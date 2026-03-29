@@ -34,7 +34,7 @@ We've been running this in production on three agents for 6+ weeks. The code is 
 
 Open source (MIT). Currently supports Python SDKs; Go/JS support coming soon.
 
-https://github.com/kaywhy331/tokenpak
+https://github.com/tokenpak/tokenpak
 
 I'm happy to dig into the compression algorithms, caching strategy, or cost math if anyone wants to discuss.
 

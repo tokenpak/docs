@@ -1,6 +1,6 @@
 # TokenPak Troubleshooting Guide
 
-A quick reference for the most common issues and their fixes. If something isn't here, check [GitHub Issues](https://github.com/kaywhy331/tokenpak/issues) or open a new one.
+A quick reference for the most common issues and their fixes. If something isn't here, check [GitHub Issues](https://github.com/tokenpak/tokenpak/issues) or open a new one.
 
 ---
 

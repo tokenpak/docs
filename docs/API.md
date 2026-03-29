@@ -399,7 +399,7 @@ tokenpak/
 - **Examples:** See `~/vault/01_PROJECTS/tokenpak/examples/`
 - **Tests:** See `~/vault/01_PROJECTS/tokenpak/tests/`
 - **Troubleshooting:** See [QUICKSTART.md](./QUICKSTART.md#troubleshooting)
-- **Issues:** Open a GitHub issue on [kaywhy331/tokenpak](https://github.com/kaywhy331/tokenpak)
+- **Issues:** Open a GitHub issue on [tokenpak/tokenpak](https://github.com/tokenpak/tokenpak)
 
 ---
 

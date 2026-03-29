@@ -139,7 +139,7 @@ tokenpak cost --last 7d
 
 ### Links & Info
 
-**GitHub:** https://github.com/kaywhy331/tokenpak
+**GitHub:** https://github.com/tokenpak/tokenpak
 **Docs:** https://tokenpak.dev
 **License:** MIT (free tier)
 
@@ -173,7 +173,7 @@ The compression is lossless (the model sees the same content), and it's battle-t
 
 If you're mixing local inference with cloud APIs for cost-optimization, this is a tool worth knowing about.
 
-https://github.com/kaywhy331/tokenpak
+https://github.com/tokenpak/tokenpak
 
 ---
 

@@ -187,11 +187,11 @@ Requests exceeding limits are rejected with clear error messages.
 
 ### Where do I report bugs?
 
-[GitHub Issues](https://github.com/kaywhy331/tokenpak/issues). Include your OS, Python version, TokenPak version, and reproduction steps. We prioritize crashes and regressions.
+[GitHub Issues](https://github.com/tokenpak/tokenpak/issues). Include your OS, Python version, TokenPak version, and reproduction steps. We prioritize crashes and regressions.
 
 ### How do I request features?
 
-[GitHub Discussions](https://github.com/kaywhy331/tokenpak/discussions) for ideas, or [Issues](https://github.com/kaywhy331/tokenpak/issues) if you have a detailed spec. We review requests weekly and prioritize based on community interest and alignment with our roadmap.
+[GitHub Discussions](https://github.com/tokenpak/tokenpak/discussions) for ideas, or [Issues](https://github.com/tokenpak/tokenpak/issues) if you have a detailed spec. We review requests weekly and prioritize based on community interest and alignment with our roadmap.
 
 ### How do I contribute?
 
@@ -199,4 +199,4 @@ We welcome bug fixes, docs, adapters, and tests. No need to ask permission—for
 
 ### Is there a Slack/Discord community?
 
-We're using GitHub Discussions for now, which is lower-friction than chat. If the community asks for Slack, we'll set it up. Reach out in [Discussions](https://github.com/kaywhy331/tokenpak/discussions) if you'd like to chat!
+We're using GitHub Discussions for now, which is lower-friction than chat. If the community asks for Slack, we'll set it up. Reach out in [Discussions](https://github.com/tokenpak/tokenpak/discussions) if you'd like to chat!
