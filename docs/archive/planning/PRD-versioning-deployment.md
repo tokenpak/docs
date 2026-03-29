@@ -134,7 +134,7 @@ Checking versions...
 What's new in 1.0.2:
   • Fix: WebSocket proxy memory leak on idle connections
   • Improve: Compression ratio +4% on short prompts
-  → Full changelog: https://github.com/kaywhy331/tokenpak/releases/1.0.2
+  → Full changelog: https://github.com/tokenpak/tokenpak/releases/1.0.2
 
 Updating package...  ✓
 Syncing proxy...     ✓

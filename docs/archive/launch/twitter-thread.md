@@ -73,7 +73,7 @@ Pro tier adds semantic cache, smart routing, PII scrubbing, multi-tenant.
 Works with Claude, GPT, Gemini.
 
 **Tweet 7 (Call to Action):**
-Try it: https://github.com/kaywhy331/tokenpak
+Try it: https://github.com/tokenpak/tokenpak
 
 Questions? Ask in the thread. We're happy to dig into compression algorithms, deployment patterns, or how to integrate it into your stack.
 
@@ -115,7 +115,7 @@ Real teams. Real APIs. Real cost savings.
 **Tweet 5 (Call to Action):**
 Free tier available. Try it:
 
-https://github.com/kaywhy331/tokenpak
+https://github.com/tokenpak/tokenpak
 
 If you're paying for LLM APIs, you probably need this.
 

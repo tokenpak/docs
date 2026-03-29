@@ -171,4 +171,4 @@ Want to improve the docs? See [CONTRIBUTING.md](../CONTRIBUTING.md) in the root.
 
 ---
 
-**Questions?** Open an issue on [GitHub](https://github.com/kaywhy331/tokenpak).
+**Questions?** Open an issue on [GitHub](https://github.com/tokenpak/tokenpak).

@@ -67,7 +67,7 @@ Welcome / status endpoint. Returns proxy identity and available endpoints.
     "docs": "/docs",
     "proxy": "/v1/messages (POST), /v1/chat/completions (POST)"
   },
-  "docs": "https://github.com/kaywhy331/tokenpak"
+  "docs": "https://github.com/tokenpak/tokenpak"
 }
 ```
 

@@ -44,8 +44,8 @@
 
 3. **Developer clone URL inconsistency**  
    - Dev section (line ~34): `git clone https://github.com/tokenpak/tokenpak.git` (org: `tokenpak`)  
-   - All other links in README use `github.com/kaywhy331/tokenpak`  
-   - **Suggested fix:** Standardize to `github.com/kaywhy331/tokenpak` throughout, or confirm the OSS org name.
+   - All other links in README use `github.com/tokenpak/tokenpak`  
+   - **Suggested fix:** Standardize to `github.com/tokenpak/tokenpak` throughout, or confirm the OSS org name.
 
 4. **`python3 -m tokenpak version` reports `0.5.0` for CLI, `1.0.2` for package**  
    - README only references version `1.0.x` but the CLI self-reports as `TokenPak CLI: 0.5.0`  
@@ -66,8 +66,8 @@
    - The `/health` endpoint returns 200, but the CLI `version` command hits a different path that returns 404 — suggests a CLI version-check URL mismatch internally  
    - **Impact:** Minor (proxy works); user may see confusing "not reachable" in `tokenpak version` output even when serving correctly.
 
-2. **GitHub Actions badge URL (`kaywhy331/tokenpak`) may not resolve publicly**  
-   - Badge URL points to `github.com/kaywhy331/tokenpak/actions` — if repo is private or not yet published, badge will show broken/error state to public readers  
+2. **GitHub Actions badge URL (`tokenpak/tokenpak`) may not resolve publicly**  
+   - Badge URL points to `github.com/tokenpak/tokenpak/actions` — if repo is private or not yet published, badge will show broken/error state to public readers  
    - **Suggested fix:** Confirm repo is public before OSS launch; placeholder badge OK in private dev but should be verified.
 
 ---
@@ -83,6 +83,6 @@
 
 **Top priority fixes before OSS launch:**
 1. Fix the `health` endpoint example (remove `version` field or add it to the response)
-2. Resolve git clone URL inconsistency (`tokenpak` org vs `kaywhy331`)
+2. Resolve git clone URL inconsistency (`tokenpak` org (resolved))
 3. Add missing CHANGELOG entries for `v1.0.1` and `v1.0.3`
 4. Investigate CLI version string mismatch (`0.5.0` vs `1.0.2`)

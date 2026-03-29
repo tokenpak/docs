@@ -311,4 +311,4 @@ Expected `/stats` response time: **<20ms** on local hardware.
 1. Check [FAQ.md](FAQ.md) for conceptual explanations
 2. Check [Error Handling](error-handling.md) for specific error codes
 3. Run `journalctl --user -u tokenpak --no-pager -n 100` for recent logs
-4. Open an issue: <https://github.com/kaywhy331/tokenpak/issues>
+4. Open an issue: <https://github.com/tokenpak/tokenpak/issues>

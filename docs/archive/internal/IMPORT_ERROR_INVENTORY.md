@@ -83,7 +83,7 @@ if "tokenpak" in sys.modules:
             del sys.modules[k]
 ```
 
-**Fixed in:** Commit `851626532` · PR [#tokenpak-conftest-rewrite](https://github.com/kaywhy331/obsidian-vault/commit/851626532355d14582de868eec3a91f70c5fc07a)
+**Fixed in:** Commit `851626532` · PR [#tokenpak-conftest-rewrite](https://github.com/tokenpak/tokenpak/commit/851626532355d14582de868eec3a91f70c5fc07a)
 
 **Prevention:**
 - Always run pytest from the repo root: `pytest tests/`

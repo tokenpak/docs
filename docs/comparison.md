@@ -291,7 +291,7 @@ response = client.chat.completions.create(
 - **LiteLLM:** https://github.com/BerriAI/litellm (Latest commit: 2026-03-25)
 - **Helicone:** https://github.com/Helicone/helicone (Latest commit: 2026-03-25)
 - **OpenRouter:** https://openrouter.ai (Public docs: 2026-03-25)
-- **TokenPak:** https://github.com/kaywhy331/tokenpak (Benchmarks: `docs/benchmarks.md`)
+- **TokenPak:** https://github.com/tokenpak/tokenpak (Benchmarks: `docs/benchmarks.md`)
 
 ---
 
