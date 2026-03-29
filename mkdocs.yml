@@ -61,7 +61,6 @@ nav:
     - Features: features.md
     - Plugin Guide: plugin-guide.md
     - Plugin System Architecture: plugin-system-architecture.md
-    - OSS / PRO Boundary: OSS-PRO-BOUNDARY.md
     - Architecture Diagrams: assets/DIAGRAMS.md
   - Adapters:
     - OpenAI-Compatible: adapters/openai-compat.md
@@ -95,8 +94,6 @@ exclude_docs: |
   INDEX.md
   TROUBLESHOOTING.md
   getting-started.md
-  archive/**
-  audits/**
 
 plugins:
   - search:

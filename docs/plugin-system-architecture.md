@@ -48,7 +48,7 @@ kind: adapter                    # adapter | compressor | metrics
 
 # optional
 description: "Translates MyAPI format to canonical"
-author: "Kevin Yang"
+author: "TokenPak Contributors"
 min_tokenpak_version: "0.9.0"   # Semver range, defaults to any
 
 # Hook declarations (what lifecycle events does this plugin use?)

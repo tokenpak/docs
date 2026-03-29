@@ -23,8 +23,8 @@ rate_limit:
       burst: 2  # Allow 2 extra in a burst
       window_seconds: 60
 
-    pro:
-      rps: 50  # Pro tier: 50 req/min
+    standard:
+      rps: 50  # Standard tier: 50 req/min
       burst: 10
       window_seconds: 60
 
@@ -65,7 +65,7 @@ models:
 tokenpak validate-config config.yaml
 # Expected output:
 # ✓ Config valid
-# ✓ Rate limiting: 3 tiers configured (free/pro/enterprise)
+# ✓ Rate limiting: 3 tiers configured (free/standard/enterprise)
 # ✓ User assignments: 3 users (user-123→free, user-456→pro, user-789→enterprise)
 ```
 
@@ -86,9 +86,9 @@ done
 # ✗ Request 6: { status: 429, message: "Rate limit exceeded. Free tier: 5 req/min" }
 ```
 
-**Step 3:** Test pro tier user (higher limit):
+**Step 3:** Test standard tier user (higher limit):
 ```bash
-# Same 6 requests from pro-tier user
+# Same 6 requests from standard-tier user
 for i in {1..6}; do
   curl -X POST http://localhost:8000/v1/messages \
     -H "Authorization: Bearer user-456" \
@@ -102,12 +102,12 @@ done
 
 **Step 4:** Verify per-user isolation (different windows don't interfere):
 ```bash
-# Hammer free tier user, then check pro tier is unaffected
+# Hammer free tier user, then check standard tier is unaffected
 ab -n 50 -c 5 -H "Authorization: Bearer user-123" \
   -p request.json http://localhost:8000/v1/messages
 # Results: ~5 success, ~45 rejected (429)
 
-# Pro tier user still has full quota
+# Standard tier user still has full quota
 curl -X POST http://localhost:8000/v1/messages \
   -H "Authorization: Bearer user-456" \
   -d '{"model": "gpt-4", "messages": [{"role": "user", "content": "Still works?"}]}' \
@@ -131,7 +131,7 @@ Each user has their own request counter, resetting every 60 seconds. Users canno
 
 **Pitfall 1: Rate limits are too uniform**
 - ❌ Wrong: All users get 10 req/min regardless of tier
-- ✅ Right: Differentiate clearly: free=5, pro=50, enterprise=500
+- ✅ Right: Differentiate clearly: free=5, standard=50, enterprise=500
 
 **Pitfall 2: Burst allowance is missing**
 - ❌ Wrong: Reject immediately on 6th request (no flexibility)

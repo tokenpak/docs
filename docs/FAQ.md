@@ -8,11 +8,10 @@ Yes. TokenPak is used in production by multiple teams, with built-in failover, e
 
 ### Is TokenPak free?
 
-Yes, TokenPak is 100% open-source (MIT/Apache licensed) and free to use. The OSS version includes all core features: provider routing, failover, cost tracking, streaming, and caching. We offer a commercial Pro tier for advanced features (dashboards, team management, audit logs), but you never pay for basic functionality.
 
 ### What's the catch? Why is it free?
 
-We believe building a better LLM infrastructure benefits everyone. The OSS version generates network effects and community trust; the Pro tier monetizes advanced use cases (enterprises, dashboards, audit trails) without restricting core functionality. This is how sustainable open-source projects work.
+This is how sustainable open-source projects work.
 
 ### What providers does TokenPak support?
 
@@ -66,8 +65,6 @@ TokenPak uses native token counters for each provider (Anthropic's `token-counte
 
 **Self-hosted version:** Your data never leaves your infrastructure. TokenPak runs on your machine or server and only talks to the provider's API. No external logging, no analytics, no data storage. Responses are only cached in-memory (configurable TTL).
 
-**Pro SaaS (future):** Data is encrypted in transit (TLS) and at rest (AES-256). We don't train on user data, and you can request deletion anytime.
-
 ### How does rate limiting work?
 
 TokenPak supports multiple rate-limiting strategies:
@@ -80,7 +77,7 @@ Limits are configurable in `proxy.yaml`. You get clear error messages when limit
 
 ### Can I audit requests for compliance?
 
-Yes. TokenPak logs all requests (model, prompt hash, response length, cost, latency) to local files and stdout. For the Pro tier, we offer centralized audit logs with filtering and export. Self-hosted users can integrate their own logging backend via webhooks.
+Self-hosted users can integrate their own logging backend via webhooks.
 
 ---
 

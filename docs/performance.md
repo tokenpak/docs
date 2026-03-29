@@ -276,7 +276,7 @@ CI alerts automatically if any metric regresses >10% from baseline.
 ### Quick benchmark (in-process, no API calls)
 
 ```bash
-cd ~/vault/01_PROJECTS/tokenpak
+cd ~/tokenpak
 python benchmarks/performance_benchmark.py
 ```
 

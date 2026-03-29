@@ -164,12 +164,12 @@ To validate these findings:
 
 ### Python benchmark (future work)
 ```bash
-python3 ~/vault/01_PROJECTS/tokenpak/scripts/latency_benchmark.py
+python3 ~/tokenpak/scripts/latency_benchmark.py
 ```
 
 ### Bash benchmark (future work)
 ```bash
-bash ~/vault/01_PROJECTS/tokenpak/scripts/latency_benchmark.sh
+bash ~/tokenpak/scripts/latency_benchmark.sh
 ```
 
 Both scripts are designed to measure real-world latency with 10+ unique prompts and provide confidence intervals.

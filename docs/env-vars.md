@@ -30,7 +30,7 @@ Env vars always take precedence over config file values.
 
 | Variable | Default | Type | Description |
 |----------|---------|------|-------------|
-| `TOKENPAK_VAULT_INDEX` | `~/vault/.tokenpak` | str | Path to vault `.tokenpak` index directory |
+| `TOKENPAK_VAULT_INDEX` | `~/.tokenpak` | str | Path to vault `.tokenpak` index directory |
 | `TOKENPAK_VAULT_INDEX_RELOAD_INTERVAL` | `300` | int | Seconds between vault index reloads |
 | `TOKENPAK_VAULT_MEMORY_MAX` | `268435456` (256MB) | int | Max bytes for Tier 2 LRU content cache |
 | `TOKENPAK_VAULT_CACHE_PRELOAD` | `200` | int | Number of recently-modified blocks to preload into cache at startup |

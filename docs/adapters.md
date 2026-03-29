@@ -486,6 +486,6 @@ except Exception as e:
 
 - **Token counting:** See [Installation](./installation.md)
 - **Error handling:** Check [Error Handling Guide](./error-handling.md)
-- **Advanced routing:** See [Feature Matrix](./features.md) (PRO only)
+- **Advanced routing:** See [Feature Matrix](./features.md) 
 
 All adapters work out-of-the-box with FREE TokenPak.
