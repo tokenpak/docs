@@ -396,8 +396,8 @@ tokenpak/
 
 ## Getting Help
 
-- **Examples:** See `~/vault/01_PROJECTS/tokenpak/examples/`
-- **Tests:** See `~/vault/01_PROJECTS/tokenpak/tests/`
+- **Examples:** See `~/tokenpak/examples/`
+- **Tests:** See `~/tokenpak/tests/`
 - **Troubleshooting:** See [QUICKSTART.md](./QUICKSTART.md#troubleshooting)
 - **Issues:** Open a GitHub issue on [tokenpak/tokenpak](https://github.com/tokenpak/tokenpak)
 

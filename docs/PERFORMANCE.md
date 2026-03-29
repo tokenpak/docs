@@ -1,10 +1,10 @@
 # TokenPak Proxy — Performance Baseline
 
-## Hardware: CaliBOT
+## Hardware: Test Environment
 
 | Spec | Value |
 |------|-------|
-| Host | CaliBOT (`cali@calibot`) |
+| Host | Test Environment () |
 | RAM | 4 GB |
 | CPU | 4 cores |
 | GPU | None |
@@ -33,7 +33,7 @@ Measured via `tests/benchmarks/test_load_100rps.py` against `tokenpak.agent.prox
 | p95 latency | < 15 ms |
 | p99 latency | < 50 ms |
 
-### SLA Thresholds (CaliBOT hardware)
+### SLA Thresholds (Test Environment hardware)
 
 | Metric | Threshold | Notes |
 |--------|-----------|-------|

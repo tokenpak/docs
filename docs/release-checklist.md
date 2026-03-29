@@ -28,7 +28,6 @@
 These **cannot be automated** — verify manually:
 
 - [ ] **Config preservation:** `~/.tokenpak/config.json` is NOT modified by update
-- [ ] **Vault files untouched:** No `.md` or `.json` files in `~/vault/` are modified
 - [ ] **System files untouched:** No system-level config files (`.bashrc`, systemd, etc.) are modified
 
 **How to verify:**

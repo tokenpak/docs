@@ -110,7 +110,6 @@ Real-world use cases and configuration patterns.
 High-level strategy and business docs.
 
 - **[SAVINGS.md](SAVINGS.md)** — ROI, cost savings, value prop
-- **[OSS-PRO-BOUNDARY.md](OSS-PRO-BOUNDARY.md)** — Open source vs. Pro feature boundary
 - **[FAQ.md](FAQ.md)** — Frequently asked questions
 
 ---

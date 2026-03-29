@@ -54,8 +54,6 @@ grep "ANTHROPIC_API_KEY" ~/.openclaw/.env
 curl -s http://localhost:8766/health | python3 -m json.tool
 
 # If the file is missing, check the master source on your gateway machine
-# and re-push secrets:
-bash ~/vault/06_RUNTIME/scripts/push-secrets.sh
 
 # Restart proxy to reload env
 systemctl --user restart tokenpak
@@ -85,7 +83,7 @@ curl -s http://localhost:8766/stats | python3 -m json.tool
 - **First-request lag:** Vault index loads on first use — subsequent requests are faster.
 - **Consistently slow:** Check if vault index is large; rebuild it:
   ```bash
-  bash ~/vault/06_RUNTIME/scripts/rebuild-vault-index.sh
+  tokenpak index rebuild
   ```
 - **All requests slow:** Check upstream provider status (Anthropic/OpenAI status pages).
 
@@ -159,16 +157,16 @@ Vault index is out of date, pointing to a wrong path, or the rebuild hasn't run 
 **Fix:**
 ```bash
 # Force-rebuild the vault index
-bash ~/vault/06_RUNTIME/scripts/rebuild-vault-index.sh
+  tokenpak index rebuild
 
 # Verbose output to verify paths
-bash ~/vault/06_RUNTIME/scripts/rebuild-vault-index.sh --verbose
+  tokenpak index rebuild
 
 # Check the index file exists and is recent
-ls -lh ~/vault/.tokenpak/index.json
+ls -lh ~/.tokenpak/index.json
 ```
 
-> ⚠️ Do NOT use `python3 -m tokenpak index ~/vault` — this routes differently and may write to the wrong path.
+> ⚠️ Do NOT use `python3 -m tokenpak index ~/your-vault` — this routes differently and may write to the wrong path.
 
 Index auto-reloads every 5 minutes (`VAULT_INDEX_RELOAD_INTERVAL=300s`). If you need immediate reload, restart the proxy:
 ```bash
@@ -250,7 +248,6 @@ systemctl --user restart tokenpak
 ## 9. Agent Proxy Drift — Running Old Version
 
 **Symptom:**  
-`check-proxy-drift.sh` reports a diff between vault canonical and a deployed agent's proxy. Or an agent behaves differently from others.
 
 **Cause:**  
 A sync was run when the agent was offline, or someone edited `~/tokenpak/proxy.py` directly on an agent machine instead of going through the vault workflow.
@@ -258,19 +255,15 @@ A sync was run when the agent was offline, or someone edited `~/tokenpak/proxy.p
 **Fix:**
 ```bash
 # Check current drift across all agents
-bash ~/vault/06_RUNTIME/scripts/check-proxy-drift.sh
 
 # Deploy canonical to all agents (idempotent — already-synced agents are no-ops)
-bash ~/vault/06_RUNTIME/scripts/sync-tokenpak-proxy.sh --restart
 
 # Confirm all agents healthy
-for agent in sue trix cali; do
+# Check all proxy instances
   echo "=== $agent ==="
-  ssh ${agent}bot "curl -s http://localhost:8766/health" | python3 -m json.tool
 done
 ```
 
-> ⚠️ **Never edit `~/tokenpak/proxy.py` directly on agent machines.** Always edit `~/tokenpak-dev/proxy.py` on staging, commit to vault, then deploy via `sync-tokenpak-proxy.sh`. Direct edits will be overwritten on next sync.
 
 ---
 

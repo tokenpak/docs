@@ -14,7 +14,7 @@ Route your LangChain applications through the TokenPak proxy for cost tracking, 
 
 1. **TokenPak proxy running locally**
    ```bash
-   python3 ~/vault/01_PROJECTS/tokenpak/proxy.py &
+   python3 tokenpak serve &
    # Proxy starts on http://localhost:8766 by default
    ```
 
@@ -107,7 +107,7 @@ If you see requests recorded, traffic is flowing correctly through the proxy.
 **Fix:**
 ```bash
 # Start proxy in background
-python3 ~/vault/01_PROJECTS/tokenpak/proxy.py &
+python3 tokenpak serve &
 
 # Verify it's listening
 curl http://localhost:8766/health
@@ -218,7 +218,7 @@ llm = ChatAnthropic(
     api_key=os.getenv("ANTHROPIC_API_KEY"),
     # Optional: custom headers for injection/compression directives
     default_headers={
-        "X-TokenPak-Vault": "~/vault/01_KNOWLEDGE",  # Auto-inject blocks
+        "X-TokenPak-Vault": "~/your-vault",  # Auto-inject blocks
         "X-TokenPak-Compress": "true",  # Enable compression
     }
 )

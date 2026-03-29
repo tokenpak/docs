@@ -2,9 +2,9 @@
 title: "README"
 created: 2026-03-24T19:05:55Z
 ---
-# TokenPak — FREE Package Documentation
+# TokenPak — Documentation
 
-Welcome to TokenPak! This documentation covers the **free, open-source package** (`tokenpak` on PyPI).
+Welcome to TokenPak! This documentation covers the **open-source package** (`tokenpak` on PyPI).
 
 ---
 
@@ -12,7 +12,7 @@ Welcome to TokenPak! This documentation covers the **free, open-source package**
 
 TokenPak is a **provider-agnostic proxy layer** that sits between your application and LLM providers (Anthropic, OpenAI, Google, etc.). It lets you write once and route flexibly, automatically count tokens across providers, and compress context to reduce API costs.
 
-### Key Capabilities (FREE tier)
+### Key Capabilities
 
 ✅ **Smart Adapter System** — Convert between provider request/response formats seamlessly
 ✅ **Token Counting** — Accurate token counts across all supported providers
@@ -24,16 +24,6 @@ TokenPak is a **provider-agnostic proxy layer** that sits between your applicati
 ✅ **Cost Tracking** — Basic token usage and cost tallying
 ✅ **Vault Integration** — Automatically inject and index local documents
 
-### What's NOT in FREE
-
-The PRO package adds:
-- Advanced compression algorithms (dict-based, code/log extraction)
-- Dashboard UI for cost management and real-time monitoring
-- Budget enforcement and alerts
-- Advanced agentic features (function calling optimization, retry orchestration)
-- Team/multi-user features
-
-**Goal:** Get the core proxy working, understand the patterns, and level up when you need advanced features.
 
 ---
 
@@ -41,7 +31,6 @@ The PRO package adds:
 
 - **[Architecture](./architecture.md)** — How TokenPak works under the hood
 - **[Installation Guide](./installation.md)** — Get TokenPak running in 5 minutes
-- **[Feature Matrix](./features.md)** — What's included in FREE vs PRO
 - **[Adapter Reference](./adapters.md)** — All 5 adapters with code examples
 - **[Error Handling Guide](./error-handling.md)** — Common issues and solutions
 - **[Quick Start](./QUICKSTART.md)** — 30-second working example
@@ -198,6 +187,5 @@ print(f"This message is {tokens} tokens")
 
 ## License
 
-TokenPak (FREE) is distributed under the **MIT License**. Use it however you like.
+TokenPak is distributed under the **Apache 2.0 License**. Use it however you like.
 
-PRO package has additional licensing terms. See the PRO docs for details.

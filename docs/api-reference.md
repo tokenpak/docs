@@ -881,8 +881,8 @@ tokenpak update
 Index a directory for vault-based context injection.
 
 ```bash
-tokenpak index ~/vault           # Index the vault
-tokenpak index ~/vault --watch   # Watch and auto-reindex on changes
+tokenpak index ~/your-vault           # Index the vault
+tokenpak index ~/your-vault --watch   # Watch and auto-reindex on changes
 tokenpak index --status          # Show indexed file count by type
 tokenpak index -w 8              # Use 8 parallel workers
 ```
@@ -1247,7 +1247,7 @@ Benchmark compression performance.
 ```bash
 tokenpak benchmark               # Built-in sample data
 tokenpak benchmark --file prompt.txt
-tokenpak benchmark --latency ~/vault   # Latency/indexing benchmark
+tokenpak benchmark --latency ~/your-vault   # Latency/indexing benchmark
 tokenpak benchmark --json        # JSON output
 ```
 
@@ -1348,7 +1348,7 @@ The proxy reads configuration from `~/.tokenpak/config.yaml` with environment va
 
 | Variable | Default | Description |
 |----------|---------|-------------|
-| `TOKENPAK_VAULT_INDEX` | `~/vault/.tokenpak` | Path to vault index directory |
+| `TOKENPAK_VAULT_INDEX` | `~/.tokenpak` | Path to vault index directory |
 | `TOKENPAK_INJECT_BUDGET` | `4000` | Max tokens to inject from vault per request |
 | `TOKENPAK_INJECT_TOP_K` | `5` | Max vault blocks to inject per request |
 | `TOKENPAK_INJECT_MIN_SCORE` | `2.0` | Minimum BM25 score to include a block |

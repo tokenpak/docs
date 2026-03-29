@@ -56,7 +56,7 @@ At least one API key is required. The proxy auto-detects which provider to use b
 | `TOKENPAK_INJECT_MIN_SCORE` | `2.0` | float | Minimum relevance score for injection |
 | `TOKENPAK_INJECT_SKIP_MODELS` | `haiku` | str | Comma-separated models to skip vault injection |
 | `TOKENPAK_INJECT_MIN_PROMPT` | `1000` | int | Skip injection if prompt is shorter than this (chars) |
-| `VAULT_INDEX_PATH` | `~/vault/.tokenpak/index.json` | str | Path to vault index JSON |
+| `VAULT_INDEX_PATH` | `~/.tokenpak/index.json` | str | Path to vault index JSON |
 
 ---
 
