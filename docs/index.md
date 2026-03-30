@@ -43,4 +43,4 @@ tokenpak start --port 8766
 | [Configuration](configuration.md) | All configuration options |
 | [CLI Reference](adapters.md) | Command-line interface |
 | [Architecture](features.md) | How TokenPak works |
-| [FAQ](FAQ.md) | Common questions |
+| [FAQ](faq.md) | Common questions |

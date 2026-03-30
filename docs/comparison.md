@@ -305,4 +305,4 @@ All four are production-ready. The best choice depends on your team's priorities
 
 ---
 
-**Questions?** Open an issue on [TokenPak's GitHub](https://github.com/tokenpak/tokenpak) or check the [FAQ](FAQ.md).
+**Questions?** Open an issue on [TokenPak's GitHub](https://github.com/tokenpak/tokenpak) or check the [FAQ](faq.md).
