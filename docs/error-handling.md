@@ -474,7 +474,7 @@ client = Client(
 
 ## Getting Help
 
-- **Question?** Check this guide or [FAQ](FAQ.md)
+- **Question?** Check this guide or [FAQ](faq.md)
 - **Bug?** Open an issue on GitHub
 - **Stuck?** Email support or check Discord
 

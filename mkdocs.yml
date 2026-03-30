@@ -85,7 +85,7 @@ nav:
     - Streaming Responses: recipes/06-streaming-responses.md
     - Local Development Mock: recipes/07-local-development-mock.md
   - Support:
-    - FAQ: FAQ.md
+    - FAQ: faq.md
     - Examples: EXAMPLES.md
     - Release Checklist: release-checklist.md
 
@@ -93,6 +93,7 @@ exclude_docs: |
   README.md
   INDEX.md
   TROUBLESHOOTING.md
+  FAQ.md
   getting-started.md
 
 plugins:
