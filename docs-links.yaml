@@ -1,0 +1,42 @@
+# Curated documentation entry points surfaced on tokenpak.ai.
+#
+# This file is the source of truth for the 'Documentation highlights' section
+# of the public marketing site (tokenpak.ai). tokenpak/site consumes it at
+# build time via scripts/sync-docs-links.ts and publishes to data/docs-links.json.
+#
+# Format: flat YAML list. Each entry needs title + url + section + description.
+# URLs are relative to docs.tokenpak.ai (the site repo prefixes docs_base_url).
+#
+# Section enum:
+#   starter    — install, quickstart, first-run
+#   reference  — CLI / API / architecture
+#   support    — troubleshooting, FAQ
+#   protocol   — TIP-1.0 normative text
+#
+# Changes here fire a repository_dispatch at tokenpak/site via
+# .github/workflows/notify-site.yml; the site rebuilds within minutes.
+
+- title: Getting Started
+  url: /quickstart/
+  section: starter
+  description: Install TokenPak and see savings in one command.
+
+- title: Installation
+  url: /install/
+  section: starter
+  description: pip install options, OS notes, troubleshooting install failures.
+
+- title: CLI Reference
+  url: /cli/
+  section: reference
+  description: Every tokenpak verb, flag, and exit code.
+
+- title: Architecture
+  url: /architecture/
+  section: reference
+  description: Proxy-centered model; three planes; 18 subsystems at a glance.
+
+- title: Troubleshooting
+  url: /troubleshooting/
+  section: support
+  description: Common symptoms and the fixes that work.

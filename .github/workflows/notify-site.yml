@@ -1,0 +1,28 @@
+name: notify-site
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'docs-links.yaml'
+  workflow_dispatch: {}
+
+jobs:
+  dispatch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Fire repository_dispatch at tokenpak/site
+        uses: peter-evans/repository-dispatch@v3
+        with:
+          # Fine-grained PAT stored in this repo's secrets. Must have
+          # contents:write on tokenpak/site so repository_dispatch is
+          # accepted. GITHUB_TOKEN cannot trigger cross-repo dispatches.
+          token: ${{ secrets.SITE_DISPATCH_TOKEN }}
+          repository: tokenpak/site
+          event-type: docs-links-updated
+          client-payload: |
+            {
+              "source_repo": "${{ github.repository }}",
+              "source_commit": "${{ github.sha }}",
+              "source_ref": "${{ github.ref }}"
+            }
