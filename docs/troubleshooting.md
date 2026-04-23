@@ -38,10 +38,10 @@ pip install tokenpak[docs]  # for documentation
 pip install tokenpak[dev]   # for development
 ```
 
-### Error: "Python 3.9+ required"
-**Symptom:** Installation fails with "This project requires Python 3.9 or later."
+### Error: "Python 3.10+ required"
+**Symptom:** Installation fails with "This project requires Python 3.10 or later."
 
-**Likely cause:** You're running Python 3.8 or older.
+**Likely cause:** You're running Python 3.9 or older. TokenPak's `pyproject.toml` declares `requires-python = ">=3.10"`. Supported: 3.10 / 3.11 / 3.12 / 3.13 (on 3.13 the optional `tree-sitter-languages` wheel is unavailable and affected features gracefully degrade).
 
 **Fix:**
 ```bash
