@@ -84,6 +84,14 @@ nav:
     - Cost Monitoring: recipes/05-cost-monitoring.md
     - Streaming Responses: recipes/06-streaming-responses.md
     - Local Development Mock: recipes/07-local-development-mock.md
+  - Recall:
+    - Overview: recall/index.md
+    - Pak Reason Codes: recall/reason-codes.md
+    - Pak Risk Flags: recall/risk-flags.md
+    - Recall Store API: recall/recall-store-api.md
+    - "`tokenpak pak inspect` semantics": recall/inspect-and-explain.md
+    - Deterministic Recall Pak Selection: recall/selection-explanation.md
+    - "Context Package `ordering_hints` Examples": recall/ordering-hints-examples.md
   - Support:
     - FAQ: faq.md
     - Examples: EXAMPLES.md
