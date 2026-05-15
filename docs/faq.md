@@ -4,25 +4,29 @@
 
 ### Is TokenPak production-ready?
 
-Yes. TokenPak is used in production by multiple teams, with built-in failover, error recovery, streaming support, and comprehensive monitoring. We maintain 99.5% uptime SLAs on our public infrastructure, and self-hosted instances achieve similar reliability. All core features are stable; we don't mark major versions until they've been battle-tested.
+TokenPak is currently in **OSS beta**. The proxy core, Prompt Packing pipeline, Spend Guard, Savings Ledger, and client integrations are stable and used in real workflows today. Some surfaces (Pak scoring/assembly, fleet orchestration, advanced recipes) are explicitly read-only or experimental in the beta — see [Known Issues](known-issues.md) for the current line.
+
+We don't claim an SLA for the OSS package: TokenPak runs on your machine, so reliability is determined by your machine and the upstream provider, not by any infrastructure we operate.
 
 ### Is TokenPak free?
 
+Yes. TokenPak is Apache 2.0 licensed and the package on PyPI (`pip install tokenpak`) is the full OSS product. No license activation, no feature gates inside the OSS package, no telemetry sent home by default.
 
-### What's the catch? Why is it free?
+### Why is it free?
 
-This is how sustainable open-source projects work.
+TokenPak is built in the open because it works better that way. The protocol it implements (TIP-1.0) is a public spec; the proxy is its reference implementation. Sustainable open-source projects work when the source is honest, the docs match the code, and the development cadence is real — that's the bar we hold ourselves to.
 
 ### What providers does TokenPak support?
 
-**Fully supported:**
+**Fully supported in the OSS beta:**
+
 - Anthropic Claude (all models)
 - OpenAI GPT-4, GPT-3.5
 - Google Gemini
 - Meta Llama (via Replicate or Hugging Face)
 - Local Ollama
 
-**Easy to add:** Any REST-compatible LLM API. TokenPak's adapter pattern makes adding custom providers straightforward—see the [adapters guide](adapters.md).
+**Easy to add:** any REST-compatible LLM API. TokenPak's adapter pattern makes adding custom providers straightforward — see the [adapters guide](adapters.md).
 
 ---
 
@@ -30,7 +34,7 @@ This is how sustainable open-source projects work.
 
 ### How does TokenPak route requests to providers?
 
-You define a routing strategy in `proxy.yaml`:
+You define a routing strategy in `config.yaml`:
 
 ```yaml
 routing:
@@ -47,7 +51,7 @@ TokenPak matches the requested model to a provider and routes there. If the prov
 
 ### Does TokenPak support streaming?
 
-Yes, completely. TokenPak proxies Server-Sent Events (SSE) from providers without buffering. Your streaming requests work exactly as if you called the provider directly—you get chunks in real-time with full backpressure handling.
+Yes, completely. TokenPak proxies Server-Sent Events (SSE) from providers without buffering. Your streaming requests work exactly as if you called the provider directly — you get chunks in real-time with full backpressure handling.
 
 ### How does caching work? Will I get stale responses?
 
@@ -55,7 +59,7 @@ TokenPak caches responses based on request hashing (model + prompt). Cache hits 
 
 ### What about token counting? Is it accurate?
 
-TokenPak uses native token counters for each provider (Anthropic's `token-counter`, OpenAI's `tiktoken`). We don't approximate—you get exact counts. For unsupported providers, we use a fallback estimator (~4 chars per token), which you can override.
+TokenPak uses native token counters for each provider (Anthropic's `token-counter`, OpenAI's `tiktoken`). We don't approximate — you get exact counts. For unsupported providers, we use a fallback estimator (~4 chars per token), which you can override.
 
 ---
 
@@ -63,21 +67,21 @@ TokenPak uses native token counters for each provider (Anthropic's `token-counte
 
 ### Is my data stored? Is it encrypted?
 
-**Self-hosted version:** Your data never leaves your infrastructure. TokenPak runs on your machine or server and only talks to the provider's API. No external logging, no analytics, no data storage. Responses are only cached in-memory (configurable TTL).
+Your data never leaves your machine. TokenPak runs locally and only talks to the upstream provider's API. No external logging, no analytics, no cloud component. Cached responses live in a local SQLite ledger (`~/.tokenpak/monitor.db` or `~/.tpk/monitor.db` on fresh installs) with a configurable TTL. Full details on the [tokenpak.ai privacy page](https://tokenpak.ai/compliance/privacy).
 
 ### How does rate limiting work?
 
 TokenPak supports multiple rate-limiting strategies:
 
-- **Per-provider:** Respects each provider's rate limits (e.g., Claude's RPM limits)
-- **Per-key:** Limits by API key (useful for multi-tenant setups)
-- **Per-user:** Limits by user ID (requires middleware integration)
+- **Per-provider:** respects each provider's rate limits (e.g., Claude's RPM limits).
+- **Per-key:** limits by API key (useful for multi-tenant setups).
+- **Per-user:** limits by user ID (requires middleware integration).
 
-Limits are configurable in `proxy.yaml`. You get clear error messages when limits are exceeded.
+Limits are configurable in `config.yaml`. You get clear error messages when limits are exceeded.
 
 ### Can I audit requests for compliance?
 
-Self-hosted users can integrate their own logging backend via webhooks.
+Yes. Every request is logged to the local SQLite ledger with metadata (model, token counts, latency, cost, cache-origin). You can also wire up your own logging backend via webhooks.
 
 ---
 
@@ -85,22 +89,23 @@ Self-hosted users can integrate their own logging backend via webhooks.
 
 ### What's the performance overhead?
 
-**Proxy internals:** TokenPak adds **<2ms of latency** per request for routing, token counting, and cache lookup.
+**Proxy internals:** TokenPak adds **<50ms** of compression overhead per request on typical agent prompts. Routing, token counting, and cache lookup are sub-millisecond.
 
-**End-to-end latency:** When measured against direct API calls, the proxy adds ~**280ms (50%) overhead** due to network round-trip, request serialization, and connection pooling differences. This is expected for any network proxy.
+**End-to-end latency:** when measured against direct API calls, the proxy adds a few hundred ms due to the network round-trip and connection-pooling differences. This is expected for any local proxy.
 
-**Context:** The latency overhead is *acceptable* because:
-- Token savings (10–40% cost reduction) dwarf the latency cost
-- Cache hits (common in production) eliminate latency overhead entirely
-- Compression batching improves throughput for batch/async workloads
-- For interactive latency-sensitive apps, run the proxy on the same network/machine as your app
+**Context:** the latency overhead is acceptable because:
 
-For applications where sub-millisecond response time is critical, either self-host TokenPak on the same machine as your client, or use the SDK mode (no network overhead) with a direct API key.
+- Token savings dwarf the latency cost on real agent workloads.
+- Cache hits eliminate provider round-trip latency entirely.
+- Compression batching improves throughput for batch/async workloads.
+
+For applications where sub-millisecond response time is critical, either run the proxy on the same machine as your client (recommended), or use the SDK in-process.
 
 ### Can I self-host TokenPak?
 
-Yes, it's designed for self-hosting. You can run it via:
-- **pip:** `pip install tokenpak && tokenpak serve`
+That's the only way to run TokenPak. You install the OSS package locally:
+
+- **pip:** `pip install tokenpak && tokenpak start`
 - **Docker:** `docker run -p 8766:8766 tokenpak/tokenpak`
 - **Kubernetes:** Helm charts and manifests are in the repo
 
@@ -108,17 +113,18 @@ See the [installation guide](installation.md) for deployment options.
 
 ### How do I monitor TokenPak?
 
-TokenPak exposes Prometheus metrics (`/metrics` endpoint):
+TokenPak exposes Prometheus metrics on `/metrics`:
+
 - Request count, latency, error rates
 - Token usage by model and provider
 - Cache hit/miss rates
 - Provider health status
 
-You can scrape this in Prometheus, Datadog, or any metrics platform. Logs are JSON-formatted for easy parsing.
+You can scrape this in Prometheus, Datadog, or any metrics platform. Logs are JSON-formatted for easy parsing. The local dashboard (`tokenpak dashboard`) gives you a TUI + web view of the same data.
 
 ### What if a provider goes down? How does failover work?
 
-TokenPak automatically detects provider failures via health checks and circuit breakers. When a provider is unhealthy, it routes to the fallback provider (no user action needed). Once the primary provider recovers, routing resumes. You can also manually force a provider state via the API.
+TokenPak automatically detects provider failures via health checks and circuit breakers. When a provider is unhealthy, it routes to the fallback provider (no user action needed). Once the primary provider recovers, routing resumes. You can also manually force a provider state via the CLI (`tokenpak provider-status`).
 
 ---
 
@@ -126,17 +132,17 @@ TokenPak automatically detects provider failures via health checks and circuit b
 
 ### How do I add a custom LLM provider?
 
-TokenPak uses an adapter pattern. See the [adapters guide](adapters.md) for a full guide, but the quick version:
+TokenPak uses an adapter pattern. See the [adapters guide](adapters.md) for the full guide, but the quick version:
 
-1. Create an adapter class inheriting from `BaseAdapter`
-2. Implement `send_request()` and `count_tokens()` methods
-3. Register it in `config.yaml`
+1. Create an adapter class inheriting from `BaseAdapter`.
+2. Implement `send_request()` and `count_tokens()`.
+3. Register it in `config.yaml`.
 
-Full example with a local Ollama instance is in the docs.
+A full example with a local Ollama instance is in the docs.
 
 ### Can I use TokenPak with my favorite SDK (LangChain, LiteLLM, etc.)?
 
-Yes. TokenPak is a drop-in replacement for the OpenAI API. Change your SDK's base URL to `http://localhost:8766/v1` and your API key to any value (it's not validated by the proxy—providers validate). Works with LangChain, LlamaIndex, Autogen, and any OpenAI-compatible SDK.
+Yes. TokenPak is a drop-in replacement for the OpenAI and Anthropic APIs. Change your SDK's base URL to `http://localhost:8766` and your real API key stays where the SDK already reads it from. Works with LangChain, LlamaIndex, AutoGen, CrewAI, LiteLLM, and any OpenAI-compatible SDK.
 
 ### Can I modify requests/responses in-flight?
 
@@ -152,31 +158,25 @@ def log_response(response):
     return response
 ```
 
-See the [error handling guide](error-handling.md) for examples of request/response hooks and custom logic.
+See the [plugin guide](plugin-guide.md) for the full hook surface.
 
 ---
 
-## Pricing & Business
-
-### Is there a SaaS/cloud version?
-
-Not yet, but we're building one. For now, TokenPak is self-hosted only. If you'd prefer managed infrastructure, sign up for our [waitlist](https://forms.gle/tokenpak-saas).
+## Cost & Budget
 
 ### How does TokenPak calculate costs?
 
-TokenPak tracks input and output tokens and multiplies by provider pricing. Pricing is updated daily from provider public pricing pages. You can also configure custom rates in `proxy.yaml` (useful for negotiated enterprise pricing). Costs are logged per request and rolled up hourly.
+TokenPak tracks input and output tokens and multiplies by provider pricing. Pricing is updated from provider public pricing pages. You can also configure custom rates in `config.yaml` (useful for negotiated enterprise pricing). Costs are logged per request and rolled up by session, agent, model, and provider.
 
 ### Can I set a budget/cost limit?
 
-Yes. You can configure hard cost limits in `proxy.yaml`:
+Yes — that's what **Spend Guard** does. It's shipped in the OSS beta as a pre-send circuit breaker:
 
-```yaml
-cost_control:
-  daily_limit_usd: 100
-  per_request_limit_usd: 10
+```bash
+tokenpak budget --help
 ```
 
-Requests exceeding limits are rejected with clear error messages.
+Defaults are context-window-percentage based (90% warn / 100% hard stop). Dollar-based rolling caps are opt-in. When a request would exceed the cap, TokenPak returns HTTP 402 with `error.type=tokenpak_spend_guard_blocked` and a clear release directive — instead of letting a runaway agent burn through a budget. Full details in the Spend Guard section of the [configuration docs](configuration.md).
 
 ---
 
@@ -188,12 +188,12 @@ Requests exceeding limits are rejected with clear error messages.
 
 ### How do I request features?
 
-[GitHub Discussions](https://github.com/tokenpak/tokenpak/discussions) for ideas, or [Issues](https://github.com/tokenpak/tokenpak/issues) if you have a detailed spec. We review requests weekly and prioritize based on community interest and alignment with our roadmap.
+[GitHub Discussions](https://github.com/tokenpak/tokenpak/discussions) for ideas, or [Issues](https://github.com/tokenpak/tokenpak/issues) if you have a detailed spec. We review requests weekly and prioritize based on community interest and alignment with the roadmap.
 
 ### How do I contribute?
 
-We welcome bug fixes, docs, adapters, and tests. No need to ask permission—fork, make your change, and open a PR. Good first issues are labeled [`good-first-issue`](https://github.com/tokenpak/tokenpak/labels/good-first-issue).
+We welcome bug fixes, docs, adapters, and tests. Fork, make your change, and open a PR. Good first issues are labeled [`good-first-issue`](https://github.com/tokenpak/tokenpak/labels/good-first-issue).
 
 ### Is there a Slack/Discord community?
 
-We're using GitHub Discussions for now, which is lower-friction than chat. If the community asks for Slack, we'll set it up. Reach out in [Discussions](https://github.com/tokenpak/tokenpak/discussions) if you'd like to chat!
+We're using GitHub Discussions for now, which is lower-friction than chat. If the community asks for Slack, we'll set it up. Reach out in [Discussions](https://github.com/tokenpak/tokenpak/discussions) if you'd like to chat.

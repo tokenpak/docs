@@ -19,22 +19,25 @@ theme:
     - content.code.annotate
   palette:
     - scheme: default
-      primary: indigo
-      accent: indigo
+      primary: teal
+      accent: teal
       toggle:
         icon: material/brightness-7
         name: Switch to dark mode
     - scheme: slate
-      primary: indigo
-      accent: indigo
+      primary: teal
+      accent: teal
       toggle:
         icon: material/brightness-4
         name: Switch to light mode
   font:
-    text: Roboto
-    code: Roboto Mono
+    text: Inter
+    code: JetBrains Mono
   logo: assets/logo.svg
   favicon: assets/favicon.ico
+
+extra_css:
+  - assets/tokenpak.css
 
 nav:
   - Home: index.md
@@ -47,9 +50,11 @@ nav:
   - User Guide:
     - Configuration: configuration.md
     - Environment Variables: env-vars.md
-    - CLI Reference: adapters.md
+    - CLI Reference: cli-reference.md
+    - Adapter Reference: adapters.md
     - Error Handling: error-handling.md
     - Troubleshooting: troubleshooting.md
+    - Known Issues: known-issues.md
     - Docker Deployment: DOCKER.md
     - Savings: SAVINGS.md
     - Security: SECURITY.md
@@ -69,7 +74,6 @@ nav:
     - Google: adapters/google.md
   - Advanced:
     - Observability: observability.md
-    - Production SLA: production-sla.md
     - Performance Overview: performance.md
     - Performance Benchmarks: PERFORMANCE.md
     - Compression Tuning: COMPRESSION_TUNING.md
@@ -103,6 +107,7 @@ exclude_docs: |
   TROUBLESHOOTING.md
   FAQ.md
   getting-started.md
+  production-sla.md
 
 plugins:
   - search:

@@ -15,7 +15,7 @@ TokenPak provides normalized error handling across all providers, automatic retr
 **Error Message:**
 ```
 ConnectionRefusedError: [Errno 111] Connection refused
-Failed to connect to http://127.0.0.1:8000
+Failed to connect to http://127.0.0.1:8766
 ```
 
 **Cause:** The TokenPak proxy server is not running.
@@ -323,7 +323,7 @@ tokenpak serve --log-file /tmp/tokenpak.log
 
 ```bash
 # Health check endpoint
-curl http://127.0.0.1:8000/health
+curl http://127.0.0.1:8766/health
 
 # Response:
 # {
@@ -340,13 +340,13 @@ curl http://127.0.0.1:8000/health
 
 ```bash
 # Last 100 requests
-curl http://127.0.0.1:8000/logs?limit=100
+curl http://127.0.0.1:8766/logs?limit=100
 
 # Requests to Anthropic only
-curl 'http://127.0.0.1:8000/logs?provider=anthropic'
+curl 'http://127.0.0.1:8766/logs?provider=anthropic'
 
 # Requests with errors
-curl 'http://127.0.0.1:8000/logs?status=error'
+curl 'http://127.0.0.1:8766/logs?status=error'
 ```
 
 ### Test Provider Connectivity

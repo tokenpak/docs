@@ -30,7 +30,7 @@ pip install tokenpak
 
 ```bash
 tokenpak --version
-# Output: tokenpak 0.1.0
+# Output: tokenpak 1.5.6
 ```
 
 ### (Optional) Install with Extras
@@ -117,19 +117,21 @@ load_dotenv()  # Loads .env automatically
 
 ## Step 3: Start the Proxy Server
 
-TokenPak runs as a local proxy server on port `8000` (configurable).
+TokenPak runs as a local proxy server on port `8766` (configurable).
 
 ### Start the Server
 
 ```bash
-tokenpak serve
+tokenpak start
 ```
+
+(`tokenpak serve` is also accepted as an alias.)
 
 **Output:**
 ```
-[2026-03-24 21:20:00] TokenPak Proxy v0.1.0 starting...
-[2026-03-24 21:20:00] Listening on http://127.0.0.1:8000
-[2026-03-24 21:20:00] Ready to proxy requests
+[2026-05-15 09:00:00] TokenPak Proxy v1.5.6 starting...
+[2026-05-15 09:00:00] Listening on http://127.0.0.1:8766
+[2026-05-15 09:00:00] Ready to proxy requests
 ```
 
 The server is now running and ready to accept requests.
@@ -137,21 +139,21 @@ The server is now running and ready to accept requests.
 ### (Optional) Custom Port
 
 ```bash
-tokenpak serve --port 9000
+tokenpak start --port 9000
 ```
 
 ### (Optional) Background Mode
 
 ```bash
-nohup tokenpak serve &
+nohup tokenpak start &
 # or
-tokenpak serve &
+tokenpak start --background
 ```
 
 ### (Optional) With Dashboard
 
 ```bash
-tokenpak serve --dashboard
+tokenpak dashboard
 ```
 
 Opens a web dashboard at `http://127.0.0.1:8001` to view cost, token counts, and request history.
@@ -169,7 +171,7 @@ from tokenpak import Client
 
 # Initialize client pointing to the proxy
 client = Client(
-    base_url="http://127.0.0.1:8000",  # Your proxy
+    base_url="http://127.0.0.1:8766",  # Your proxy
     api_key="sk-ant-...",  # Your API key
     model="claude-opus-4-6"  # Default model
 )
@@ -202,7 +204,7 @@ Response: TokenPak is working!
 ### Using curl
 
 ```bash
-curl -X POST http://127.0.0.1:8000/v1/messages \
+curl -X POST http://127.0.0.1:8766/v1/messages \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer sk-ant-..." \
   -d '{
@@ -227,7 +229,7 @@ TokenPak works out-of-the-box with defaults, but you can customize it with a `co
 
 # Proxy settings
 proxy:
-  port: 8000
+  port: 8766
   host: 127.0.0.1
 
 # Default provider
@@ -259,7 +261,7 @@ vault:
 Then run:
 
 ```bash
-tokenpak serve --config config.yaml
+tokenpak start --config config.yaml
 ```
 
 See [Feature Matrix](./features.md) for full configuration options.
@@ -276,12 +278,12 @@ See [Feature Matrix](./features.md) for full configuration options.
 pip install tokenpak
 ```
 
-### "Connection refused (127.0.0.1:8000)"
+### "Connection refused (127.0.0.1:8766)"
 
 **Cause:** Proxy server not running
 **Fix:**
 ```bash
-tokenpak serve
+tokenpak start
 # (in another terminal)
 ```
 
@@ -292,19 +294,19 @@ tokenpak serve
 ```bash
 export ANTHROPIC_API_KEY="sk-ant-..."
 # Then start the proxy
-tokenpak serve
+tokenpak start
 ```
 
-### "Port 8000 already in use"
+### "Port 8766 already in use"
 
-**Cause:** Another process using port 8000
+**Cause:** Another process using port 8766
 **Fix:**
 ```bash
 # Use a different port
-tokenpak serve --port 9000
+tokenpak start --port 9000
 
-# Or kill the process using 8000
-lsof -i :8000
+# Or kill the process using 8766
+lsof -i :8766
 kill <pid>
 ```
 

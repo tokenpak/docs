@@ -1,0 +1,66 @@
+/*
+ * TokenPak brand token overrides for Material for MkDocs.
+ *
+ * Light scheme: paper background, ink text, brand teal accent.
+ * Dark scheme:  near-black background, off-white text, brand teal accent.
+ *
+ * Brand tokens mirror the Astro site's tailwind.config.mjs to keep
+ * tokenpak.ai and docs.tokenpak.ai visually consistent.
+ *
+ *   tp-ink:           #0B0F14
+ *   tp-paper:         #F6F7F9
+ *   tp-accent:        #00C389  (brand teal)
+ *   tp-signal-value:  #EDE085  (savings highlight, used sparingly)
+ *   tp-mute:          #6B7280
+ *   tp-rule:          #E4E7EB
+ */
+
+:root,
+[data-md-color-scheme="default"] {
+  --md-primary-fg-color:               #0B0F14;
+  --md-primary-fg-color--light:        #1A1F26;
+  --md-primary-fg-color--dark:         #000000;
+  --md-accent-fg-color:                #00C389;
+  --md-accent-fg-color--transparent:   rgba(0, 195, 137, 0.12);
+  --md-default-bg-color:               #FFFFFF;
+  --md-default-fg-color:               #0B0F14;
+  --md-default-fg-color--light:        #1A1F26;
+  --md-typeset-a-color:                #00B07A;
+}
+
+[data-md-color-scheme="slate"] {
+  --md-primary-fg-color:               #0B0F14;
+  --md-primary-fg-color--light:        #1A1F26;
+  --md-primary-fg-color--dark:         #000000;
+  --md-accent-fg-color:                #00C389;
+  --md-accent-fg-color--transparent:   rgba(0, 195, 137, 0.18);
+  --md-default-bg-color:               #0B0F14;
+  --md-default-fg-color:               #E4E7EB;
+  --md-default-fg-color--light:        #F6F7F9;
+  --md-default-fg-color--lighter:      #6B7280;
+  --md-typeset-a-color:                #00C389;
+  --md-code-bg-color:                  #14181F;
+  --md-code-fg-color:                  #E4E7EB;
+}
+
+/* Brand wordmark split-color (matches Astro site Header). */
+.md-header__title .md-header__topic:first-child::after {
+  color: var(--md-accent-fg-color);
+}
+
+/* Beta banner / admonition tone. */
+.md-typeset .admonition.beta,
+.md-typeset details.beta {
+  border-color: var(--md-accent-fg-color);
+}
+.md-typeset .beta > .admonition-title,
+.md-typeset .beta > summary {
+  background-color: var(--md-accent-fg-color--transparent);
+  border-color: var(--md-accent-fg-color);
+}
+.md-typeset .beta > .admonition-title::before,
+.md-typeset .beta > summary::before {
+  background-color: var(--md-accent-fg-color);
+  -webkit-mask-image: var(--md-admonition-icon--note);
+          mask-image: var(--md-admonition-icon--note);
+}

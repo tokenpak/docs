@@ -131,7 +131,7 @@ kill $(cat ~/.tokenpak/proxy.pid)
 
 For persistent daemonization on Linux, example unit file in the OSS repo under `examples/systemd/tokenpak.service`.
 
-## Non-localhost access (Pro-adjacent, OSS-shipped)
+## Non-localhost access (LAN exposure)
 
 If you want to expose the proxy to other machines on your LAN, set an auth token:
 
@@ -147,7 +147,7 @@ Non-localhost clients must then include `X-TokenPak-Auth: <your-token>` on every
 - **Tune compression** — `tokenpak recipe --help` for custom compression recipes.
 - **Monitor savings** — dashboard at `http://127.0.0.1:8766/dashboard`.
 - **Route-class policies** — `tokenpak/services/policy_service/presets/*.yaml` in the OSS repo ship per-client policies (Claude Code variants, Anthropic SDK, OpenAI SDK, generic).
-- **Upgrade to Pro** — `tokenpak upgrade` opens the purchase page. Pro adds team dashboards, budget enforcement (hard `429 budget_exceeded`), advanced routing policies.
+- **Spend Guard** — `tokenpak budget --help` to configure rolling per-agent and per-fleet caps. The pre-send circuit breaker blocks runaway requests before they hit the provider.
 
 ## Troubleshooting
 
