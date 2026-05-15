@@ -46,10 +46,12 @@
         
         
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
-        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,300i,400,400i,700,700i%7CJetBrains+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Inter";--md-code-font:"JetBrains Mono"}</style>
       
     
+    
+      <link rel="stylesheet" href="assets/tokenpak.css">
     
     <script>__md_scope=new URL(".",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
@@ -67,7 +69,7 @@
     
     
     
-    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="teal">
   
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
@@ -122,7 +124,7 @@
     
     
     
-    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="teal"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
     
       <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
@@ -132,7 +134,7 @@
     
     
     
-    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="teal" data-md-color-accent="teal"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
     
       <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
@@ -365,6 +367,26 @@
     
     
       <li class="md-tabs__item">
+        <a href="recall/" class="md-tabs__link">
+          
+  
+  
+  Recall
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
         <a href="faq/" class="md-tabs__link">
           
   
@@ -490,10 +512,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#key-features" class="md-nav__link">
+  <a href="#what-ships-in-the-oss-beta" class="md-nav__link">
     <span class="md-ellipsis">
       
-        ✨ Key Features
+        What ships in the OSS beta
       
     </span>
   </a>
@@ -504,7 +526,7 @@
   <a href="#quick-start" class="md-nav__link">
     <span class="md-ellipsis">
       
-        🚀 Quick Start
+        Quick start
       
     </span>
   </a>
@@ -512,10 +534,21 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#documentation" class="md-nav__link">
+  <a href="#documentation-map" class="md-nav__link">
     <span class="md-ellipsis">
       
-        📚 Documentation
+        Documentation map
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#source-package" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Source + package
       
     </span>
   </a>
@@ -844,7 +877,7 @@
   
   
     <li class="md-nav__item">
-      <a href="adapters/" class="md-nav__link">
+      <a href="cli-reference/" class="md-nav__link">
         
   
   
@@ -852,6 +885,34 @@
     
   
     CLI Reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="adapters/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Adapter Reference
   
 
     
@@ -908,6 +969,34 @@
     
   
     Troubleshooting
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="known-issues/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Known Issues
   
 
     
@@ -1560,34 +1649,6 @@
   
   
     <li class="md-nav__item">
-      <a href="production-sla/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Production SLA
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
       <a href="performance/" class="md-nav__link">
         
   
@@ -2044,7 +2105,7 @@
   <span class="md-ellipsis">
     
   
-    Support
+    Recall
   
 
     
@@ -2057,6 +2118,261 @@
         
         <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Recall
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="recall/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="recall/reason-codes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Pak Reason Codes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="recall/risk-flags/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Pak Risk Flags
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="recall/recall-store-api/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Recall Store API
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="recall/inspect-and-explain/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    `tokenpak pak inspect` semantics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="recall/selection-explanation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Deterministic Recall Pak Selection
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="recall/ordering-hints-examples/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Context Package `ordering_hints` Examples
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_9" >
+        
+          
+          <label class="md-nav__link" for="__nav_9" id="__nav_9_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Support
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_9">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -2186,10 +2502,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#key-features" class="md-nav__link">
+  <a href="#what-ships-in-the-oss-beta" class="md-nav__link">
     <span class="md-ellipsis">
       
-        ✨ Key Features
+        What ships in the OSS beta
       
     </span>
   </a>
@@ -2200,7 +2516,7 @@
   <a href="#quick-start" class="md-nav__link">
     <span class="md-ellipsis">
       
-        🚀 Quick Start
+        Quick start
       
     </span>
   </a>
@@ -2208,10 +2524,21 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#documentation" class="md-nav__link">
+  <a href="#documentation-map" class="md-nav__link">
     <span class="md-ellipsis">
       
-        📚 Documentation
+        Documentation map
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#source-package" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Source + package
       
     </span>
   </a>
@@ -2241,57 +2568,100 @@
 
 
 <h1 id="tokenpak">TokenPak<a class="headerlink" href="#tokenpak" title="Permanent link">&para;</a></h1>
-<p><strong>The intelligent LLM proxy for context compression and vault injection.</strong></p>
-<p>TokenPak sits between your AI tools and the upstream LLM API, automatically compressing context, injecting vault knowledge, and caching tokens to slash costs and latency.</p>
+<p><strong>A local proxy that compresses your LLM context before it hits the API — fewer tokens, lower cost, same results.</strong></p>
+<p>TokenPak sits between your AI tools and the upstream LLM provider, running entirely on <code>127.0.0.1</code>. It deterministically packages context (Prompt Packing), routes requests, blocks runaway spend before it hits the wire (Spend Guard), and logs every saving locally. No cloud, no credentials stored, no code changes.</p>
+<div class="admonition note">
+<p class="admonition-title">OSS beta</p>
+<p>These docs describe the <strong>OSS beta</strong> of TokenPak (<code>pip install tokenpak</code>, currently <strong>v1.5.6</strong>, Apache 2.0). Anything not listed here is not part of the beta surface. See <a href="known-issues/">Known Issues</a> for current limitations.</p>
+</div>
 <hr />
-<h2 id="key-features">✨ Key Features<a class="headerlink" href="#key-features" title="Permanent link">&para;</a></h2>
+<h2 id="what-ships-in-the-oss-beta">What ships in the OSS beta<a class="headerlink" href="#what-ships-in-the-oss-beta" title="Permanent link">&para;</a></h2>
 <ul>
-<li><strong>Context compression</strong> — Up to 40% token reduction on large payloads</li>
-<li><strong>Vault injection</strong> — Automatically enrich requests with relevant knowledge</li>
-<li><strong>Token caching</strong> — Reduce repeat API costs with smart cache hits</li>
-<li><strong>Drop-in proxy</strong> — Works with any OpenAI-compatible client</li>
-<li><strong>Multi-provider</strong> — Routes to Anthropic, OpenAI, Gemini, and more</li>
+<li><strong>Prompt Packing pipeline</strong> — deterministic context reduction; ≥30% floor pinned in CI on an agent-style fixture, 90%+ routinely observed on direct-API / CLI / uncached workloads. Provider-cached flows (Claude Code) show lower incremental gains.</li>
+<li><strong>Local proxy on 127.0.0.1</strong> — byte-preserved passthrough; your prompts and credentials never leave your machine.</li>
+<li><strong>Spend Guard</strong> — pre-send circuit breaker with rolling caps; blocks runaway requests before they reach the provider and returns a clear release directive.</li>
+<li><strong>Nine client integrations</strong> — Claude Code, Cursor, Cline, Continue, Aider, OpenAI SDK, Anthropic SDK, LiteLLM, Codex.</li>
+<li><strong>Savings Ledger + local dashboard</strong> — every request logged to a local SQLite store with causal attribution; TUI + web dashboard.</li>
+<li><strong>Vault indexing + semantic search</strong> — index your codebase, search without an LLM call.</li>
+<li><strong>TIP-1.0 protocol contracts</strong> — canonical headers, metadata fields, capability labels, manifest schemas. Conformance gate runnable via <code>tokenpak doctor --conformance</code>.</li>
+<li><strong>Pak recall (read-only)</strong> — storage, FTS, <code>tokenpak pak inspect</code>. Scoring and assembly are not part of the OSS beta.</li>
+<li><strong>50 built-in compression profiles</strong> — YAML, customizable.</li>
 </ul>
 <hr />
-<h2 id="quick-start">🚀 Quick Start<a class="headerlink" href="#quick-start" title="Permanent link">&para;</a></h2>
+<h2 id="quick-start">Quick start<a class="headerlink" href="#quick-start" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code>pip<span class="w"> </span>install<span class="w"> </span>tokenpak
-tokenpak<span class="w"> </span>start<span class="w"> </span>--port<span class="w"> </span><span class="m">8766</span>
-<span class="c1"># Point your client to http://localhost:8766</span>
+tokenpak<span class="w"> </span>setup
+<span class="c1"># Then point your client at http://127.0.0.1:8766</span>
 </code></pre></div>
-<p>→ <a href="installation/">Full installation guide</a><br />
-→ <a href="QUICKSTART/">Quick start guide</a></p>
+<p>→ <a href="installation/">Full installation guide</a>
+→ <a href="QUICKSTART/">5-minute Quick Start</a></p>
 <hr />
-<h2 id="documentation">📚 Documentation<a class="headerlink" href="#documentation" title="Permanent link">&para;</a></h2>
+<h2 id="documentation-map">Documentation map<a class="headerlink" href="#documentation-map" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
 <tr>
 <th>Section</th>
-<th>Description</th>
+<th>What it covers</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><a href="installation/">Getting Started</a></td>
-<td>Install and configure TokenPak</td>
+<td><a href="installation/">Installation</a></td>
+<td><code>pip install</code>, system requirements, first run</td>
+</tr>
+<tr>
+<td><a href="QUICKSTART/">Quick Start</a></td>
+<td>Setup wizard, client integration, first savings in 5 minutes</td>
 </tr>
 <tr>
 <td><a href="configuration/">Configuration</a></td>
 <td>All configuration options</td>
 </tr>
 <tr>
-<td><a href="adapters/">CLI Reference</a></td>
-<td>Command-line interface</td>
+<td><a href="env-vars/">Environment Variables</a></td>
+<td>Complete <code>TOKENPAK_*</code> reference</td>
 </tr>
 <tr>
-<td><a href="features/">Architecture</a></td>
-<td>How TokenPak works</td>
+<td><a href="cli-reference/">CLI Reference</a></td>
+<td>Every verb, flag, and exit code (auto-generated)</td>
+</tr>
+<tr>
+<td><a href="architecture/">Architecture</a></td>
+<td>Three planes, 18 subsystems, proxy-centered design</td>
+</tr>
+<tr>
+<td><a href="SAVINGS/">Savings</a></td>
+<td>How TokenPak attributes savings causally</td>
+</tr>
+<tr>
+<td><a href="SECURITY/">Security</a></td>
+<td>Auth tokens, TLS, audit logging, data privacy</td>
+</tr>
+<tr>
+<td><a href="troubleshooting/">Troubleshooting</a></td>
+<td>Common symptoms and fixes that work</td>
+</tr>
+<tr>
+<td><a href="known-issues/">Known Issues</a></td>
+<td>Current OSS-beta limitations</td>
 </tr>
 <tr>
 <td><a href="faq/">FAQ</a></td>
-<td>Common questions</td>
+<td>General questions</td>
+</tr>
+<tr>
+<td><a href="recall/">Recall overview</a></td>
+<td>Paks, reason codes, risk flags — the OSS data plane</td>
 </tr>
 </tbody>
 </table>
+<hr />
+<h2 id="source-package">Source + package<a class="headerlink" href="#source-package" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>GitHub</strong>: <a href="https://github.com/tokenpak/tokenpak">github.com/tokenpak/tokenpak</a></li>
+<li><strong>PyPI</strong>: <a href="https://pypi.org/project/tokenpak">pypi.org/project/tokenpak</a></li>
+<li><strong>License</strong>: Apache 2.0</li>
+</ul>
 
 
 

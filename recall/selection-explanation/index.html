@@ -10,13 +10,13 @@
         <meta name="author" content="TokenPak Contributors">
       
       
-        <link rel="canonical" href="https://docs.tokenpak.ai/adapters/langchain/">
+        <link rel="canonical" href="https://docs.tokenpak.ai/recall/selection-explanation/">
       
       
-        <link rel="prev" href="../litellm/">
+        <link rel="prev" href="../inspect-and-explain/">
       
       
-        <link rel="next" href="../google/">
+        <link rel="next" href="../ordering-hints-examples/">
       
       
         
@@ -27,7 +27,7 @@
     
     
       
-        <title>LangChain - TokenPak</title>
+        <title>Deterministic Recall Pak Selection - TokenPak</title>
       
     
     
@@ -80,7 +80,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#langchain-adapter-quick-start" class="md-skip">
+        <a href="#deterministic-recall-pak-selection-oss-visible-signals" class="md-skip">
           Skip to content
         </a>
       
@@ -113,7 +113,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              LangChain
+              Deterministic Recall Pak Selection
             
           </span>
         </div>
@@ -303,13 +303,11 @@
   
   
   
-    
-  
   
     
     
-      <li class="md-tabs__item md-tabs__item--active">
-        <a href="../openai-compat/" class="md-tabs__link">
+      <li class="md-tabs__item">
+        <a href="../../adapters/openai-compat/" class="md-tabs__link">
           
   
   
@@ -365,11 +363,13 @@
   
   
   
+    
+  
   
     
     
-      <li class="md-tabs__item">
-        <a href="../../recall/" class="md-tabs__link">
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../" class="md-tabs__link">
           
   
   
@@ -814,7 +814,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../" class="md-nav__link">
+      <a href="../../adapters/" class="md-nav__link">
         
   
   
@@ -1297,31 +1297,26 @@
       
   
   
-    
   
   
-  
     
     
     
     
-      
-        
-        
       
       
         
       
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
         
           
-          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
             
   
   
@@ -1339,7 +1334,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_5">
             <span class="md-nav__icon md-icon"></span>
             
@@ -1357,7 +1352,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../openai-compat/" class="md-nav__link">
+      <a href="../../adapters/openai-compat/" class="md-nav__link">
         
   
   
@@ -1385,7 +1380,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../litellm/" class="md-nav__link">
+      <a href="../../adapters/litellm/" class="md-nav__link">
         
   
   
@@ -1410,37 +1405,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    LangChain
-  
-
-    
-  </span>
-  
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../../adapters/langchain/" class="md-nav__link">
         
   
   
@@ -1456,214 +1424,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#why-route-through-tokenpak" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Why Route Through TokenPak?
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#prerequisites" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Prerequisites
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#quick-start-10-lines" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Quick Start (10 lines)
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#configuration" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Configuration
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Configuration">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#environment-variables" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Environment Variables
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#passing-config-directly" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Passing Config Directly
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#verification-check-the-proxy" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Verification — Check the Proxy
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#common-errors-fixes" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Common Errors &amp; Fixes
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Common Errors &amp; Fixes">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#connection-refused-cannot-connect-to-proxy" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        ❌ Connection refused / Cannot connect to proxy
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#authentication-failed-invalid-api-key" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        ❌ Authentication failed / Invalid API key
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#404-not-found-when-calling-proxy" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        ❌ 404 Not Found when calling proxy
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#requests-not-showing-up-in-proxy-stats" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        ❌ Requests not showing up in proxy stats
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#full-example-application" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Full Example Application
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#advanced-request-injection-compression" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Advanced: Request Injection &amp; Compression
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#troubleshooting" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Troubleshooting
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#next-steps" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Next Steps
-      
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -1676,7 +1436,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../google/" class="md-nav__link">
+      <a href="../../adapters/google/" class="md-nav__link">
         
   
   
@@ -2228,26 +1988,31 @@
       
   
   
+    
   
   
+  
     
     
     
     
+      
+        
+        
       
       
         
       
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" checked>
         
           
-          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="">
             
   
   
@@ -2265,7 +2030,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_8">
             <span class="md-nav__icon md-icon"></span>
             
@@ -2283,7 +2048,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../recall/" class="md-nav__link">
+      <a href="../" class="md-nav__link">
         
   
   
@@ -2311,7 +2076,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../recall/reason-codes/" class="md-nav__link">
+      <a href="../reason-codes/" class="md-nav__link">
         
   
   
@@ -2339,7 +2104,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../recall/risk-flags/" class="md-nav__link">
+      <a href="../risk-flags/" class="md-nav__link">
         
   
   
@@ -2367,7 +2132,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../recall/recall-store-api/" class="md-nav__link">
+      <a href="../recall-store-api/" class="md-nav__link">
         
   
   
@@ -2395,7 +2160,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../recall/inspect-and-explain/" class="md-nav__link">
+      <a href="../inspect-and-explain/" class="md-nav__link">
         
   
   
@@ -2420,10 +2185,37 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../../recall/selection-explanation/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Deterministic Recall Pak Selection
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -2439,6 +2231,175 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#what-deterministic-means-here" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What "deterministic" means here
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#oss-visible-signals" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        OSS-visible signals
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#a-minimal-deterministic-selector-pseudo-code" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A minimal deterministic selector — pseudo-code
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#each-signal-in-detail" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Each signal in detail
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Each signal in detail">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#anchor-match" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Anchor match
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#recency" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Recency
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#content-hash-equality" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Content hash equality
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fts-hits" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        FTS hits
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reason-rows" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reason rows
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#risk-severity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Risk severity
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#worked-example-a-minimum-scoring-config" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Worked example — a minimum scoring config
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-this-is-not" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What this is not
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#related" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Related
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -2451,7 +2412,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../recall/ordering-hints-examples/" class="md-nav__link">
+      <a href="../ordering-hints-examples/" class="md-nav__link">
         
   
   
@@ -2649,10 +2610,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#why-route-through-tokenpak" class="md-nav__link">
+  <a href="#what-deterministic-means-here" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Why Route Through TokenPak?
+        What "deterministic" means here
       
     </span>
   </a>
@@ -2660,10 +2621,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#prerequisites" class="md-nav__link">
+  <a href="#oss-visible-signals" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Prerequisites
+        OSS-visible signals
       
     </span>
   </a>
@@ -2671,10 +2632,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#quick-start-10-lines" class="md-nav__link">
+  <a href="#a-minimal-deterministic-selector-pseudo-code" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Quick Start (10 lines)
+        A minimal deterministic selector — pseudo-code
       
     </span>
   </a>
@@ -2682,22 +2643,22 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#configuration" class="md-nav__link">
+  <a href="#each-signal-in-detail" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Configuration
+        Each signal in detail
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Configuration">
+    <nav class="md-nav" aria-label="Each signal in detail">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#environment-variables" class="md-nav__link">
+  <a href="#anchor-match" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Environment Variables
+        Anchor match
       
     </span>
   </a>
@@ -2705,10 +2666,54 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#passing-config-directly" class="md-nav__link">
+  <a href="#recency" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Passing Config Directly
+        Recency
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#content-hash-equality" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Content hash equality
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fts-hits" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        FTS hits
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reason-rows" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reason rows
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#risk-severity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Risk severity
       
     </span>
   </a>
@@ -2721,10 +2726,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#verification-check-the-proxy" class="md-nav__link">
+  <a href="#worked-example-a-minimum-scoring-config" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Verification — Check the Proxy
+        Worked example — a minimum scoring config
       
     </span>
   </a>
@@ -2732,71 +2737,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#common-errors-fixes" class="md-nav__link">
+  <a href="#what-this-is-not" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Common Errors &amp; Fixes
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Common Errors &amp; Fixes">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#connection-refused-cannot-connect-to-proxy" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        ❌ Connection refused / Cannot connect to proxy
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#authentication-failed-invalid-api-key" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        ❌ Authentication failed / Invalid API key
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#404-not-found-when-calling-proxy" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        ❌ 404 Not Found when calling proxy
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#requests-not-showing-up-in-proxy-stats" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        ❌ Requests not showing up in proxy stats
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#full-example-application" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Full Example Application
+        What this is not
       
     </span>
   </a>
@@ -2804,32 +2748,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#advanced-request-injection-compression" class="md-nav__link">
+  <a href="#related" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Advanced: Request Injection &amp; Compression
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#troubleshooting" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Troubleshooting
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#next-steps" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Next Steps
+        Related
       
     </span>
   </a>
@@ -2856,230 +2778,266 @@
   
 
 
-<h1 id="langchain-adapter-quick-start">LangChain Adapter — Quick-Start<a class="headerlink" href="#langchain-adapter-quick-start" title="Permanent link">&para;</a></h1>
-<p>Route your LangChain applications through the TokenPak proxy for cost tracking, compression, and vault context injection.</p>
-<h2 id="why-route-through-tokenpak">Why Route Through TokenPak?<a class="headerlink" href="#why-route-through-tokenpak" title="Permanent link">&para;</a></h2>
-<ul>
-<li><strong>Cost tracking:</strong> Every token counted and categorized by model/provider</li>
-<li><strong>Request compression:</strong> Reduces token usage via built-in context optimization</li>
-<li><strong>Vault injection:</strong> Automatically enrich prompts with your knowledge base</li>
-<li><strong>Request caching:</strong> Deduplicate identical calls across applications</li>
-<li><strong>Usage analytics:</strong> Dashboard metrics for model spend and performance</li>
-</ul>
-<h2 id="prerequisites">Prerequisites<a class="headerlink" href="#prerequisites" title="Permanent link">&para;</a></h2>
+<h1 id="deterministic-recall-pak-selection-oss-visible-signals">Deterministic Recall Pak selection (OSS-visible signals)<a class="headerlink" href="#deterministic-recall-pak-selection-oss-visible-signals" title="Permanent link">&para;</a></h1>
+<p>This page explains how an OSS caller can deterministically pick which Paks to include in a Context Package using only signals visible through the OSS recall store. It is a <strong>narrative + pseudo-code reference</strong>, not a Pro scorer.</p>
+<p>The Pro daemon ships a tuned scorer with extension points, capture pipelines, and runtime ranking. OSS is the data plane: it persists Paks, FTS shadows, reason codes, and risk flags; it does not impose a ranking algorithm. If you want recall to be reproducible and inspectable without Pro, the signals below give you everything you need to write your own selector.</p>
+<hr />
+<h2 id="what-deterministic-means-here">What "deterministic" means here<a class="headerlink" href="#what-deterministic-means-here" title="Permanent link">&para;</a></h2>
+<p>A recall selector is <strong>deterministic</strong> if, given the same recall store state and the same query inputs, it returns the same ordered Pak list every run. Two requirements:</p>
 <ol>
-<li>
-<p><strong>TokenPak proxy running locally</strong>
-   <div class="highlight"><pre><span></span><code>python3<span class="w"> </span>tokenpak<span class="w"> </span>serve<span class="w"> </span><span class="p">&amp;</span>
-<span class="c1"># Proxy starts on http://localhost:8766 by default</span>
-</code></pre></div></p>
-</li>
-<li>
-<p><strong>LangChain and anthropic adapter installed</strong>
-   <div class="highlight"><pre><span></span><code>pip<span class="w"> </span>install<span class="w"> </span>langchain<span class="w"> </span>langchain-anthropic<span class="w"> </span>anthropic
-</code></pre></div></p>
-</li>
-<li>
-<p><strong>ANTHROPIC_API_KEY set</strong>
-   <div class="highlight"><pre><span></span><code><span class="nb">export</span><span class="w"> </span><span class="nv">ANTHROPIC_API_KEY</span><span class="o">=</span><span class="s2">&quot;sk-ant-...&quot;</span>
-</code></pre></div></p>
-</li>
+<li><strong>Pure function of OSS-visible state.</strong> No clock-based jitter, no random sampling, no cached priors from a previous run.</li>
+<li><strong>Stable tiebreak.</strong> When two Paks tie on every other signal, the selector falls back to a deterministic ordering — <code>(updated_at DESC, pak_id DESC)</code> matches the store's natural order and is the recommended tiebreak.</li>
 </ol>
-<h2 id="quick-start-10-lines">Quick Start (10 lines)<a class="headerlink" href="#quick-start-10-lines" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">langchain_anthropic</span><span class="w"> </span><span class="kn">import</span> <span class="n">ChatAnthropic</span>
-
-<span class="c1"># Point ChatAnthropic at the TokenPak proxy instead of Anthropic directly</span>
-<span class="n">llm</span> <span class="o">=</span> <span class="n">ChatAnthropic</span><span class="p">(</span>
-    <span class="n">model</span><span class="o">=</span><span class="s2">&quot;claude-3-5-sonnet-20241022&quot;</span><span class="p">,</span>
-    <span class="n">base_url</span><span class="o">=</span><span class="s2">&quot;http://localhost:8766/v1&quot;</span><span class="p">,</span>  <span class="c1"># TokenPak proxy endpoint</span>
-    <span class="n">api_key</span><span class="o">=</span><span class="s2">&quot;sk-ant-...&quot;</span>  <span class="c1"># Proxy forwards this to Anthropic</span>
-<span class="p">)</span>
-
-<span class="c1"># Use it normally — proxy handles everything behind the scenes</span>
-<span class="n">response</span> <span class="o">=</span> <span class="n">llm</span><span class="o">.</span><span class="n">invoke</span><span class="p">(</span><span class="s2">&quot;What is Python good for?&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">content</span><span class="p">)</span>
-</code></pre></div>
-<p><strong>That's it.</strong> All traffic flows through the proxy automatically.</p>
-<h2 id="configuration">Configuration<a class="headerlink" href="#configuration" title="Permanent link">&para;</a></h2>
-<h3 id="environment-variables">Environment Variables<a class="headerlink" href="#environment-variables" title="Permanent link">&para;</a></h3>
+<p>Both conditions are achievable with the OSS surface alone. The pseudo-code below maintains them throughout.</p>
+<hr />
+<h2 id="oss-visible-signals">OSS-visible signals<a class="headerlink" href="#oss-visible-signals" title="Permanent link">&para;</a></h2>
+<p>Six signals are available without Pro:</p>
 <table>
 <thead>
 <tr>
-<th>Variable</th>
-<th>Default</th>
-<th>Purpose</th>
+<th>Signal</th>
+<th>Source</th>
+<th>What it tells you</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><code>ANTHROPIC_BASE_URL</code></td>
-<td><code>https://api.anthropic.com/v1</code></td>
-<td>Overrides LLM endpoint (set to proxy)</td>
+<td><strong>Anchor match</strong></td>
+<td>Caller-supplied vs Pak metadata (project, topic, anchor fields on the Pak body)</td>
+<td>The Pak is in-scope for the task.</td>
 </tr>
 <tr>
-<td><code>ANTHROPIC_API_KEY</code></td>
-<td><em>none</em></td>
-<td>API key (proxy forwards this)</td>
+<td><strong>Recency</strong></td>
+<td><code>paks.updated_at</code></td>
+<td>The Pak is freshly written or recently touched.</td>
 </tr>
 <tr>
-<td><code>TOKENPAK_PROXY_URL</code></td>
-<td><code>http://localhost:8766</code></td>
-<td>Proxy address if not default</td>
+<td><strong>Content hash equality</strong></td>
+<td><code>paks.content_hash</code></td>
+<td>Two Paks carry byte-identical bodies — candidates for de-duplication.</td>
 </tr>
 <tr>
-<td><code>TOKENPAK_VAULT_PATH</code></td>
-<td><em>none</em></td>
-<td>Path to vault blocks for injection</td>
+<td><strong>FTS hits</strong></td>
+<td><code>paks_fts</code> virtual table (<code>MATCH</code> queries on <code>title</code> + <code>summary</code>)</td>
+<td>The Pak's text matches the query terms.</td>
+</tr>
+<tr>
+<td><strong>Reason rows</strong></td>
+<td><code>pak_reason_codes</code> (28-code closed registry)</td>
+<td>The caller — or an upstream stage — already recorded why this Pak is relevant.</td>
+</tr>
+<tr>
+<td><strong>Risk severity</strong></td>
+<td><code>pak_risk_flags</code> (13-flag closed registry)</td>
+<td>The Pak carries risk indicators that should influence inclusion or post-package review.</td>
 </tr>
 </tbody>
 </table>
-<h3 id="passing-config-directly">Passing Config Directly<a class="headerlink" href="#passing-config-directly" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">langchain_anthropic</span><span class="w"> </span><span class="kn">import</span> <span class="n">ChatAnthropic</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
-
-<span class="n">llm</span> <span class="o">=</span> <span class="n">ChatAnthropic</span><span class="p">(</span>
-    <span class="n">model</span><span class="o">=</span><span class="s2">&quot;claude-3-5-sonnet-20241022&quot;</span><span class="p">,</span>
-    <span class="n">base_url</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;TOKENPAK_PROXY_URL&quot;</span><span class="p">,</span> <span class="s2">&quot;http://localhost:8766/v1&quot;</span><span class="p">),</span>
-    <span class="n">api_key</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;ANTHROPIC_API_KEY&quot;</span><span class="p">),</span>
-    <span class="n">timeout</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span>  <span class="c1"># request timeout in seconds</span>
-<span class="p">)</span>
-</code></pre></div>
-<h2 id="verification-check-the-proxy">Verification — Check the Proxy<a class="headerlink" href="#verification-check-the-proxy" title="Permanent link">&para;</a></h2>
-<p>After making a few requests, verify they went through TokenPak:</p>
-<div class="highlight"><pre><span></span><code><span class="c1"># View proxy stats</span>
-curl<span class="w"> </span>http://localhost:8766/stats<span class="w"> </span><span class="p">|</span><span class="w"> </span>python3<span class="w"> </span>-m<span class="w"> </span>json.tool
-
-<span class="c1"># Expected output:</span>
-<span class="c1"># {</span>
-<span class="c1">#   &quot;requests_processed&quot;: 5,</span>
-<span class="c1">#   &quot;total_input_tokens&quot;: 1250,</span>
-<span class="c1">#   &quot;total_output_tokens&quot;: 480,</span>
-<span class="c1">#   &quot;cache_hits&quot;: 1,</span>
-<span class="c1">#   &quot;models&quot;: {</span>
-<span class="c1">#     &quot;claude-3-5-sonnet-20241022&quot;: {</span>
-<span class="c1">#       &quot;calls&quot;: 5,</span>
-<span class="c1">#       &quot;input_tokens&quot;: 1250,</span>
-<span class="c1">#       &quot;output_tokens&quot;: 480</span>
-<span class="c1">#     }</span>
-<span class="c1">#   }</span>
-<span class="c1"># }</span>
-</code></pre></div>
-<p>If you see requests recorded, traffic is flowing correctly through the proxy.</p>
-<h2 id="common-errors-fixes">Common Errors &amp; Fixes<a class="headerlink" href="#common-errors-fixes" title="Permanent link">&para;</a></h2>
-<h3 id="connection-refused-cannot-connect-to-proxy">❌ <code>Connection refused</code> / <code>Cannot connect to proxy</code><a class="headerlink" href="#connection-refused-cannot-connect-to-proxy" title="Permanent link">&para;</a></h3>
-<p><strong>Cause:</strong> Proxy not running or listening on wrong port.</p>
-<p><strong>Fix:</strong>
-<div class="highlight"><pre><span></span><code><span class="c1"># Start proxy in background</span>
-python3<span class="w"> </span>tokenpak<span class="w"> </span>serve<span class="w"> </span><span class="p">&amp;</span>
-
-<span class="c1"># Verify it&#39;s listening</span>
-curl<span class="w"> </span>http://localhost:8766/health
-<span class="c1"># Should return: {&quot;status&quot;: &quot;ok&quot;}</span>
-</code></pre></div></p>
+<p>The recall store exposes all six. The first four are direct columns / virtual tables on the <code>paks</code> schema; the last two are the join tables documented in <a href="../reason-codes/">Pak Reason Codes</a> and <a href="../risk-flags/">Pak Risk Flags</a>.</p>
 <hr />
-<h3 id="authentication-failed-invalid-api-key">❌ <code>Authentication failed</code> / <code>Invalid API key</code><a class="headerlink" href="#authentication-failed-invalid-api-key" title="Permanent link">&para;</a></h3>
-<p><strong>Cause:</strong> API key not set or proxy can't forward it.</p>
-<p><strong>Fix:</strong>
-<div class="highlight"><pre><span></span><code><span class="c1"># Check key is exported</span>
-<span class="nb">echo</span><span class="w"> </span><span class="nv">$ANTHROPIC_API_KEY</span><span class="w">  </span><span class="c1"># Should print your key, not be empty</span>
+<h2 id="a-minimal-deterministic-selector-pseudo-code">A minimal deterministic selector — pseudo-code<a class="headerlink" href="#a-minimal-deterministic-selector-pseudo-code" title="Permanent link">&para;</a></h2>
+<p>The selector takes a query (free text plus optional <code>project</code> / <code>pak_type</code> filters) and an explicit budget (<code>limit</code>). It walks the OSS signals in priority order, scores each candidate, and returns the top-<code>limit</code> Paks under a stable tiebreak.</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Pure pseudo-code for documentation. Not a shipped API.</span>
 
-<span class="c1"># Or pass explicitly</span>
-<span class="nv">llm</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>ChatAnthropic<span class="o">(</span>
-<span class="w">    </span><span class="nv">model</span><span class="o">=</span><span class="s2">&quot;claude-3-5-sonnet-20241022&quot;</span>,
-<span class="w">    </span><span class="nv">base_url</span><span class="o">=</span><span class="s2">&quot;http://localhost:8766/v1&quot;</span>,
-<span class="w">    </span><span class="nv">api_key</span><span class="o">=</span><span class="s2">&quot;sk-ant-YOUR_KEY_HERE&quot;</span><span class="w">  </span><span class="c1"># Explicit &gt; env var for debugging</span>
-<span class="o">)</span>
-</code></pre></div></p>
-<hr />
-<h3 id="404-not-found-when-calling-proxy">❌ <code>404 Not Found</code> when calling proxy<a class="headerlink" href="#404-not-found-when-calling-proxy" title="Permanent link">&para;</a></h3>
-<p><strong>Cause:</strong> Endpoint path missing <code>/v1</code> suffix or proxy address wrong.</p>
-<p><strong>Fix:</strong>
-<div class="highlight"><pre><span></span><code><span class="c1"># ✅ CORRECT</span>
-<span class="n">base_url</span><span class="o">=</span><span class="s2">&quot;http://localhost:8766/v1&quot;</span>
-
-<span class="c1"># ❌ WRONG</span>
-<span class="n">base_url</span><span class="o">=</span><span class="s2">&quot;http://localhost:8766&quot;</span>  <span class="c1"># Missing /v1</span>
-</code></pre></div></p>
-<hr />
-<h3 id="requests-not-showing-up-in-proxy-stats">❌ Requests not showing up in proxy stats<a class="headerlink" href="#requests-not-showing-up-in-proxy-stats" title="Permanent link">&para;</a></h3>
-<p><strong>Cause:</strong> Traffic bypassing proxy or using different endpoint.</p>
-<p><strong>Fix:</strong>
-<div class="highlight"><pre><span></span><code><span class="c1"># Check what URL LangChain is actually calling</span>
-import<span class="w"> </span>logging
-logging.basicConfig<span class="o">(</span><span class="nv">level</span><span class="o">=</span>logging.DEBUG<span class="o">)</span>
-logging.getLogger<span class="o">(</span><span class="s2">&quot;httpx&quot;</span><span class="o">)</span>.setLevel<span class="o">(</span>logging.DEBUG<span class="o">)</span>
-
-<span class="c1"># Now make a request — debug logs will show the URL being called</span>
-llm.invoke<span class="o">(</span><span class="s2">&quot;test&quot;</span><span class="o">)</span>
-
-<span class="c1"># Should see requests to http://localhost:8766/...</span>
-</code></pre></div></p>
-<hr />
-<h2 id="full-example-application">Full Example Application<a class="headerlink" href="#full-example-application" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">Complete example: chat app routing through TokenPak proxy</span>
-<span class="sd">&quot;&quot;&quot;</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">langchain_anthropic</span><span class="w"> </span><span class="kn">import</span> <span class="n">ChatAnthropic</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">langchain_core.messages</span><span class="w"> </span><span class="kn">import</span> <span class="n">HumanMessage</span><span class="p">,</span> <span class="n">SystemMessage</span>
-
-<span class="c1"># Initialize with proxy endpoint</span>
-<span class="n">llm</span> <span class="o">=</span> <span class="n">ChatAnthropic</span><span class="p">(</span>
-    <span class="n">model</span><span class="o">=</span><span class="s2">&quot;claude-3-5-sonnet-20241022&quot;</span><span class="p">,</span>
-    <span class="n">base_url</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;TOKENPAK_PROXY_URL&quot;</span><span class="p">,</span> <span class="s2">&quot;http://localhost:8766/v1&quot;</span><span class="p">),</span>
-    <span class="n">api_key</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;ANTHROPIC_API_KEY&quot;</span><span class="p">),</span>
-    <span class="n">timeout</span><span class="o">=</span><span class="mi">60</span><span class="p">,</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">dataclass</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">tokenpak.companion.recall</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">PakListFilters</span><span class="p">,</span>
+    <span class="n">PakRow</span><span class="p">,</span>
+    <span class="n">ReasonCodeEntry</span><span class="p">,</span>
+    <span class="n">RecallStore</span><span class="p">,</span>
+    <span class="n">RiskFlagEntry</span><span class="p">,</span>
 <span class="p">)</span>
 
-<span class="c1"># Build conversation</span>
-<span class="n">messages</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="n">SystemMessage</span><span class="p">(</span><span class="n">content</span><span class="o">=</span><span class="s2">&quot;You are a helpful Python assistant.&quot;</span><span class="p">),</span>
-    <span class="n">HumanMessage</span><span class="p">(</span><span class="n">content</span><span class="o">=</span><span class="s2">&quot;Write a function that checks if a number is prime.&quot;</span><span class="p">),</span>
-<span class="p">]</span>
 
-<span class="c1"># Call through proxy</span>
-<span class="n">response</span> <span class="o">=</span> <span class="n">llm</span><span class="o">.</span><span class="n">invoke</span><span class="p">(</span><span class="n">messages</span><span class="p">)</span>
+<span class="nd">@dataclass</span><span class="p">(</span><span class="n">frozen</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">Query</span><span class="p">:</span>
+    <span class="n">text</span><span class="p">:</span> <span class="nb">str</span>                       <span class="c1"># FTS5 MATCH query</span>
+    <span class="n">project</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>      <span class="c1"># byte-literal filter (no aliasing)</span>
+    <span class="n">pak_type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>     <span class="c1"># byte-literal filter</span>
+    <span class="n">recency_window_days</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">30</span>   <span class="c1"># caller-defined; affects scoring only</span>
+    <span class="n">limit</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">25</span>                 <span class="c1"># final selection size</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Assistant:&quot;</span><span class="p">,</span> <span class="n">response</span><span class="o">.</span><span class="n">content</span><span class="p">)</span>
 
-<span class="c1"># Check proxy recorded it</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">requests</span>
-<span class="n">stats</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;http://localhost:8766/stats&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Proxy stats: </span><span class="si">{</span><span class="n">stats</span><span class="p">[</span><span class="s1">&#39;requests_processed&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2"> requests processed&quot;</span><span class="p">)</span>
+<span class="nd">@dataclass</span><span class="p">(</span><span class="n">frozen</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">Score</span><span class="p">:</span>
+    <span class="n">pak_id</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">score</span><span class="p">:</span> <span class="nb">float</span>
+    <span class="n">risk_severities</span><span class="p">:</span> <span class="nb">frozenset</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>   <span class="c1"># observability — not a kill switch in OSS</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">select</span><span class="p">(</span><span class="n">store</span><span class="p">:</span> <span class="n">RecallStore</span><span class="p">,</span> <span class="n">q</span><span class="p">:</span> <span class="n">Query</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">Score</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Deterministic top-K Pak selection over OSS-visible signals.&quot;&quot;&quot;</span>
+
+    <span class="c1"># 1. FTS hits — the spine of the candidate set. Returns pak_ids sorted by</span>
+    <span class="c1">#    the FTS5 ranking function; we re-sort below so the final order does</span>
+    <span class="c1">#    not depend on FTS rank ties.</span>
+    <span class="n">fts_hits</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="n">_fts_query</span><span class="p">(</span><span class="n">store</span><span class="p">,</span> <span class="n">q</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+
+    <span class="c1"># 2. Pull metadata for the candidate set + anything the caller-supplied</span>
+    <span class="c1">#    filters bring in (anchor matches that don&#39;t surface in FTS).</span>
+    <span class="n">candidates</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">PakRow</span><span class="p">]</span> <span class="o">=</span> <span class="n">_hydrate</span><span class="p">(</span><span class="n">store</span><span class="p">,</span> <span class="n">fts_hits</span><span class="p">,</span> <span class="n">q</span><span class="p">)</span>
+
+    <span class="c1"># 3. Per-candidate scoring — pure function of OSS-visible state.</span>
+    <span class="n">scored</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Score</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">pak_id</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">candidates</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="mf">0.0</span>
+
+        <span class="c1"># 3a. FTS contribution.</span>
+        <span class="n">s</span> <span class="o">+=</span> <span class="n">fts_hits</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">pak_id</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span> <span class="o">*</span> <span class="mf">1.0</span>
+
+        <span class="c1"># 3b. Anchor match — caller-supplied filters that line up with row</span>
+        <span class="c1">#     fields. project / pak_type / topic are byte-literal.</span>
+        <span class="k">if</span> <span class="n">q</span><span class="o">.</span><span class="n">project</span> <span class="ow">and</span> <span class="n">row</span><span class="o">.</span><span class="n">project</span> <span class="o">==</span> <span class="n">q</span><span class="o">.</span><span class="n">project</span><span class="p">:</span>
+            <span class="n">s</span> <span class="o">+=</span> <span class="mf">0.5</span>
+        <span class="k">if</span> <span class="n">q</span><span class="o">.</span><span class="n">pak_type</span> <span class="ow">and</span> <span class="n">row</span><span class="o">.</span><span class="n">pak_type</span> <span class="o">==</span> <span class="n">q</span><span class="o">.</span><span class="n">pak_type</span><span class="p">:</span>
+            <span class="n">s</span> <span class="o">+=</span> <span class="mf">0.3</span>
+
+        <span class="c1"># 3c. Recency. Older Paks contribute less; nothing decays past zero.</span>
+        <span class="n">s</span> <span class="o">+=</span> <span class="n">_recency_bonus</span><span class="p">(</span><span class="n">row</span><span class="o">.</span><span class="n">updated_at</span><span class="p">,</span> <span class="n">q</span><span class="o">.</span><span class="n">recency_window_days</span><span class="p">)</span>
+
+        <span class="c1"># 3d. Reason-code contribution. Each row contributes its weight,</span>
+        <span class="c1">#     scaled by a stable per-category factor the caller controls.</span>
+        <span class="n">reason_rows</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">ReasonCodeEntry</span><span class="p">]</span> <span class="o">=</span> <span class="n">store</span><span class="o">.</span><span class="n">get_pak_reason_codes</span><span class="p">(</span><span class="n">pak_id</span><span class="p">)</span>
+        <span class="n">s</span> <span class="o">+=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">_weight_for</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">reason_code</span><span class="p">)</span> <span class="o">*</span> <span class="n">r</span><span class="o">.</span><span class="n">weight</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">reason_rows</span><span class="p">)</span>
+
+        <span class="c1"># 3e. Content-hash de-duplication. Keep the newer of any pair sharing</span>
+        <span class="c1">#     a content_hash. (Done after this loop, see step 4.)</span>
+
+        <span class="c1"># 3f. Risk flags are recorded but do not refuse inclusion in OSS.</span>
+        <span class="n">risk_rows</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">RiskFlagEntry</span><span class="p">]</span> <span class="o">=</span> <span class="n">store</span><span class="o">.</span><span class="n">get_pak_risk_flags</span><span class="p">(</span><span class="n">pak_id</span><span class="p">)</span>
+        <span class="n">risk_severities</span> <span class="o">=</span> <span class="nb">frozenset</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">severity</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">risk_rows</span><span class="p">)</span>
+
+        <span class="n">scored</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Score</span><span class="p">(</span><span class="n">pak_id</span><span class="o">=</span><span class="n">pak_id</span><span class="p">,</span> <span class="n">score</span><span class="o">=</span><span class="n">s</span><span class="p">,</span> <span class="n">risk_severities</span><span class="o">=</span><span class="n">risk_severities</span><span class="p">))</span>
+
+    <span class="c1"># 4. Content-hash collapse: keep the most-recent Pak per content_hash.</span>
+    <span class="c1">#    Deterministic because we tiebreak on (updated_at DESC, pak_id DESC).</span>
+    <span class="n">scored</span> <span class="o">=</span> <span class="n">_collapse_by_content_hash</span><span class="p">(</span><span class="n">scored</span><span class="p">,</span> <span class="n">candidates</span><span class="p">)</span>
+
+    <span class="c1"># 5. Final stable sort. Primary key: descending score. Tiebreak:</span>
+    <span class="c1">#    descending updated_at, then descending pak_id (matches the store&#39;s</span>
+    <span class="c1">#    natural ordering, so cursoring behaviour is consistent).</span>
+    <span class="n">scored</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span>
+        <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">s</span><span class="p">:</span> <span class="p">(</span>
+            <span class="o">-</span><span class="n">s</span><span class="o">.</span><span class="n">score</span><span class="p">,</span>
+            <span class="n">_row_key</span><span class="p">(</span><span class="n">candidates</span><span class="p">[</span><span class="n">s</span><span class="o">.</span><span class="n">pak_id</span><span class="p">]),</span>
+        <span class="p">)</span>
+    <span class="p">)</span>
+    <span class="k">return</span> <span class="n">scored</span><span class="p">[:</span> <span class="n">q</span><span class="o">.</span><span class="n">limit</span><span class="p">]</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_row_key</span><span class="p">(</span><span class="n">row</span><span class="p">:</span> <span class="n">PakRow</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Reverse-lexicographic key — sort puts larger strings first.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">_neg</span><span class="p">(</span><span class="n">row</span><span class="o">.</span><span class="n">updated_at</span><span class="p">),</span> <span class="n">_neg</span><span class="p">(</span><span class="n">row</span><span class="o">.</span><span class="n">pak_id</span><span class="p">))</span>
 </code></pre></div>
-<h2 id="advanced-request-injection-compression">Advanced: Request Injection &amp; Compression<a class="headerlink" href="#advanced-request-injection-compression" title="Permanent link">&para;</a></h2>
-<p>TokenPak supports vault injection (prepend your knowledge base) and automatic compression. These work transparently with LangChain:</p>
-<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">langchain_anthropic</span><span class="w"> </span><span class="kn">import</span> <span class="n">ChatAnthropic</span>
-
-<span class="n">llm</span> <span class="o">=</span> <span class="n">ChatAnthropic</span><span class="p">(</span>
-    <span class="n">model</span><span class="o">=</span><span class="s2">&quot;claude-3-5-sonnet-20241022&quot;</span><span class="p">,</span>
-    <span class="n">base_url</span><span class="o">=</span><span class="s2">&quot;http://localhost:8766/v1&quot;</span><span class="p">,</span>
-    <span class="n">api_key</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;ANTHROPIC_API_KEY&quot;</span><span class="p">),</span>
-    <span class="c1"># Optional: custom headers for injection/compression directives</span>
-    <span class="n">default_headers</span><span class="o">=</span><span class="p">{</span>
-        <span class="s2">&quot;X-TokenPak-Vault&quot;</span><span class="p">:</span> <span class="s2">&quot;~/your-vault&quot;</span><span class="p">,</span>  <span class="c1"># Auto-inject blocks</span>
-        <span class="s2">&quot;X-TokenPak-Compress&quot;</span><span class="p">:</span> <span class="s2">&quot;true&quot;</span><span class="p">,</span>  <span class="c1"># Enable compression</span>
-    <span class="p">}</span>
-<span class="p">)</span>
-
-<span class="c1"># All requests now use vault injection + compression</span>
-<span class="n">response</span> <span class="o">=</span> <span class="n">llm</span><span class="o">.</span><span class="n">invoke</span><span class="p">(</span><span class="s2">&quot;What should I know about Python async?&quot;</span><span class="p">)</span>
+<p>The helpers (<code>_fts_query</code>, <code>_hydrate</code>, <code>_recency_bonus</code>, <code>_weight_for</code>, <code>_collapse_by_content_hash</code>, <code>_neg</code>) are caller-defined; their bodies are the same shape across any deterministic implementation. The point of the pseudo-code is the <strong>signal flow</strong>, not any specific weighting.</p>
+<hr />
+<h2 id="each-signal-in-detail">Each signal in detail<a class="headerlink" href="#each-signal-in-detail" title="Permanent link">&para;</a></h2>
+<h3 id="anchor-match">Anchor match<a class="headerlink" href="#anchor-match" title="Permanent link">&para;</a></h3>
+<p>The recall store stores <code>project</code> and <code>topic</code> columns on every Pak row, plus a <code>pak_type</code> discriminator. The <code>PakListFilters</code> shape supports byte-literal filtering on <code>project</code> and <code>pak_type</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="n">filters</span> <span class="o">=</span> <span class="n">PakListFilters</span><span class="p">(</span><span class="n">project</span><span class="o">=</span><span class="s2">&quot;tokenpak&quot;</span><span class="p">,</span> <span class="n">pak_type</span><span class="o">=</span><span class="s2">&quot;vault&quot;</span><span class="p">,</span> <span class="n">limit</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">store</span><span class="o">.</span><span class="n">list_paks</span><span class="p">(</span><span class="n">filters</span><span class="p">)</span>
 </code></pre></div>
-<p>Check the main <a href="../../">TokenPak docs</a> for detailed vault injection and compression configuration.</p>
-<h2 id="troubleshooting">Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permanent link">&para;</a></h2>
+<p>No alias expansion, no casefolding — the column value must equal the filter exactly. Anchor matches on the Pak body itself (file paths, line ranges, identifiers) are encoded as fields on the Pak JSON and matched by the caller after <code>inspect</code>.</p>
+<h3 id="recency">Recency<a class="headerlink" href="#recency" title="Permanent link">&para;</a></h3>
+<p><code>paks.updated_at</code> is an ISO-8601 UTC string written by <code>upsert_pak</code> on every write. The natural <code>list_paks</code> ordering is <code>(updated_at DESC, pak_id DESC)</code> — newest first, with <code>pak_id</code> as a deterministic tiebreak.</p>
+<p>A typical recency bonus is a monotonic decay over the caller's window:</p>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">_recency_bonus</span><span class="p">(</span><span class="n">updated_at</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">window_days</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+    <span class="n">age</span> <span class="o">=</span> <span class="n">_utc_now</span><span class="p">()</span> <span class="o">-</span> <span class="n">_parse_iso</span><span class="p">(</span><span class="n">updated_at</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">age</span><span class="o">.</span><span class="n">days</span> <span class="o">&gt;=</span> <span class="n">window_days</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mf">0.0</span>
+    <span class="k">return</span> <span class="mf">1.0</span> <span class="o">-</span> <span class="p">(</span><span class="n">age</span><span class="o">.</span><span class="n">total_seconds</span><span class="p">()</span> <span class="o">/</span> <span class="p">(</span><span class="n">window_days</span> <span class="o">*</span> <span class="mf">86400.0</span><span class="p">))</span>
+</code></pre></div>
+<p>Whatever decay shape you choose, keep it a <strong>pure function</strong> of <code>updated_at</code> and a fixed window. Don't sample wall clock inside the inner loop; pass it in once at the top of <code>select()</code> so all candidates see the same <code>_utc_now()</code>.</p>
+<h3 id="content-hash-equality">Content hash equality<a class="headerlink" href="#content-hash-equality" title="Permanent link">&para;</a></h3>
+<p><code>paks.content_hash</code> is the hex digest of the underlying Pak body. Two rows with identical <code>content_hash</code> carry identical bodies — they are de-duplication candidates. The recommended collapse rule:</p>
+<blockquote>
+<p><strong>Among rows that share a <code>content_hash</code>, keep the one with the highest <code>updated_at</code>; break ties on the highest <code>pak_id</code>.</strong></p>
+</blockquote>
+<p>This is both deterministic and pak-id stable, which matters for cache reuse downstream.</p>
+<h3 id="fts-hits">FTS hits<a class="headerlink" href="#fts-hits" title="Permanent link">&para;</a></h3>
+<p>The <code>paks_fts</code> virtual table is an FTS5 shadow over <code>title</code> + <code>summary</code> (kept consistent by the v2 triggers). Callers query it directly:</p>
+<div class="highlight"><pre><span></span><code><span class="n">rows</span> <span class="o">=</span> <span class="n">store</span><span class="o">.</span><span class="n">conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+    <span class="s2">&quot;SELECT pak_id FROM paks_fts WHERE paks_fts MATCH ? ORDER BY rank&quot;</span><span class="p">,</span>
+    <span class="p">(</span><span class="n">q</span><span class="o">.</span><span class="n">text</span><span class="p">,),</span>
+<span class="p">)</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>
+</code></pre></div>
+<p>The <code>unicode61</code> tokenizer is configured with <code>remove_diacritics=2</code>, so <code>cafe</code> and <code>café</code> match the same row. Empty stores return zero rows; queries against absent terms return zero rows.</p>
+<p>The FTS5 rank value is a sound input to your scorer. Just <strong>re-sort after combining with non-FTS signals</strong> — FTS rank order alone is not stable across queries that share the same primary score but differ on recency or reason rows.</p>
+<h3 id="reason-rows">Reason rows<a class="headerlink" href="#reason-rows" title="Permanent link">&para;</a></h3>
+<p><a href="../reason-codes/"><code>pak_reason_codes</code></a> is observability data, not a scoring directive — but a deterministic selector can use it as one. Two common patterns:</p>
 <ul>
-<li><strong>Proxy won't start:</strong> Check port 8766 isn't in use (<code>lsof -i :8766</code>)</li>
-<li><strong>Can't import langchain_anthropic:</strong> Run <code>pip install langchain-anthropic --upgrade</code></li>
-<li><strong>Requests timing out:</strong> Increase timeout in <code>ChatAnthropic(timeout=120)</code></li>
-<li><strong>Proxy crashes with errors:</strong> Check logs: <code>tail -f /tmp/tokenpak-proxy.log</code></li>
+<li><strong>Per-code weighting</strong> — assign a stable scalar to each <code>reason_code</code> (e.g. <code>current_task = 1.0</code>, <code>direct_file_match = 0.7</code>, <code>stale_context = -1.0</code>) and sum the contributions. Keep the weights in a literal mapping; do not pull them at runtime from anywhere that can change between calls.</li>
+<li><strong>Category gating</strong> — treat <code>exclude</code>-category codes as a hard skip for the candidate (not a hard removal — the row is still observable in the store; the selector just doesn't pick it for this query).</li>
 </ul>
-<h2 id="next-steps">Next Steps<a class="headerlink" href="#next-steps" title="Permanent link">&para;</a></h2>
+<p>Both patterns stay inside the OSS surface and stay deterministic.</p>
+<h3 id="risk-severity">Risk severity<a class="headerlink" href="#risk-severity" title="Permanent link">&para;</a></h3>
+<p><a href="../risk-flags/"><code>pak_risk_flags</code></a> carries the severity signal in <code>{info, warn, block}</code>. In the OSS selector:</p>
 <ul>
-<li><a href="../../">TokenPak main documentation</a></li>
-<li><a href="../">Adapter architecture</a></li>
-<li>Vault injection guide (if docs exist)</li>
-<li><a href="../../performance/">Performance tuning</a> (if docs exist)</li>
+<li><code>info</code> is an observability tag — passes through into the <code>Score.risk_severities</code> field for the caller to display.</li>
+<li><code>warn</code> is also a pass-through; it does not change inclusion in OSS, but a downstream reviewer surface (such as <code>tokenpak pak inspect</code>) renders it prominently.</li>
+<li><code>block</code> is the one to be careful with. <strong>OSS does not refuse to include a Pak because it carries a <code>block</code> flag.</strong> The selector may choose to surface the flag (recommended) but must not silently drop the Pak — the receiver decides whether to refuse.</li>
+</ul>
+<p>The Pro Phase 3 Context Package builder is where <code>block</code> becomes enforcement. Until then, the recommended OSS pattern is "include + flag" so the human-reviewable trace contains the data.</p>
+<hr />
+<h2 id="worked-example-a-minimum-scoring-config">Worked example — a minimum scoring config<a class="headerlink" href="#worked-example-a-minimum-scoring-config" title="Permanent link">&para;</a></h2>
+<p>A working OSS selector configuration that runs entirely on the signals above:</p>
+<div class="highlight"><pre><span></span><code><span class="n">REASON_WEIGHTS</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="c1"># task / authority</span>
+    <span class="s2">&quot;current_task&quot;</span><span class="p">:</span>          <span class="mf">1.0</span><span class="p">,</span>
+    <span class="s2">&quot;mandatory&quot;</span><span class="p">:</span>             <span class="mf">1.0</span><span class="p">,</span>
+    <span class="s2">&quot;acceptance_criteria&quot;</span><span class="p">:</span>   <span class="mf">0.9</span><span class="p">,</span>
+    <span class="s2">&quot;user_pinned&quot;</span><span class="p">:</span>           <span class="mf">1.0</span><span class="p">,</span>
+    <span class="s2">&quot;standard_applies&quot;</span><span class="p">:</span>      <span class="mf">0.9</span><span class="p">,</span>
+    <span class="s2">&quot;governance_constraint&quot;</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">,</span>
+    <span class="s2">&quot;risk_relevant&quot;</span><span class="p">:</span>         <span class="mf">0.8</span><span class="p">,</span>
+    <span class="s2">&quot;prior_success_pattern&quot;</span><span class="p">:</span> <span class="mf">0.7</span><span class="p">,</span>
+    <span class="c1"># match</span>
+    <span class="s2">&quot;agent_role_match&quot;</span><span class="p">:</span>      <span class="mf">0.6</span><span class="p">,</span>
+    <span class="s2">&quot;task_type_match&quot;</span><span class="p">:</span>       <span class="mf">0.6</span><span class="p">,</span>
+    <span class="s2">&quot;direct_file_match&quot;</span><span class="p">:</span>     <span class="mf">0.8</span><span class="p">,</span>
+    <span class="s2">&quot;direct_test_match&quot;</span><span class="p">:</span>     <span class="mf">0.8</span><span class="p">,</span>
+    <span class="s2">&quot;dependency_match&quot;</span><span class="p">:</span>      <span class="mf">0.5</span><span class="p">,</span>
+    <span class="s2">&quot;workflow_relevant&quot;</span><span class="p">:</span>     <span class="mf">0.6</span><span class="p">,</span>
+    <span class="c1"># recency</span>
+    <span class="s2">&quot;recently_modified&quot;</span><span class="p">:</span>     <span class="mf">0.4</span><span class="p">,</span>
+    <span class="s2">&quot;recent_failure_link&quot;</span><span class="p">:</span>   <span class="mf">0.9</span><span class="p">,</span>
+    <span class="c1"># shape</span>
+    <span class="s2">&quot;compressed_summary_available&quot;</span><span class="p">:</span> <span class="mf">0.4</span><span class="p">,</span>
+    <span class="s2">&quot;large_raw_context&quot;</span><span class="p">:</span>     <span class="mf">0.2</span><span class="p">,</span>
+    <span class="s2">&quot;available_on_request&quot;</span><span class="p">:</span>  <span class="mf">0.3</span><span class="p">,</span>
+    <span class="s2">&quot;stable_context&quot;</span><span class="p">:</span>        <span class="mf">0.5</span><span class="p">,</span>
+    <span class="s2">&quot;reusable_context&quot;</span><span class="p">:</span>      <span class="mf">0.5</span><span class="p">,</span>
+    <span class="s2">&quot;cache_ordering_candidate&quot;</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">,</span>
+    <span class="c1"># exclude (negative — drop or strongly penalise)</span>
+    <span class="s2">&quot;low_task_match&quot;</span><span class="p">:</span>         <span class="o">-</span><span class="mf">1.0</span><span class="p">,</span>
+    <span class="s2">&quot;unrelated_domain&quot;</span><span class="p">:</span>       <span class="o">-</span><span class="mf">1.0</span><span class="p">,</span>
+    <span class="s2">&quot;stale_context&quot;</span><span class="p">:</span>          <span class="o">-</span><span class="mf">1.0</span><span class="p">,</span>
+    <span class="s2">&quot;duplicate_context&quot;</span><span class="p">:</span>      <span class="o">-</span><span class="mf">0.5</span><span class="p">,</span>
+    <span class="s2">&quot;excluded_by_budget&quot;</span><span class="p">:</span>     <span class="o">-</span><span class="mf">0.5</span><span class="p">,</span>
+    <span class="s2">&quot;excluded_by_policy&quot;</span><span class="p">:</span>     <span class="o">-</span><span class="mf">1.0</span><span class="p">,</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Three properties make this config deterministic:</p>
+<ol>
+<li><strong>It is a literal</strong> — no runtime lookup, no environment variable, no per-Pak override.</li>
+<li><strong>It covers every catalogued code</strong> — no surprises when a future Pak adds a new reason row.</li>
+<li><strong>Negative codes are explicit</strong> — <code>exclude</code>-category codes drop scores below the inclusion threshold, which is the documented OSS contract.</li>
+</ol>
+<p>If a downstream caller wants different weights, they ship their own literal. The recall store is unchanged.</p>
+<hr />
+<h2 id="what-this-is-not">What this is <strong>not</strong><a class="headerlink" href="#what-this-is-not" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Not a Pro scorer.</strong> The Pro daemon's scorer admits ranked alternatives, online tuning, fleet-wide priors, and feedback loops. None of that is in this page.</li>
+<li><strong>Not a CLI verb.</strong> OSS does not ship <code>tokenpak pak select</code>. Selection is caller code; the recall store is the data surface.</li>
+<li><strong>Not enforcement.</strong> Risk severity <code>block</code> does not refuse inclusion in OSS. The selector may surface it; the receiver decides.</li>
+</ul>
+<hr />
+<h2 id="related">Related<a class="headerlink" href="#related" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="../recall-store-api/">Recall store API</a> — the read/write surface the selector calls into.</li>
+<li><a href="../reason-codes/">Pak Reason Codes</a> — the catalogue + per-code guidance.</li>
+<li><a href="../risk-flags/">Pak Risk Flags</a> — the severity catalogue and the <code>block</code> observability invariant.</li>
+<li><a href="../inspect-and-explain/"><code>tokenpak pak inspect</code></a> — the surface a human uses to see what the selector picked, and why.</li>
 </ul>
 
 
