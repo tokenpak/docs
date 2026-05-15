@@ -10,13 +10,13 @@
         <meta name="author" content="TokenPak Contributors">
       
       
-        <link rel="canonical" href="https://docs.tokenpak.ai/adapters/langchain/">
+        <link rel="canonical" href="https://docs.tokenpak.ai/recall/ordering-hints-examples/">
       
       
-        <link rel="prev" href="../litellm/">
+        <link rel="prev" href="../selection-explanation/">
       
       
-        <link rel="next" href="../google/">
+        <link rel="next" href="../../faq/">
       
       
         
@@ -27,7 +27,7 @@
     
     
       
-        <title>LangChain - TokenPak</title>
+        <title>Context Package `ordering_hints` Examples - TokenPak</title>
       
     
     
@@ -80,7 +80,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#langchain-adapter-quick-start" class="md-skip">
+        <a href="#context-package-ordering_hints-examples" class="md-skip">
           Skip to content
         </a>
       
@@ -113,7 +113,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              LangChain
+              Context Package `ordering_hints` Examples
             
           </span>
         </div>
@@ -303,13 +303,11 @@
   
   
   
-    
-  
   
     
     
-      <li class="md-tabs__item md-tabs__item--active">
-        <a href="../openai-compat/" class="md-tabs__link">
+      <li class="md-tabs__item">
+        <a href="../../adapters/openai-compat/" class="md-tabs__link">
           
   
   
@@ -365,11 +363,13 @@
   
   
   
+    
+  
   
     
     
-      <li class="md-tabs__item">
-        <a href="../../recall/" class="md-tabs__link">
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../" class="md-tabs__link">
           
   
   
@@ -814,7 +814,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../" class="md-nav__link">
+      <a href="../../adapters/" class="md-nav__link">
         
   
   
@@ -1297,31 +1297,26 @@
       
   
   
-    
   
   
-  
     
     
     
     
-      
-        
-        
       
       
         
       
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
         
           
-          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
             
   
   
@@ -1339,7 +1334,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_5">
             <span class="md-nav__icon md-icon"></span>
             
@@ -1357,7 +1352,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../openai-compat/" class="md-nav__link">
+      <a href="../../adapters/openai-compat/" class="md-nav__link">
         
   
   
@@ -1385,7 +1380,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../litellm/" class="md-nav__link">
+      <a href="../../adapters/litellm/" class="md-nav__link">
         
   
   
@@ -1410,37 +1405,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    LangChain
-  
-
-    
-  </span>
-  
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../../adapters/langchain/" class="md-nav__link">
         
   
   
@@ -1456,214 +1424,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#why-route-through-tokenpak" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Why Route Through TokenPak?
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#prerequisites" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Prerequisites
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#quick-start-10-lines" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Quick Start (10 lines)
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#configuration" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Configuration
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Configuration">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#environment-variables" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Environment Variables
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#passing-config-directly" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Passing Config Directly
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#verification-check-the-proxy" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Verification — Check the Proxy
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#common-errors-fixes" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Common Errors &amp; Fixes
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Common Errors &amp; Fixes">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#connection-refused-cannot-connect-to-proxy" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        ❌ Connection refused / Cannot connect to proxy
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#authentication-failed-invalid-api-key" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        ❌ Authentication failed / Invalid API key
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#404-not-found-when-calling-proxy" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        ❌ 404 Not Found when calling proxy
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#requests-not-showing-up-in-proxy-stats" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        ❌ Requests not showing up in proxy stats
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#full-example-application" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Full Example Application
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#advanced-request-injection-compression" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Advanced: Request Injection &amp; Compression
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#troubleshooting" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Troubleshooting
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#next-steps" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Next Steps
-      
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -1676,7 +1436,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../google/" class="md-nav__link">
+      <a href="../../adapters/google/" class="md-nav__link">
         
   
   
@@ -2228,26 +1988,31 @@
       
   
   
+    
   
   
+  
     
     
     
     
+      
+        
+        
       
       
         
       
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" checked>
         
           
-          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="">
             
   
   
@@ -2265,7 +2030,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_8">
             <span class="md-nav__icon md-icon"></span>
             
@@ -2283,7 +2048,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../recall/" class="md-nav__link">
+      <a href="../" class="md-nav__link">
         
   
   
@@ -2311,7 +2076,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../recall/reason-codes/" class="md-nav__link">
+      <a href="../reason-codes/" class="md-nav__link">
         
   
   
@@ -2339,7 +2104,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../recall/risk-flags/" class="md-nav__link">
+      <a href="../risk-flags/" class="md-nav__link">
         
   
   
@@ -2367,7 +2132,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../recall/recall-store-api/" class="md-nav__link">
+      <a href="../recall-store-api/" class="md-nav__link">
         
   
   
@@ -2395,7 +2160,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../recall/inspect-and-explain/" class="md-nav__link">
+      <a href="../inspect-and-explain/" class="md-nav__link">
         
   
   
@@ -2423,7 +2188,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../recall/selection-explanation/" class="md-nav__link">
+      <a href="../selection-explanation/" class="md-nav__link">
         
   
   
@@ -2448,10 +2213,37 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../../recall/ordering-hints-examples/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Context Package `ordering_hints` Examples
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -2467,6 +2259,136 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#the-byte-shape-invariant" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The byte-shape invariant
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#fields" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fields
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#example-1-all-defaults-cache-aware-anchors-at-end" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Example 1 — All defaults (cache-aware, anchors at end)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#example-2-anchors-interleaved-with-their-referencing-block" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Example 2 — Anchors interleaved with their referencing block
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#example-3-drop-anchors-entirely-budget-constrained" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Example 3 — Drop anchors entirely (budget-constrained)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#example-4-cache-sensitive-block-pinning" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Example 4 — Cache-sensitive block pinning
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#example-5-producer-chose-not-to-set-ordering-hints" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Example 5 — Producer chose not to set ordering hints
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#producer-side-python-emitting-a-package-with-hints" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Producer-side Python — emitting a package with hints
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#receiver-side-python-reading-hints-back" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Receiver-side Python — reading hints back
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#related" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Related
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -2649,10 +2571,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#why-route-through-tokenpak" class="md-nav__link">
+  <a href="#the-byte-shape-invariant" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Why Route Through TokenPak?
+        The byte-shape invariant
       
     </span>
   </a>
@@ -2660,10 +2582,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#prerequisites" class="md-nav__link">
+  <a href="#fields" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Prerequisites
+        Fields
       
     </span>
   </a>
@@ -2671,10 +2593,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#quick-start-10-lines" class="md-nav__link">
+  <a href="#example-1-all-defaults-cache-aware-anchors-at-end" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Quick Start (10 lines)
+        Example 1 — All defaults (cache-aware, anchors at end)
       
     </span>
   </a>
@@ -2682,49 +2604,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#configuration" class="md-nav__link">
+  <a href="#example-2-anchors-interleaved-with-their-referencing-block" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Configuration
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Configuration">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#environment-variables" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Environment Variables
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#passing-config-directly" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Passing Config Directly
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#verification-check-the-proxy" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Verification — Check the Proxy
+        Example 2 — Anchors interleaved with their referencing block
       
     </span>
   </a>
@@ -2732,71 +2615,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#common-errors-fixes" class="md-nav__link">
+  <a href="#example-3-drop-anchors-entirely-budget-constrained" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Common Errors &amp; Fixes
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Common Errors &amp; Fixes">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#connection-refused-cannot-connect-to-proxy" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        ❌ Connection refused / Cannot connect to proxy
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#authentication-failed-invalid-api-key" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        ❌ Authentication failed / Invalid API key
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#404-not-found-when-calling-proxy" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        ❌ 404 Not Found when calling proxy
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#requests-not-showing-up-in-proxy-stats" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        ❌ Requests not showing up in proxy stats
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#full-example-application" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Full Example Application
+        Example 3 — Drop anchors entirely (budget-constrained)
       
     </span>
   </a>
@@ -2804,10 +2626,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#advanced-request-injection-compression" class="md-nav__link">
+  <a href="#example-4-cache-sensitive-block-pinning" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Advanced: Request Injection &amp; Compression
+        Example 4 — Cache-sensitive block pinning
       
     </span>
   </a>
@@ -2815,10 +2637,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#troubleshooting" class="md-nav__link">
+  <a href="#example-5-producer-chose-not-to-set-ordering-hints" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Troubleshooting
+        Example 5 — Producer chose not to set ordering hints
       
     </span>
   </a>
@@ -2826,10 +2648,32 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#next-steps" class="md-nav__link">
+  <a href="#producer-side-python-emitting-a-package-with-hints" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Next Steps
+        Producer-side Python — emitting a package with hints
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#receiver-side-python-reading-hints-back" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Receiver-side Python — reading hints back
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#related" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Related
       
     </span>
   </a>
@@ -2856,230 +2700,284 @@
   
 
 
-<h1 id="langchain-adapter-quick-start">LangChain Adapter — Quick-Start<a class="headerlink" href="#langchain-adapter-quick-start" title="Permanent link">&para;</a></h1>
-<p>Route your LangChain applications through the TokenPak proxy for cost tracking, compression, and vault context injection.</p>
-<h2 id="why-route-through-tokenpak">Why Route Through TokenPak?<a class="headerlink" href="#why-route-through-tokenpak" title="Permanent link">&para;</a></h2>
-<ul>
-<li><strong>Cost tracking:</strong> Every token counted and categorized by model/provider</li>
-<li><strong>Request compression:</strong> Reduces token usage via built-in context optimization</li>
-<li><strong>Vault injection:</strong> Automatically enrich prompts with your knowledge base</li>
-<li><strong>Request caching:</strong> Deduplicate identical calls across applications</li>
-<li><strong>Usage analytics:</strong> Dashboard metrics for model spend and performance</li>
-</ul>
-<h2 id="prerequisites">Prerequisites<a class="headerlink" href="#prerequisites" title="Permanent link">&para;</a></h2>
+<h1 id="context-package-ordering_hints-examples">Context Package <code>ordering_hints</code> examples<a class="headerlink" href="#context-package-ordering_hints-examples" title="Permanent link">&para;</a></h1>
+<p><code>OrderingHints</code> is the optional, additive cache-aware ordering field on a Context Package. It lets a producer state preferences about block ordering — stable content first, output requirements last, anchor snippets in a known position — so a downstream consumer (or the Pro Phase 3 Context Package builder) can preserve cache hits and produce a deterministic byte layout.</p>
+<p>This page shows the field in three forms:</p>
 <ol>
-<li>
-<p><strong>TokenPak proxy running locally</strong>
-   <div class="highlight"><pre><span></span><code>python3<span class="w"> </span>tokenpak<span class="w"> </span>serve<span class="w"> </span><span class="p">&amp;</span>
-<span class="c1"># Proxy starts on http://localhost:8766 by default</span>
-</code></pre></div></p>
-</li>
-<li>
-<p><strong>LangChain and anthropic adapter installed</strong>
-   <div class="highlight"><pre><span></span><code>pip<span class="w"> </span>install<span class="w"> </span>langchain<span class="w"> </span>langchain-anthropic<span class="w"> </span>anthropic
-</code></pre></div></p>
-</li>
-<li>
-<p><strong>ANTHROPIC_API_KEY set</strong>
-   <div class="highlight"><pre><span></span><code><span class="nb">export</span><span class="w"> </span><span class="nv">ANTHROPIC_API_KEY</span><span class="o">=</span><span class="s2">&quot;sk-ant-...&quot;</span>
-</code></pre></div></p>
-</li>
+<li>The wire shape.</li>
+<li>The Python dataclass that emits it.</li>
+<li>Concrete example manifests for the common use patterns.</li>
 </ol>
-<h2 id="quick-start-10-lines">Quick Start (10 lines)<a class="headerlink" href="#quick-start-10-lines" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">langchain_anthropic</span><span class="w"> </span><span class="kn">import</span> <span class="n">ChatAnthropic</span>
-
-<span class="c1"># Point ChatAnthropic at the TokenPak proxy instead of Anthropic directly</span>
-<span class="n">llm</span> <span class="o">=</span> <span class="n">ChatAnthropic</span><span class="p">(</span>
-    <span class="n">model</span><span class="o">=</span><span class="s2">&quot;claude-3-5-sonnet-20241022&quot;</span><span class="p">,</span>
-    <span class="n">base_url</span><span class="o">=</span><span class="s2">&quot;http://localhost:8766/v1&quot;</span><span class="p">,</span>  <span class="c1"># TokenPak proxy endpoint</span>
-    <span class="n">api_key</span><span class="o">=</span><span class="s2">&quot;sk-ant-...&quot;</span>  <span class="c1"># Proxy forwards this to Anthropic</span>
-<span class="p">)</span>
-
-<span class="c1"># Use it normally — proxy handles everything behind the scenes</span>
-<span class="n">response</span> <span class="o">=</span> <span class="n">llm</span><span class="o">.</span><span class="n">invoke</span><span class="p">(</span><span class="s2">&quot;What is Python good for?&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">content</span><span class="p">)</span>
+<p>The full TIP context-package schema is published at <a href="https://docs.tokenpak.ai/schemas/tip/context-package-v1.json"><code>https://docs.tokenpak.ai/schemas/tip/context-package-v1.json</code></a>.</p>
+<hr />
+<h2 id="the-byte-shape-invariant">The byte-shape invariant<a class="headerlink" href="#the-byte-shape-invariant" title="Permanent link">&para;</a></h2>
+<p><code>ordering_hints</code> is additive within TIP-1.x. The receiver-side contract is:</p>
+<div class="admonition note">
+<p class="admonition-title">Ignorant receivers produce a valid package</p>
+<p>A receiver that does not recognise <code>ordering_hints</code> ignores the field and produces a <strong>valid</strong> (just unoptimised) package. The receiver's behaviour is identical to the pre-addendum behaviour.</p>
+</div>
+<p><code>ContextPackage.to_dict()</code> enforces this from the producer side too: when the dataclass is constructed without ordering hints (<code>ordering_hints=None</code>), the field is <strong>omitted entirely</strong> from the serialized payload. Old receivers see byte-identical output to the pre-addendum shape. New receivers see the field when (and only when) it was set.</p>
+<p>This is the invariant to protect when tooling around the package — diff tools, golden fixtures, byte-stable transports should all behave the same way on an old package and a new package whose producer did not set <code>ordering_hints</code>.</p>
+<hr />
+<h2 id="fields">Fields<a class="headerlink" href="#fields" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><span class="nd">@dataclass</span><span class="p">(</span><span class="n">frozen</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">OrderingHints</span><span class="p">:</span>
+    <span class="n">stable_first</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="n">task_delta_after_stable_context</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="n">output_requirements_near_end</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="n">cache_sensitive_blocks</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span> <span class="o">=</span> <span class="p">()</span>
+    <span class="n">anchor_block_position</span><span class="p">:</span> <span class="n">AnchorBlockPosition</span> <span class="o">=</span> <span class="n">AnchorBlockPosition</span><span class="o">.</span><span class="n">END</span>
 </code></pre></div>
-<p><strong>That's it.</strong> All traffic flows through the proxy automatically.</p>
-<h2 id="configuration">Configuration<a class="headerlink" href="#configuration" title="Permanent link">&para;</a></h2>
-<h3 id="environment-variables">Environment Variables<a class="headerlink" href="#environment-variables" title="Permanent link">&para;</a></h3>
 <table>
 <thead>
 <tr>
-<th>Variable</th>
+<th>Field</th>
 <th>Default</th>
-<th>Purpose</th>
+<th>Meaning</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><code>ANTHROPIC_BASE_URL</code></td>
-<td><code>https://api.anthropic.com/v1</code></td>
-<td>Overrides LLM endpoint (set to proxy)</td>
+<td><code>stable_first</code></td>
+<td><code>True</code></td>
+<td>Place stable / reusable Pak content before volatile task delta. Cache-aware.</td>
 </tr>
 <tr>
-<td><code>ANTHROPIC_API_KEY</code></td>
-<td><em>none</em></td>
-<td>API key (proxy forwards this)</td>
+<td><code>task_delta_after_stable_context</code></td>
+<td><code>True</code></td>
+<td>Mandatory and primary Paks appear after stable / reusable Paks (consistent with <code>stable_first</code>).</td>
 </tr>
 <tr>
-<td><code>TOKENPAK_PROXY_URL</code></td>
-<td><code>http://localhost:8766</code></td>
-<td>Proxy address if not default</td>
+<td><code>output_requirements_near_end</code></td>
+<td><code>True</code></td>
+<td>Output-shape instructions immediately precede the cursor / model.</td>
 </tr>
 <tr>
-<td><code>TOKENPAK_VAULT_PATH</code></td>
-<td><em>none</em></td>
-<td>Path to vault blocks for injection</td>
+<td><code>cache_sensitive_blocks</code></td>
+<td><code>()</code></td>
+<td>Block IDs whose ordering must not change once assembled.</td>
+</tr>
+<tr>
+<td><code>anchor_block_position</code></td>
+<td><code>END</code></td>
+<td>Where hydrated anchor snippets sit. Closed enum: <code>END</code>, <code>INLINE</code>, <code>OMIT</code>.</td>
 </tr>
 </tbody>
 </table>
-<h3 id="passing-config-directly">Passing Config Directly<a class="headerlink" href="#passing-config-directly" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">langchain_anthropic</span><span class="w"> </span><span class="kn">import</span> <span class="n">ChatAnthropic</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
-
-<span class="n">llm</span> <span class="o">=</span> <span class="n">ChatAnthropic</span><span class="p">(</span>
-    <span class="n">model</span><span class="o">=</span><span class="s2">&quot;claude-3-5-sonnet-20241022&quot;</span><span class="p">,</span>
-    <span class="n">base_url</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;TOKENPAK_PROXY_URL&quot;</span><span class="p">,</span> <span class="s2">&quot;http://localhost:8766/v1&quot;</span><span class="p">),</span>
-    <span class="n">api_key</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;ANTHROPIC_API_KEY&quot;</span><span class="p">),</span>
-    <span class="n">timeout</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span>  <span class="c1"># request timeout in seconds</span>
+<p><code>anchor_block_position</code> is a closed enum within TIP-1.x — receivers reading an unknown value raise <code>ValueError</code>. The field set itself is additive (new optional fields may be added in a future TIP-1.x minor), but the enum admits no surprise values.</p>
+<hr />
+<h2 id="example-1-all-defaults-cache-aware-anchors-at-end">Example 1 — All defaults (cache-aware, anchors at end)<a class="headerlink" href="#example-1-all-defaults-cache-aware-anchors-at-end" title="Permanent link">&para;</a></h2>
+<p>The most common manifest. Stable / reusable Paks first, task delta after, output requirements near the end, anchor snippets appended after the main Pak content.</p>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;package_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ctx_2026-05-12_a1b2c3&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;scope&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;user_scope&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;local_user&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;project_scope&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;tokenpak&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;target_platform&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;anthropic&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;target_task&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;implement&quot;</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="nt">&quot;recall_query&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;explain the OSS recall reason / risk surface&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;context_level&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;handoff_pak&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;included_pak_ids&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="s2">&quot;vault:auth-pattern#a1b2c3&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;vault:recall-storage#d4e5f6&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;vault:risk-flags-catalogue#7g8h9i&quot;</span>
+<span class="w">  </span><span class="p">],</span>
+<span class="w">  </span><span class="nt">&quot;hydrated_anchor_ids&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="s2">&quot;anchor:store.py:548-732&quot;</span>
+<span class="w">  </span><span class="p">],</span>
+<span class="w">  </span><span class="nt">&quot;coverage&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;state&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;complete&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;required_paks&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;included_paks&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;hydrated_anchors&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;missing_context&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span>
+<span class="w">    </span><span class="nt">&quot;confidence&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;high&quot;</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="nt">&quot;policy&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;cross_project_blocked&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;sensitive_blocked&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;hydration_budget_exceeded&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;blocked_pak_ids&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span>
+<span class="w">    </span><span class="nt">&quot;blocked_anchor_ids&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span>
+<span class="w">    </span><span class="nt">&quot;reasons&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="nt">&quot;generated_at&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2026-05-12T17:14:09Z&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;memory_horizon&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;recent&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;privacy_class&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;local_only&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;ordering_hints&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;stable_first&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;task_delta_after_stable_context&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;output_requirements_near_end&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;cache_sensitive_blocks&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span>
+<span class="w">    </span><span class="nt">&quot;anchor_block_position&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;end&quot;</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>This is the recommended starting point for any package that wants to stay cache-friendly.</p>
+<hr />
+<h2 id="example-2-anchors-interleaved-with-their-referencing-block">Example 2 — Anchors interleaved with their referencing block<a class="headerlink" href="#example-2-anchors-interleaved-with-their-referencing-block" title="Permanent link">&para;</a></h2>
+<p>For tasks where anchor snippets are tightly coupled to the surrounding Pak narrative (e.g. code review with inline references), set <code>anchor_block_position</code> to <code>inline</code>. The producer is asserting that ordering anchors near their citation point matters more than the cache benefit of keeping all anchors at the end.</p>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;...&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;(other fields as in Example 1)&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;ordering_hints&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;stable_first&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;task_delta_after_stable_context&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;output_requirements_near_end&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;cache_sensitive_blocks&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span>
+<span class="w">    </span><span class="nt">&quot;anchor_block_position&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;inline&quot;</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>This is a cache-cost tradeoff: anchor blocks inserted mid-package will shift the byte offsets of every following block. Old receivers (which ignore <code>ordering_hints</code>) still see a valid package — just one that may benefit less from cache reuse.</p>
+<hr />
+<h2 id="example-3-drop-anchors-entirely-budget-constrained">Example 3 — Drop anchors entirely (budget-constrained)<a class="headerlink" href="#example-3-drop-anchors-entirely-budget-constrained" title="Permanent link">&para;</a></h2>
+<p>For a tight token budget, set <code>anchor_block_position</code> to <code>omit</code>. The Pak content is included; the hydrated anchor snippets are not. The Pak <code>summary</code> field still carries the headline.</p>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;...&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;(other fields as in Example 1)&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;hydrated_anchor_ids&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span>
+<span class="w">  </span><span class="nt">&quot;coverage&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;state&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;partial&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;required_paks&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;included_paks&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;hydrated_anchors&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;missing_context&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;anchor:store.py:548-732 omitted by ordering_hints&quot;</span><span class="p">],</span>
+<span class="w">    </span><span class="nt">&quot;confidence&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;medium&quot;</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="nt">&quot;ordering_hints&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;stable_first&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;task_delta_after_stable_context&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;output_requirements_near_end&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;cache_sensitive_blocks&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span>
+<span class="w">    </span><span class="nt">&quot;anchor_block_position&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;omit&quot;</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>When <code>anchor_block_position = omit</code>, the package's <code>coverage</code> state typically downgrades from <code>complete</code> to <code>partial</code> so the receiver understands the omission was a producer choice, not a recall miss.</p>
+<hr />
+<h2 id="example-4-cache-sensitive-block-pinning">Example 4 — Cache-sensitive block pinning<a class="headerlink" href="#example-4-cache-sensitive-block-pinning" title="Permanent link">&para;</a></h2>
+<p><code>cache_sensitive_blocks</code> names blocks whose ordering relative to their neighbours must not change once the package is assembled. A typical case: a long stable preamble (governance pin, project README, glossary excerpt) that you want to retain across many subsequent task deltas so the upstream provider's cache hits the same prefix on every call.</p>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;...&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;(other fields as in Example 1)&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;included_pak_ids&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="s2">&quot;vault:project-readme#0aa00&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;vault:governance-pin#0bb01&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;vault:glossary-multipak#0cc02&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;vault:current-task-spec#7g8h9i&quot;</span>
+<span class="w">  </span><span class="p">],</span>
+<span class="w">  </span><span class="nt">&quot;ordering_hints&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;stable_first&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;task_delta_after_stable_context&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;output_requirements_near_end&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;cache_sensitive_blocks&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">      </span><span class="s2">&quot;vault:project-readme#0aa00&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="s2">&quot;vault:governance-pin#0bb01&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="s2">&quot;vault:glossary-multipak#0cc02&quot;</span>
+<span class="w">    </span><span class="p">],</span>
+<span class="w">    </span><span class="nt">&quot;anchor_block_position&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;end&quot;</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>A consumer that respects <code>cache_sensitive_blocks</code> will not re-order or partially elide those block IDs even under budget pressure — it will drop the volatile task delta first.</p>
+<hr />
+<h2 id="example-5-producer-chose-not-to-set-ordering-hints">Example 5 — Producer chose <strong>not</strong> to set ordering hints<a class="headerlink" href="#example-5-producer-chose-not-to-set-ordering-hints" title="Permanent link">&para;</a></h2>
+<p>This package was built by a producer that did not write <code>ordering_hints</code> (legacy producer, or a producer that has opted out). The serialized payload <strong>omits the field entirely</strong>:</p>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;package_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ctx_2026-05-12_legacy&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;scope&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;...&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;...&quot;</span><span class="w"> </span><span class="p">},</span>
+<span class="w">  </span><span class="nt">&quot;recall_query&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;...&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;context_level&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;handoff_pak&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;included_pak_ids&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="s2">&quot;...&quot;</span><span class="w"> </span><span class="p">],</span>
+<span class="w">  </span><span class="nt">&quot;hydrated_anchor_ids&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="s2">&quot;...&quot;</span><span class="w"> </span><span class="p">],</span>
+<span class="w">  </span><span class="nt">&quot;coverage&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;...&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;...&quot;</span><span class="w"> </span><span class="p">},</span>
+<span class="w">  </span><span class="nt">&quot;policy&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;...&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;...&quot;</span><span class="w"> </span><span class="p">},</span>
+<span class="w">  </span><span class="nt">&quot;generated_at&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2026-05-12T17:14:09Z&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;memory_horizon&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;recent&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;privacy_class&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;local_only&quot;</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>A new receiver that does recognise the field treats the absence as "no preference": it uses sensible defaults (<code>stable_first=true</code>, <code>anchor_block_position=end</code>) but is not allowed to fabricate the field in the package. The byte shape on the wire — and any golden fixtures — stays pre-addendum.</p>
+<hr />
+<h2 id="producer-side-python-emitting-a-package-with-hints">Producer-side Python — emitting a package with hints<a class="headerlink" href="#producer-side-python-emitting-a-package-with-hints" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">tokenpak.tip.context_package</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">AnchorBlockPosition</span><span class="p">,</span>
+    <span class="n">ContextLevel</span><span class="p">,</span>
+    <span class="n">ContextPackage</span><span class="p">,</span>
+    <span class="n">ContextScope</span><span class="p">,</span>
+    <span class="n">CoverageConfidence</span><span class="p">,</span>
+    <span class="n">CoverageReport</span><span class="p">,</span>
+    <span class="n">CoverageState</span><span class="p">,</span>
+    <span class="n">OrderingHints</span><span class="p">,</span>
+    <span class="n">PolicyDecision</span><span class="p">,</span>
 <span class="p">)</span>
-</code></pre></div>
-<h2 id="verification-check-the-proxy">Verification — Check the Proxy<a class="headerlink" href="#verification-check-the-proxy" title="Permanent link">&para;</a></h2>
-<p>After making a few requests, verify they went through TokenPak:</p>
-<div class="highlight"><pre><span></span><code><span class="c1"># View proxy stats</span>
-curl<span class="w"> </span>http://localhost:8766/stats<span class="w"> </span><span class="p">|</span><span class="w"> </span>python3<span class="w"> </span>-m<span class="w"> </span>json.tool
 
-<span class="c1"># Expected output:</span>
-<span class="c1"># {</span>
-<span class="c1">#   &quot;requests_processed&quot;: 5,</span>
-<span class="c1">#   &quot;total_input_tokens&quot;: 1250,</span>
-<span class="c1">#   &quot;total_output_tokens&quot;: 480,</span>
-<span class="c1">#   &quot;cache_hits&quot;: 1,</span>
-<span class="c1">#   &quot;models&quot;: {</span>
-<span class="c1">#     &quot;claude-3-5-sonnet-20241022&quot;: {</span>
-<span class="c1">#       &quot;calls&quot;: 5,</span>
-<span class="c1">#       &quot;input_tokens&quot;: 1250,</span>
-<span class="c1">#       &quot;output_tokens&quot;: 480</span>
-<span class="c1">#     }</span>
-<span class="c1">#   }</span>
-<span class="c1"># }</span>
-</code></pre></div>
-<p>If you see requests recorded, traffic is flowing correctly through the proxy.</p>
-<h2 id="common-errors-fixes">Common Errors &amp; Fixes<a class="headerlink" href="#common-errors-fixes" title="Permanent link">&para;</a></h2>
-<h3 id="connection-refused-cannot-connect-to-proxy">❌ <code>Connection refused</code> / <code>Cannot connect to proxy</code><a class="headerlink" href="#connection-refused-cannot-connect-to-proxy" title="Permanent link">&para;</a></h3>
-<p><strong>Cause:</strong> Proxy not running or listening on wrong port.</p>
-<p><strong>Fix:</strong>
-<div class="highlight"><pre><span></span><code><span class="c1"># Start proxy in background</span>
-python3<span class="w"> </span>tokenpak<span class="w"> </span>serve<span class="w"> </span><span class="p">&amp;</span>
-
-<span class="c1"># Verify it&#39;s listening</span>
-curl<span class="w"> </span>http://localhost:8766/health
-<span class="c1"># Should return: {&quot;status&quot;: &quot;ok&quot;}</span>
-</code></pre></div></p>
-<hr />
-<h3 id="authentication-failed-invalid-api-key">❌ <code>Authentication failed</code> / <code>Invalid API key</code><a class="headerlink" href="#authentication-failed-invalid-api-key" title="Permanent link">&para;</a></h3>
-<p><strong>Cause:</strong> API key not set or proxy can't forward it.</p>
-<p><strong>Fix:</strong>
-<div class="highlight"><pre><span></span><code><span class="c1"># Check key is exported</span>
-<span class="nb">echo</span><span class="w"> </span><span class="nv">$ANTHROPIC_API_KEY</span><span class="w">  </span><span class="c1"># Should print your key, not be empty</span>
-
-<span class="c1"># Or pass explicitly</span>
-<span class="nv">llm</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>ChatAnthropic<span class="o">(</span>
-<span class="w">    </span><span class="nv">model</span><span class="o">=</span><span class="s2">&quot;claude-3-5-sonnet-20241022&quot;</span>,
-<span class="w">    </span><span class="nv">base_url</span><span class="o">=</span><span class="s2">&quot;http://localhost:8766/v1&quot;</span>,
-<span class="w">    </span><span class="nv">api_key</span><span class="o">=</span><span class="s2">&quot;sk-ant-YOUR_KEY_HERE&quot;</span><span class="w">  </span><span class="c1"># Explicit &gt; env var for debugging</span>
-<span class="o">)</span>
-</code></pre></div></p>
-<hr />
-<h3 id="404-not-found-when-calling-proxy">❌ <code>404 Not Found</code> when calling proxy<a class="headerlink" href="#404-not-found-when-calling-proxy" title="Permanent link">&para;</a></h3>
-<p><strong>Cause:</strong> Endpoint path missing <code>/v1</code> suffix or proxy address wrong.</p>
-<p><strong>Fix:</strong>
-<div class="highlight"><pre><span></span><code><span class="c1"># ✅ CORRECT</span>
-<span class="n">base_url</span><span class="o">=</span><span class="s2">&quot;http://localhost:8766/v1&quot;</span>
-
-<span class="c1"># ❌ WRONG</span>
-<span class="n">base_url</span><span class="o">=</span><span class="s2">&quot;http://localhost:8766&quot;</span>  <span class="c1"># Missing /v1</span>
-</code></pre></div></p>
-<hr />
-<h3 id="requests-not-showing-up-in-proxy-stats">❌ Requests not showing up in proxy stats<a class="headerlink" href="#requests-not-showing-up-in-proxy-stats" title="Permanent link">&para;</a></h3>
-<p><strong>Cause:</strong> Traffic bypassing proxy or using different endpoint.</p>
-<p><strong>Fix:</strong>
-<div class="highlight"><pre><span></span><code><span class="c1"># Check what URL LangChain is actually calling</span>
-import<span class="w"> </span>logging
-logging.basicConfig<span class="o">(</span><span class="nv">level</span><span class="o">=</span>logging.DEBUG<span class="o">)</span>
-logging.getLogger<span class="o">(</span><span class="s2">&quot;httpx&quot;</span><span class="o">)</span>.setLevel<span class="o">(</span>logging.DEBUG<span class="o">)</span>
-
-<span class="c1"># Now make a request — debug logs will show the URL being called</span>
-llm.invoke<span class="o">(</span><span class="s2">&quot;test&quot;</span><span class="o">)</span>
-
-<span class="c1"># Should see requests to http://localhost:8766/...</span>
-</code></pre></div></p>
-<hr />
-<h2 id="full-example-application">Full Example Application<a class="headerlink" href="#full-example-application" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">Complete example: chat app routing through TokenPak proxy</span>
-<span class="sd">&quot;&quot;&quot;</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">langchain_anthropic</span><span class="w"> </span><span class="kn">import</span> <span class="n">ChatAnthropic</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">langchain_core.messages</span><span class="w"> </span><span class="kn">import</span> <span class="n">HumanMessage</span><span class="p">,</span> <span class="n">SystemMessage</span>
-
-<span class="c1"># Initialize with proxy endpoint</span>
-<span class="n">llm</span> <span class="o">=</span> <span class="n">ChatAnthropic</span><span class="p">(</span>
-    <span class="n">model</span><span class="o">=</span><span class="s2">&quot;claude-3-5-sonnet-20241022&quot;</span><span class="p">,</span>
-    <span class="n">base_url</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;TOKENPAK_PROXY_URL&quot;</span><span class="p">,</span> <span class="s2">&quot;http://localhost:8766/v1&quot;</span><span class="p">),</span>
-    <span class="n">api_key</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;ANTHROPIC_API_KEY&quot;</span><span class="p">),</span>
-    <span class="n">timeout</span><span class="o">=</span><span class="mi">60</span><span class="p">,</span>
+<span class="n">pkg</span> <span class="o">=</span> <span class="n">ContextPackage</span><span class="p">(</span>
+    <span class="n">package_id</span><span class="o">=</span><span class="s2">&quot;ctx_2026-05-12_a1b2c3&quot;</span><span class="p">,</span>
+    <span class="n">scope</span><span class="o">=</span><span class="n">ContextScope</span><span class="p">(</span>
+        <span class="n">project_scope</span><span class="o">=</span><span class="s2">&quot;tokenpak&quot;</span><span class="p">,</span>
+        <span class="n">target_platform</span><span class="o">=</span><span class="s2">&quot;anthropic&quot;</span><span class="p">,</span>
+        <span class="n">target_task</span><span class="o">=</span><span class="s2">&quot;implement&quot;</span><span class="p">,</span>
+    <span class="p">),</span>
+    <span class="n">recall_query</span><span class="o">=</span><span class="s2">&quot;explain the OSS recall reason / risk surface&quot;</span><span class="p">,</span>
+    <span class="n">context_level</span><span class="o">=</span><span class="n">ContextLevel</span><span class="o">.</span><span class="n">HANDOFF_PAK</span><span class="p">,</span>
+    <span class="n">included_pak_ids</span><span class="o">=</span><span class="p">(</span>
+        <span class="s2">&quot;vault:auth-pattern#a1b2c3&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;vault:recall-storage#d4e5f6&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;vault:risk-flags-catalogue#7g8h9i&quot;</span><span class="p">,</span>
+    <span class="p">),</span>
+    <span class="n">hydrated_anchor_ids</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;anchor:store.py:548-732&quot;</span><span class="p">,),</span>
+    <span class="n">coverage</span><span class="o">=</span><span class="n">CoverageReport</span><span class="p">(</span>
+        <span class="n">state</span><span class="o">=</span><span class="n">CoverageState</span><span class="o">.</span><span class="n">COMPLETE</span><span class="p">,</span>
+        <span class="n">required_paks</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
+        <span class="n">included_paks</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
+        <span class="n">hydrated_anchors</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+        <span class="n">confidence</span><span class="o">=</span><span class="n">CoverageConfidence</span><span class="o">.</span><span class="n">HIGH</span><span class="p">,</span>
+    <span class="p">),</span>
+    <span class="n">policy</span><span class="o">=</span><span class="n">PolicyDecision</span><span class="p">(),</span>
+    <span class="n">generated_at</span><span class="o">=</span><span class="s2">&quot;2026-05-12T17:14:09Z&quot;</span><span class="p">,</span>
+    <span class="n">ordering_hints</span><span class="o">=</span><span class="n">OrderingHints</span><span class="p">(</span>
+        <span class="n">cache_sensitive_blocks</span><span class="o">=</span><span class="p">(</span>
+            <span class="s2">&quot;vault:project-readme#0aa00&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;vault:governance-pin#0bb01&quot;</span><span class="p">,</span>
+        <span class="p">),</span>
+        <span class="n">anchor_block_position</span><span class="o">=</span><span class="n">AnchorBlockPosition</span><span class="o">.</span><span class="n">END</span><span class="p">,</span>
+    <span class="p">),</span>
 <span class="p">)</span>
 
-<span class="c1"># Build conversation</span>
-<span class="n">messages</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="n">SystemMessage</span><span class="p">(</span><span class="n">content</span><span class="o">=</span><span class="s2">&quot;You are a helpful Python assistant.&quot;</span><span class="p">),</span>
-    <span class="n">HumanMessage</span><span class="p">(</span><span class="n">content</span><span class="o">=</span><span class="s2">&quot;Write a function that checks if a number is prime.&quot;</span><span class="p">),</span>
-<span class="p">]</span>
-
-<span class="c1"># Call through proxy</span>
-<span class="n">response</span> <span class="o">=</span> <span class="n">llm</span><span class="o">.</span><span class="n">invoke</span><span class="p">(</span><span class="n">messages</span><span class="p">)</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Assistant:&quot;</span><span class="p">,</span> <span class="n">response</span><span class="o">.</span><span class="n">content</span><span class="p">)</span>
-
-<span class="c1"># Check proxy recorded it</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">requests</span>
-<span class="n">stats</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;http://localhost:8766/stats&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Proxy stats: </span><span class="si">{</span><span class="n">stats</span><span class="p">[</span><span class="s1">&#39;requests_processed&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2"> requests processed&quot;</span><span class="p">)</span>
+<span class="n">wire</span> <span class="o">=</span> <span class="n">pkg</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span>
+<span class="k">assert</span> <span class="s2">&quot;ordering_hints&quot;</span> <span class="ow">in</span> <span class="n">wire</span>
 </code></pre></div>
-<h2 id="advanced-request-injection-compression">Advanced: Request Injection &amp; Compression<a class="headerlink" href="#advanced-request-injection-compression" title="Permanent link">&para;</a></h2>
-<p>TokenPak supports vault injection (prepend your knowledge base) and automatic compression. These work transparently with LangChain:</p>
-<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">langchain_anthropic</span><span class="w"> </span><span class="kn">import</span> <span class="n">ChatAnthropic</span>
-
-<span class="n">llm</span> <span class="o">=</span> <span class="n">ChatAnthropic</span><span class="p">(</span>
-    <span class="n">model</span><span class="o">=</span><span class="s2">&quot;claude-3-5-sonnet-20241022&quot;</span><span class="p">,</span>
-    <span class="n">base_url</span><span class="o">=</span><span class="s2">&quot;http://localhost:8766/v1&quot;</span><span class="p">,</span>
-    <span class="n">api_key</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;ANTHROPIC_API_KEY&quot;</span><span class="p">),</span>
-    <span class="c1"># Optional: custom headers for injection/compression directives</span>
-    <span class="n">default_headers</span><span class="o">=</span><span class="p">{</span>
-        <span class="s2">&quot;X-TokenPak-Vault&quot;</span><span class="p">:</span> <span class="s2">&quot;~/your-vault&quot;</span><span class="p">,</span>  <span class="c1"># Auto-inject blocks</span>
-        <span class="s2">&quot;X-TokenPak-Compress&quot;</span><span class="p">:</span> <span class="s2">&quot;true&quot;</span><span class="p">,</span>  <span class="c1"># Enable compression</span>
-    <span class="p">}</span>
+<p>Omitting the field at construction time produces a payload that is byte-identical to the pre-addendum shape:</p>
+<div class="highlight"><pre><span></span><code><span class="n">pkg_legacy</span> <span class="o">=</span> <span class="n">ContextPackage</span><span class="p">(</span>
+    <span class="c1"># ... same fields as above, but no ordering_hints ...</span>
+    <span class="n">ordering_hints</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span>
 
-<span class="c1"># All requests now use vault injection + compression</span>
-<span class="n">response</span> <span class="o">=</span> <span class="n">llm</span><span class="o">.</span><span class="n">invoke</span><span class="p">(</span><span class="s2">&quot;What should I know about Python async?&quot;</span><span class="p">)</span>
+<span class="n">wire_legacy</span> <span class="o">=</span> <span class="n">pkg_legacy</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span>
+<span class="k">assert</span> <span class="s2">&quot;ordering_hints&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">wire_legacy</span>
 </code></pre></div>
-<p>Check the main <a href="../../">TokenPak docs</a> for detailed vault injection and compression configuration.</p>
-<h2 id="troubleshooting">Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permanent link">&para;</a></h2>
+<p>This is the byte-shape invariant in code form.</p>
+<hr />
+<h2 id="receiver-side-python-reading-hints-back">Receiver-side Python — reading hints back<a class="headerlink" href="#receiver-side-python-reading-hints-back" title="Permanent link">&para;</a></h2>
+<p><code>OrderingHints.from_wire</code> parses a wire-form mapping back into the dataclass. Unknown <code>anchor_block_position</code> values raise <code>ValueError</code>; new optional fields are tolerated.</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">tokenpak.tip.context_package</span><span class="w"> </span><span class="kn">import</span> <span class="n">ContextPackage</span>
+
+<span class="n">pkg</span> <span class="o">=</span> <span class="n">ContextPackage</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">wire</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">pkg</span><span class="o">.</span><span class="n">ordering_hints</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="n">hints</span> <span class="o">=</span> <span class="n">pkg</span><span class="o">.</span><span class="n">ordering_hints</span>
+    <span class="k">if</span> <span class="n">hints</span><span class="o">.</span><span class="n">anchor_block_position</span> <span class="ow">is</span> <span class="n">AnchorBlockPosition</span><span class="o">.</span><span class="n">OMIT</span><span class="p">:</span>
+        <span class="o">...</span>
+    <span class="k">if</span> <span class="n">hints</span><span class="o">.</span><span class="n">cache_sensitive_blocks</span><span class="p">:</span>
+        <span class="o">...</span>
+</code></pre></div>
+<p>If <code>ordering_hints</code> is absent from the wire payload, <code>pkg.ordering_hints</code> is <code>None</code>. Receivers that depend on hints should default sensibly in that case (don't synthesize the field; treat absence as "use my own defaults").</p>
+<hr />
+<h2 id="related">Related<a class="headerlink" href="#related" title="Permanent link">&para;</a></h2>
 <ul>
-<li><strong>Proxy won't start:</strong> Check port 8766 isn't in use (<code>lsof -i :8766</code>)</li>
-<li><strong>Can't import langchain_anthropic:</strong> Run <code>pip install langchain-anthropic --upgrade</code></li>
-<li><strong>Requests timing out:</strong> Increase timeout in <code>ChatAnthropic(timeout=120)</code></li>
-<li><strong>Proxy crashes with errors:</strong> Check logs: <code>tail -f /tmp/tokenpak-proxy.log</code></li>
-</ul>
-<h2 id="next-steps">Next Steps<a class="headerlink" href="#next-steps" title="Permanent link">&para;</a></h2>
-<ul>
-<li><a href="../../">TokenPak main documentation</a></li>
-<li><a href="../">Adapter architecture</a></li>
-<li>Vault injection guide (if docs exist)</li>
-<li><a href="../../performance/">Performance tuning</a> (if docs exist)</li>
+<li>TIP context-package schema: <a href="https://docs.tokenpak.ai/schemas/tip/context-package-v1.json"><code>context-package-v1.json</code></a></li>
+<li><a href="../reason-codes/">Pak Reason Codes</a> — <code>cache_ordering_candidate</code> is the reason code that motivates entries in <code>cache_sensitive_blocks</code>.</li>
+<li><a href="../risk-flags/">Pak Risk Flags</a> — <code>cache_sensitive_ordering</code> is the corresponding <code>info</code>-severity flag for a package.</li>
+<li><a href="../selection-explanation/">Deterministic Recall Pak selection</a> — <code>cache_ordering_candidate</code> is one of the signals an OSS selector can pin into <code>cache_sensitive_blocks</code>.</li>
 </ul>
 
 

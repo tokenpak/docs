@@ -10,31 +10,31 @@
         <meta name="author" content="TokenPak Contributors">
       
       
-        <link rel="canonical" href="https://docs.tokenpak.ai/COMPATIBILITY/">
+        <link rel="canonical" href="https://docs.tokenpak.ai/recall/inspect-and-explain/">
       
       
-        <link rel="prev" href="../comparison/">
+        <link rel="prev" href="../recall-store-api/">
       
       
-        <link rel="next" href="../demo/">
+        <link rel="next" href="../selection-explanation/">
       
       
         
       
       
-      <link rel="icon" href="../assets/favicon.ico">
+      <link rel="icon" href="../../assets/favicon.ico">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
     
     
       
-        <title>Compatibility - TokenPak</title>
+        <title>`tokenpak pak inspect` semantics - TokenPak</title>
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
       
         
-        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
       
       
 
@@ -53,9 +53,9 @@
       
     
     
-      <link rel="stylesheet" href="../assets/tokenpak.css">
+      <link rel="stylesheet" href="../../assets/tokenpak.css">
     
-    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -80,7 +80,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#tokenpak-python-compatibility-matrix" class="md-skip">
+        <a href="#tokenpak-pak-inspect-semantics-today-and-as-recall-data-populates" class="md-skip">
           Skip to content
         </a>
       
@@ -94,9 +94,9 @@
 
 <header class="md-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href=".." title="TokenPak" class="md-header__button md-logo" aria-label="TokenPak" data-md-component="logo">
+    <a href="../.." title="TokenPak" class="md-header__button md-logo" aria-label="TokenPak" data-md-component="logo">
       
-  <img src="../assets/logo.svg" alt="logo">
+  <img src="../../assets/logo.svg" alt="logo">
 
     </a>
     <label class="md-header__button md-icon" for="__drawer">
@@ -113,7 +113,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Compatibility
+              `tokenpak pak inspect` semantics
             
           </span>
         </div>
@@ -226,7 +226,7 @@
   
   
     <li class="md-tabs__item">
-      <a href=".." class="md-tabs__link">
+      <a href="../.." class="md-tabs__link">
         
   
   
@@ -243,13 +243,11 @@
   
   
   
-    
-  
   
     
     
-      <li class="md-tabs__item md-tabs__item--active">
-        <a href="../installation/" class="md-tabs__link">
+      <li class="md-tabs__item">
+        <a href="../../installation/" class="md-tabs__link">
           
   
   
@@ -269,7 +267,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../configuration/" class="md-tabs__link">
+        <a href="../../configuration/" class="md-tabs__link">
           
   
   
@@ -289,7 +287,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../architecture/" class="md-tabs__link">
+        <a href="../../architecture/" class="md-tabs__link">
           
   
   
@@ -309,7 +307,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../adapters/openai-compat/" class="md-tabs__link">
+        <a href="../../adapters/openai-compat/" class="md-tabs__link">
           
   
   
@@ -329,7 +327,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../observability/" class="md-tabs__link">
+        <a href="../../observability/" class="md-tabs__link">
           
   
   
@@ -349,7 +347,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../recipes/01-multi-provider-fallback/" class="md-tabs__link">
+        <a href="../../recipes/01-multi-provider-fallback/" class="md-tabs__link">
           
   
   
@@ -365,11 +363,13 @@
   
   
   
+    
+  
   
     
     
-      <li class="md-tabs__item">
-        <a href="../recall/" class="md-tabs__link">
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../" class="md-tabs__link">
           
   
   
@@ -389,7 +389,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../faq/" class="md-tabs__link">
+        <a href="../../faq/" class="md-tabs__link">
           
   
   
@@ -423,9 +423,9 @@
 
 <nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href=".." title="TokenPak" class="md-nav__button md-logo" aria-label="TokenPak" data-md-component="logo">
+    <a href="../.." title="TokenPak" class="md-nav__button md-logo" aria-label="TokenPak" data-md-component="logo">
       
-  <img src="../assets/logo.svg" alt="logo">
+  <img src="../../assets/logo.svg" alt="logo">
 
     </a>
     TokenPak
@@ -452,7 +452,7 @@
   
   
     <li class="md-nav__item">
-      <a href=".." class="md-nav__link">
+      <a href="../.." class="md-nav__link">
         
   
   
@@ -476,31 +476,26 @@
       
   
   
-    
   
   
-  
     
     
     
     
-      
-        
-        
       
       
         
       
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
         
           
-          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
             
   
   
@@ -518,7 +513,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_2">
             <span class="md-nav__icon md-icon"></span>
             
@@ -536,7 +531,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../installation/" class="md-nav__link">
+      <a href="../../installation/" class="md-nav__link">
         
   
   
@@ -564,7 +559,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../QUICKSTART/" class="md-nav__link">
+      <a href="../../QUICKSTART/" class="md-nav__link">
         
   
   
@@ -592,7 +587,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../comparison/" class="md-nav__link">
+      <a href="../../comparison/" class="md-nav__link">
         
   
   
@@ -617,37 +612,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Compatibility
-  
-
-    
-  </span>
-  
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../../COMPATIBILITY/" class="md-nav__link">
         
   
   
@@ -663,59 +631,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#supported-versions" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Supported Versions
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#notes" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Notes
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#updating-this-file" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Updating This File
-      
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -728,7 +643,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../demo/" class="md-nav__link">
+      <a href="../../demo/" class="md-nav__link">
         
   
   
@@ -815,7 +730,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../configuration/" class="md-nav__link">
+      <a href="../../configuration/" class="md-nav__link">
         
   
   
@@ -843,7 +758,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../env-vars/" class="md-nav__link">
+      <a href="../../env-vars/" class="md-nav__link">
         
   
   
@@ -871,7 +786,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../cli-reference/" class="md-nav__link">
+      <a href="../../cli-reference/" class="md-nav__link">
         
   
   
@@ -899,7 +814,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../adapters/" class="md-nav__link">
+      <a href="../../adapters/" class="md-nav__link">
         
   
   
@@ -927,7 +842,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../error-handling/" class="md-nav__link">
+      <a href="../../error-handling/" class="md-nav__link">
         
   
   
@@ -955,7 +870,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../troubleshooting/" class="md-nav__link">
+      <a href="../../troubleshooting/" class="md-nav__link">
         
   
   
@@ -983,7 +898,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../known-issues/" class="md-nav__link">
+      <a href="../../known-issues/" class="md-nav__link">
         
   
   
@@ -1011,7 +926,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../DOCKER/" class="md-nav__link">
+      <a href="../../DOCKER/" class="md-nav__link">
         
   
   
@@ -1039,7 +954,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../SAVINGS/" class="md-nav__link">
+      <a href="../../SAVINGS/" class="md-nav__link">
         
   
   
@@ -1067,7 +982,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../SECURITY/" class="md-nav__link">
+      <a href="../../SECURITY/" class="md-nav__link">
         
   
   
@@ -1154,7 +1069,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../architecture/" class="md-nav__link">
+      <a href="../../architecture/" class="md-nav__link">
         
   
   
@@ -1182,7 +1097,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../COMPONENT-DIAGRAM/" class="md-nav__link">
+      <a href="../../COMPONENT-DIAGRAM/" class="md-nav__link">
         
   
   
@@ -1210,7 +1125,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../API/" class="md-nav__link">
+      <a href="../../API/" class="md-nav__link">
         
   
   
@@ -1238,7 +1153,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../api-reference/" class="md-nav__link">
+      <a href="../../api-reference/" class="md-nav__link">
         
   
   
@@ -1266,7 +1181,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../features/" class="md-nav__link">
+      <a href="../../features/" class="md-nav__link">
         
   
   
@@ -1294,7 +1209,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../plugin-guide/" class="md-nav__link">
+      <a href="../../plugin-guide/" class="md-nav__link">
         
   
   
@@ -1322,7 +1237,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../plugin-system-architecture/" class="md-nav__link">
+      <a href="../../plugin-system-architecture/" class="md-nav__link">
         
   
   
@@ -1350,7 +1265,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../assets/DIAGRAMS/" class="md-nav__link">
+      <a href="../../assets/DIAGRAMS/" class="md-nav__link">
         
   
   
@@ -1437,7 +1352,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../adapters/openai-compat/" class="md-nav__link">
+      <a href="../../adapters/openai-compat/" class="md-nav__link">
         
   
   
@@ -1465,7 +1380,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../adapters/litellm/" class="md-nav__link">
+      <a href="../../adapters/litellm/" class="md-nav__link">
         
   
   
@@ -1493,7 +1408,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../adapters/langchain/" class="md-nav__link">
+      <a href="../../adapters/langchain/" class="md-nav__link">
         
   
   
@@ -1521,7 +1436,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../adapters/google/" class="md-nav__link">
+      <a href="../../adapters/google/" class="md-nav__link">
         
   
   
@@ -1608,7 +1523,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../observability/" class="md-nav__link">
+      <a href="../../observability/" class="md-nav__link">
         
   
   
@@ -1643,7 +1558,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../performance/" class="md-nav__link">
+      <a href="../../performance/" class="md-nav__link">
         
   
   
@@ -1671,7 +1586,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../PERFORMANCE/" class="md-nav__link">
+      <a href="../../PERFORMANCE/" class="md-nav__link">
         
   
   
@@ -1699,7 +1614,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../COMPRESSION_TUNING/" class="md-nav__link">
+      <a href="../../COMPRESSION_TUNING/" class="md-nav__link">
         
   
   
@@ -1730,7 +1645,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../LATENCY/" class="md-nav__link">
+      <a href="../../LATENCY/" class="md-nav__link">
         
   
   
@@ -1758,7 +1673,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../performance/memory-analysis/" class="md-nav__link">
+      <a href="../../performance/memory-analysis/" class="md-nav__link">
         
   
   
@@ -1786,7 +1701,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../TESTING/" class="md-nav__link">
+      <a href="../../TESTING/" class="md-nav__link">
         
   
   
@@ -1873,7 +1788,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../recipes/01-multi-provider-fallback/" class="md-nav__link">
+      <a href="../../recipes/01-multi-provider-fallback/" class="md-nav__link">
         
   
   
@@ -1901,7 +1816,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../recipes/02-budget-caps/" class="md-nav__link">
+      <a href="../../recipes/02-budget-caps/" class="md-nav__link">
         
   
   
@@ -1929,7 +1844,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../recipes/03-per-user-rate-limiting/" class="md-nav__link">
+      <a href="../../recipes/03-per-user-rate-limiting/" class="md-nav__link">
         
   
   
@@ -1957,7 +1872,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../recipes/04-model-routing-by-use-case/" class="md-nav__link">
+      <a href="../../recipes/04-model-routing-by-use-case/" class="md-nav__link">
         
   
   
@@ -1985,7 +1900,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../recipes/05-cost-monitoring/" class="md-nav__link">
+      <a href="../../recipes/05-cost-monitoring/" class="md-nav__link">
         
   
   
@@ -2013,7 +1928,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../recipes/06-streaming-responses/" class="md-nav__link">
+      <a href="../../recipes/06-streaming-responses/" class="md-nav__link">
         
   
   
@@ -2041,7 +1956,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../recipes/07-local-development-mock/" class="md-nav__link">
+      <a href="../../recipes/07-local-development-mock/" class="md-nav__link">
         
   
   
@@ -2073,26 +1988,31 @@
       
   
   
+    
   
   
+  
     
     
     
     
+      
+        
+        
       
       
         
       
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" checked>
         
           
-          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="">
             
   
   
@@ -2110,7 +2030,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_8">
             <span class="md-nav__icon md-icon"></span>
             
@@ -2128,7 +2048,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../recall/" class="md-nav__link">
+      <a href="../" class="md-nav__link">
         
   
   
@@ -2156,7 +2076,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../recall/reason-codes/" class="md-nav__link">
+      <a href="../reason-codes/" class="md-nav__link">
         
   
   
@@ -2184,7 +2104,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../recall/risk-flags/" class="md-nav__link">
+      <a href="../risk-flags/" class="md-nav__link">
         
   
   
@@ -2212,7 +2132,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../recall/recall-store-api/" class="md-nav__link">
+      <a href="../recall-store-api/" class="md-nav__link">
         
   
   
@@ -2237,10 +2157,37 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../recall/inspect-and-explain/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    `tokenpak pak inspect` semantics
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -2256,6 +2203,187 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#what-inspect-returns-today" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What inspect returns today
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="What inspect returns today">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#text-output" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Text output
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#json-output" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        JSON output
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-inspect-does-not-do-today" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What inspect does not do today
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#errors" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Errors
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-inspect-becomes-an-explanation-surface" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How inspect becomes an explanation surface
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="How inspect becomes an explanation surface">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#anticipated-json-shape-with-recall-rows-present" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Anticipated JSON shape with recall rows present
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#anticipated-text-shape" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Anticipated text shape
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#backward-compatibility" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Backward compatibility
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tokenpak-pak-status-the-diagnostic-surface" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tokenpak pak status — the diagnostic surface
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="tokenpak pak status — the diagnostic surface">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-status-tells-you-about-recall-data" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What status tells you about recall data
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#verbs-that-are-not-in-this-lane" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Verbs that are not in this lane
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#related" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Related
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -2268,7 +2396,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../recall/selection-explanation/" class="md-nav__link">
+      <a href="../selection-explanation/" class="md-nav__link">
         
   
   
@@ -2296,7 +2424,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../recall/ordering-hints-examples/" class="md-nav__link">
+      <a href="../ordering-hints-examples/" class="md-nav__link">
         
   
   
@@ -2383,7 +2511,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../faq/" class="md-nav__link">
+      <a href="../../faq/" class="md-nav__link">
         
   
   
@@ -2411,7 +2539,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../EXAMPLES/" class="md-nav__link">
+      <a href="../../EXAMPLES/" class="md-nav__link">
         
   
   
@@ -2439,7 +2567,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../release-checklist/" class="md-nav__link">
+      <a href="../../release-checklist/" class="md-nav__link">
         
   
   
@@ -2494,10 +2622,149 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#supported-versions" class="md-nav__link">
+  <a href="#what-inspect-returns-today" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Supported Versions
+        What inspect returns today
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="What inspect returns today">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#text-output" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Text output
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#json-output" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        JSON output
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-inspect-does-not-do-today" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What inspect does not do today
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#errors" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Errors
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-inspect-becomes-an-explanation-surface" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How inspect becomes an explanation surface
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="How inspect becomes an explanation surface">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#anticipated-json-shape-with-recall-rows-present" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Anticipated JSON shape with recall rows present
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#anticipated-text-shape" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Anticipated text shape
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#backward-compatibility" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Backward compatibility
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tokenpak-pak-status-the-diagnostic-surface" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tokenpak pak status — the diagnostic surface
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="tokenpak pak status — the diagnostic surface">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-status-tells-you-about-recall-data" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What status tells you about recall data
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#verbs-that-are-not-in-this-lane" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Verbs that are not in this lane
       
     </span>
   </a>
@@ -2505,21 +2772,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#notes" class="md-nav__link">
+  <a href="#related" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Notes
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#updating-this-file" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Updating This File
+        Related
       
     </span>
   </a>
@@ -2546,59 +2802,224 @@
   
 
 
-<h1 id="tokenpak-python-compatibility-matrix">TokenPak Python Compatibility Matrix<a class="headerlink" href="#tokenpak-python-compatibility-matrix" title="Permanent link">&para;</a></h1>
-<p>TokenPak requires Python <strong>3.10+</strong> (<code>requires-python = "&gt;=3.10"</code>).</p>
-<h2 id="supported-versions">Supported Versions<a class="headerlink" href="#supported-versions" title="Permanent link">&para;</a></h2>
+<h1 id="tokenpak-pak-inspect-semantics-today-and-as-recall-data-populates"><code>tokenpak pak inspect</code> — semantics today, and as recall data populates<a class="headerlink" href="#tokenpak-pak-inspect-semantics-today-and-as-recall-data-populates" title="Permanent link">&para;</a></h1>
+<p>The Phase 1 OSS surface for examining a Pak is <code>tokenpak pak inspect</code>. It is read-only, it works without the Pro daemon for Vault Paks, and it returns the same payload shape as the corresponding HTTP endpoint so dashboards, fleet automation, and human reviewers see one canonical structure.</p>
+<p>This page documents:</p>
+<ol>
+<li>What <code>tokenpak pak inspect</code> surfaces <strong>today</strong> (in Phase 1 OSS).</li>
+<li>What it surfaces <strong>as <code>pak_reason_codes</code> and <code>pak_risk_flags</code> rows populate</strong> — i.e. how the inspector becomes an explanation surface without new verbs being added.</li>
+<li>The <code>tokenpak pak status</code> diagnostic, and how to read its output.</li>
+</ol>
+<p>The lane is <strong>inspect refinement, not new verbs</strong>. No <code>plan</code>, <code>assemble</code>, <code>validate</code>, or <code>explain</code> subcommand is being introduced; the goal is that <code>inspect</code> becomes informationally richer as the join tables fill in.</p>
+<hr />
+<h2 id="what-inspect-returns-today">What <code>inspect</code> returns today<a class="headerlink" href="#what-inspect-returns-today" title="Permanent link">&para;</a></h2>
+<p><code>tokenpak pak inspect &lt;pak-id-or-file&gt;</code> resolves a Pak ID (or reads a Pak file from disk) and prints its metadata. Two surfaces:</p>
+<ul>
+<li><strong>Text mode (default)</strong> — human-readable, suitable for terminal output.</li>
+<li><strong>JSON mode (<code>--json</code>)</strong> — exactly the same payload as <code>GET /pak/v1/inspect/&lt;pak-id&gt;</code>. Field names, types, and key ordering are stable across the two surfaces by design.</li>
+</ul>
+<h3 id="text-output">Text output<a class="headerlink" href="#text-output" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>$ tokenpak pak inspect vault:auth-pattern#a1b2c3
+Pak vault:auth-pattern#a1b2c3
+────────────────────────────────────────
+  type        : vault
+  title       : router-not-vault credential architecture
+  status      : active
+  authority   : llm_generated
+  confidence  : 0.8
+  source      : vault (doc)
+  source_hash : 0123456789abcdef…
+  created_at  : 2026-05-09T14:22:11Z
+  project     : tokenpak
+
+Summary:
+  Single-refresh-owner invariant across providers; cohabitation flagged.
+</code></pre></div>
+<h3 id="json-output">JSON output<a class="headerlink" href="#json-output" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;pak_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;vault:auth-pattern#a1b2c3&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;pak_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;vault&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;router-not-vault credential architecture&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;status&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;active&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;authority&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;llm_generated&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;confidence&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.8</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;source&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;platform&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;vault&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;source_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;doc&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;source_hash&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;created_at&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2026-05-09T14:22:11Z&quot;</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="nt">&quot;scope&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;project&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;tokenpak&quot;</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="nt">&quot;summary&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Single-refresh-owner invariant across providers; cohabitation flagged.&quot;</span>
+<span class="p">}</span>
+</code></pre></div>
+<h3 id="what-inspect-does-not-do-today">What <code>inspect</code> does <strong>not</strong> do today<a class="headerlink" href="#what-inspect-does-not-do-today" title="Permanent link">&para;</a></h3>
+<p>Phase 1 <code>inspect</code> is intentionally narrow:</p>
+<ul>
+<li>It resolves Vault Paks via the OSS adapter. Other Pak subtypes (interaction, decision, recall, handoff) return a "Pro daemon required" envelope with exit code 1.</li>
+<li>It returns metadata. It does not return Pak body bytes, anchors, or referenced source content — <code>tokenpak pak export</code> is the read path for content.</li>
+<li>It does not yet read the <code>pak_reason_codes</code> or <code>pak_risk_flags</code> join tables. That refinement is documented below.</li>
+</ul>
+<h3 id="errors">Errors<a class="headerlink" href="#errors" title="Permanent link">&para;</a></h3>
+<p><code>inspect</code> exits with code 1 on the user-facing errors below and emits a JSON error envelope under <code>--json</code>:</p>
 <table>
 <thead>
 <tr>
-<th>Python</th>
-<th>Status</th>
-<th>Notes</th>
+<th>Error</th>
+<th>JSON <code>error</code> field</th>
+<th>Text</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>3.10</td>
-<td>✅ Supported</td>
-<td>Minimum supported version</td>
+<td>Vault block not indexed</td>
+<td><code>pak_not_found</code></td>
+<td><code>vault block not indexed: &lt;pak-id&gt;</code></td>
 </tr>
 <tr>
-<td>3.11</td>
-<td>✅ Supported</td>
-<td>Primary CI version (coverage gates run here)</td>
+<td>Pak file missing</td>
+<td><code>file_not_found</code></td>
+<td><code>file not found: &lt;path&gt;</code></td>
 </tr>
 <tr>
-<td>3.12</td>
-<td>✅ Supported</td>
-<td>Tested in CI matrix</td>
+<td>Pak file unparseable</td>
+<td><code>invalid_pak_file</code></td>
+<td><code>cannot parse Pak file: &lt;reason&gt;</code></td>
 </tr>
 <tr>
-<td>3.13</td>
-<td>✅ Supported</td>
-<td>Added to CI matrix 2026-03-26</td>
-</tr>
-<tr>
-<td>3.9</td>
-<td>❌ Not supported</td>
-<td>Requires <code>match</code>/<code>case</code> and 3.10+ typing features</td>
+<td>Non-Vault subtype on Phase 1 OSS</td>
+<td><code>not_implemented</code> (<code>reason: pro_daemon_required</code>)</td>
+<td>"requires the Pro daemon — non-Vault subtypes are encrypted at rest"</td>
 </tr>
 </tbody>
 </table>
-<h2 id="notes">Notes<a class="headerlink" href="#notes" title="Permanent link">&para;</a></h2>
+<p>Exit code 2 is reserved for argparse usage errors (handled by argparse itself).</p>
+<hr />
+<h2 id="how-inspect-becomes-an-explanation-surface">How <code>inspect</code> becomes an explanation surface<a class="headerlink" href="#how-inspect-becomes-an-explanation-surface" title="Permanent link">&para;</a></h2>
+<p>The recall storage v3 migration added two join tables: <a href="../reason-codes/"><code>pak_reason_codes</code></a> and <a href="../risk-flags/"><code>pak_risk_flags</code></a>. Once a recall pipeline writes rows to those tables for a given <code>pak_id</code>, the same Pak can be inspected with two additional, additive sections — without a new CLI verb.</p>
+<p>The contract is:</p>
 <ul>
-<li><strong>Python 3.13</strong> is GC-cycle-aware (PEP 703 no-GIL experimental builds exist but are not tested).
-  Standard CPython 3.13 is fully supported.</li>
-<li>CI runs <code>fail-fast: false</code> — all versions tested regardless of individual failures.</li>
-<li>Coverage gates (Tier-1 ≥50%, overall ≥45%) run on Python 3.11 only.</li>
-<li>See <code>.github/workflows/ci.yml</code> for the full matrix definition.</li>
+<li><strong>Field shape is additive.</strong> When reason / risk rows exist for the inspected Pak, they appear as new top-level keys in the JSON payload. When they don't, the keys are <strong>omitted</strong> — receivers that don't know about reason codes or risk flags see byte-identical output to today.</li>
+<li><strong>Field source is the join table.</strong> The inspector reads <code>pak_reason_codes</code> and <code>pak_risk_flags</code> via <code>RecallStore.get_pak_reason_codes</code> / <code>get_pak_risk_flags</code>. No new state, no new files.</li>
+<li><strong>No enforcement on <code>block</code>.</strong> Inspect-time output for a Pak with a <code>severity="block"</code> row is the row itself — surfaced for the human reader. OSS does not refuse to inspect, export, or otherwise read the Pak (see <a href="../risk-flags/#oss-does-not-refuse-on-severity--block"><code>risk-flags.md</code></a>).</li>
+<li><strong>Closed catalogues.</strong> The inspector renders catalogue codes / flags verbatim from the join table; it does not invent new strings. A reason code or risk flag that is not in the registry is still rendered (the runtime does not enforce the catalogue), but a registry-aware validator will surface that mismatch.</li>
 </ul>
-<h2 id="updating-this-file">Updating This File<a class="headerlink" href="#updating-this-file" title="Permanent link">&para;</a></h2>
-<p>When a new Python version is released or support is dropped, update:
-1. This table
-2. <code>.github/workflows/ci.yml</code> matrix
-3. <code>packages/core/pyproject.toml</code> <code>requires-python</code>
-4. README badge</p>
+<h3 id="anticipated-json-shape-with-recall-rows-present">Anticipated JSON shape with recall rows present<a class="headerlink" href="#anticipated-json-shape-with-recall-rows-present" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;pak_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;vault:auth-pattern#a1b2c3&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;pak_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;vault&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;router-not-vault credential architecture&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;status&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;active&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;authority&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;llm_generated&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;confidence&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.8</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;source&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;...&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;...&quot;</span><span class="w"> </span><span class="p">},</span>
+<span class="w">  </span><span class="nt">&quot;scope&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;project&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;tokenpak&quot;</span><span class="w"> </span><span class="p">},</span>
+<span class="w">  </span><span class="nt">&quot;summary&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;...&quot;</span><span class="p">,</span>
+
+<span class="w">  </span><span class="nt">&quot;reason_codes&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;code&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;current_task&quot;</span><span class="p">,</span><span class="w">     </span><span class="nt">&quot;weight&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">1.0</span><span class="w"> </span><span class="p">},</span>
+<span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;code&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;standard_applies&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;weight&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.9</span><span class="w"> </span><span class="p">},</span>
+<span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;code&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;direct_file_match&quot;</span><span class="p">,</span><span class="nt">&quot;weight&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.7</span><span class="w"> </span><span class="p">}</span>
+<span class="w">  </span><span class="p">],</span>
+<span class="w">  </span><span class="nt">&quot;risk_flags&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;flag&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;governance_applies&quot;</span><span class="p">,</span><span class="w">    </span><span class="nt">&quot;severity&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;warn&quot;</span><span class="w"> </span><span class="p">},</span>
+<span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;flag&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;cache_sensitive_ordering&quot;</span><span class="p">,</span><span class="nt">&quot;severity&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;info&quot;</span><span class="w"> </span><span class="p">}</span>
+<span class="w">  </span><span class="p">]</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Both arrays are sorted ascending on the natural key (<code>code</code> / <code>flag</code>) so the output is deterministic across runs.</p>
+<h3 id="anticipated-text-shape">Anticipated text shape<a class="headerlink" href="#anticipated-text-shape" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>$ tokenpak pak inspect vault:auth-pattern#a1b2c3
+Pak vault:auth-pattern#a1b2c3
+────────────────────────────────────────
+  type        : vault
+  title       : router-not-vault credential architecture
+  status      : active
+  authority   : llm_generated
+  ... (existing fields) ...
+
+Reason codes:
+  current_task              weight=1.00   (task)
+  direct_file_match         weight=0.70   (match)
+  standard_applies          weight=0.90   (authority)
+
+Risk flags:
+  ⚠ governance_applies      (warn)
+  ℹ cache_sensitive_ordering (info)
+</code></pre></div>
+<p>The category column on reason codes (<code>task / match / recency / authority / shape / exclude</code>) is looked up from the registry, not stored in the join table — the inspector renders it for readability.</p>
+<h3 id="backward-compatibility">Backward compatibility<a class="headerlink" href="#backward-compatibility" title="Permanent link">&para;</a></h3>
+<p><code>tokenpak pak inspect</code> output is part of the OSS public surface. The additive shape above preserves all existing JSON keys; new keys (<code>reason_codes</code>, <code>risk_flags</code>) are introduced only when the join tables have content. A consumer that pins to today's JSON shape continues to parse correctly when reason / risk rows are absent.</p>
+<p>If you depend on this surface in scripts, treat both new keys as optional and absent-by-default.</p>
+<hr />
+<h2 id="tokenpak-pak-status-the-diagnostic-surface"><code>tokenpak pak status</code> — the diagnostic surface<a class="headerlink" href="#tokenpak-pak-status-the-diagnostic-surface" title="Permanent link">&para;</a></h2>
+<p><code>tokenpak pak status</code> is the always-works diagnostic: it runs whether or not the Pro daemon is installed, and reports MultiPak readiness. JSON mode (<code>--json</code>) mirrors <code>GET /pak/v1/status</code>.</p>
+<div class="highlight"><pre><span></span><code>$ tokenpak pak status
+MultiPak Pro Phase 1 status
+───────────────────────────
+✅ Daemon state           : active
+⚠️ multipak.enabled       : false
+⚠️ Pak store present      : false
+📦 Vault Paks indexed     : 142
+📦 Promotion candidates   : 7
+</code></pre></div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>What it says</th>
+<th>Where it comes from</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>daemon_state</code></td>
+<td><code>active</code>, <code>degraded</code>, or <code>unavailable</code></td>
+<td><code>tokenpak.licensing.daemon_probe.detect_daemon_state()</code></td>
+</tr>
+<tr>
+<td><code>multipak_enabled</code></td>
+<td>The <code>multipak.enabled</code> config flag (default <code>False</code>)</td>
+<td><code>tokenpak doctor</code> / config loader</td>
+</tr>
+<tr>
+<td><code>pak_store_present</code></td>
+<td>Whether the Pro multipak state directory exists</td>
+<td>filesystem check</td>
+</tr>
+<tr>
+<td><code>vault_paks_indexed</code></td>
+<td>How many vault blocks the bridge currently has indexed</td>
+<td>vault bridge</td>
+</tr>
+<tr>
+<td><code>promotion_candidates</code></td>
+<td>How many journal entries are flagged as Pak promotion candidates</td>
+<td><code>companion.journal.pak_aware</code></td>
+</tr>
+</tbody>
+</table>
+<p>Exit code is always <code>0</code> — status is informational, not pass/fail.</p>
+<h3 id="what-status-tells-you-about-recall-data">What <code>status</code> tells you about recall data<a class="headerlink" href="#what-status-tells-you-about-recall-data" title="Permanent link">&para;</a></h3>
+<p><code>status</code> is intentionally not a per-Pak surface. It reports <strong>inventory</strong> (how many Vault Paks are indexed, how many promotion candidates are queued) but does not aggregate reason-code or risk-flag counts. If you want a per-Pak view of reason / risk rows, call <code>inspect</code>; if you want a programmatic walk of the join tables, use <code>RecallStore.get_pak_reason_codes</code> / <code>get_pak_risk_flags</code> directly.</p>
+<hr />
+<h2 id="verbs-that-are-not-in-this-lane">Verbs that are <strong>not</strong> in this lane<a class="headerlink" href="#verbs-that-are-not-in-this-lane" title="Permanent link">&para;</a></h2>
+<p>Two verbs are mentioned only to be explicitly out of scope:</p>
+<ul>
+<li><strong><code>explain</code></strong> — Phase 1 OSS does not ship a <code>tokenpak pak explain</code> verb. The "explanation" surface is <code>inspect</code> becoming richer as the join tables populate; an <code>explain</code> verb would be a new surface and is not part of this lane.</li>
+<li><strong><code>plan</code> / <code>assemble</code> / <code>validate</code></strong> — these belong to the Pro Phase 3 Context Package builder. Not in the OSS Phase 1 surface, and not added here.</li>
+</ul>
+<p>The forbidden list is documented alongside the Pak lane in the protocol guide.</p>
+<hr />
+<h2 id="related">Related<a class="headerlink" href="#related" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="../reason-codes/">Pak Reason Codes</a> — what fields can appear under <code>reason_codes</code>.</li>
+<li><a href="../risk-flags/">Pak Risk Flags</a> — what fields can appear under <code>risk_flags</code>.</li>
+<li><a href="../recall-store-api/">Recall store API</a> — how to write the join rows that drive the additive inspector output.</li>
+<li><a href="../selection-explanation/">Deterministic Recall Pak selection</a> — the OSS-visible signals that motivate the recall data in the first place.</li>
+</ul>
 
 
 
@@ -2674,10 +3095,10 @@
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.instant", "navigation.tracking", "navigation.tabs", "navigation.sections", "navigation.top", "search.suggest", "search.highlight", "content.code.copy", "content.code.annotate"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.instant", "navigation.tracking", "navigation.tabs", "navigation.sections", "navigation.top", "search.suggest", "search.highlight", "content.code.copy", "content.code.annotate"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
       
     
   </body>

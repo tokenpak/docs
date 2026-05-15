@@ -10,13 +10,13 @@
         <meta name="author" content="TokenPak Contributors">
       
       
-        <link rel="canonical" href="https://docs.tokenpak.ai/production-sla/">
+        <link rel="canonical" href="https://docs.tokenpak.ai/known-issues/">
       
       
-        <link rel="prev" href="../observability/">
+        <link rel="prev" href="../troubleshooting/">
       
       
-        <link rel="next" href="../performance/">
+        <link rel="next" href="../DOCKER/">
       
       
         
@@ -27,7 +27,7 @@
     
     
       
-        <title>production-sla - TokenPak</title>
+        <title>Known Issues — OSS beta - TokenPak</title>
       
     
     
@@ -48,10 +48,12 @@
         
         
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
-        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,300i,400,400i,700,700i%7CJetBrains+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Inter";--md-code-font:"JetBrains Mono"}</style>
       
     
+    
+      <link rel="stylesheet" href="../assets/tokenpak.css">
     
     <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
@@ -69,7 +71,7 @@
     
     
     
-    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="teal">
   
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
@@ -78,7 +80,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#tokenpak-proxy-production-sla-targets" class="md-skip">
+        <a href="#known-issues-oss-beta" class="md-skip">
           Skip to content
         </a>
       
@@ -111,7 +113,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              production-sla
+              Known Issues — OSS beta
             
           </span>
         </div>
@@ -124,7 +126,7 @@
     
     
     
-    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="teal"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
     
       <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
@@ -134,7 +136,7 @@
     
     
     
-    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="teal" data-md-color-accent="teal"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
     
       <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
@@ -261,10 +263,12 @@
   
   
   
+    
+  
   
     
     
-      <li class="md-tabs__item">
+      <li class="md-tabs__item md-tabs__item--active">
         <a href="../configuration/" class="md-tabs__link">
           
   
@@ -321,12 +325,10 @@
   
   
   
-    
-  
   
     
     
-      <li class="md-tabs__item md-tabs__item--active">
+      <li class="md-tabs__item">
         <a href="../observability/" class="md-tabs__link">
           
   
@@ -352,6 +354,26 @@
   
   
   Recipes
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../recall/" class="md-tabs__link">
+          
+  
+  
+  Recall
 
         </a>
       </li>
@@ -653,26 +675,31 @@
       
   
   
+    
   
   
+  
     
     
     
     
+      
+        
+        
       
       
         
       
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
         
           
-          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
             
   
   
@@ -690,7 +717,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_3">
             <span class="md-nav__icon md-icon"></span>
             
@@ -764,7 +791,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../adapters/" class="md-nav__link">
+      <a href="../cli-reference/" class="md-nav__link">
         
   
   
@@ -772,6 +799,34 @@
     
   
     CLI Reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../adapters/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Adapter Reference
   
 
     
@@ -836,6 +891,158 @@
   
 
       </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Known Issues
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Known Issues
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#storage-path-migration-in-progress" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Storage path migration in progress
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pak-scoring-ranking-and-assembly-are-not-in-the-oss-beta" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pak scoring, ranking, and assembly are not in the OSS beta
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#some-documented-cli-commands-are-experimental" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Some documented CLI commands are experimental
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#default-port-standardization" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Default port standardization
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#coverage-gate-is-advisory" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Coverage gate is advisory
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#no-managed-cloud-hosted-offering" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        No managed cloud / hosted offering
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reporting-beta-issues" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reporting beta issues
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -1390,31 +1597,26 @@
       
   
   
-    
   
   
-  
     
     
     
     
-      
-        
-        
       
       
         
       
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
         
           
-          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="">
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
             
   
   
@@ -1432,7 +1634,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_6">
             <span class="md-nav__icon md-icon"></span>
             
@@ -1473,197 +1675,6 @@
   
 
       </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-    
-  
-  
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Production SLA
-  
-
-    
-  </span>
-  
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Production SLA
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#proxy-endpoint-slas" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Proxy Endpoint SLAs
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#measured-performance-2026-03-24" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Measured Performance (2026-03-24)
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#features-validated-phase-6" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Features Validated (Phase 6)
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Features Validated (Phase 6)">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#health-endpoint" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        /health endpoint
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#index-freshness-check" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Index Freshness Check
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#graceful-adapter-fallback" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Graceful Adapter Fallback
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#request-timeout-enforcement" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Request Timeout Enforcement
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#load-test-suite" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Load Test Suite
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#error-rate-budget" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Error Rate Budget
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#upgrade-path" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Upgrade Path
-      
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -2132,7 +2143,7 @@
   <span class="md-ellipsis">
     
   
-    Support
+    Recall
   
 
     
@@ -2145,6 +2156,261 @@
         
         <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Recall
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../recall/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../recall/reason-codes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Pak Reason Codes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../recall/risk-flags/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Pak Risk Flags
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../recall/recall-store-api/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Recall Store API
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../recall/inspect-and-explain/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    `tokenpak pak inspect` semantics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../recall/selection-explanation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Deterministic Recall Pak Selection
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../recall/ordering-hints-examples/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Context Package `ordering_hints` Examples
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_9" >
+        
+          
+          <label class="md-nav__link" for="__nav_9" id="__nav_9_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Support
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_9">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -2272,10 +2538,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#proxy-endpoint-slas" class="md-nav__link">
+  <a href="#storage-path-migration-in-progress" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Proxy Endpoint SLAs
+        Storage path migration in progress
       
     </span>
   </a>
@@ -2283,10 +2549,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#measured-performance-2026-03-24" class="md-nav__link">
+  <a href="#pak-scoring-ranking-and-assembly-are-not-in-the-oss-beta" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Measured Performance (2026-03-24)
+        Pak scoring, ranking, and assembly are not in the OSS beta
       
     </span>
   </a>
@@ -2294,71 +2560,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#features-validated-phase-6" class="md-nav__link">
+  <a href="#some-documented-cli-commands-are-experimental" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Features Validated (Phase 6)
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Features Validated (Phase 6)">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#health-endpoint" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        /health endpoint
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#index-freshness-check" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Index Freshness Check
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#graceful-adapter-fallback" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Graceful Adapter Fallback
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#request-timeout-enforcement" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Request Timeout Enforcement
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#load-test-suite" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Load Test Suite
+        Some documented CLI commands are experimental
       
     </span>
   </a>
@@ -2366,10 +2571,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#error-rate-budget" class="md-nav__link">
+  <a href="#default-port-standardization" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Error Rate Budget
+        Default port standardization
       
     </span>
   </a>
@@ -2377,10 +2582,32 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#upgrade-path" class="md-nav__link">
+  <a href="#coverage-gate-is-advisory" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Upgrade Path
+        Coverage gate is advisory
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#no-managed-cloud-hosted-offering" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        No managed cloud / hosted offering
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reporting-beta-issues" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reporting beta issues
       
     </span>
   </a>
@@ -2407,118 +2634,66 @@
   
 
 
-<h1 id="tokenpak-proxy-production-sla-targets">TokenPak Proxy — Production SLA Targets<a class="headerlink" href="#tokenpak-proxy-production-sla-targets" title="Permanent link">&para;</a></h1>
-<p><em>Last updated: 2026-03-24 | Phase 6 Production Hardening</em></p>
-<h2 id="proxy-endpoint-slas">Proxy Endpoint SLAs<a class="headerlink" href="#proxy-endpoint-slas" title="Permanent link">&para;</a></h2>
-<table>
-<thead>
-<tr>
-<th>Endpoint</th>
-<th>p50 target</th>
-<th>p95 target</th>
-<th>p99 target</th>
-<th>Error rate</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>/health</code></td>
-<td>&lt; 15ms</td>
-<td>&lt; 250ms</td>
-<td>&lt; 500ms</td>
-<td>&lt; 0.1%</td>
-</tr>
-<tr>
-<td><code>/stats</code></td>
-<td>&lt; 15ms</td>
-<td>&lt; 250ms</td>
-<td>&lt; 500ms</td>
-<td>&lt; 0.1%</td>
-</tr>
-<tr>
-<td><code>/v1/messages</code> (passthrough)</td>
-<td>&lt; 50ms overhead</td>
-<td>—</td>
-<td>—</td>
-<td>&lt; 0.1%</td>
-</tr>
-</tbody>
-</table>
-<blockquote>
-<p><strong>Note:</strong> Targets reflect Test Environment (4GB RAM, Python HTTPServer, 20-worker bounded pool).
-Production deployment with asyncio server (<code>server_async.py</code>) should achieve p99 &lt; 20ms.</p>
-</blockquote>
-<h2 id="measured-performance-2026-03-24">Measured Performance (2026-03-24)<a class="headerlink" href="#measured-performance-2026-03-24" title="Permanent link">&para;</a></h2>
-<p>Benchmark run on Test Environment, 100 req/sec sustained for 5s:</p>
-<table>
-<thead>
-<tr>
-<th>Endpoint</th>
-<th>p50</th>
-<th>p95</th>
-<th>p99</th>
-<th>Errors</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>/health</code></td>
-<td>~4ms</td>
-<td>~100ms</td>
-<td>~250ms</td>
-<td>0%</td>
-</tr>
-<tr>
-<td><code>/stats</code></td>
-<td>~4ms</td>
-<td>~100ms</td>
-<td>~250ms</td>
-<td>0%</td>
-</tr>
-</tbody>
-</table>
-<h2 id="features-validated-phase-6">Features Validated (Phase 6)<a class="headerlink" href="#features-validated-phase-6" title="Permanent link">&para;</a></h2>
-<h3 id="health-endpoint">/health endpoint<a class="headerlink" href="#health-endpoint" title="Permanent link">&para;</a></h3>
-<p>Reports: <code>status</code>, <code>uptime_seconds</code>, <code>compression_ratio_avg</code>, <code>circuit_breakers</code>, <code>index_freshness</code>, <code>request_timeout_seconds</code></p>
-<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>http://localhost:8766/health
-curl<span class="w"> </span>http://localhost:8766/health?deep<span class="o">=</span><span class="nb">true</span><span class="w">   </span><span class="c1"># includes memory + disk</span>
-</code></pre></div>
-<h3 id="index-freshness-check">Index Freshness Check<a class="headerlink" href="#index-freshness-check" title="Permanent link">&para;</a></h3>
-<p><code>/health</code> now reports <code>index_freshness.age_seconds</code> — stale if &gt; 600s (10 min).
-Index auto-reloads every 5min via <code>VAULT_INDEX_RELOAD_INTERVAL</code>.</p>
-<h3 id="graceful-adapter-fallback">Graceful Adapter Fallback<a class="headerlink" href="#graceful-adapter-fallback" title="Permanent link">&para;</a></h3>
-<p>Circuit breaker per provider (<code>tokenpak/agent/proxy/circuit_breaker.py</code>):
-- Opens after 5 failures in 60s window
-- HALF_OPEN probe after 60s recovery timeout
-- Fail-fast 503 when open (no timeout wasted)</p>
-<h3 id="request-timeout-enforcement">Request Timeout Enforcement<a class="headerlink" href="#request-timeout-enforcement" title="Permanent link">&para;</a></h3>
-<p>Set <code>TOKENPAK_REQUEST_TIMEOUT=&lt;seconds&gt;</code> to enforce per-request upstream timeout.
-Default: <code>0</code> (disabled — rely on pool defaults).</p>
-<div class="highlight"><pre><span></span><code><span class="nb">export</span><span class="w"> </span><span class="nv">TOKENPAK_REQUEST_TIMEOUT</span><span class="o">=</span><span class="m">30</span><span class="w">   </span><span class="c1"># 30s hard timeout per request</span>
-</code></pre></div>
-<p>Timeout is passed directly to the connection pool's <code>stream()</code> and <code>request()</code> calls.</p>
-<h2 id="load-test-suite">Load Test Suite<a class="headerlink" href="#load-test-suite" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>~/Projects/tokenpak
-python<span class="w"> </span>-m<span class="w"> </span>pytest<span class="w"> </span>tests/benchmarks/test_load_100rps.py<span class="w"> </span>-v
-</code></pre></div>
-<p>6 tests covering:
-- p99 &lt; 500ms at 100 req/sec (5s sustained)
-- p50 &lt; 15ms at 100 req/sec
-- Zero errors under load
-- /stats p99 &lt; 30ms (relative)
-- Throughput ≥ 85 req/sec achievable
-- JSON validity under concurrent load</p>
-<h2 id="error-rate-budget">Error Rate Budget<a class="headerlink" href="#error-rate-budget" title="Permanent link">&para;</a></h2>
+<h1 id="known-issues-oss-beta">Known Issues — OSS beta<a class="headerlink" href="#known-issues-oss-beta" title="Permanent link">&para;</a></h1>
+<p>This page tracks current limitations of the <strong>OSS beta</strong> (<code>pip install tokenpak</code>, v1.5.6). The intent is <strong>beta honesty</strong>: if a documented capability isn't shipping the way the rest of the docs imply, it shows up here.</p>
+<p>If you hit something not listed here, file it at <a href="https://github.com/tokenpak/tokenpak/issues">github.com/tokenpak/tokenpak/issues</a>.</p>
+<hr />
+<h2 id="storage-path-migration-in-progress">Storage path migration in progress<a class="headerlink" href="#storage-path-migration-in-progress" title="Permanent link">&para;</a></h2>
+<p><strong>Status:</strong> affects fresh installs only.</p>
+<p>The canonical local-storage path is <code>~/.tpk/</code>. Existing installs continue to read from <code>~/.tokenpak/</code> (the legacy fallback) and are not migrated automatically. The CLI resolves paths in this order:</p>
+<ol>
+<li><code>$TOKENPAK_HOME</code> (operator override)</li>
+<li><code>~/.tpk/</code> (canonical default)</li>
+<li><code>~/.tokenpak/</code> (legacy fallback — only when <code>~/.tpk/</code> is absent and legacy exists)</li>
+</ol>
+<p>If you started with TokenPak before May 2026, you can keep using <code>~/.tokenpak/</code>. Fresh installs will create <code>~/.tpk/</code>. Some docs and examples still reference <code>~/.tokenpak/</code>; both paths work today.</p>
+<hr />
+<h2 id="pak-scoring-ranking-and-assembly-are-not-in-the-oss-beta">Pak scoring, ranking, and assembly are not in the OSS beta<a class="headerlink" href="#pak-scoring-ranking-and-assembly-are-not-in-the-oss-beta" title="Permanent link">&para;</a></h2>
+<p><strong>Status:</strong> by design.</p>
+<p>The OSS recall layer is a transparent data plane — it persists Paks, reason codes, and risk flags, and exposes them via the <code>tokenpak.companion.recall</code> Python API and <code>tokenpak pak inspect</code>. The OSS package <strong>does not</strong>:</p>
 <ul>
-<li><strong>Target:</strong> &lt; 0.1% (1 error per 1,000 requests)</li>
-<li><strong>Measured:</strong> 0% in all load test runs</li>
-<li><strong>Circuit breaker threshold:</strong> 5 failures / 60s window</li>
+<li>Rank Paks by reason-code scores.</li>
+<li>Refuse to assemble when a Pak carries <code>severity = block</code>.</li>
+<li>Reorder Paks according to <code>ordering_hints</code> during assembly.</li>
+<li>Implement <code>tokenpak pak plan</code> / <code>assemble</code> / <code>validate</code> verbs.</li>
 </ul>
-<h2 id="upgrade-path">Upgrade Path<a class="headerlink" href="#upgrade-path" title="Permanent link">&para;</a></h2>
-<p>For production deployments requiring stricter p99:
-1. Switch to <code>server_async.py</code> (asyncio-based, removes GIL contention)
-2. Gzip-compress vault index blocks (3x smaller, faster load) — see <code>analysis/index-compression-2026-03.md</code>
-3. Exclude JS/binary chunks from vault index (~7.5MB saved)</p>
+<p><code>tokenpak pakplan</code> ships <code>preview</code>, <code>explain</code>, and <code>report</code> (read-only). The scoring engine and autonomous injection pipeline are planned for a later release and are not part of the OSS beta surface.</p>
+<p>See the <a href="../recall/">Recall overview</a> for the full OSS-vs-planned split.</p>
+<hr />
+<h2 id="some-documented-cli-commands-are-experimental">Some documented CLI commands are experimental<a class="headerlink" href="#some-documented-cli-commands-are-experimental" title="Permanent link">&para;</a></h2>
+<p><strong>Status:</strong> stability flag missing.</p>
+<p>The CLI exposes ~47 top-level commands. The following families are functional but their surface, output format, and flag set may change without notice during the beta:</p>
+<ul>
+<li><code>tokenpak fleet ...</code> — multi-machine orchestration</li>
+<li><code>tokenpak macro ...</code> — user-defined YAML macros</li>
+<li><code>tokenpak template ...</code> — template expansion</li>
+<li><code>tokenpak recipe ...</code> — recipe management</li>
+<li><code>tokenpak audit ...</code> — audit log management</li>
+<li><code>tokenpak agent ...</code> — agent coordination locks</li>
+<li><code>tokenpak trigger ...</code> — event triggers</li>
+<li><code>tokenpak retrieval ...</code> — hybrid retrieval debug</li>
+<li><code>tokenpak goals ...</code> — savings goals</li>
+</ul>
+<p>Treat anything outside the stable verbs (<code>start</code>/<code>stop</code>/<code>status</code>/<code>savings</code>/<code>cost</code>/<code>setup</code>/<code>doctor</code>/<code>config</code>/<code>index</code>/<code>search</code>/<code>stats</code>/<code>models</code>/<code>budget</code>/<code>dashboard</code>/<code>update</code>/<code>version</code>) as subject to change.</p>
+<hr />
+<h2 id="default-port-standardization">Default port standardization<a class="headerlink" href="#default-port-standardization" title="Permanent link">&para;</a></h2>
+<p><strong>Status:</strong> docs cleanup landing in beta.</p>
+<p>The proxy default port is <strong><code>8766</code></strong>. Some older doc snippets and code examples reference <code>8000</code> (an earlier default). All current configurations and the setup wizard write <code>8766</code>. If you have an old config from before the standardization, rerun <code>tokenpak setup</code> to refresh it.</p>
+<hr />
+<h2 id="coverage-gate-is-advisory">Coverage gate is advisory<a class="headerlink" href="#coverage-gate-is-advisory" title="Permanent link">&para;</a></h2>
+<p><strong>Status:</strong> intentional during beta.</p>
+<p>The repository's coverage gate is currently advisory (<code>continue-on-error: true</code> at the step level). Threshold breach is visible in workflow logs but does not block merges. This will flip back to blocking once the ratchet baseline lands.</p>
+<hr />
+<h2 id="no-managed-cloud-hosted-offering">No managed cloud / hosted offering<a class="headerlink" href="#no-managed-cloud-hosted-offering" title="Permanent link">&para;</a></h2>
+<p><strong>Status:</strong> by design.</p>
+<p>TokenPak is a <strong>local proxy</strong>. There is no SaaS, hosted dashboard, license server, team workspace, SSO, or shared cloud component in the OSS beta. The package runs on <code>127.0.0.1</code> and only talks to the upstream LLM provider you configure. This is the trust-posture commitment, not a feature gap.</p>
+<hr />
+<h2 id="reporting-beta-issues">Reporting beta issues<a class="headerlink" href="#reporting-beta-issues" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Crashes / regressions:</strong> <a href="https://github.com/tokenpak/tokenpak/issues">github.com/tokenpak/tokenpak/issues</a> — please include OS, Python version, TokenPak version (<code>tokenpak --version</code>), and reproduction steps.</li>
+<li><strong>Feature requests:</strong> <a href="https://github.com/tokenpak/tokenpak/discussions">github.com/tokenpak/tokenpak/discussions</a>.</li>
+<li><strong>Documentation gaps:</strong> PRs against <a href="https://github.com/tokenpak/docs">github.com/tokenpak/docs</a> are welcome.</li>
+</ul>
 
 
 

@@ -1,0 +1,5707 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+        <meta name="author" content="TokenPak Contributors">
+      
+      
+        <link rel="canonical" href="https://docs.tokenpak.ai/cli-reference/">
+      
+      
+        <link rel="prev" href="../env-vars/">
+      
+      
+        <link rel="next" href="../adapters/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/favicon.ico">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>CLI Reference - TokenPak</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,300i,400,400i,700,700i%7CJetBrains+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Inter";--md-code-font:"JetBrains Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/tokenpak.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="teal">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#cli-reference" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="TokenPak" class="md-header__button md-logo" aria-label="TokenPak" data-md-component="logo">
+      
+  <img src="../assets/logo.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            TokenPak
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              CLI Reference
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="teal"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="teal" data-md-color-accent="teal"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/tokenpak/tokenpak" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    tokenpak/tokenpak
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href=".." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../installation/" class="md-tabs__link">
+          
+  
+  
+  Getting Started
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../configuration/" class="md-tabs__link">
+          
+  
+  
+  User Guide
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../architecture/" class="md-tabs__link">
+          
+  
+  
+  Architecture
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../adapters/openai-compat/" class="md-tabs__link">
+          
+  
+  
+  Adapters
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../observability/" class="md-tabs__link">
+          
+  
+  
+  Advanced
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../recipes/01-multi-provider-fallback/" class="md-tabs__link">
+          
+  
+  
+  Recipes
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../recall/" class="md-tabs__link">
+          
+  
+  
+  Recall
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../faq/" class="md-tabs__link">
+          
+  
+  
+  Support
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="TokenPak" class="md-nav__button md-logo" aria-label="TokenPak" data-md-component="logo">
+      
+  <img src="../assets/logo.svg" alt="logo">
+
+    </a>
+    TokenPak
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/tokenpak/tokenpak" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    tokenpak/tokenpak
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting Started
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Getting Started
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../installation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Installation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../QUICKSTART/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quick Start
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../comparison/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Comparison
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../COMPATIBILITY/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Compatibility
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../demo/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Demo Data
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    User Guide
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    User Guide
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../configuration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Configuration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../env-vars/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Environment Variables
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CLI Reference
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CLI Reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#group-getting-started" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Group: Getting Started
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Group: Getting Started">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#tokenpak-start" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tokenpak start
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tokenpak-stop" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tokenpak stop
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tokenpak-restart" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tokenpak restart
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tokenpak-demo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tokenpak demo
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tokenpak-cost" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tokenpak cost
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tokenpak-status" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tokenpak status
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tokenpak-logs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tokenpak logs
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#group-indexing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Group: Indexing
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Group: Indexing">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#tokenpak-index" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tokenpak index
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tokenpak-search" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tokenpak search
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#group-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Group: Configuration
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Group: Configuration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#tokenpak-route" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tokenpak route
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tokenpak-recipe" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tokenpak recipe
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tokenpak-template" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tokenpak template
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tokenpak-budget" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tokenpak budget
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tokenpak-alerts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tokenpak alerts
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tokenpak-goals" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tokenpak goals
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tokenpak-config" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tokenpak config
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tokenpak-explain" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tokenpak explain
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#group-versioning" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Group: Versioning
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Group: Versioning">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#tokenpak-version" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tokenpak version
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tokenpak-update" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tokenpak update
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#group-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Group: Operations
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Group: Operations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#tokenpak-benchmark" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tokenpak benchmark
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tokenpak-calibrate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tokenpak calibrate
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tokenpak-doctor" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tokenpak doctor
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tokenpak-diagnose" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tokenpak diagnose
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tokenpak-dashboard" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tokenpak dashboard
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tokenpak-timeline" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tokenpak timeline
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tokenpak-attribution" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tokenpak attribution
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tokenpak-recommendations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tokenpak recommendations
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tokenpak-models" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tokenpak models
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tokenpak-forecast" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tokenpak forecast
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tokenpak-debug" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tokenpak debug
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tokenpak-learn" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tokenpak learn
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tokenpak-vault-health" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tokenpak vault-health
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tokenpak-fleet" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tokenpak fleet
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tokenpak-aggregate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tokenpak aggregate
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tokenpak-requests" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tokenpak requests
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#group-companion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Group: Companion
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Group: Companion">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#tokenpak-claude" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tokenpak claude
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tokenpak-codex" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tokenpak codex
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tokenpak-creds" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tokenpak creds
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tokenpak-pak" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tokenpak pak
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tokenpak-test" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tokenpak test
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tokenpak-prove" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tokenpak prove
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#group-advanced" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Group: Advanced
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Group: Advanced">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#tokenpak-trigger" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tokenpak trigger
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tokenpak-macro" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tokenpak macro
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tokenpak-fingerprint" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tokenpak fingerprint
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tokenpak-agent" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tokenpak agent
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tokenpak-lock" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tokenpak lock
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tokenpak-run" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tokenpak run
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tokenpak-replay" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tokenpak replay
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tokenpak-audit" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tokenpak audit
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tokenpak-compliance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tokenpak compliance
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tokenpak-validate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tokenpak validate
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tokenpak-config-check" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tokenpak config-check
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tokenpak-diff" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tokenpak diff
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tokenpak-stats" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tokenpak stats
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tokenpak-serve" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tokenpak serve
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tokenpak-retrieval" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tokenpak retrieval
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#additional-commands" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Additional Commands
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Additional Commands">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#tokenpak-activate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tokenpak activate
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tokenpak-check-alerts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tokenpak check-alerts
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tokenpak-compare" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tokenpak compare
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tokenpak-compress" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tokenpak compress
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tokenpak-deactivate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tokenpak deactivate
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tokenpak-features" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tokenpak features
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tokenpak-help" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tokenpak help
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tokenpak-home" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tokenpak home
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tokenpak-init" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tokenpak init
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tokenpak-integrate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tokenpak integrate
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tokenpak-last" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tokenpak last
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tokenpak-leaderboard" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tokenpak leaderboard
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tokenpak-license" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tokenpak license
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tokenpak-menu" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tokenpak menu
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tokenpak-monitor" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tokenpak monitor
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tokenpak-optimize" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tokenpak optimize
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tokenpak-pakplan" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tokenpak pakplan
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tokenpak-plan" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tokenpak plan
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tokenpak-preview" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tokenpak preview
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tokenpak-prune" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tokenpak prune
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tokenpak-report" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tokenpak report
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tokenpak-savings" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tokenpak savings
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tokenpak-setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tokenpak setup
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tokenpak-telemetry" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tokenpak telemetry
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tokenpak-tip" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tokenpak tip
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tokenpak-usage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tokenpak usage
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tokenpak-validate-config" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tokenpak validate-config
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tokenpak-vault" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tokenpak vault
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tokenpak-watch" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tokenpak watch
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../adapters/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Adapter Reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../error-handling/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Error Handling
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../troubleshooting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Troubleshooting
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../known-issues/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Known Issues
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../DOCKER/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Docker Deployment
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../SAVINGS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Savings
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../SECURITY/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Security
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Architecture
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Architecture
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../architecture/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../COMPONENT-DIAGRAM/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Component Diagram
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../API/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API Reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api-reference/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API Reference (Extended)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../features/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Features
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../plugin-guide/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Plugin Guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../plugin-system-architecture/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Plugin System Architecture
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../assets/DIAGRAMS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Architecture Diagrams
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Adapters
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Adapters
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../adapters/openai-compat/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    OpenAI-Compatible
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../adapters/litellm/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    LiteLLM
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../adapters/langchain/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    LangChain
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../adapters/google/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Google
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Advanced
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Advanced
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../observability/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Observability
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--active"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../performance/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Performance Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../PERFORMANCE/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Performance Benchmarks
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../COMPRESSION_TUNING/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Compression Tuning
+  
+
+    
+      <br>
+      <small>Optimize token savings vs latency tradeoffs for your use case</small>
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../LATENCY/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Latency Analysis
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../performance/memory-analysis/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Memory Analysis
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../TESTING/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Testing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Recipes
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Recipes
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../recipes/01-multi-provider-fallback/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Multi-Provider Fallback
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../recipes/02-budget-caps/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Budget Caps
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../recipes/03-per-user-rate-limiting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Per-User Rate Limiting
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../recipes/04-model-routing-by-use-case/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Model Routing by Use Case
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../recipes/05-cost-monitoring/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Cost Monitoring
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../recipes/06-streaming-responses/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Streaming Responses
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../recipes/07-local-development-mock/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Local Development Mock
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Recall
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Recall
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../recall/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../recall/reason-codes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Pak Reason Codes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../recall/risk-flags/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Pak Risk Flags
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../recall/recall-store-api/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Recall Store API
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../recall/inspect-and-explain/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    `tokenpak pak inspect` semantics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../recall/selection-explanation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Deterministic Recall Pak Selection
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../recall/ordering-hints-examples/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Context Package `ordering_hints` Examples
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_9" >
+        
+          
+          <label class="md-nav__link" for="__nav_9" id="__nav_9_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Support
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_9">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Support
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../faq/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    FAQ
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../EXAMPLES/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Examples
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../release-checklist/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Release Checklist
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#group-getting-started" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Group: Getting Started
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Group: Getting Started">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#tokenpak-start" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tokenpak start
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tokenpak-stop" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tokenpak stop
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tokenpak-restart" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tokenpak restart
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tokenpak-demo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tokenpak demo
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tokenpak-cost" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tokenpak cost
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tokenpak-status" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tokenpak status
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tokenpak-logs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tokenpak logs
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#group-indexing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Group: Indexing
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Group: Indexing">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#tokenpak-index" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tokenpak index
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tokenpak-search" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tokenpak search
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#group-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Group: Configuration
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Group: Configuration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#tokenpak-route" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tokenpak route
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tokenpak-recipe" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tokenpak recipe
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tokenpak-template" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tokenpak template
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tokenpak-budget" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tokenpak budget
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tokenpak-alerts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tokenpak alerts
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tokenpak-goals" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tokenpak goals
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tokenpak-config" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tokenpak config
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tokenpak-explain" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tokenpak explain
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#group-versioning" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Group: Versioning
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Group: Versioning">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#tokenpak-version" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tokenpak version
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tokenpak-update" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tokenpak update
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#group-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Group: Operations
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Group: Operations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#tokenpak-benchmark" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tokenpak benchmark
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tokenpak-calibrate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tokenpak calibrate
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tokenpak-doctor" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tokenpak doctor
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tokenpak-diagnose" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tokenpak diagnose
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tokenpak-dashboard" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tokenpak dashboard
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tokenpak-timeline" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tokenpak timeline
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tokenpak-attribution" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tokenpak attribution
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tokenpak-recommendations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tokenpak recommendations
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tokenpak-models" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tokenpak models
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tokenpak-forecast" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tokenpak forecast
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tokenpak-debug" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tokenpak debug
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tokenpak-learn" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tokenpak learn
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tokenpak-vault-health" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tokenpak vault-health
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tokenpak-fleet" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tokenpak fleet
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tokenpak-aggregate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tokenpak aggregate
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tokenpak-requests" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tokenpak requests
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#group-companion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Group: Companion
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Group: Companion">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#tokenpak-claude" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tokenpak claude
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tokenpak-codex" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tokenpak codex
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tokenpak-creds" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tokenpak creds
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tokenpak-pak" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tokenpak pak
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tokenpak-test" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tokenpak test
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tokenpak-prove" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tokenpak prove
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#group-advanced" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Group: Advanced
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Group: Advanced">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#tokenpak-trigger" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tokenpak trigger
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tokenpak-macro" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tokenpak macro
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tokenpak-fingerprint" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tokenpak fingerprint
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tokenpak-agent" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tokenpak agent
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tokenpak-lock" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tokenpak lock
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tokenpak-run" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tokenpak run
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tokenpak-replay" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tokenpak replay
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tokenpak-audit" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tokenpak audit
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tokenpak-compliance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tokenpak compliance
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tokenpak-validate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tokenpak validate
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tokenpak-config-check" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tokenpak config-check
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tokenpak-diff" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tokenpak diff
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tokenpak-stats" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tokenpak stats
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tokenpak-serve" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tokenpak serve
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tokenpak-retrieval" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tokenpak retrieval
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#additional-commands" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Additional Commands
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Additional Commands">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#tokenpak-activate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tokenpak activate
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tokenpak-check-alerts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tokenpak check-alerts
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tokenpak-compare" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tokenpak compare
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tokenpak-compress" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tokenpak compress
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tokenpak-deactivate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tokenpak deactivate
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tokenpak-features" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tokenpak features
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tokenpak-help" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tokenpak help
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tokenpak-home" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tokenpak home
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tokenpak-init" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tokenpak init
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tokenpak-integrate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tokenpak integrate
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tokenpak-last" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tokenpak last
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tokenpak-leaderboard" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tokenpak leaderboard
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tokenpak-license" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tokenpak license
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tokenpak-menu" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tokenpak menu
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tokenpak-monitor" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tokenpak monitor
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tokenpak-optimize" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tokenpak optimize
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tokenpak-pakplan" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tokenpak pakplan
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tokenpak-plan" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tokenpak plan
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tokenpak-preview" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tokenpak preview
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tokenpak-prune" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tokenpak prune
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tokenpak-report" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tokenpak report
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tokenpak-savings" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tokenpak savings
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tokenpak-setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tokenpak setup
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tokenpak-telemetry" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tokenpak telemetry
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tokenpak-tip" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tokenpak tip
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tokenpak-usage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tokenpak usage
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tokenpak-validate-config" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tokenpak validate-config
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tokenpak-vault" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tokenpak vault
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tokenpak-watch" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tokenpak watch
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="cli-reference">CLI Reference<a class="headerlink" href="#cli-reference" title="Permanent link">&para;</a></h1>
+<p><em>Auto-generated from <code>tokenpak/cli.py</code> — do not edit by hand.</em>
+<em>To update: edit <code>tokenpak/cli.py</code> then run <code>python scripts/generate-cli-docs.py</code>.</em></p>
+<hr />
+<h2 id="group-getting-started">Group: Getting Started<a class="headerlink" href="#group-getting-started" title="Permanent link">&para;</a></h2>
+<h3 id="tokenpak-start"><code>tokenpak start</code><a class="headerlink" href="#tokenpak-start" title="Permanent link">&para;</a></h3>
+<p>Start the TokenPak proxy server, which routes LLM API requests through
+context compression. The proxy listens on localhost:PORT and forwards
+compressed requests to your configured LLM providers.</p>
+<p>Example:
+  tokenpak serve --port 8888 --workers 4</p>
+<p>The proxy reads config from tokenpak.yaml or ~/.tokenpak/config.yaml</p>
+<p><strong>Flags:</strong></p>
+<ul>
+<li><code>--port</code> — Port to listen on (default: 8766) (default: 8766)</li>
+<li><code>--workers</code> — Number of worker processes (default: 2) (default: 2)</li>
+<li><code>--log-level</code> — Logging level (default: info) (default: info) — choices: <code>debug</code>, <code>info</code>, <code>warning</code>, <code>error</code></li>
+</ul>
+<h3 id="tokenpak-stop"><code>tokenpak stop</code><a class="headerlink" href="#tokenpak-stop" title="Permanent link">&para;</a></h3>
+<p>Stop the proxy</p>
+<h3 id="tokenpak-restart"><code>tokenpak restart</code><a class="headerlink" href="#tokenpak-restart" title="Permanent link">&para;</a></h3>
+<p>Restart the proxy</p>
+<h3 id="tokenpak-demo"><code>tokenpak demo</code><a class="headerlink" href="#tokenpak-demo" title="Permanent link">&para;</a></h3>
+<p>See compression in action</p>
+<p><strong>Flags:</strong></p>
+<ul>
+<li><code>--list</code> — List all 50 baked-in recipes</li>
+<li><code>--category</code> — Filter by category (general, python, javascript, markdown, config, common_patterns)</li>
+<li><code>--recipe</code> — Show details for a specific recipe by name</li>
+<li><code>--file</code> — Show which recipes match a given file path</li>
+<li><code>--seed</code> — Populate dashboard with 500 realistic demo events (24h window)</li>
+<li><code>--seed-count</code> — Number of demo events to generate (default: 500) (default: 500)</li>
+<li><code>--seed-hours</code> — Time window in hours (default: 24) (default: 24)</li>
+<li><code>--clear</code> — Remove all demo data from telemetry storage</li>
+</ul>
+<h3 id="tokenpak-cost"><code>tokenpak cost</code><a class="headerlink" href="#tokenpak-cost" title="Permanent link">&para;</a></h3>
+<p>View API spend</p>
+<p><strong>Flags:</strong></p>
+<ul>
+<li><code>--week</code> — Show weekly totals</li>
+<li><code>--month</code> — Show monthly totals</li>
+<li><code>--by-model</code> — Break down by model</li>
+<li><code>--export-csv</code> — Export as CSV</li>
+</ul>
+<p><strong>Subcommands:</strong></p>
+<ul>
+<li><code>show-budget</code></li>
+<li><code>--config</code> — Path to tokenpak config file</li>
+</ul>
+<h3 id="tokenpak-status"><code>tokenpak status</code><a class="headerlink" href="#tokenpak-status" title="Permanent link">&para;</a></h3>
+<p>Check proxy health</p>
+<p><strong>Flags:</strong></p>
+<ul>
+<li><code>--limit</code> — Max retry events to show (default: 20)</li>
+<li><code>--full</code> — Expanded view with all details</li>
+<li><code>--by-source</code> — Breakdown by request source (Claude Code, Codex, API, etc.)</li>
+<li><code>--by-provider</code> — Breakdown by provider (Anthropic, OpenAI, Google, etc.)</li>
+<li><code>--minimal</code> — One-line savings summary</li>
+<li><code>--json</code> — Full JSON data dump</li>
+<li><code>--no-meme</code> — Suppress tagline</li>
+<li><code>--days</code> — Filter to last N days (combinable with --hours)</li>
+<li><code>--hours</code> — Filter to last N hours (combinable with --days)</li>
+</ul>
+<h3 id="tokenpak-logs"><code>tokenpak logs</code><a class="headerlink" href="#tokenpak-logs" title="Permanent link">&para;</a></h3>
+<p>Show recent logs</p>
+<p><strong>Flags:</strong></p>
+<ul>
+<li><code>--lines</code>, <code>-n</code> — Number of log lines to show (default: 50) (default: 50)</li>
+</ul>
+<hr />
+<h2 id="group-indexing">Group: Indexing<a class="headerlink" href="#group-indexing" title="Permanent link">&para;</a></h2>
+<h3 id="tokenpak-index"><code>tokenpak index</code><a class="headerlink" href="#tokenpak-index" title="Permanent link">&para;</a></h3>
+<p>Index a directory</p>
+<p><strong>Flags:</strong></p>
+<ul>
+<li><code>DIRECTORY</code> — Directory to index</li>
+<li><code>--status</code> — Show indexed file count by type</li>
+<li><code>--budget</code> — default: 8000</li>
+<li><code>--workers</code>, <code>-w</code> — Parallel workers (default: 4) (default: 4)</li>
+<li><code>--auto-workers</code> — Use hybrid calibration (static baseline + dynamic adjustment)</li>
+<li><code>--recalibrate</code> — Run static calibration before indexing</li>
+<li><code>--calibration-rounds</code> — Calibration rounds per candidate worker count (default: 2)</li>
+<li><code>--max-workers</code> — Upper worker cap for auto/recalibration (default: 8)</li>
+<li><code>--watch</code> — Watch directory and auto-reindex on file changes</li>
+<li><code>--debounce</code> — Debounce delay in ms for watch mode (default: 500) (default: 500)</li>
+<li><code>--no-treesitter</code> — Force regex-based code processing (skip tree-sitter)</li>
+<li><code>--reindex-all</code> — Reindex every directory registered in ~/.tokenpak/vault.yaml</li>
+<li><code>--reindex-path</code> — Reindex a single directory registered in ~/.tokenpak/vault.yaml</li>
+</ul>
+<h3 id="tokenpak-search"><code>tokenpak search</code><a class="headerlink" href="#tokenpak-search" title="Permanent link">&para;</a></h3>
+<p>Search indexed content</p>
+<p><strong>Flags:</strong></p>
+<ul>
+<li><code>QUERY</code> — Search query</li>
+<li><code>--budget</code> — default: 8000</li>
+<li><code>--top-k</code> — default: 10</li>
+<li><code>--gaps</code> — Path to gaps.json for miss-based retrieval expansion (default: .tokenpak/gaps.json)</li>
+<li><code>--inject-refs</code> — Enable compile-time reference injection (GitHub, URLs)</li>
+</ul>
+<hr />
+<h2 id="group-configuration">Group: Configuration<a class="headerlink" href="#group-configuration" title="Permanent link">&para;</a></h2>
+<h3 id="tokenpak-route"><code>tokenpak route</code><a class="headerlink" href="#tokenpak-route" title="Permanent link">&para;</a></h3>
+<p>Manage routing rules</p>
+<p><strong>Subcommands:</strong></p>
+<ul>
+<li><code>list</code></li>
+<li><code>--routes</code> — Path to routes.yaml</li>
+<li><code>add</code></li>
+<li><code>--model</code> — Model glob pattern (e.g. 'gpt-4<em>', 'openai/</em>')</li>
+<li><code>--prefix</code> — Prompt prefix match (case-insensitive)</li>
+<li><code>--min-tokens</code> — Minimum token count (inclusive)</li>
+<li><code>--max-tokens</code> — Maximum token count (inclusive)</li>
+<li><code>--target</code> — Target model/provider (e.g. 'anthropic/claude-3-haiku-20240307')</li>
+<li><code>--priority</code> — Rule priority (lower = higher priority, default 100) (default: 100)</li>
+<li><code>--description</code> — Optional description (default: )</li>
+<li><code>--routes</code> — Path to routes.yaml</li>
+<li><code>remove</code></li>
+<li><code>ID</code> — Rule ID to remove</li>
+<li><code>--routes</code> — Path to routes.yaml</li>
+<li><code>test</code></li>
+<li><code>PROMPT</code> — Prompt text to test (default: )</li>
+<li><code>--model</code> — Model name to test against (default: )</li>
+<li><code>--tokens</code> — Token count override (default: auto-estimated)</li>
+<li><code>--verbose</code>, <code>-v</code> — Show all rules and their match status</li>
+<li><code>--routes</code> — Path to routes.yaml</li>
+<li><code>enable</code></li>
+<li><code>ID</code> — Rule ID</li>
+<li><code>--routes</code> — Path to routes.yaml</li>
+<li><code>disable</code></li>
+<li><code>ID</code> — Rule ID</li>
+<li><code>--routes</code> — Path to routes.yaml</li>
+</ul>
+<h3 id="tokenpak-recipe"><code>tokenpak recipe</code><a class="headerlink" href="#tokenpak-recipe" title="Permanent link">&para;</a></h3>
+<p>Manage compression recipes</p>
+<p><strong>Subcommands:</strong></p>
+<ul>
+<li><code>create</code></li>
+<li><code>NAME</code> — Recipe name (e.g. my-legal-cleanup)</li>
+<li><code>--output-dir</code> — Directory to write the recipe file (default: current dir) (default: .)</li>
+<li><code>--category</code> — Recipe category: python, markdown, legal, medical, etc. (default: general)</li>
+<li><code>--description</code> — Short description (default: )</li>
+<li><code>--match-mode</code> — Pattern match mode: any|extension|filename|content|path_pattern (default: extension)</li>
+<li><code>--ext</code> — File extension hint (for extension match mode) (default: txt)</li>
+<li><code>--domain-example</code> — Use a domain-specific template: legal | medical</li>
+<li><code>validate</code></li>
+<li><code>FILE</code> — Path to recipe YAML file</li>
+<li><code>test</code></li>
+<li><code>FILE</code> — Path to recipe YAML file</li>
+<li><code>--input-text</code> — Raw text to test against</li>
+<li><code>--input-file</code> — Path to a file to use as test input</li>
+<li><code>--filename-hint</code> — Filename to check pattern matching against (e.g. script.py) (default: )</li>
+<li><code>benchmark</code></li>
+<li><code>FILE</code> — Path to recipe YAML file</li>
+<li><code>--samples-file</code> — JSON file with list of sample strings (default: auto-generated)</li>
+<li><code>--runs</code> — Repetitions per sample for timing (default: 5) (default: 5)</li>
+</ul>
+<h3 id="tokenpak-template"><code>tokenpak template</code><a class="headerlink" href="#tokenpak-template" title="Permanent link">&para;</a></h3>
+<p>Manage prompt templates</p>
+<p><strong>Subcommands:</strong></p>
+<ul>
+<li><code>list</code></li>
+<li><code>add</code></li>
+<li><code>NAME</code> — Template name</li>
+<li><code>--content</code> — Template content (use {{var}} for variables)</li>
+<li><code>show</code></li>
+<li><code>NAME</code> — Template name</li>
+<li><code>remove</code></li>
+<li><code>NAME</code> — Template name</li>
+<li><code>use</code></li>
+<li><code>NAME</code> — Template name</li>
+<li><code>--var</code> — Variable substitution (repeatable) (default: [])</li>
+</ul>
+<h3 id="tokenpak-budget"><code>tokenpak budget</code><a class="headerlink" href="#tokenpak-budget" title="Permanent link">&para;</a></h3>
+<p>Set budget limits</p>
+<p><strong>Subcommands:</strong></p>
+<ul>
+<li><code>set</code></li>
+<li><code>--daily</code> — Daily spend limit in USD</li>
+<li><code>--monthly</code> — Monthly spend limit in USD</li>
+<li><code>--alert-at</code> — Alert threshold %% (default 80)</li>
+<li><code>--hard-stop</code> — Block requests when limit exceeded</li>
+<li><code>status</code></li>
+<li><code>show</code></li>
+<li><code>history</code></li>
+<li><code>--limit</code> — default: 20</li>
+<li><code>--month</code> — Show this month</li>
+</ul>
+<h3 id="tokenpak-alerts"><code>tokenpak alerts</code><a class="headerlink" href="#tokenpak-alerts" title="Permanent link">&para;</a></h3>
+<p>Manage alert channels</p>
+<p><strong>Subcommands:</strong></p>
+<ul>
+<li><code>test</code></li>
+<li><code>--channel</code> — Channel type to test — choices: <code>webhook</code>, <code>slack</code></li>
+<li><code>--url</code> — Webhook URL (for --channel webhook)</li>
+<li><code>--webhook</code> — Slack incoming-webhook URL (for --channel slack)</li>
+</ul>
+<h3 id="tokenpak-goals"><code>tokenpak goals</code><a class="headerlink" href="#tokenpak-goals" title="Permanent link">&para;</a></h3>
+<p>Track savings goals</p>
+<p><strong>Subcommands:</strong></p>
+<ul>
+<li><code>list</code></li>
+<li><code>detail</code></li>
+<li><code>GOAL_ID</code> — Goal ID</li>
+<li><code>add</code></li>
+<li><code>--name</code> — Goal name</li>
+<li><code>--type</code> — Goal type — choices: <code>savings</code>, <code>compression</code>, <code>cache</code>, <code>metric</code></li>
+<li><code>--target</code> — Target value</li>
+<li><code>--start</code> — Start date (YYYY-MM-DD, default: today)</li>
+<li><code>--end</code> — End date (YYYY-MM-DD, default: 30 days from start)</li>
+<li><code>--description</code> — Goal description</li>
+<li><code>--metric</code> — Custom metric name (for metric type)</li>
+<li><code>--rolling-window</code> — Enable weekly pace tracking</li>
+<li><code>edit</code></li>
+<li><code>GOAL_ID</code> — Goal ID to edit</li>
+<li><code>--name</code> — New goal name</li>
+<li><code>--target</code> — New target value</li>
+<li><code>--description</code> — New description</li>
+<li><code>--end</code> — New end date (YYYY-MM-DD)</li>
+<li><code>delete</code></li>
+<li><code>GOAL_ID</code> — Goal ID to delete</li>
+<li><code>update</code></li>
+<li><code>GOAL_ID</code> — Goal ID</li>
+<li><code>VALUE</code> — New current value</li>
+<li><code>export</code></li>
+<li><code>--output</code>, <code>-o</code> — Output file (default: stdout)</li>
+<li><code>history</code></li>
+<li><code>compare</code></li>
+</ul>
+<h3 id="tokenpak-config"><code>tokenpak config</code><a class="headerlink" href="#tokenpak-config" title="Permanent link">&para;</a></h3>
+<p>View and edit config</p>
+<p><strong>Subcommands:</strong></p>
+<ul>
+<li><code>sync</code></li>
+<li><code>--source</code> — Config source: git (vault) or url (default: git) — choices: <code>git</code>, <code>url</code></li>
+<li><code>--url</code> — URL for source=url</li>
+<li><code>--dry-run</code></li>
+<li><code>pull</code></li>
+<li><code>--source</code> — default: git — choices: <code>git</code>, <code>url</code></li>
+<li><code>--url</code> — URL for source=url</li>
+<li><code>--dry-run</code></li>
+<li><code>--merge</code> — Merge strategy (default: merge) — choices: <code>replace</code>, <code>merge</code>, <code>diff</code></li>
+<li><code>validate</code></li>
+<li><code>--config</code> — Path to proxy config file (JSON/YAML) to validate against schema</li>
+<li><code>show</code></li>
+<li><code>--json</code> — Output as JSON</li>
+<li><code>init</code></li>
+<li><code>--force</code> — Overwrite existing config</li>
+<li><code>path</code></li>
+<li><code>migrate</code></li>
+<li><code>--config-json</code> — Path to legacy config.json (default: ~/.tokenpak/config.json) (default: ~/.tokenpak/config.json)</li>
+<li><code>--dry-run</code> — Print what would change without writing</li>
+</ul>
+<h3 id="tokenpak-explain"><code>tokenpak explain</code><a class="headerlink" href="#tokenpak-explain" title="Permanent link">&para;</a></h3>
+<p>Explain workflow profiles</p>
+<p><strong>Flags:</strong></p>
+<ul>
+<li><code>--profile</code> — Profile name (safe|balanced|aggressive|agentic); omit to show all</li>
+</ul>
+<hr />
+<h2 id="group-versioning">Group: Versioning<a class="headerlink" href="#group-versioning" title="Permanent link">&para;</a></h2>
+<h3 id="tokenpak-version"><code>tokenpak version</code><a class="headerlink" href="#tokenpak-version" title="Permanent link">&para;</a></h3>
+<p>Show current version</p>
+<h3 id="tokenpak-update"><code>tokenpak update</code><a class="headerlink" href="#tokenpak-update" title="Permanent link">&para;</a></h3>
+<p>Update tokenpak</p>
+<p><strong>Flags:</strong></p>
+<ul>
+<li><code>--check</code> — Check for updates without installing</li>
+<li><code>--force</code> — Force update even if already up to date</li>
+<li><code>--core-only</code> — Update core only, skip config merge</li>
+<li><code>--dry-run</code> — Show what would change without applying</li>
+</ul>
+<hr />
+<h2 id="group-operations">Group: Operations<a class="headerlink" href="#group-operations" title="Permanent link">&para;</a></h2>
+<h3 id="tokenpak-benchmark"><code>tokenpak benchmark</code><a class="headerlink" href="#tokenpak-benchmark" title="Permanent link">&para;</a></h3>
+<p>Run benchmarks</p>
+<p><strong>Flags:</strong></p>
+<ul>
+<li><code>DIRECTORY</code> — Directory to benchmark (used with --latency mode)</li>
+<li><code>--file</code> — Benchmark a specific file</li>
+<li><code>--samples</code> — Use built-in sample data (default when no file/directory given)</li>
+<li><code>--json</code> — Output results as JSON</li>
+<li><code>--latency</code> — Run latency/indexing benchmark instead of compression benchmark</li>
+<li><code>--iterations</code> — Iterations for latency benchmark (default: 3) (default: 3)</li>
+<li><code>--compare</code> — Compare baseline vs optimized (latency mode only)</li>
+</ul>
+<h3 id="tokenpak-calibrate"><code>tokenpak calibrate</code><a class="headerlink" href="#tokenpak-calibrate" title="Permanent link">&para;</a></h3>
+<p>Calibrate workers</p>
+<p><strong>Flags:</strong></p>
+<ul>
+<li><code>DIRECTORY</code> — Directory to sample for calibration</li>
+<li><code>--max-workers</code> — default: 8</li>
+<li><code>--rounds</code> — default: 2</li>
+</ul>
+<h3 id="tokenpak-doctor"><code>tokenpak doctor</code><a class="headerlink" href="#tokenpak-doctor" title="Permanent link">&para;</a></h3>
+<p>Run diagnostics</p>
+<p><strong>Flags:</strong></p>
+<ul>
+<li><code>--fix</code> — Auto-fix issues where possible</li>
+<li><code>--json</code> — Output results as machine-readable JSON</li>
+<li><code>--fleet</code> — Check all agents in ~/.tokenpak/fleet.yaml</li>
+<li><code>--deploy</code> — Push latest doctor to all agents (use with --fleet)</li>
+<li><code>--verbose</code>, <code>-v</code> — Show extra detail for each check</li>
+<li><code>--claude-code</code> — Run Claude Code integration checks (ENABLE_TOOL_SEARCH, mode, IDE detection)</li>
+<li><code>--conformance</code> — Run TIP self-conformance checks (alias for <code>tokenpak tip conformance</code>)</li>
+</ul>
+<h3 id="tokenpak-diagnose"><code>tokenpak diagnose</code><a class="headerlink" href="#tokenpak-diagnose" title="Permanent link">&para;</a></h3>
+<p>Full health check</p>
+<p><strong>Flags:</strong></p>
+<ul>
+<li><code>--json</code> — Output as JSON</li>
+<li><code>--verbose</code> — Verbose output</li>
+</ul>
+<h3 id="tokenpak-dashboard"><code>tokenpak dashboard</code><a class="headerlink" href="#tokenpak-dashboard" title="Permanent link">&para;</a></h3>
+<p>Live dashboard</p>
+<p><strong>Flags:</strong></p>
+<ul>
+<li><code>--fleet</code> — Show fleet-wide summary (TUI)</li>
+<li><code>--json</code> — Export dashboard as JSON (non-interactive)</li>
+<li><code>--public</code> — Show public URL with token (accessible from any machine)</li>
+<li><code>--show-token</code> — Display current dashboard token</li>
+<li><code>--new-token</code> — Regenerate dashboard token</li>
+</ul>
+<h3 id="tokenpak-timeline"><code>tokenpak timeline</code><a class="headerlink" href="#tokenpak-timeline" title="Permanent link">&para;</a></h3>
+<p>View savings trend</p>
+<p><strong>Flags:</strong></p>
+<ul>
+<li><code>--days</code> — Number of days (default 7) (default: 7)</li>
+<li><code>--chart</code> — Show ASCII sparkline chart</li>
+<li><code>--json</code> — JSON output</li>
+</ul>
+<h3 id="tokenpak-attribution"><code>tokenpak attribution</code><a class="headerlink" href="#tokenpak-attribution" title="Permanent link">&para;</a></h3>
+<p>Savings by source</p>
+<p><strong>Flags:</strong></p>
+<ul>
+<li><code>--days</code> — Number of days (default 7) (default: 7)</li>
+<li><code>--agent</code> — Filter by agent name</li>
+<li><code>--model</code> — Filter by model</li>
+<li><code>--json</code> — JSON output</li>
+</ul>
+<h3 id="tokenpak-recommendations"><code>tokenpak recommendations</code><a class="headerlink" href="#tokenpak-recommendations" title="Permanent link">&para;</a></h3>
+<p>Show ranked, telemetry-backed recommendations from the local TokenPak telemetry store. Reads only — never modifies traffic.</p>
+<p><strong>Flags:</strong></p>
+<ul>
+<li><code>--window</code> — Rolling window (e.g. 24h, 7d). Default: 24h (default: 24h)</li>
+<li><code>--model</code> — Filter recommendations to a single model name</li>
+<li><code>--platform</code> — Filter recommendations to a single platform (matched against agent_id and payload)</li>
+<li><code>--json</code> — Emit machine-readable JSON output</li>
+<li><code>--db-path</code> — Override telemetry DB path (default: resolved via tokenpak.core.paths.get_db_path)</li>
+</ul>
+<h3 id="tokenpak-models"><code>tokenpak models</code><a class="headerlink" href="#tokenpak-models" title="Permanent link">&para;</a></h3>
+<p>Per-model breakdown</p>
+<p><strong>Flags:</strong></p>
+<ul>
+<li><code>MODEL</code> — Show details for a specific model (partial match, e.g. 'sonnet', 'gpt-4')</li>
+<li><code>--raw</code> — Output as JSON</li>
+</ul>
+<h3 id="tokenpak-forecast"><code>tokenpak forecast</code><a class="headerlink" href="#tokenpak-forecast" title="Permanent link">&para;</a></h3>
+<p>Cost projections</p>
+<p><strong>Flags:</strong></p>
+<ul>
+<li><code>--period</code> — Analysis window (default: 7d) (default: 7d) — choices: <code>7d</code>, <code>30d</code>, <code>90d</code></li>
+<li><code>--alert</code> — Alert if monthly projection exceeds this USD amount</li>
+</ul>
+<h3 id="tokenpak-debug"><code>tokenpak debug</code><a class="headerlink" href="#tokenpak-debug" title="Permanent link">&para;</a></h3>
+<p>Toggle debug logging</p>
+<p><strong>Subcommands:</strong></p>
+<ul>
+<li><code>on</code></li>
+<li><code>off</code></li>
+<li><code>status</code></li>
+<li><code>list</code></li>
+<li><code>--json</code> — Output as JSON</li>
+<li><code>export</code></li>
+<li><code>TRACE_ID</code> — Trace ID to export</li>
+<li><code>--json</code> — Output as JSON</li>
+</ul>
+<h3 id="tokenpak-learn"><code>tokenpak learn</code><a class="headerlink" href="#tokenpak-learn" title="Permanent link">&para;</a></h3>
+<p>View learned patterns</p>
+<p><strong>Subcommands:</strong></p>
+<ul>
+<li><code>status</code></li>
+<li><code>reset</code></li>
+</ul>
+<h3 id="tokenpak-vault-health"><code>tokenpak vault-health</code><a class="headerlink" href="#tokenpak-vault-health" title="Permanent link">&para;</a></h3>
+<p>Check the health of your vault index and repair stale or corrupted entries.
+The vault index stores compressed context blocks and metadata about requests.</p>
+<p>Subcommands:
+  repair     Check and rebuild stale vault index entries</p>
+<p>Example:
+  tokenpak vault repair    # Auto-fix corrupted entries
+  tokenpak vault-health repair  # Same via alias</p>
+<p><strong>Subcommands:</strong></p>
+<ul>
+<li><code>repair</code></li>
+</ul>
+<h3 id="tokenpak-fleet"><code>tokenpak fleet</code><a class="headerlink" href="#tokenpak-fleet" title="Permanent link">&para;</a></h3>
+<p>Fleet status</p>
+<p><strong>Flags:</strong></p>
+<ul>
+<li><code>--json</code> — Output as JSON</li>
+<li><code>--compact</code> — Compact one-line output</li>
+</ul>
+<p><strong>Subcommands:</strong></p>
+<ul>
+<li><code>init</code></li>
+</ul>
+<h3 id="tokenpak-aggregate"><code>tokenpak aggregate</code><a class="headerlink" href="#tokenpak-aggregate" title="Permanent link">&para;</a></h3>
+<p>Aggregate ledger</p>
+<p><strong>Flags:</strong></p>
+<ul>
+<li><code>--since</code> — Time window, e.g. 7d, 24h, 30m, or ISO date (default: 7d)</li>
+<li><code>--json</code> — JSON output</li>
+</ul>
+<h3 id="tokenpak-requests"><code>tokenpak requests</code><a class="headerlink" href="#tokenpak-requests" title="Permanent link">&para;</a></h3>
+<p>Live request explorer</p>
+<p><strong>Flags:</strong></p>
+<ul>
+<li><code>ACTION</code> — tail | show | <request_id> (default: tail)</li>
+<li><code>REQUEST_ID</code> — Request id (for show)</li>
+<li><code>--limit</code>, <code>-n</code> — Number of rows to show (default: 10)</li>
+<li><code>--once</code> — Print once and exit</li>
+</ul>
+<hr />
+<h2 id="group-companion">Group: Companion<a class="headerlink" href="#group-companion" title="Permanent link">&para;</a></h2>
+<h3 id="tokenpak-claude"><code>tokenpak claude</code><a class="headerlink" href="#tokenpak-claude" title="Permanent link">&para;</a></h3>
+<p>Launch Claude Code with tokenpak companion active.</p>
+<p>All arguments are forwarded verbatim to the claude binary.</p>
+<p>Examples:
+  tokenpak claude
+  tokenpak claude --budget 5.00
+  tokenpak claude --print "Fix the bug"
+  tokenpak claude --model claude-sonnet-4-6 --print "Review this PR"</p>
+<p><strong>Flags:</strong></p>
+<ul>
+<li><code>--budget</code> — Daily spend cap in USD; sets TOKENPAK_COMPANION_BUDGET env var</li>
+<li><code>ARGS</code> — Arguments forwarded verbatim to claude</li>
+</ul>
+<h3 id="tokenpak-codex"><code>tokenpak codex</code><a class="headerlink" href="#tokenpak-codex" title="Permanent link">&para;</a></h3>
+<p>Launch OpenAI Codex CLI with tokenpak companion active.</p>
+<p>Registers the MCP server, installs hooks, and writes AGENTS.md,
+then launches Codex with any user-provided arguments.</p>
+<p>Examples:
+  tokenpak codex
+  tokenpak codex --install-only    # set up without launching Codex
+  tokenpak codex doctor            # verify installation
+  tokenpak codex uninstall         # reverse installation
+  tokenpak codex --budget 5.00
+  tokenpak codex "Fix the login bug"
+  tokenpak codex --model o3 -s workspace-write</p>
+<p><strong>Flags:</strong></p>
+<ul>
+<li><code>--budget</code> — Daily spend cap in USD; sets TOKENPAK_COMPANION_BUDGET env var</li>
+<li><code>--install-only</code> — Run setup (MCP, hooks, AGENTS.md, skills) and exit without launching codex</li>
+<li><code>ARGS</code> — Arguments forwarded verbatim to codex (or <code>doctor</code> / <code>uninstall</code>)</li>
+</ul>
+<h3 id="tokenpak-creds"><code>tokenpak creds</code><a class="headerlink" href="#tokenpak-creds" title="Permanent link">&para;</a></h3>
+<p>Inspect, manage, and dry-run-route credentials tokenpak can see from
+all registered providers (Codex CLI, Claude CLI, env vars,
+~/.tokenpak/credentials.toml, OpenClaw agent profiles).</p>
+<p>Proxy fast-path integration still deferred — <code>creds route</code> is a
+dry-run (what would I pick) with no side effects.</p>
+<p>Examples:
+  tokenpak creds list                                  # show all
+  tokenpak creds doctor                                # hazards
+  tokenpak creds add                                   # BYOK (interactive)
+  tokenpak creds add --id openai-work --platform openai \
+       --kind api_key --key sk-...
+  tokenpak creds remove openai-work
+  tokenpak creds test openai-work                      # cheap live probe
+  tokenpak creds route api.anthropic.com               # what'd I pick?
+  tokenpak creds route api.openai.com --caller my-app:profile:* \
+       --tag work</p>
+<p><strong>Flags:</strong></p>
+<ul>
+<li><code>ARGS</code> — Subcommand + args (list | doctor)</li>
+</ul>
+<h3 id="tokenpak-pak"><code>tokenpak pak</code><a class="headerlink" href="#tokenpak-pak" title="Permanent link">&para;</a></h3>
+<p>MultiPak Pro Phase 1 OSS surface. Read-only Vault Pak operations work without Pro; other Pak subtypes require the tokenpak-paid daemon.</p>
+<p><strong>Subcommands:</strong></p>
+<ul>
+<li><code>inspect</code></li>
+<li><code>PAK_REF</code> — Pak ID (e.g. 'vault:path#hash') or path to a Pak file</li>
+<li><code>--json</code> — Emit JSON instead of text</li>
+<li><code>export</code></li>
+<li><code>PAK_REF</code> — Pak ID to export</li>
+<li><code>--output</code>, <code>-o</code> — Output directory</li>
+<li><code>create</code> — Package a directory into a Pak JSON file. The Pak captures anchor file content, objective/summary metadata, and a sha256 checksum. Encrypted Pak archives + capture pipeline are Pro features; plain JSON Paks are OSS Beta 1.</li>
+<li><code>SOURCE_DIR</code> — Directory to package</li>
+<li><code>--output</code>, <code>-o</code> — Output Pak file path</li>
+<li><code>--title</code> — Pak title (default: directory name) (default: )</li>
+<li><code>--objective</code> — Pak objective (free-form) (default: )</li>
+<li><code>--summary</code> — Pak summary (free-form) (default: )</li>
+<li><code>--ttl</code> — Pak TTL hint (free-form, e.g. '7d') (default: )</li>
+<li><code>--continuation-notes</code> — Notes for continuation (free-form) (default: )</li>
+<li><code>--include-content</code> — Embed file content in the Pak (default: on; use --no-include-content to omit)</li>
+<li><code>--no-include-content</code> — Omit file content; only record paths + per-file sha256</li>
+<li><code>--max-bytes</code> — Skip files larger than this when embedding content (default: 2 MiB) (default: 2000000)</li>
+<li><code>import</code> — Copy a Pak file into the local Pak store under <TOKENPAK_HOME>/paks/ so it is discoverable by <code>pak inspect &lt;id&gt;</code>. Pro daemon adds encryption-at-rest + capture pipeline; OSS import is a plain copy with checksum verification.</li>
+<li><code>PAK_FILE</code> — Path to a Pak file to install</li>
+<li><code>--force</code> — Overwrite if a Pak with the same id is already installed</li>
+<li><code>status</code></li>
+<li><code>--json</code> — Emit JSON instead of text</li>
+</ul>
+<h3 id="tokenpak-test"><code>tokenpak test</code><a class="headerlink" href="#tokenpak-test" title="Permanent link">&para;</a></h3>
+<p>Launch an interactive test that auto-detects your available
+platforms, providers, and models, then runs a 5-turn A/B
+comparison (with vs without tokenpak) with live display.</p>
+<p>Just run: tokenpak test</p>
+<h3 id="tokenpak-prove"><code>tokenpak prove</code><a class="headerlink" href="#tokenpak-prove" title="Permanent link">&para;</a></h3>
+<p>Run the same multi-turn prompt scenario through direct API and through
+tokenpak, then compare metrics side-by-side.</p>
+<p>Scenarios are .md files with YAML frontmatter and ## Turn headings.
+Create your own at: ~/.tokenpak/prove/scenarios/<name>.md</p>
+<p>Examples:
+  tokenpak prove run                       # run default scenario
+  tokenpak prove run my-scenario            # run custom scenario
+  tokenpak prove run default --model gpt-4o # override model
+  tokenpak prove list                       # list all scenarios
+  tokenpak prove show prf_a1b2c3d4          # show past result
+  tokenpak prove create --name my-test      # create new scenario</p>
+<p><strong>Subcommands:</strong></p>
+<ul>
+<li><code>run</code></li>
+<li><code>SCENARIO</code> — Scenario name (default: 'default') (default: default)</li>
+<li><code>--model</code>, <code>-m</code> — Override model from scenario</li>
+<li><code>--provider</code> — Override provider (anthropic|openai)</li>
+<li><code>--no-live</code> — Skip launching live display windows</li>
+<li><code>list</code></li>
+<li><code>show</code></li>
+<li><code>PROOF_ID</code> — Proof ID (e.g. prf_a1b2c3d4)</li>
+<li><code>create</code></li>
+<li><code>--name</code> — Scenario name</li>
+<li><code>--model</code> — Model to use (default: claude-sonnet-4-6)</li>
+<li><code>PROMPTS</code> — Turn prompts (one per positional arg)</li>
+<li><code>providers</code></li>
+</ul>
+<hr />
+<h2 id="group-advanced">Group: Advanced<a class="headerlink" href="#group-advanced" title="Permanent link">&para;</a></h2>
+<h3 id="tokenpak-trigger"><code>tokenpak trigger</code><a class="headerlink" href="#tokenpak-trigger" title="Permanent link">&para;</a></h3>
+<p>Manage event triggers</p>
+<p><strong>Subcommands:</strong></p>
+<ul>
+<li><code>list</code></li>
+<li><code>--json</code> — Output raw JSON</li>
+<li><code>add</code></li>
+<li><code>--event</code> — Event pattern (e.g. file:changed:*.py, git:commit, cost:daily&gt;5)</li>
+<li><code>--action</code> — Action: tokenpak sub-command or shell script path</li>
+<li><code>--json</code> — Output raw JSON</li>
+<li><code>remove</code></li>
+<li><code>ID</code> — Trigger ID</li>
+<li><code>--json</code> — Output raw JSON</li>
+<li><code>test</code></li>
+<li><code>--event</code> — Event string to test</li>
+<li><code>--json</code> — Output raw JSON</li>
+<li><code>log</code></li>
+<li><code>--limit</code> — default: 20</li>
+<li><code>--json</code> — Output raw JSON</li>
+<li><code>daemon</code></li>
+<li><code>fire</code></li>
+<li><code>EVENT</code> — Event string to fire (e.g. git:push, agent:finished:cali)</li>
+<li><code>hook</code></li>
+<li><code>watch</code></li>
+<li><code>PATHS</code> — Paths to watch (default: .)</li>
+</ul>
+<h3 id="tokenpak-macro"><code>tokenpak macro</code><a class="headerlink" href="#tokenpak-macro" title="Permanent link">&para;</a></h3>
+<p>Manage macros</p>
+<p><strong>Subcommands:</strong></p>
+<ul>
+<li><code>list</code></li>
+<li><code>create</code></li>
+<li><code>--name</code> — Macro name (e.g., my-deploy)</li>
+<li><code>--description</code> — Short description (default: )</li>
+<li><code>--step</code> — Add a step (repeatable). Format: 'Label:command'</li>
+<li><code>--var</code> — Default variable (repeatable). Format: KEY=VALUE</li>
+<li><code>--continue-on-error</code> — Keep running if a step fails (default: fail-fast)</li>
+<li><code>--file</code> — Load macro definition from a YAML file</li>
+<li><code>--overwrite</code> — Overwrite an existing macro with the same name</li>
+<li><code>run</code></li>
+<li><code>NAME</code> — Macro name</li>
+<li><code>--dry-run</code> — Print commands without executing them</li>
+<li><code>--continue-on-error</code> — Keep running if a step fails</li>
+<li><code>--var</code> — Runtime variable override (repeatable)</li>
+<li><code>--json</code> — Output raw JSON</li>
+<li><code>show</code></li>
+<li><code>NAME</code> — Macro name</li>
+<li><code>--json</code> — Output raw JSON</li>
+<li><code>delete</code></li>
+<li><code>NAME</code> — Macro name</li>
+<li><code>--yes</code>, <code>-y</code> — Skip confirmation prompt</li>
+<li><code>install</code></li>
+<li><code>NAME</code> — Macro name (morning-standup, pre-deploy, weekly-report)</li>
+<li><code>hooks</code></li>
+</ul>
+<h3 id="tokenpak-fingerprint"><code>tokenpak fingerprint</code><a class="headerlink" href="#tokenpak-fingerprint" title="Permanent link">&para;</a></h3>
+<p>Fingerprint management</p>
+<p><strong>Subcommands:</strong></p>
+<ul>
+<li><code>sync</code></li>
+<li><code>TEXT</code> — Prompt text (or omit to read from stdin)</li>
+<li><code>--file</code>, <code>-f</code> — Read prompt from file</li>
+<li><code>--messages</code> — OpenAI messages JSON file</li>
+<li><code>--dry-run</code> — Show what would be sent without transmitting</li>
+<li><code>--privacy</code> — default: standard — choices: <code>minimal</code>, <code>standard</code>, <code>full</code></li>
+<li><code>--ttl</code> — Cache TTL in seconds (default 3600) (default: 3600)</li>
+<li><code>--skip-cache</code></li>
+<li><code>--json</code></li>
+<li><code>cache</code></li>
+<li><code>--json</code></li>
+<li><code>clear-cache</code></li>
+<li><code>--id</code> — Clear only this fingerprint ID (default: all)</li>
+<li><code>--yes</code>, <code>-y</code> — Skip confirmation prompt</li>
+</ul>
+<h3 id="tokenpak-agent"><code>tokenpak agent</code><a class="headerlink" href="#tokenpak-agent" title="Permanent link">&para;</a></h3>
+<p>Agent coordination</p>
+<p><strong>Subcommands:</strong></p>
+<ul>
+<li><code>lock</code></li>
+<li><code>PATH</code> — File path to lock</li>
+<li><code>--timeout</code> — Lock TTL in seconds (default 600) (default: 600)</li>
+<li><code>--agent</code> — Agent id override</li>
+<li><code>unlock</code></li>
+<li><code>PATH</code> — File path to unlock</li>
+<li><code>--agent</code> — Agent id override</li>
+<li><code>locks</code></li>
+<li><code>--agent</code> — Filter by agent id</li>
+<li><code>list</code></li>
+<li><code>--all</code> — Include stale agents</li>
+<li><code>--json</code> — JSON output</li>
+<li><code>register</code></li>
+<li><code>NAME</code> — Agent name (e.g., trix, sue, cali)</li>
+<li><code>--hostname</code> — Hostname (default: auto-detect)</li>
+<li><code>--gpu</code> — Has GPU</li>
+<li><code>--memory</code> — Memory in GB (default: 4.0)</li>
+<li><code>--specialties</code> — Specialties (e.g., code research) (default: [])</li>
+<li><code>--providers</code> — Provider access (default: ['anthropic'])</li>
+<li><code>--json</code> — JSON output</li>
+<li><code>deregister</code></li>
+<li><code>AGENT_ID</code> — Agent ID to remove</li>
+<li><code>heartbeat</code></li>
+<li><code>AGENT_ID</code> — Agent ID</li>
+<li><code>--status</code> — Update status — choices: <code>active</code>, <code>busy</code>, <code>draining</code></li>
+<li><code>--task</code> — Current task name</li>
+<li><code>match</code></li>
+<li><code>--gpu</code> — Require GPU</li>
+<li><code>--memory</code> — Minimum memory GB</li>
+<li><code>--specialty</code> — Required specialties (default: [])</li>
+<li><code>--provider</code> — Required providers (default: [])</li>
+<li><code>--json</code> — JSON output</li>
+<li><code>prune</code></li>
+<li><code>handoff</code></li>
+</ul>
+<h3 id="tokenpak-lock"><code>tokenpak lock</code><a class="headerlink" href="#tokenpak-lock" title="Permanent link">&para;</a></h3>
+<p>File lock management</p>
+<p><strong>Subcommands:</strong></p>
+<ul>
+<li><code>claim</code></li>
+<li><code>PATH</code> — File or directory path to lock</li>
+<li><code>--timeout</code> — Lock TTL in seconds (default 1800 = 30 min) (default: 1800)</li>
+<li><code>--agent</code> — Agent id override</li>
+<li><code>release</code></li>
+<li><code>PATH</code> — File or directory path to release</li>
+<li><code>--agent</code> — Agent id override</li>
+<li><code>query</code></li>
+<li><code>PATH</code> — File or directory path to query</li>
+<li><code>--agent</code> — Agent id override (for manager context)</li>
+<li><code>list</code></li>
+<li><code>--agent</code> — Filter by agent id (display context only)</li>
+<li><code>renew</code></li>
+<li><code>PATH</code> — File or directory path to renew</li>
+<li><code>--timeout</code> — New TTL in seconds (default 1800 = 30 min) (default: 1800)</li>
+<li><code>--agent</code> — Agent id override</li>
+</ul>
+<h3 id="tokenpak-run"><code>tokenpak run</code><a class="headerlink" href="#tokenpak-run" title="Permanent link">&para;</a></h3>
+<p>Schedule macro runs</p>
+<p><strong>Subcommands:</strong></p>
+<ul>
+<li><code>cron</code></li>
+<li><code>NAME</code> — Macro name</li>
+<li><code>--cron</code> — Cron expression e.g. "0 9 * * 1-5"</li>
+<li><code>--description</code> — Optional description (default: )</li>
+<li><code>at</code></li>
+<li><code>NAME</code> — Macro name</li>
+<li><code>--at</code> — Time string e.g. "2026-03-06 09:00" or "now + 1 hour"</li>
+<li><code>--description</code> — Optional description (default: )</li>
+<li><code>list</code></li>
+<li><code>cancel</code></li>
+<li><code>ID</code> — Schedule ID to cancel</li>
+</ul>
+<h3 id="tokenpak-replay"><code>tokenpak replay</code><a class="headerlink" href="#tokenpak-replay" title="Permanent link">&para;</a></h3>
+<p>Replay captured sessions</p>
+<p><strong>Subcommands:</strong></p>
+<ul>
+<li><code>list</code></li>
+<li><code>--limit</code> — Max entries to show (default 20) (default: 20)</li>
+<li><code>--provider</code> — Filter by provider</li>
+<li><code>show</code></li>
+<li><code>ID</code> — Replay entry ID</li>
+<li><code>--messages</code> — Print captured message content</li>
+<li><code>run</code></li>
+<li><code>ID</code> — Replay entry ID</li>
+<li><code>--model</code> — Label as a different model</li>
+<li><code>--no-compress</code> — Simulate sending uncompressed</li>
+<li><code>--aggressive</code> — Apply aggressive compression mode</li>
+<li><code>--diff</code> — Show unified diff of original vs compressed messages</li>
+<li><code>clear</code></li>
+</ul>
+<h3 id="tokenpak-audit"><code>tokenpak audit</code><a class="headerlink" href="#tokenpak-audit" title="Permanent link">&para;</a></h3>
+<p>Audit log management</p>
+<h3 id="tokenpak-compliance"><code>tokenpak compliance</code><a class="headerlink" href="#tokenpak-compliance" title="Permanent link">&para;</a></h3>
+<p>Compliance reports</p>
+<h3 id="tokenpak-validate"><code>tokenpak validate</code><a class="headerlink" href="#tokenpak-validate" title="Permanent link">&para;</a></h3>
+<p>Validate JSON files</p>
+<p><strong>Flags:</strong></p>
+<ul>
+<li><code>FILE</code> — Path to the .json TokenPak file</li>
+<li><code>--verbose</code>, <code>-v</code> — Show quality hints in addition to errors/warnings</li>
+<li><code>--json</code> — Output validation result as JSON</li>
+</ul>
+<h3 id="tokenpak-config-check"><code>tokenpak config-check</code><a class="headerlink" href="#tokenpak-config-check" title="Permanent link">&para;</a></h3>
+<p>Validate config</p>
+<p><strong>Flags:</strong></p>
+<ul>
+<li><code>FILE</code> — Path to config file (JSON)</li>
+</ul>
+<h3 id="tokenpak-diff"><code>tokenpak diff</code><a class="headerlink" href="#tokenpak-diff" title="Permanent link">&para;</a></h3>
+<p>Show context changes</p>
+<p><strong>Flags:</strong></p>
+<ul>
+<li><code>--verbose</code>, <code>-v</code> — Show token counts per block</li>
+<li><code>--json</code> — Output as JSON</li>
+<li><code>--since</code> — Diff from specific time</li>
+</ul>
+<h3 id="tokenpak-stats"><code>tokenpak stats</code><a class="headerlink" href="#tokenpak-stats" title="Permanent link">&para;</a></h3>
+<p>Registry stats</p>
+<h3 id="tokenpak-serve"><code>tokenpak serve</code><a class="headerlink" href="#tokenpak-serve" title="Permanent link">&para;</a></h3>
+<p>Start proxy server</p>
+<p><strong>Flags:</strong></p>
+<ul>
+<li><code>--port</code> — default: 8766</li>
+<li><code>--telemetry</code> — Start telemetry ingest server</li>
+<li><code>--ingest</code> — Start Phase 5A ingest API server</li>
+<li><code>--workers</code> — Number of uvicorn workers</li>
+<li><code>--shutdown-timeout</code> — Seconds to wait for in-flight requests to complete before forcing shutdown (default: 30, or TOKENPAK_SHUTDOWN_TIMEOUT env var)</li>
+<li><code>--safe</code> — Disable compression defaults (restore pre-1.1 passthrough behavior). Equivalent to TOKENPAK_COMPACT=0.</li>
+</ul>
+<h3 id="tokenpak-retrieval"><code>tokenpak retrieval</code><a class="headerlink" href="#tokenpak-retrieval" title="Permanent link">&para;</a></h3>
+<p>Test search retrieval</p>
+<p><strong>Flags:</strong></p>
+<ul>
+<li><code>--json</code> — Output as JSON</li>
+</ul>
+<p><strong>Subcommands:</strong></p>
+<ul>
+<li><code>status</code></li>
+<li><code>--json</code> — Output as JSON</li>
+<li><code>test</code></li>
+<li><code>QUERY</code> — Query string to test</li>
+<li><code>--top-k</code> — Number of results (default: 5) (default: 5)</li>
+<li><code>--json</code> — Output as JSON</li>
+</ul>
+<hr />
+<h2 id="additional-commands">Additional Commands<a class="headerlink" href="#additional-commands" title="Permanent link">&para;</a></h2>
+<h3 id="tokenpak-activate"><code>tokenpak activate</code><a class="headerlink" href="#tokenpak-activate" title="Permanent link">&para;</a></h3>
+<p><strong>Flags:</strong></p>
+<ul>
+<li><code>KEY</code> — Your license key (default: )</li>
+<li><code>--email</code> — Optional email for the license (default: )</li>
+</ul>
+<h3 id="tokenpak-check-alerts"><code>tokenpak check-alerts</code><a class="headerlink" href="#tokenpak-check-alerts" title="Permanent link">&para;</a></h3>
+<p>Evaluate alert rules and return exit code 1 if any fired.</p>
+<h3 id="tokenpak-compare"><code>tokenpak compare</code><a class="headerlink" href="#tokenpak-compare" title="Permanent link">&para;</a></h3>
+<p>Show before/after cost comparison for last N requests.</p>
+<p><strong>Flags:</strong></p>
+<ul>
+<li><code>--last</code> — Show last N requests (default: 1)</li>
+</ul>
+<h3 id="tokenpak-compress"><code>tokenpak compress</code><a class="headerlink" href="#tokenpak-compress" title="Permanent link">&para;</a></h3>
+<p>Compress a piece of text, JSON, or code using TokenPak's compression.
+Shows token savings and compressed output.</p>
+<p>Note: The proxy handles compression automatically for API requests.
+Use this command to test compression on arbitrary content.</p>
+<p>Example:
+  tokenpak compress &lt; myfile.json
+  echo '{"data": "...large JSON..."}' | tokenpak compress --verbose</p>
+<p><strong>Flags:</strong></p>
+<ul>
+<li><code>--file</code>, <code>-f</code> — Input file path (reads from stdin if omitted)</li>
+<li><code>--verbose</code>, <code>-v</code> — Show compression blocks</li>
+<li><code>--json</code> — Output as machine-readable JSON</li>
+</ul>
+<h3 id="tokenpak-deactivate"><code>tokenpak deactivate</code><a class="headerlink" href="#tokenpak-deactivate" title="Permanent link">&para;</a></h3>
+<h3 id="tokenpak-features"><code>tokenpak features</code><a class="headerlink" href="#tokenpak-features" title="Permanent link">&para;</a></h3>
+<p>Show every feature TokenPak knows about and whether the current license entitles you to use it. Use <code>tokenpak features explain &lt;feature&gt;</code> for a single-feature breakdown.</p>
+<p><strong>Flags:</strong></p>
+<ul>
+<li><code>--json</code> — Emit JSON instead of text</li>
+<li><code>--tier</code> — Filter to a specific tier: free|pro|team|enterprise</li>
+</ul>
+<p><strong>Subcommands:</strong></p>
+<ul>
+<li><code>explain</code></li>
+<li><code>FEATURE</code> — Feature key (e.g. T9_replay_system)</li>
+<li><code>--json</code> — Emit JSON</li>
+</ul>
+<h3 id="tokenpak-help"><code>tokenpak help</code><a class="headerlink" href="#tokenpak-help" title="Permanent link">&para;</a></h3>
+<p>Show tier-aware help. Pass a command name for details, or --minimal for compact list.</p>
+<p><strong>Flags:</strong></p>
+<ul>
+<li><code>CMD_NAME</code> — Command name for detailed help</li>
+<li><code>--more</code> — Show essential + intermediate commands</li>
+<li><code>--all</code> — Show all commands</li>
+<li><code>--minimal</code> — Show compact one-line command list</li>
+</ul>
+<h3 id="tokenpak-home"><code>tokenpak home</code><a class="headerlink" href="#tokenpak-home" title="Permanent link">&para;</a></h3>
+<p>Inspect, validate, and migrate the TokenPak home directory. All paths resolve through tokenpak._paths so subcommands honor TOKENPAK_HOME and the canonical ~/.tpk/ boundary.</p>
+<p><strong>Subcommands:</strong></p>
+<ul>
+<li><code>path</code></li>
+<li><code>--json</code></li>
+<li><code>init</code></li>
+<li><code>--force</code> — Overwrite an existing config.json</li>
+<li><code>validate</code></li>
+<li><code>--json</code></li>
+<li><code>explain</code></li>
+<li><code>--json</code></li>
+<li><code>migrate</code> — Copy the legacy ~/.tokenpak/ tree to the canonical ~/.tpk/ location. The legacy tree is left in place as a safety backup; you can prune it manually once satisfied.</li>
+<li><code>--dry-run</code> — Show what would be copied without writing anything</li>
+<li><code>--force</code> — Allow merging into an existing ~/.tpk/ (default: refuse and report what to do manually)</li>
+</ul>
+<h3 id="tokenpak-init"><code>tokenpak init</code><a class="headerlink" href="#tokenpak-init" title="Permanent link">&para;</a></h3>
+<p>Guided first-run setup wizard: API key, port, vault path.</p>
+<h3 id="tokenpak-integrate"><code>tokenpak integrate</code><a class="headerlink" href="#tokenpak-integrate" title="Permanent link">&para;</a></h3>
+<p>Show one-step setup instructions for pointing your LLM client at tokenpak.</p>
+<p>Examples:
+  tokenpak integrate                # list detected clients + SDKs
+  tokenpak integrate cursor         # show Cursor setup
+  tokenpak integrate claude-code    # show Claude Code setup
+  tokenpak integrate --all          # dump instructions for every client</p>
+<p><strong>Flags:</strong></p>
+<ul>
+<li><code>CLIENT</code> — Client key: claude-code | cursor | cline | continue | aider | codex | openai-sdk | anthropic-sdk | litellm</li>
+<li><code>--all</code> — Show instructions for every supported client</li>
+<li><code>--proxy-url</code> — Override the printed proxy URL (default: $TOKENPAK_PROXY_URL or http://localhost:8766)</li>
+<li><code>--apply</code> — (reserved) auto-write config files — not yet implemented, prints safe instructions instead</li>
+</ul>
+<h3 id="tokenpak-last"><code>tokenpak last</code><a class="headerlink" href="#tokenpak-last" title="Permanent link">&para;</a></h3>
+<p>Display details about the most recent request processed by the proxy.
+Includes compression ratio, token savings, latency, and provider info.</p>
+<p>Example:
+  tokenpak last                    # Show last request
+  tokenpak last --json             # Export as JSON
+  tokenpak last --limit 5          # Show last 5 requests</p>
+<p><strong>Flags:</strong></p>
+<ul>
+<li><code>--limit</code> — Show last N requests (default: 1)</li>
+<li><code>--json</code> — Output as JSON</li>
+<li><code>--verbose</code>, <code>-v</code> — Show full request/response bodies</li>
+</ul>
+<h3 id="tokenpak-leaderboard"><code>tokenpak leaderboard</code><a class="headerlink" href="#tokenpak-leaderboard" title="Permanent link">&para;</a></h3>
+<p>Show per-model efficiency ranking.</p>
+<p><strong>Flags:</strong></p>
+<ul>
+<li><code>--days</code> — Rolling window in days (default: today)</li>
+</ul>
+<h3 id="tokenpak-license"><code>tokenpak license</code><a class="headerlink" href="#tokenpak-license" title="Permanent link">&para;</a></h3>
+<p><strong>Flags:</strong></p>
+<ul>
+<li><code>--json</code> — Machine-readable JSON output</li>
+</ul>
+<h3 id="tokenpak-menu"><code>tokenpak menu</code><a class="headerlink" href="#tokenpak-menu" title="Permanent link">&para;</a></h3>
+<h3 id="tokenpak-monitor"><code>tokenpak monitor</code><a class="headerlink" href="#tokenpak-monitor" title="Permanent link">&para;</a></h3>
+<p>Start the live monitor dashboard.</p>
+<p><strong>Flags:</strong></p>
+<ul>
+<li><code>--port</code> — Dashboard port (default: 8767) (default: 8767)</li>
+</ul>
+<h3 id="tokenpak-optimize"><code>tokenpak optimize</code><a class="headerlink" href="#tokenpak-optimize" title="Permanent link">&para;</a></h3>
+<p>Analyze and optimize a prompt for better compression efficiency.
+Suggests rewording and restructuring to reduce compressed token count.</p>
+<p>Example:
+  tokenpak optimize &lt; myprompt.txt
+  tokenpak optimize --strategy aggressive myfile.txt</p>
+<p><strong>Flags:</strong></p>
+<ul>
+<li><code>--file</code>, <code>-f</code> — Input file path (reads from stdin if omitted)</li>
+<li><code>--strategy</code> — Optimization aggressiveness (default: balanced) (default: balanced) — choices: <code>conservative</code>, <code>balanced</code>, <code>aggressive</code></li>
+<li><code>--show-diff</code> — Show before/after token counts</li>
+<li><code>--json</code> — Machine-readable JSON output</li>
+</ul>
+<h3 id="tokenpak-pakplan"><code>tokenpak pakplan</code><a class="headerlink" href="#tokenpak-pakplan" title="Permanent link">&para;</a></h3>
+<p>Read-only consumer surface over the PAKPlan recall foundation. Scoring + capture pipeline are Pro.</p>
+<p><strong>Subcommands:</strong></p>
+<ul>
+<li><code>preview</code></li>
+<li><code>--limit</code> — Max Paks to surface (default: 10) (default: 10)</li>
+<li><code>--json</code> — Emit JSON</li>
+<li><code>explain</code></li>
+<li><code>PAK_ID</code> — Pak id (e.g. pak:abcd1234…)</li>
+<li><code>--json</code> — Emit JSON</li>
+<li><code>report</code></li>
+<li><code>--json</code> — Emit JSON</li>
+</ul>
+<h3 id="tokenpak-plan"><code>tokenpak plan</code><a class="headerlink" href="#tokenpak-plan" title="Permanent link">&para;</a></h3>
+<p><strong>Flags:</strong></p>
+<ul>
+<li><code>--json</code> — Machine-readable JSON output</li>
+</ul>
+<h3 id="tokenpak-preview"><code>tokenpak preview</code><a class="headerlink" href="#tokenpak-preview" title="Permanent link">&para;</a></h3>
+<p>Preview compression result for input text (dry-run).</p>
+<p><strong>Flags:</strong></p>
+<ul>
+<li><code>INPUT</code> — Input text to preview (or reads from stdin)</li>
+<li><code>--file</code> — Read input from file instead of command line</li>
+<li><code>--raw</code> — Show raw compression output (no formatting)</li>
+<li><code>--verbose</code> — Show detailed block breakdown</li>
+<li><code>--json</code> — Output as JSON (machine-readable)</li>
+</ul>
+<h3 id="tokenpak-prune"><code>tokenpak prune</code><a class="headerlink" href="#tokenpak-prune" title="Permanent link">&para;</a></h3>
+<p>Remove low-priority blocks from the compression store.
+Blocks below the quality threshold are listed and optionally deleted.</p>
+<p>Example:
+  tokenpak prune                     # interactive review
+  tokenpak prune --dry-run           # preview without changes
+  tokenpak prune --auto              # prune without confirmation
+  tokenpak prune --threshold 0.3     # custom quality threshold</p>
+<p><strong>Flags:</strong></p>
+<ul>
+<li><code>--auto</code> — Auto-prune without confirmation</li>
+<li><code>--dry-run</code> — Show what would be pruned (no changes made)</li>
+<li><code>--threshold</code> — Quality score below which blocks are pruned (default: 0.4) (default: 0.4)</li>
+<li><code>--json</code> — Output raw JSON</li>
+</ul>
+<h3 id="tokenpak-report"><code>tokenpak report</code><a class="headerlink" href="#tokenpak-report" title="Permanent link">&para;</a></h3>
+<p>Generate and display daily savings report.</p>
+<p><strong>Flags:</strong></p>
+<ul>
+<li><code>--markdown</code> — Output markdown format (for messaging)</li>
+<li><code>--json</code> — Output JSON format</li>
+</ul>
+<h3 id="tokenpak-savings"><code>tokenpak savings</code><a class="headerlink" href="#tokenpak-savings" title="Permanent link">&para;</a></h3>
+<p>Show compression savings summary.</p>
+<p><strong>Flags:</strong></p>
+<ul>
+<li><code>--days</code> — Rolling window in days (default: 30)</li>
+</ul>
+<h3 id="tokenpak-setup"><code>tokenpak setup</code><a class="headerlink" href="#tokenpak-setup" title="Permanent link">&para;</a></h3>
+<p>Interactive wizard for first-time TokenPak configuration.</p>
+<h3 id="tokenpak-telemetry"><code>tokenpak telemetry</code><a class="headerlink" href="#tokenpak-telemetry" title="Permanent link">&para;</a></h3>
+<p><strong>Subcommands:</strong></p>
+<ul>
+<li><code>export</code></li>
+<li><code>--format</code> — Output format (default: json) (default: json) — choices: <code>json</code>, <code>csv</code></li>
+<li><code>--since</code> — Only include events on or after this date</li>
+<li><code>--until</code> — Only include events on or before this date</li>
+<li><code>--provider</code> — Filter to a specific provider name</li>
+</ul>
+<h3 id="tokenpak-tip"><code>tokenpak tip</code><a class="headerlink" href="#tokenpak-tip" title="Permanent link">&para;</a></h3>
+<p>TIP is the protocol layer that adapter providers and platform integrations declare against. This verb family exposes the OSS-side validation, inspection, and self-conformance surface.</p>
+<p><strong>Subcommands:</strong></p>
+<ul>
+<li><code>inspect</code></li>
+<li><code>--json</code> — Emit JSON instead of text</li>
+<li><code>validate</code></li>
+<li><code>REF</code> — Either a capability label (e.g. 'tip.compression.v1') or a filesystem path to a JSON document to check</li>
+<li><code>--schema</code> — Schema name (e.g. 'tip-capabilities.v1') when validating a JSON file. Required for file mode.</li>
+<li><code>--json</code> — Emit JSON result</li>
+<li><code>conformance</code></li>
+<li><code>--json</code> — Emit JSON result envelope</li>
+<li><code>doctor</code></li>
+<li><code>--json</code> — Emit JSON result envelope</li>
+<li><code>scaffold-adapter</code></li>
+<li><code>NAME</code> — Adapter name (e.g. 'my-platform')</li>
+<li><code>--output</code>, <code>-o</code> — Output file path (default: ./<name>_adapter.py)</li>
+</ul>
+<h3 id="tokenpak-usage"><code>tokenpak usage</code><a class="headerlink" href="#tokenpak-usage" title="Permanent link">&para;</a></h3>
+<p>Show model token usage summary.</p>
+<p><strong>Flags:</strong></p>
+<ul>
+<li><code>--days</code> — Rolling window in days (default: 30)</li>
+</ul>
+<h3 id="tokenpak-validate-config"><code>tokenpak validate-config</code><a class="headerlink" href="#tokenpak-validate-config" title="Permanent link">&para;</a></h3>
+<p>CLI wrapper for tokenpak validate-config.</p>
+<p><strong>Flags:</strong></p>
+<ul>
+<li><code>FILE</code> — Path to config file (YAML or JSON)</li>
+</ul>
+<h3 id="tokenpak-vault"><code>tokenpak vault</code><a class="headerlink" href="#tokenpak-vault" title="Permanent link">&para;</a></h3>
+<p>Check the health of your vault index and repair stale or corrupted entries.
+The vault index stores compressed context blocks and metadata about requests.</p>
+<p>Subcommands:
+  repair     Check and rebuild stale vault index entries</p>
+<p>Example:
+  tokenpak vault repair    # Auto-fix corrupted entries
+  tokenpak vault-health repair  # Same via alias</p>
+<p><strong>Subcommands:</strong></p>
+<ul>
+<li><code>repair</code></li>
+</ul>
+<h3 id="tokenpak-watch"><code>tokenpak watch</code><a class="headerlink" href="#tokenpak-watch" title="Permanent link">&para;</a></h3>
+<hr />
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2026 TokenPak Contributors
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/tokenpak/tokenpak" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.instant", "navigation.tracking", "navigation.tabs", "navigation.sections", "navigation.top", "search.suggest", "search.highlight", "content.code.copy", "content.code.annotate"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>
