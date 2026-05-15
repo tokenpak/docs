@@ -5,7 +5,7 @@ The `pak_risk_flags` table on a TokenPak recall store carries the **risk signal*
 - **Machine-readable source of truth:** [`pak-risk-flags-v1.json`](https://docs.tokenpak.ai/schemas/tip/pak-risk-flags-v1.json) on the registry.
 - **OSS persistence:** `pak_risk_flags` join table (recall storage v3 migration).
 - **OSS access:** `RecallStore.set_pak_risk_flags` / `get_pak_risk_flags` — see [Recall store API](recall-store-api.md).
-- **Closed catalogue:** new flags require an additive (Class B) amendment. Pro-only extensions live in a sibling `pak-risk-flags-v1.pro.json` overlay and are never required by OSS receivers.
+- **Closed catalogue:** new flags require an additive (Class B) amendment. Extensions outside the OSS beta surface live in a sibling overlay schema and are never required by OSS receivers.
 
 ---
 
@@ -14,14 +14,14 @@ The `pak_risk_flags` table on a TokenPak recall store carries the **risk signal*
 This is the most important invariant on this page.
 
 !!! warning "`block` is a data tag in OSS"
-    OSS persists, exposes, inspects, exports, and validates rows with `severity="block"`. **OSS does not refuse to assemble a Context Package because a `block` flag was attached.** Refusal lives in the Pro Phase 3 Context Package builder.
+    OSS persists, exposes, inspects, exports, and validates rows with `severity="block"`. **OSS does not refuse to assemble a Context Package because a `block` flag was attached.** Refusal is not part of the OSS beta — it lives in the planned assembly layer.
 
     Two consequences:
 
-    1. A caller that wants enforcement must implement it themselves or upgrade to Pro. Reading a `block` row out of the store and ignoring it is not a violation of any OSS contract.
-    2. An OSS recall store with `block` rows present is a perfectly valid, byte-stable input to a Pro builder downstream. The store side is enforcement-agnostic on purpose.
+    1. A caller that wants enforcement must implement it themselves. Reading a `block` row out of the store and ignoring it is not a violation of any OSS contract.
+    2. An OSS recall store with `block` rows present is a perfectly valid, byte-stable input to a downstream builder. The store side is enforcement-agnostic on purpose.
 
-This split — OSS = transparent data plane; Pro = enforcement — is intentional. It keeps the OSS surface a pure observability layer, and lets Pro upgrade enforcement semantics without changing the recall schema.
+This split — OSS = transparent data plane; assembly/enforcement = a separate layer — is intentional. It keeps the OSS surface a pure observability layer, and lets Pro upgrade enforcement semantics without changing the recall schema.
 
 ---
 

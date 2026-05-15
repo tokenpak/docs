@@ -7,7 +7,7 @@ The OSS recall layer is a transparent data plane:
 - It **persists** Paks, FTS shadows, reason codes, and risk flags.
 - It **exposes** them via the `tokenpak.companion.recall` Python API.
 - It **inspects** and **exports** them via the `tokenpak pak` CLI.
-- It does **not** rank, score, or enforce. The Pro Phase 3 Context Package builder is the enforcement surface.
+- It does **not** rank, score, or enforce in the OSS beta. The ranking / assembly / enforcement layer is planned but not part of this beta surface.
 
 The page set below documents the OSS surface end-to-end.
 
@@ -28,7 +28,7 @@ The page set below documents the OSS surface end-to-end.
 
 ## OSS vs Pro at a glance
 
-| Surface | OSS | Pro Phase 3 |
+| Surface | OSS beta | Planned (not in OSS beta) |
 |---|---|---|
 | `pak_reason_codes` and `pak_risk_flags` storage | ✅ persist + expose | inherits the same storage |
 | FTS5 search over Pak `title` + `summary` | ✅ via `paks_fts` MATCH | inherits |

@@ -37,7 +37,7 @@ provider: anthropic
 from tokenpak import Client
 
 client = Client(
-    base_url="http://127.0.0.1:8000",
+    base_url="http://127.0.0.1:8766",
     api_key="sk-ant-...",
     model="claude-opus-4-6"
 )
@@ -134,7 +134,7 @@ model: gpt-4o
 from tokenpak import Client
 
 client = Client(
-    base_url="http://127.0.0.1:8000",
+    base_url="http://127.0.0.1:8766",
     api_key="sk-...",  # OpenAI key
     model="gpt-4o"
 )
@@ -241,7 +241,7 @@ model: text-davinci-003
 
 ```python
 client = Client(
-    base_url="http://127.0.0.1:8000",
+    base_url="http://127.0.0.1:8766",
     api_key="sk-...",
     model="text-davinci-003"
 )
@@ -277,7 +277,7 @@ model: gemini-pro
 from tokenpak import Client
 
 client = Client(
-    base_url="http://127.0.0.1:8000",
+    base_url="http://127.0.0.1:8766",
     api_key="AIza...",  # Google API key
     model="gemini-pro"
 )
@@ -384,7 +384,7 @@ import httpx
 
 # Send raw JSON directly
 response = httpx.post(
-    "http://127.0.0.1:8000/v1/messages",
+    "http://127.0.0.1:8766/v1/messages",
     json={
         "model": "claude-opus-4-6",
         "max_tokens": 100,
