@@ -58,6 +58,7 @@ tokenpak setup
 | [Known Issues](known-issues.md)            | Current OSS-beta limitations |
 | [FAQ](faq.md)                              | General questions |
 | [Recall overview](recall/index.md)         | Paks, reason codes, risk flags — the OSS data plane |
+| [Client Guides](guides/claude-code.md)     | Per-client integration walkthroughs (Claude Code, Cursor, Cline, Continue, Aider, Codex CLI, Gemini CLI, OpenAI/Anthropic SDK) |
 
 ---
 

@@ -73,6 +73,16 @@ nav:
     - LiteLLM: adapters/litellm.md
     - LangChain: adapters/langchain.md
     - Google: adapters/google.md
+  - Client Guides:
+    - Claude Code: guides/claude-code.md
+    - Cursor: guides/cursor.md
+    - Cline: guides/cline.md
+    - Continue: guides/continue.md
+    - Aider: guides/aider.md
+    - Codex CLI: guides/codex.md
+    - Gemini CLI: guides/gemini-cli.md
+    - OpenAI SDK: guides/openai-sdk.md
+    - Anthropic SDK: guides/anthropic-sdk.md
   - Advanced:
     - Observability: observability.md
     - Performance Overview: performance.md
