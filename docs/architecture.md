@@ -55,7 +55,7 @@ Counts input and output tokens accurately using provider-specific tokenizers. Wo
 **Responsibility:** Accurate token counting per provider, cache-aware token calculation, real-time stats collection.
 
 ### 4. **Cache Manager**
-Implements a multi-layer caching strategy: semantic deduplication (recognizes similar prompts), prompt caching integration (leverages provider caching when available), and configurable TTL-based cache eviction.
+Implements a multi-layer caching strategy: provider-native prompt caching (e.g. Anthropic prompt cache pass-through), and an opt-in TokenPak-managed semantic cache for narrow read-shaped route classes. Semantic response substitution is OFF by default, bypassed entirely for code/debug/streaming/Claude-Code traffic, and gated by per-route similarity thresholds. Configurable TTL-based eviction governs cache lifetime. See the **Caching Strategy** section below for the full safety contract.
 
 **Responsibility:** Cache storage and retrieval, cache hit rate optimization, prompt cache header management, token savings calculation.
 
@@ -208,9 +208,9 @@ graph TD
 
 TokenPak uses a three-tier caching approach to maximize token savings:
 
-1. **Exact Match Cache** — If we've seen this exact request before, return the cached response instantly (0 tokens)
-2. **Semantic Cache** — If a similar request exists (same intent, minor wording differences), TokenPak can return a cached response with high confidence
-3. **Prompt Cache Headers** — When available, TokenPak automatically injects prompt caching headers so the LLM provider caches expensive prompt prefixes
+1. **Exact Match Cache** — If we've seen this exact request before, return the cached response instantly (0 tokens).
+2. **Semantic Cache (opt-in)** — When explicitly enabled via `TOKENPAK_SEMANTIC_CACHE_STAGE`, TokenPak may serve cached responses for a narrow set of read-shaped route classes (status checks, summarization, configuration inspection) at conservative per-route similarity thresholds. All code-generation, code-edit, code-review, debugging, test-failure, log-analysis, git-diff-review, and shell-command-analysis prompts are bypassed entirely. Streaming requests are never served from semantic cache. Claude Code traffic is excluded to preserve message-id fidelity. Unknown route classes default to no response substitution. The TokenPak semantic cache stores normalized + hashed query forms only — entries hold a 12-character query hash, response bytes, content type, and wire format. Raw prompt text is not persisted in the semantic-cache store. (This statement scopes only the semantic-cache store; other TokenPak surfaces — request telemetry, trace records, companion journal, capsule storage — have their own retention rules documented in their respective standards and operator configuration.)
+3. **Prompt Cache Headers** — When available, TokenPak automatically injects prompt caching headers so the LLM provider caches expensive prompt prefixes.
 
 ---
 
