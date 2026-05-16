@@ -5,33 +5,31 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
-  pages: write
-  id-token: write
+  contents: write
 
 concurrency:
   group: pages
   cancel-in-progress: false
 
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - run: pip install mkdocs-material
-      - run: mkdocs build
-      - uses: actions/upload-pages-artifact@v3
-        with:
-          path: site
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - uses: actions/deploy-pages@v4
-        id: deployment
+
+      - name: Install MkDocs Material
+        run: pip install mkdocs-material
+
+      - name: Configure canonical TokenPak identity
+        run: |
+          git config user.name TokenPak
+          git config user.email hello@tokenpak.ai
+
+      - name: Build + deploy to gh-pages
+        run: mkdocs gh-deploy --force --message "Deployed {sha} with MkDocs version: {version}"
