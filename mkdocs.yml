@@ -48,6 +48,7 @@ nav:
     - Compatibility: COMPATIBILITY.md
     - Demo Data: demo.md
   - User Guide:
+    - Beta Onboarding: beta-onboarding.md
     - Configuration: configuration.md
     - Environment Variables: env-vars.md
     - CLI Reference: cli-reference.md
