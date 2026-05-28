@@ -32,4 +32,5 @@ jobs:
           git config user.email hello@tokenpak.ai
 
       - name: Build + deploy to gh-pages
-        run: mkdocs gh-deploy --force --message "Deployed {sha} with MkDocs version: {version}"
+        run: |
+          mkdocs gh-deploy --force --message "Deployed {sha} with MkDocs version: {version}"
