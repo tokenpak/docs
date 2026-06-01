@@ -330,5 +330,5 @@ upstream tokens.
 
 ---
 
-*Benchmarks established 2026-03-26 by Cali (latency/compression) and Trix
-(cache/throughput). Re-run after any significant proxy change.*
+*Benchmarks established 2026-03-26 on TokenPak reference hosts (latency/compression
+and cache/throughput). Re-run after any significant proxy change.*

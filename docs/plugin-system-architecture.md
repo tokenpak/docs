@@ -1,9 +1,8 @@
 # TokenPak Plugin System Architecture — v1 Proposal
 
-**Status:** Draft for Sue review  
-**Author:** Trix  
-**Date:** 2026-03-26  
-**Task:** p2-tokenpak-plugin-system-foundations-2026-03-26
+**Status:** Draft  
+**Author:** TokenPak  
+**Date:** 2026-03-26
 
 ---
 
@@ -501,7 +500,7 @@ def test_metrics_plugin_flush_called_on_shutdown():
 
 ---
 
-## Open Questions for Sue
+## Open Questions
 
 1. **Sandboxing timeline** — Should v1 doc say "no isolation, trust-based" explicitly, or defer to v1.1?
 2. **AdapterPlugin vs FormatAdapter** — Should `AdapterPlugin` extend `FormatAdapter` directly, or compose it? Composition gives cleaner separation but more boilerplate.
@@ -526,4 +525,4 @@ def test_metrics_plugin_flush_called_on_shutdown():
 
 ---
 
-*Submitted for architecture review. No implementation yet — pending Sue sign-off on hook signatures, permission model, and sandboxing stance.*
+*Submitted for architecture review. No implementation yet — pending maintainer sign-off on hook signatures, permission model, and sandboxing stance.*
