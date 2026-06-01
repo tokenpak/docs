@@ -1616,10 +1616,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#open-questions-for-sue" class="md-nav__link">
+  <a href="#open-questions" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Open Questions for Sue
+        Open Questions
       
     </span>
   </a>
@@ -3437,10 +3437,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#open-questions-for-sue" class="md-nav__link">
+  <a href="#open-questions" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Open Questions for Sue
+        Open Questions
       
     </span>
   </a>
@@ -3479,10 +3479,9 @@
 
 
 <h1 id="tokenpak-plugin-system-architecture-v1-proposal">TokenPak Plugin System Architecture — v1 Proposal<a class="headerlink" href="#tokenpak-plugin-system-architecture-v1-proposal" title="Permanent link">&para;</a></h1>
-<p><strong>Status:</strong> Draft for Sue review<br />
-<strong>Author:</strong> Trix<br />
-<strong>Date:</strong> 2026-03-26<br />
-<strong>Task:</strong> p2-tokenpak-plugin-system-foundations-2026-03-26</p>
+<p><strong>Status:</strong> Draft<br />
+<strong>Author:</strong> TokenPak<br />
+<strong>Date:</strong> 2026-03-26</p>
 <hr />
 <h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">&para;</a></h2>
 <p>TokenPak already has a narrow <code>CompressorPlugin</code> system (text→text transforms). This proposal expands that into a full extensibility layer covering adapters, compression, metrics collection, and lifecycle hooks — without touching the existing <code>CompressorPlugin</code> contract.</p>
@@ -3904,7 +3903,7 @@ Default denied: <code>filesystem_write</code>, <code>subprocess</code></p>
     <span class="k">pass</span>
 </code></pre></div>
 <hr />
-<h2 id="open-questions-for-sue">Open Questions for Sue<a class="headerlink" href="#open-questions-for-sue" title="Permanent link">&para;</a></h2>
+<h2 id="open-questions">Open Questions<a class="headerlink" href="#open-questions" title="Permanent link">&para;</a></h2>
 <ol>
 <li><strong>Sandboxing timeline</strong> — Should v1 doc say "no isolation, trust-based" explicitly, or defer to v1.1?</li>
 <li><strong>AdapterPlugin vs FormatAdapter</strong> — Should <code>AdapterPlugin</code> extend <code>FormatAdapter</code> directly, or compose it? Composition gives cleaner separation but more boilerplate.</li>
@@ -3957,7 +3956,7 @@ Default denied: <code>filesystem_write</code>, <code>subprocess</code></p>
 </tbody>
 </table>
 <hr />
-<p><em>Submitted for architecture review. No implementation yet — pending Sue sign-off on hook signatures, permission model, and sandboxing stance.</em></p>
+<p><em>Submitted for architecture review. No implementation yet — pending maintainer sign-off on hook signatures, permission model, and sandboxing stance.</em></p>
 
 
 

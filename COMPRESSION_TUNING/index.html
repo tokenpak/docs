@@ -7,7 +7,7 @@
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
       
-        <meta name="author" content="Trix">
+        <meta name="author" content="TokenPak">
       
       
         <link rel="canonical" href="https://docs.tokenpak.ai/COMPRESSION_TUNING/">
@@ -3855,7 +3855,7 @@ Savings: (12 - 2.4) tokens per request = ~80% on that chunk
 <table>
 <thead>
 <tr>
-<th>Agent</th>
+<th>Host</th>
 <th>Compression Mode</th>
 <th>Token Savings</th>
 <th>P50 Latency</th>
@@ -3864,35 +3864,35 @@ Savings: (12 - 2.4) tokens per request = ~80% on that chunk
 </thead>
 <tbody>
 <tr>
-<td><strong>Trix</strong></td>
+<td><strong>Host A</strong></td>
 <td>All enabled (default)</td>
 <td>2.8%</td>
 <td>5.2ms</td>
 <td>12ms</td>
 </tr>
 <tr>
-<td><strong>Trix</strong></td>
+<td><strong>Host A</strong></td>
 <td>Dedup + Segment only</td>
 <td>2.1%</td>
 <td>2.1ms</td>
 <td>5ms</td>
 </tr>
 <tr>
-<td><strong>Trix</strong></td>
+<td><strong>Host A</strong></td>
 <td>Dedup only</td>
 <td>1.2%</td>
 <td>0.8ms</td>
 <td>2ms</td>
 </tr>
 <tr>
-<td><strong>Sue</strong></td>
+<td><strong>Host B</strong></td>
 <td>All enabled</td>
 <td>2.2%</td>
 <td>6.1ms</td>
 <td>14ms</td>
 </tr>
 <tr>
-<td><strong>Cali</strong></td>
+<td><strong>Host C</strong></td>
 <td>All enabled</td>
 <td>2.8%</td>
 <td>4.9ms</td>
