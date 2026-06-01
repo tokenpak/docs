@@ -1,7 +1,7 @@
 ---
 title: "TokenPak Compression Tuning Guide"
 subtitle: "Optimize token savings vs latency tradeoffs for your use case"
-author: Trix
+author: TokenPak
 date: 2026-03-25
 tags: [tokenpak, compression, tuning, performance]
 ---
@@ -294,13 +294,13 @@ response = client.messages.create(
 
 ### Measured on Fleet (March 2026 Benchmark)
 
-| Agent | Compression Mode | Token Savings | P50 Latency | P99 Latency |
+| Host | Compression Mode | Token Savings | P50 Latency | P99 Latency |
 |---|---|---|---|---|
-| **Trix** | All enabled (default) | 2.8% | 5.2ms | 12ms |
-| **Trix** | Dedup + Segment only | 2.1% | 2.1ms | 5ms |
-| **Trix** | Dedup only | 1.2% | 0.8ms | 2ms |
-| **Sue** | All enabled | 2.2% | 6.1ms | 14ms |
-| **Cali** | All enabled | 2.8% | 4.9ms | 11ms |
+| **Host A** | All enabled (default) | 2.8% | 5.2ms | 12ms |
+| **Host A** | Dedup + Segment only | 2.1% | 2.1ms | 5ms |
+| **Host A** | Dedup only | 1.2% | 0.8ms | 2ms |
+| **Host B** | All enabled | 2.2% | 6.1ms | 14ms |
+| **Host C** | All enabled | 2.8% | 4.9ms | 11ms |
 
 **Analysis:**
 - Dedup: <1ms overhead, 1–2% savings (always worth it)
