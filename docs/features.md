@@ -134,11 +134,13 @@ vault:
 
 ## Feature Roadmap
 
-### Coming Soon
+These items are on the roadmap and are **not part of the current OSS beta surface** — they are directions, not commitments. For exactly what ships in the beta today, see the [feature overview](index.md).
+
 - Multi-turn conversation history management
-- Prompt caching integration
-- Vision/multimodal support
+- Vision / multimodal support
 - Advanced batch processing
+
+> TokenPak already ships deterministic **Prompt Packing** today (see the [feature overview](index.md)); it interoperates with provider-side prompt caching rather than replacing it.
 
 ---
 

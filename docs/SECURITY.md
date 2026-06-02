@@ -40,9 +40,21 @@ The `/health` and `/stats` endpoints expose operational data (token counts, cost
 API keys are passed to upstream providers in outbound requests. They are:
 - Never logged
 - Never echoed in responses
-- Stored only in `~/.openclaw/.env` (not in config files or vault)
+- Read from your local environment (for example, a local `.env` file) and never written to configuration files committed to version control
 
 ## Known Limitations
 
 - No HTTPS on the proxy listener (localhost-only, low risk)
 - `/stats` exposes cost and token data (localhost-only, acceptable)
+
+## Reporting a Vulnerability
+
+If you discover a security issue in TokenPak, please report it privately by email to **security@tokenpak.ai**. Include a description of the issue, steps to reproduce, and the affected version.
+
+Please do not open a public issue for security reports.
+
+We aim to acknowledge reports within a few business days and to share a remediation timeline after triage. These are response targets, not guarantees — TokenPak is an open-source beta maintained on a best-effort basis.
+
+## Supported Versions
+
+Security fixes are applied to the current OSS beta release line (the `1.6.x` series, installed via `pip install tokenpak`). Older pre-beta versions are not maintained.
