@@ -1177,6 +1177,28 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#reporting-a-vulnerability" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reporting a Vulnerability
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#supported-versions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Supported Versions
+      
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -3048,6 +3070,28 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#reporting-a-vulnerability" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reporting a Vulnerability
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#supported-versions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Supported Versions
+      
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -3094,12 +3138,18 @@ Server: TokenPak
 <p>API keys are passed to upstream providers in outbound requests. They are:
 - Never logged
 - Never echoed in responses
-- Stored only in <code>~/.openclaw/.env</code> (not in config files or vault)</p>
+- Read from your local environment (for example, a local <code>.env</code> file) and never written to configuration files committed to version control</p>
 <h2 id="known-limitations">Known Limitations<a class="headerlink" href="#known-limitations" title="Permanent link">&para;</a></h2>
 <ul>
 <li>No HTTPS on the proxy listener (localhost-only, low risk)</li>
 <li><code>/stats</code> exposes cost and token data (localhost-only, acceptable)</li>
 </ul>
+<h2 id="reporting-a-vulnerability">Reporting a Vulnerability<a class="headerlink" href="#reporting-a-vulnerability" title="Permanent link">&para;</a></h2>
+<p>If you discover a security issue in TokenPak, please report it privately by email to <strong>security@tokenpak.ai</strong>. Include a description of the issue, steps to reproduce, and the affected version.</p>
+<p>Please do not open a public issue for security reports.</p>
+<p>We aim to acknowledge reports within a few business days and to share a remediation timeline after triage. These are response targets, not guarantees — TokenPak is an open-source beta maintained on a best-effort basis.</p>
+<h2 id="supported-versions">Supported Versions<a class="headerlink" href="#supported-versions" title="Permanent link">&para;</a></h2>
+<p>Security fixes are applied to the current OSS beta release line (the <code>1.6.x</code> series, installed via <code>pip install tokenpak</code>). Older pre-beta versions are not maintained.</p>
 
 
 
