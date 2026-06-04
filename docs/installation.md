@@ -10,7 +10,7 @@ Get TokenPak up and running in minutes.
 
 ## System Requirements
 
-- **Python:** 3.8+ (3.10+ recommended)
+- **Python:** 3.10+
 - **OS:** Linux, macOS, Windows
 - **Disk:** ~50 MB for package + dependencies
 - **RAM:** 512 MB minimum (1+ GB recommended for monitoring dashboard)
@@ -30,7 +30,7 @@ pip install tokenpak
 
 ```bash
 tokenpak --version
-# Output: tokenpak 1.6.1
+# Output: tokenpak 1.7.1
 ```
 
 ### (Optional) Install with Extras
@@ -129,7 +129,7 @@ tokenpak start
 
 **Output:**
 ```
-[2026-05-17 09:00:00] TokenPak Proxy v1.6.1 starting...
+[2026-05-17 09:00:00] TokenPak Proxy v1.7.1 starting...
 [2026-05-15 09:00:00] Listening on http://127.0.0.1:8766
 [2026-05-15 09:00:00] Ready to proxy requests
 ```
