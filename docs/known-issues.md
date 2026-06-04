@@ -4,7 +4,7 @@ title: "Known Issues — OSS beta"
 
 # Known Issues — OSS beta
 
-This page tracks current limitations of the **OSS beta** (`pip install tokenpak`, v1.6.1). The intent is **beta honesty**: if a documented capability isn't shipping the way the rest of the docs imply, it shows up here.
+This page tracks current limitations of the **OSS beta** (`pip install tokenpak`, v1.7.1). The intent is **beta honesty**: if a documented capability isn't shipping the way the rest of the docs imply, it shows up here.
 
 If you hit something not listed here, file it at [github.com/tokenpak/tokenpak/issues](https://github.com/tokenpak/tokenpak/issues).
 

@@ -62,7 +62,7 @@ Message 5: "Now add refresh tokens."
 **Configuration (in proxy config):**
 
 ```python
-# tokenpack/proxy.py
+# tokenpak/proxy.py
 pipeline = CompressionPipeline(
     enable_dedup=True,           # ← enable/disable
     enable_segmentation=True,
