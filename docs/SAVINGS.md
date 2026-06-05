@@ -1,10 +1,10 @@
-# TokenPak Savings — Real Numbers
+# TokenPak Savings
 
 **How much will TokenPak save you?**
 
-The simple answer: **10–40% of your LLM bill.**
+It depends on your workload — specifically how much of your context repeats and how compressible it is. The honest answer is: measure it on your own traffic. TokenPak gives you the tools to do exactly that.
 
-Here's how we measure it, and what you should expect.
+> **A note on numbers:** TokenPak does not publish headline savings or cost figures until they are backed by a validated, frozen-fixture benchmark run. Our benchmark suite is in progress; receipt-backed figures will publish once it produces a validated run. Until then, the most reliable savings number is the one you measure on your own workload with `tokenpak stats` and `tokenpak report --json`.
 
 ---
 
@@ -12,48 +12,35 @@ Here's how we measure it, and what you should expect.
 
 ### What TokenPak Does
 
-1. **Deduplicates requests** — If you send the same prompt twice, the second one costs less (cache hit)
+1. **Deduplicates requests** — If you send the same prompt twice, the second one can be served from cache instead of re-sent (cache hit)
 2. **Compresses long context** — Summarizes repetitive text blocks before sending to the LLM API
 3. **Injects smart context** — Reuses cached blocks from your vault instead of recomputing every time
-4. **Tracks every optimization** — Reports how many tokens you saved and how much money
+4. **Tracks every optimization** — Reports how many tokens and how much money you saved, per request
 
 ### The Impact
 
-| Technique | Typical Savings | When It Happens |
-|-----------|-----------------|-----------------|
-| **Request deduplication** | 5–15% | Every time you ask the same question twice |
-| **Semantic compression** | 10–30% | When you send large documents or code contexts |
-| **Vault injection caching** | 20–40%+ | In agent loops, batch processing, or knowledge-base lookups |
-| **Combined (balanced mode)** | 15–25% | Default behavior across all requests |
+Savings come from two complementary mechanisms:
+
+| Technique | What it does | When it helps |
+|-----------|--------------|---------------|
+| **Request deduplication** | Avoids resending an identical prompt | Every time you ask the same question twice |
+| **Semantic compression** | Shrinks repetitive or verbose context | When you send large documents or code contexts |
+| **Vault injection caching** | Reuses cached context blocks | In agent loops, batch processing, or knowledge-base lookups |
+| **Combined (balanced mode)** | Applies caching + light compression by default | Across all requests |
+
+How much each of these saves depends entirely on your workload and repeat rate — there is no single number that holds across all traffic.
 
 ---
 
-## Real Fleet Data
+## How Savings Behave in Practice
 
-TokenPak is running in production right now. Here's what we're saving:
+TokenPak's savings are workload-dependent. The general shape:
 
-### Session Snapshot (Last 24 Hours)
+- **Highly repetitive traffic** (agent loops, batch jobs, knowledge-base lookups) benefits most, because cached and compressible context dominates.
+- **Provider-cached flows** show lower incremental gains, because the provider is already discounting repeated context.
+- **One-off, highly unique requests** benefit least, because there is little to dedup or compress.
 
-| Metric | Value |
-|--------|-------|
-| **Total requests** | 23,000+ |
-| **Input tokens sent** | 244M+ |
-| **Tokens saved** | 390K+ |
-| **Dollar savings** | $415+ |
-| **Cache hit rate** | 97.6% |
-| **Compression ratio** | 3.7:1 (best compression mode) |
-
-### By Model
-
-| Model | Requests | Cost | Saved |
-|-------|----------|------|-------|
-| **Claude Haiku** | 22,701 | $155.68 | 390K tokens |
-| **Claude Sonnet** | 3,618 | $125.44 | via compression |
-| **Claude Opus** | 595 | $130.90 | via cache hits |
-
-**Translation:** In one production day, with ~26K LLM calls, TokenPak saved over $415 on Anthropic's API alone.
-
-If you're using OpenAI or Google Gemini alongside, multiply that by 2–3x.
+The only way to know your number is to run TokenPak on your traffic and read the report.
 
 ---
 
@@ -72,7 +59,7 @@ tokenpak proxy
 # Before: Uses real API directly
 client = Anthropic()
 
-# After: Routes through TokenPak proxy (100% compatible)
+# After: Routes through TokenPak proxy (drop-in compatible)
 client = Anthropic(base_url="http://localhost:8766")
 ```
 
@@ -80,22 +67,13 @@ client = Anthropic(base_url="http://localhost:8766")
 
 ```bash
 # One-liner to see your savings today
+tokenpak savings
+
+# Or scope it to the current session/day
 tokenpak stats --today
 ```
 
-**Example output:**
-```
-Session savings:
-  Requests: 4,404
-  Input tokens: 58.7M
-  Tokens saved: 2.8M (4.8%)
-  Cost: $75.01
-  Cost saved (estimated): $3.61
-
-Cache performance:
-  Hit rate: 98.2%
-  Reused tokens: 188.7M (from cache)
-```
+The output reports the requests, tokens, and estimated cost saved for *your* traffic — these are the numbers that matter for your decision.
 
 ### 4. Understand the Breakdown
 
@@ -105,33 +83,30 @@ tokenpak report --json
 ```
 
 Returns:
+
 - `input_tokens` — Tokens you actually sent to the API (after compression)
 - `saved_tokens` — Tokens we didn't send (already cached or compressed)
-- `compression_ratio` — How aggressively we squeezed your context
+- `compression_ratio` — How aggressively we compressed your context
 - `cost_saved` — Estimated dollar amount saved
-- `cache_hit_rate` — % of your requests that hit the cache
+- `cache_hit_rate` — Share of your requests that hit the cache
+
+Because these are computed from your own traffic, they are the authoritative measure of what TokenPak does for you — far more reliable than any generic headline figure.
 
 ---
 
 ## Example: Agent Loop
 
-Let's say you're running an agent that:
+Consider an agent that:
+
 1. Takes a user question
-2. Searches a knowledge base (100 results)
-3. Calls Claude 3–4 times to refine the answer
+2. Searches a knowledge base
+3. Calls Claude several times to refine the answer
 
-**Without TokenPak:**
-- Each Claude call sees the full 100 search results
-- Each call costs ~$0.10 (depends on model)
-- 4 calls = $0.40 per user question
+**Without TokenPak:** Every Claude call re-sends the full search context, so you pay for the same large context on each call.
 
-**With TokenPak:**
-- First call: Full context sent, $0.10
-- Calls 2–4: Cache hits on the search results (90% savings)
-- 3 calls cost ~$0.02 each = $0.06 total
-- **Savings: $0.34 per question (85%!)**
+**With TokenPak:** The first call sends the full context; subsequent calls reuse it from cache instead of re-sending it. The more calls reuse the same context, the larger the cumulative saving.
 
-Scale this across 10,000 questions/day, and you're saving **$3,400/day** or **$1.2M+/year**.
+This is the workload shape where TokenPak helps most — but the actual saving depends on how much context repeats across your calls. Run `tokenpak report --json` against your own agent to see the real figure.
 
 ---
 
@@ -146,6 +121,7 @@ tokenpak proxy --port 8766
 ```
 
 Then swap one URL in your client:
+
 ```python
 client = Anthropic(base_url="http://localhost:8766")
 ```
@@ -177,22 +153,24 @@ Proxy for most requests + SDK mode for special cases (cost-critical paths).
 
 ## Profiles: Tune Savings vs. Risk
 
-TokenPak ships with compression profiles tuned for different workloads:
+TokenPak ships with compression profiles tuned for different workloads. Heavier compression generally trades more aggressively for savings; lighter compression prioritizes fidelity.
 
-| Profile | Compression | Savings | Risk | Use Case |
-|---------|-------------|---------|------|----------|
-| **safe** | Light | 5–10% | Very low | Production, high-stakes queries |
-| **balanced** | Medium | 15–25% | Low | General workloads (default) |
-| **aggressive** | Strong | 30–40% | Medium | Batch processing, bulk summarization |
-| **agentic** | Medium-strong | 20–30% | Low–medium | Agent loops, tool use, reasoning |
+| Profile | Compression | Risk | Use Case |
+|---------|-------------|------|----------|
+| **safe** | Light | Very low | Production, high-stakes queries |
+| **balanced** | Medium | Low | General workloads (default) |
+| **aggressive** | Strong | Medium | Batch processing, bulk summarization |
+| **agentic** | Medium-strong | Low–medium | Agent loops, tool use, reasoning |
 
 Set your profile:
+
 ```bash
 export TOKENPAK_PROFILE=balanced  # default
 tokenpak proxy
 ```
 
 Or per-request:
+
 ```python
 # This request uses aggressive compression
 response = client.messages.create(
@@ -204,21 +182,15 @@ response = client.messages.create(
 
 ---
 
-## ROI Calculator
+## Estimating Your ROI
 
-Estimate your monthly savings:
+To estimate your own return, measure first, then extrapolate:
 
-```
-Your monthly LLM spend: $X
-TokenPak typical savings: 15–25%
-Your monthly savings: $X × 0.20 = $X/month × 12 = $Xk/year
-```
+1. Run TokenPak over a representative slice of your traffic.
+2. Read your measured saving from `tokenpak savings` / `tokenpak report --json`.
+3. Apply that measured rate to your monthly LLM spend.
 
-**Example:**
-- Spend: $5,000/month on LLM APIs
-- Savings @ 20%: $1,000/month
-- Annual savings: $12,000/year
-- Effort to deploy: ~30 minutes (swap one URL)
+Deploying the proxy is low-effort — typically a single URL swap in your client — so you can measure your real savings rate before committing to a wider rollout.
 
 ---
 
@@ -235,23 +207,25 @@ Your monthly savings: $X × 0.20 = $X/month × 12 = $Xk/year
 
 - ⚠️ One-off requests (no cache hits, no dedup)
 - ⚠️ Highly unique contexts (compression is less effective)
+- ⚠️ Provider-cached flows (the provider already discounts repeated context, so incremental gains are smaller)
 - ⚠️ Streaming responses (cache benefits hit less often)
 
 ### Quality Tradeoffs
 
 TokenPak is **semantically lossless** in `safe` and `balanced` modes:
+
 - No information loss
 - No hallucinations introduced
 - All model capabilities preserved
 
-In `aggressive` mode, we trade ~5% accuracy (on some tasks) for 30–40% cost savings. Test it on your workload.
+In `aggressive` mode, TokenPak compresses more heavily to favor cost savings, which can affect accuracy on some tasks. Test it on your workload before relying on it.
 
 ---
 
 ## Next Steps
 
 1. **Start simple:** `tokenpak proxy` + swap one URL
-2. **Measure:** Run `tokenpak stats` after a few requests
+2. **Measure:** Run `tokenpak savings` / `tokenpak stats` after a few requests
 3. **Optimize:** Test different profiles with your workload
 4. **Scale:** Deploy to production when comfortable
 
@@ -259,7 +233,7 @@ In `aggressive` mode, we trade ~5% accuracy (on some tasks) for 30–40% cost sa
 
 ## Questions?
 
-- **How do I verify the savings are real?** → Check `tokenpak stats` or `tokenpak report --json` for token-by-token breakdown
+- **How do I verify the savings are real?** → Check `tokenpak savings`, `tokenpak stats`, or `tokenpak report --json` for a token-by-token breakdown of your own traffic
 - **Will this slow down my requests?** → The proxy adds a network hop; the added latency depends on your deployment path (run it on the same machine/network to minimize it). SDK mode adds no network hop.
 - **Can I bypass TokenPak for specific requests?** → Yes, set header `X-TokenPak-Bypass: true`
 - **What if the LLM needs the exact original tokens?** → Use bypass header or switch to `safe` profile

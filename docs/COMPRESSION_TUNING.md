@@ -12,27 +12,23 @@ This guide explains **how to tune TokenPak's compression engine** to maximize to
 
 ## Overview: Why Compression Matters
 
-LLM API costs scale with token count. TokenPak's compression pipeline intercepts requests and semantically equivalent content with **2–8% fewer tokens**, depending on your data.
+LLM API costs scale with token count. TokenPak's compression pipeline intercepts requests and re-expresses semantically equivalent content with fewer tokens, with the magnitude of the reduction depending on your data.
 
-### The Math
-
-- **Without compression:** 10,000-token request = $0.30 (Sonnet)
-- **With 5% compression:** 9,500 tokens = $0.285 (saves $0.015 per request)
-- **At 100 requests/day:** ~$5/month saved (or 5% cost reduction)
+> **Note on numbers:** This guide intentionally describes savings and latency in qualitative terms. TokenPak does not publish specific latency, savings, or cache-hit figures until they are backed by a validated, frozen-fixture benchmark run. Receipt-backed figures will be added once TokenPak's benchmark suite produces a validated run. In the meantime, **measure savings and latency on your own workload** — see [Monitoring](#monitoring) and run `tokenpak savings` / `tokenpak stats`.
 
 ### The Tradeoff
 
-Compression has latency cost:
+Compression trades a small amount of added latency for a reduction in token count. The right balance depends on your workload: latency-sensitive, real-time paths favor lighter pipelines, while batch and offline work can afford more aggressive compression for larger token reductions.
 
-| Strategy | Latency | Token Savings | Best For |
-|----------|---------|---------------|----------|
-| **Dedup** | <1ms | 2–3% (on repeated context) | Iterative workflows, session context |
-| **Segmentation** | <2ms | 1–2% (metadata, structure) | Code review, doc analysis |
-| **Alias compression** | <5ms | 3–5% (long repeated names) | Large schemas, entity lists |
-| **Instruction table** | <10ms | 4–6% (cookbook patterns) | Repetitive tasks, templates |
-| **Semantic caching** (off) | N/A | 15–40% (prompt cache hit) | Same prompts, different inputs |
+| Strategy | Added Latency | Token Savings | Best For |
+|----------|---------------|---------------|----------|
+| **Dedup** | Minimal | Small (on repeated context) | Iterative workflows, session context |
+| **Segmentation** | Low | Small (metadata, structure) | Code review, doc analysis |
+| **Alias compression** | Moderate | Moderate (long repeated names) | Large schemas, entity lists |
+| **Instruction table** | Higher | Moderate (cookbook patterns) | Repetitive tasks, templates |
+| **Semantic caching** (off) | N/A | Larger (on prompt cache hit) | Same prompts, different inputs |
 
-**Default (all enabled):** ~5ms latency for ~3–5% savings. Acceptable for most workloads.
+**Default (all enabled):** low added latency for a modest token reduction. Acceptable for most workloads.
 
 ---
 
@@ -57,7 +53,7 @@ Message 4: "Here's the current auth schema:\n<200 lines JSON>"  ← DEDUP remove
 Message 5: "Now add refresh tokens."
 ```
 
-**Savings:** 1–3% (depends on how often context repeats)
+**Savings:** Small token reduction, scaling with how often context repeats.
 
 **Configuration (in proxy config):**
 
@@ -81,18 +77,18 @@ pipeline = CompressionPipeline(
 
 **Strategies per segment type:**
 
-| Segment Type | What Gets Compressed | Savings | Risk |
+| Segment Type | What Gets Compressed | Relative Savings | Risk |
 |---|---|---|---|
-| **Code** | Signature extraction, docstring keep | 5–8% | Low (retains logic) |
-| **Markdown** | Keep headers, strip body text | 3–6% | Medium (loses details) |
-| **JSON** | Schema + sample data (strip repetitive rows) | 4–7% | Medium (loses volume) |
-| **Tool results** | Truncation (keep first N lines) | 2–4% | Low (summaries) |
-| **Text/prose** | Token filtering by importance | 3–5% | High (selective) |
+| **Code** | Signature extraction, docstring keep | Higher | Low (retains logic) |
+| **Markdown** | Keep headers, strip body text | Moderate | Medium (loses details) |
+| **JSON** | Schema + sample data (strip repetitive rows) | Higher | Medium (loses volume) |
+| **Tool results** | Truncation (keep first N lines) | Lower | Low (summaries) |
+| **Text/prose** | Token filtering by importance | Moderate | High (selective) |
 
 **Real example — code compression:**
 
 ```python
-# Before (28 tokens)
+# Before
 def calculate_total(items):
     """Calculate the sum of item values."""
     result = 0
@@ -100,7 +96,7 @@ def calculate_total(items):
         result += item['price']
     return result
 
-# After (signature only, 8 tokens)
+# After (signature only)
 def calculate_total(items): ...
     """Calculate the sum of item values."""
 ```
@@ -119,7 +115,7 @@ pipeline = CompressionPipeline(
 # See recipes/oss/*.yaml for examples
 ```
 
-**When to disable:** If you need full code bodies preserved (not just signatures). Saves 2ms latency but gives up 3–6% compression.
+**When to disable:** If you need full code bodies preserved (not just signatures). Disabling trims a little added latency but gives up the compression segmentation would otherwise provide.
 
 ---
 
@@ -148,7 +144,7 @@ Mapping: A1 → ManagerInterface.process_authentication_token
 - Domain-specific acronyms or entity names
 - Code with verbose variable names
 
-**Savings:** 3–5% (depends on repetition and name length)
+**Savings:** Moderate token reduction, scaling with repetition and name length.
 
 **Configuration:**
 
@@ -194,7 +190,7 @@ Lookup table maps [CODE-REVIEW-V2] → full instruction text
 - Service agents (standard prompts)
 - Workflows with template instructions
 
-**Savings:** 4–8% (depends on instruction repetition)
+**Savings:** Moderate token reduction, scaling with instruction repetition.
 
 **Configuration:**
 
@@ -231,19 +227,19 @@ table.add_instruction(
 **What it does:** Reuses cached prompt prefixes when subsequent requests have similar context.
 
 **How it works:**
-- First request with context → stored in Claude's cache (5 min TTL, by default)
-- Identical or very similar context → reuses cached tokens at ~10% cost
+- First request with context → stored in Claude's prompt cache (the API applies a default cache TTL)
+- Identical or very similar context → reuses cached tokens at a reduced per-token cost on the cached prefix
 
 **Real example:**
 
 ```
-Request 1: "Here's the codebase:\n<50KB context>" → 12 cache creation tokens
-Request 2: "Same codebase, different question" → 24 cache read tokens (10% cost)
+Request 1: "Here's the codebase:\n<large context>" → cache creation tokens written
+Request 2: "Same codebase, different question" → cache read tokens (reduced cost on the cached prefix)
 
-Savings: (12 - 2.4) tokens per request = ~80% on that chunk
+Effect: the repeated prefix is billed at the lower cache-read rate instead of full input cost.
 ```
 
-**Savings:** 15–40% (only on repeated prefix, but huge when it hits)
+**Savings:** Potentially large, but only on the repeated prefix when the cache is hit. Measure on your own traffic, since cache-hit rates depend heavily on how often prompts repeat.
 
 **How to enable (in your client code):**
 
@@ -280,7 +276,7 @@ response = client.messages.create(
 ```
 
 **When to use:**
-- System prompts (static, reused 100% of the time)
+- System prompts (static, reused on every request)
 - Large context blocks (code, docs, schemas) used in multiple requests
 - Batch workflows where the same context applies to different questions
 
@@ -292,21 +288,24 @@ response = client.messages.create(
 
 ## Performance Characteristics: Latency vs Savings
 
-### Measured on Fleet (March 2026 Benchmark)
+> **Benchmark figures pending.** Validated latency and savings numbers will be published once TokenPak's benchmark suite produces a receipt-backed, frozen-fixture run. Until then, treat the relative ordering below as guidance and **measure on your own workload** with `tokenpak savings` / `tokenpak stats` and the [Monitoring](#monitoring) snippet.
 
-| Host | Compression Mode | Token Savings | P50 Latency | P99 Latency |
-|---|---|---|---|---|
-| **Host A** | All enabled (default) | 2.8% | 5.2ms | 12ms |
-| **Host A** | Dedup + Segment only | 2.1% | 2.1ms | 5ms |
-| **Host A** | Dedup only | 1.2% | 0.8ms | 2ms |
-| **Host B** | All enabled | 2.2% | 6.1ms | 14ms |
-| **Host C** | All enabled | 2.8% | 4.9ms | 11ms |
+### Relative cost of each stage
+
+The stages differ in how much latency they add and how much token reduction they typically deliver. Ordered from cheapest/lightest to most expensive:
+
+| Stage | Added Latency | Token Savings | When it's worth it |
+|---|---|---|---|
+| **Dedup** | Minimal | Small | Almost always — very cheap, helps whenever context repeats |
+| **Segmentation** | Low | Small | Usually — modest cost, broadly applicable |
+| **Alias** | Moderate | Moderate | Worth it for code-heavy / entity-heavy workloads |
+| **Instruction table** | Higher | Moderate | Worth it for batch / service work with repeated prompts |
 
 **Analysis:**
-- Dedup: <1ms overhead, 1–2% savings (always worth it)
-- Segmentation: <2ms overhead, 1–2% savings (usually worth it)
-- Alias: <5ms overhead, 3–5% savings (worth it for code-heavy workloads)
-- Instruction table: <10ms overhead, 4–6% savings (worth it for batch/service work)
+- **Dedup:** lowest overhead of any stage; the savings are small but the cost is so low it is almost always worth enabling.
+- **Segmentation:** low overhead, small savings; usually worth keeping on.
+- **Alias:** moderate overhead with a moderate token reduction — most valuable on code-heavy workloads with long repeated names.
+- **Instruction table:** the highest per-request overhead, but a moderate reduction on batch/service work where the same instructions repeat many times.
 
 ---
 
@@ -327,7 +326,7 @@ pipeline = CompressionPipeline(
 )
 ```
 
-**Tradeoff:** <2ms latency, 1–2% savings.
+**Tradeoff:** Minimal added latency for a small token reduction.
 
 ---
 
@@ -346,7 +345,7 @@ pipeline = CompressionPipeline(
 )
 ```
 
-**Tradeoff:** ~5ms latency, 3–5% savings.
+**Tradeoff:** Low added latency for a modest token reduction.
 
 ---
 
@@ -368,7 +367,7 @@ pipeline = CompressionPipeline(
 )
 ```
 
-**Tradeoff:** ~10–15ms latency, 5–8% savings.
+**Tradeoff:** Higher added latency for a larger token reduction.
 
 ---
 
@@ -397,7 +396,7 @@ def code_priority_hook(messages):
 pipeline.add_hook(code_priority_hook)
 ```
 
-**Tradeoff:** ~8ms latency, 6–8% savings on code.
+**Tradeoff:** Moderate added latency for a larger token reduction on code.
 
 ---
 
@@ -408,7 +407,7 @@ When you want to optimize compression for YOUR workload:
 - [ ] **Profile your requests:** What's the typical size? Code? Text? JSON?
 - [ ] **Set a baseline:** Run a week with `enable_all=True`, measure token savings.
 - [ ] **Identify bottlenecks:** Which compression stage gives the most savings? (Use `PipelineResult.stages_run`)
-- [ ] **Disable low-ROI stages:** If alias compression adds 5ms for <0.5% savings, disable it.
+- [ ] **Disable low-ROI stages:** If a stage (e.g. alias compression) adds noticeable latency for negligible savings on your data, disable it.
 - [ ] **Batch profile:** Test on 100+ requests to get real averages (single-request measurements are noisy).
 - [ ] **Test in production:** A/B test config changes on real workloads, measure cost + latency.
 
@@ -437,11 +436,11 @@ print(f"Stages run: {', '.join(result.stages_run)}")
 
 ### Q: "How much should I save?"
 
-**A:** Typical range is **2–6% depending on workload:**
-- Text-heavy (essays, reports): 2–3%
-- Code-heavy (review, analysis): 4–6%
-- JSON/structured: 3–5%
-- Real-time chat (short messages): <1%
+**A:** It depends on your workload — there is no single number, and you should measure on your own traffic with `tokenpak savings` / `tokenpak stats`. As a rough ordering of where compression helps most to least:
+- Code-heavy (review, analysis): largest reduction
+- JSON/structured: moderate reduction
+- Text-heavy (essays, reports): smaller reduction
+- Real-time chat (short messages): little to none
 
 ### Q: "Should I use alias compression?"
 
@@ -472,7 +471,7 @@ print(f"Stages run: {', '.join(result.stages_run)}")
 
 1. **Start with the balanced config** (Example 2 above).
 2. **Measure token savings** on your workload for 1 week.
-3. **Adjust based on your latency tolerance:** Trade off ~5% savings for <10ms latency most cases.
+3. **Adjust based on your latency tolerance:** Trade a portion of token savings for lower added latency where your path is latency-sensitive.
 4. **Monitor regularly:** Token costs shift as context size changes.
 
 ---

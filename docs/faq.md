@@ -89,9 +89,9 @@ Yes. Every request is logged to the local SQLite ledger with metadata (model, to
 
 ### What's the performance overhead?
 
-**Proxy internals:** TokenPak adds **<50ms** of compression overhead per request on typical agent prompts. Routing, token counting, and cache lookup are sub-millisecond.
+**Proxy internals:** TokenPak adds modest compression overhead per request on typical agent prompts. Routing, token counting, and cache lookup are lightweight, in-memory operations.
 
-**End-to-end latency:** when measured against direct API calls, the proxy adds a few hundred ms due to the network round-trip and connection-pooling differences. This is expected for any local proxy.
+**End-to-end latency:** when measured against direct API calls, the proxy adds some overhead due to the network round-trip and connection-pooling differences. This is expected for any local proxy.
 
 **Context:** the latency overhead is acceptable because:
 
