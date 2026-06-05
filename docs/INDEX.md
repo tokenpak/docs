@@ -67,10 +67,8 @@ Integrate with your stack.
 Deep dives for production use.
 
 ### Performance & Optimization
-- **[PERFORMANCE.md](PERFORMANCE.md)** — Performance tuning, caching, benchmarks
-  - _(Includes: performance-optimization, performance-index)_
 - **[COMPRESSION_TUNING.md](COMPRESSION_TUNING.md)** — Request compression settings
-- **[performance/memory-analysis.md](performance/memory-analysis.md)** — Memory profiling
+- **[LATENCY.md](LATENCY.md)** — Latency overview
 
 ### Reliability & Security
 - **[SECURITY.md](SECURITY.md)** — Security model, authentication, best practices
@@ -156,7 +154,7 @@ See `archive/README.md` for details.
 | Configure for production | [configuration.md](configuration.md) |
 | Integrate into app | [API.md](API.md) |
 | Integrate with LangChain | [adapters/langchain.md](adapters/langchain.md) |
-| Optimize performance | [PERFORMANCE.md](PERFORMANCE.md) |
+| Optimize performance | [COMPRESSION_TUNING.md](COMPRESSION_TUNING.md) |
 | Debug issues | [troubleshooting.md](troubleshooting.md) |
 | Understand security | [SECURITY.md](SECURITY.md) |
 | Check compatibility | [COMPATIBILITY.md](COMPATIBILITY.md) |

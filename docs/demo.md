@@ -11,7 +11,7 @@ python3 demo.py --seed
 
 Populates the database with:
 - **500 requests** over 24 hours
-- **70% cache hit rate** (realistic with repeated queries)
+- **A realistic cache hit rate** (modeling repeated queries)
 - **Multiple models** (Haiku, Sonnet, GPT-4)
 - **Cost breakdown**, latency, cache efficiency
 - **Labeled as "Demo Data"** for clarity
@@ -44,9 +44,9 @@ Removes all demo data — safe to run before a live demo.
 
 Once seeded, the TokenPak dashboard automatically displays:
 - **Request timeline** (scatter plot over 24h)
-- **Cache hit rate** (≈70%)
+- **Cache hit rate** (a high hit rate on repeated queries)
 - **Cost breakdown** by model
-- **Latency comparison** (cache hits ~10x faster)
+- **Latency comparison** (cache hits respond much faster)
 - **Savings estimate** (realistic for production scenarios)
 
 ## Data Isolation
@@ -59,7 +59,7 @@ Once seeded, the TokenPak dashboard automatically displays:
 ## Acceptance Criteria ✅
 
 - [x] `python3 demo.py --seed` populates with 500 requests
-- [x] 70% cache hit rate (verified in unit tests)
+- [x] Realistic cache hit rate (verified in unit tests)
 - [x] Multiple models represented
 - [x] Dashboard shows all key metrics
 - [x] `python3 demo.py --clear` removes all demo data

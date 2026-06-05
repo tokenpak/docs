@@ -241,4 +241,4 @@ Check the main [TokenPak docs](../index.md) for detailed vault injection and com
 - [TokenPak main documentation](../index.md)
 - [Adapter architecture](../adapters.md)
 - Vault injection guide (if docs exist)
-- [Performance tuning](../performance.md) (if docs exist)
+- [Compression tuning](../COMPRESSION_TUNING.md)

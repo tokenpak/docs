@@ -20,7 +20,7 @@ This comparison covers the most popular LLM proxy and observability solutions. W
 | **Python SDK** | ✅ Yes | ✅ Yes | ✅ Yes | ✅ Yes |
 | **JavaScript/TypeScript SDK** | ⚠️ HTTP client only | ✅ Yes | ✅ Yes | ✅ Yes |
 | **Docker support** | ✅ Yes | ✅ Yes | ✅ Yes (production-grade Helm) | ❌ Cloud only |
-| **Latency overhead (P95)** | <2ms | ~8ms at 1k RPS | Depends on self-host | 50-200ms (network bound) |
+| **Proxy overhead** | Designed for minimal local overhead | Local proxy (self-hosted) | Depends on self-host | Network-bound (cloud-routed) |
 | **Caching** | ✅ LRU (TTL-based) | ⚠️ Via enterprise integrations | ✅ Via observability | ❌ No |
 | **Automatic failover** | ✅ Yes | ✅ Yes (routing) | ⚠️ Via AI Gateway (newer) | ❌ No |
 | **Privacy (no data logging)** | ✅ Yes (local-only) | ✅ Yes (with config) | ⚠️ Logs to platform (GDPR compliant) | ❌ Logs to cloud |
@@ -35,10 +35,10 @@ This comparison covers the most popular LLM proxy and observability solutions. W
 **Position:** Lightweight, zero-data-sharing LLM proxy for cost-conscious teams.
 
 **Strengths:**
-- **Minimal setup** — `pip install tokenpak && tokenpak serve` — running in 2 minutes
+- **Minimal setup** — `pip install tokenpak && tokenpak serve` — running in minutes
 - **Vault compression** — Built-in prompt caching and vault compression (unique feature) reduces redundant API calls
 - **No data logging** — Requests never leave your infrastructure; full privacy by design
-- **Low latency overhead** — <2ms P95 (among the fastest proxies)
+- **Lightweight proxy** — Designed to add minimal overhead in front of your providers
 - **MIT licensed** — Permissive open source; no restrictions
 - **Cost discipline** — Per-request cost tracking with native token counting (not approximated)
 
@@ -51,7 +51,7 @@ This comparison covers the most popular LLM proxy and observability solutions. W
 - Teams that need **cost transparency and privacy** (healthcare, finance, regulated industries)
 - Projects with **Anthropic + OpenAI + Gemini** as primary providers
 - Developers who want to **run locally** with zero external dependencies
-- Applications where **latency matters** (sub-5ms SLAs)
+- Applications where **keeping proxy overhead low** is a priority
 - Teams avoiding vendor lock-in or data sharing concerns
 
 **When NOT to use TokenPak:**
@@ -73,7 +73,7 @@ This comparison covers the most popular LLM proxy and observability solutions. W
 - **Well-established** — 8+ years of battle-tested routing logic
 
 **Trade-offs:**
-- **Higher latency** — ~8ms P95 at 1k RPS (vs. <2ms for TokenPak)
+- **Heavier footprint** — More moving parts can add overhead compared to a minimal proxy
 - **More complex setup** — Requires database (Postgres), Redis, Prometheus for full features
 - **No vault compression** — Focuses on provider routing, not prompt optimization
 - **Data logging optional** — Default behavior sends telemetry; requires config to disable
@@ -87,7 +87,7 @@ This comparison covers the most popular LLM proxy and observability solutions. W
 
 **When NOT to use LiteLLM:**
 - If you want to **avoid logging infrastructure** (TokenPak is privacy-first)
-- If you need **sub-2ms latency** (TokenPak is faster)
+- If you want the **leanest possible proxy footprint** (TokenPak is intentionally minimal)
 - If you want **vault compression** (TokenPak-specific feature)
 - If you're a solo developer (overkill for small projects)
 
@@ -121,7 +121,7 @@ This comparison covers the most popular LLM proxy and observability solutions. W
 **When NOT to use Helicone:**
 - If you need **zero data sharing** (TokenPak is better)
 - If you want **minimal setup overhead** (TokenPak or cloud-only solutions better)
-- If you want **lowest latency** (self-hosted observability adds overhead)
+- If you want the **leanest proxy footprint** (a full observability stack adds more moving parts)
 - If you only use 2-3 providers (TokenPak or LiteLLM simpler)
 
 ---
@@ -199,7 +199,7 @@ Do you want the simplest setup (no local infrastructure)?
 - You want **zero infrastructure** (cloud-only)
 - You're **trying new models quickly** (150+ available immediately)
 - You're **cost-arbitraging** (some models cheaper via OpenRouter)
-- You don't care about **latency or data sovereignty** (cloud logging is acceptable)
+- You don't need **local request handling or data sovereignty** (cloud routing and logging are acceptable)
 
 ---
 
@@ -213,7 +213,7 @@ Do you want the simplest setup (no local infrastructure)?
 
 4. **Minimal Setup** — `pip install tokenpak && tokenpak serve` — no databases, no Redis, no infrastructure.
 
-5. **Sub-2ms Latency** — <2ms P95 overhead. Among the fastest proxies available.
+5. **Lightweight by Design** — A minimal proxy layer intended to add little overhead in front of your providers. Receipt-backed performance figures will publish once TokenPak's benchmark suite produces a validated run.
 
 ---
 
@@ -223,10 +223,10 @@ Do you want the simplest setup (no local infrastructure)?
 |----------|----------|---------|----------|-----------|
 | **Infrastructure** | Free (self-hosted) | Free (self-hosted) | $0/mo (10k free tier) or $50+/mo (cloud) | $0 (no infra) |
 | **API costs (100k requests/mo)** | Pass-through | Pass-through | Pass-through | Pass-through |
-| **Caching savings** | 20-50% (via vault compression) | Minimal (no caching) | Minimal (observability-focused) | 0% (no caching) |
-| **Total for 100k req/mo** | Lowest (due to caching) | Medium | Medium-high | High |
+| **Repeated-context caching** | ✅ Reduces repeated-context cost via caching + vault compression | ❌ No built-in caching | ❌ Observability-focused (no caching) | ❌ No caching |
+| **Cost profile** | Caching can reduce repeated-context spend | Pass-through only | Pass-through + platform | Pass-through (cloud) |
 
-**Assumes:** 2,000 tokens/request average, Claude 3.5 Sonnet pricing ($3/1M input, $15/1M output)
+Actual cost impact depends on your traffic and how much repeated context your workload contains. Receipt-backed savings figures will publish once TokenPak's benchmark suite produces a validated run.
 
 ---
 
@@ -291,7 +291,7 @@ response = client.chat.completions.create(
 - **LiteLLM:** https://github.com/BerriAI/litellm (Latest commit: 2026-03-25)
 - **Helicone:** https://github.com/Helicone/helicone (Latest commit: 2026-03-25)
 - **OpenRouter:** https://openrouter.ai (Public docs: 2026-03-25)
-- **TokenPak:** https://github.com/tokenpak/tokenpak (Benchmarks: `docs/benchmarks.md`)
+- **TokenPak:** https://github.com/tokenpak/tokenpak (Receipt-backed performance figures will publish once TokenPak's benchmark suite produces a validated run.)
 
 ---
 

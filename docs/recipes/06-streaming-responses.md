@@ -140,20 +140,20 @@ streamResponse();
 // Expected output: tokens streaming in real-time
 ```
 
-**Step 6:** Measure latency improvement:
+**Step 6:** Observe the latency difference:
 ```bash
 # Non-streaming (wait for full response)
 time curl -X POST http://localhost:8000/v1/messages \
   -d '{"model": "gpt-4", "messages": [{"role": "user", "content": "Write 500 words"}]}' \
   -s > /dev/null
-# Result: real 2.45s (full response time)
+# Result: the client blocks until the full response is generated
 
 # Streaming (first token appears sooner)
 time curl -X POST http://localhost:8000/v1/messages \
   -d '{"model": "gpt-4-streaming", "stream": true, "messages": [{"role": "user", "content": "Write 500 words"}]}' \
   --no-buffer -s | head -1
-# Result: real 0.28s (time to first token)
-# User sees response starting in 280ms instead of waiting 2.45s!
+# Result: the first token arrives shortly after the request is sent
+# Users see tokens stream in immediately instead of waiting for the full response
 ```
 
 ## What Just Happened
@@ -166,7 +166,7 @@ TokenPak streamed the response back to your client in real-time:
 4. **Client receives** deltas (token fragments) and can display them as they arrive
 5. **Full response** completes, connection closes cleanly
 
-Your UI can display tokens as they arrive, making the experience feel 5-10x faster than waiting for a full response.
+Your UI can display tokens as they arrive, making the experience feel noticeably faster than waiting for a full response.
 
 ## Common Pitfalls
 

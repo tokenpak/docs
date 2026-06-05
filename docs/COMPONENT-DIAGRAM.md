@@ -148,18 +148,18 @@ User Request
 
 ## Performance Characteristics
 
-| Component | Latency Impact | Notes |
+| Component | Cost Profile | Notes |
 |-----------|---|---|
-| Request Router | < 1ms | Parsing only |
-| FormatAdapter | < 1ms | Format conversion |
-| Validation Gate | 10-50ms | Depends on content size & policy complexity |
-| Cache Lookup | < 5ms | Local database query |
-| Token Counter | 5-20ms | Tokenizer operation |
-| Rate Limiter | < 1ms | Hash table lookup |
-| Provider Router | < 1ms | In-memory logic |
-| Circuit Breaker | < 1ms | In-memory health state |
+| Request Router | Lightweight | Parsing only |
+| FormatAdapter | Lightweight | Format conversion |
+| Validation Gate | Content-dependent | Scales with content size & policy complexity |
+| Cache Lookup | In-memory / local | Local database query |
+| Token Counter | Tokenizer-bound | Tokenizer operation |
+| Rate Limiter | Lightweight | Hash table lookup |
+| Provider Router | In-memory | In-memory logic |
+| Circuit Breaker | In-memory | In-memory health state |
 
-**Typical end-to-end latency (cache miss):** 150-500ms (most time spent waiting for provider response)
+**Typical end-to-end latency (cache miss):** dominated by the upstream provider response time; the proxy's own pipeline adds comparatively little.
 
 ## Testing Strategy
 
