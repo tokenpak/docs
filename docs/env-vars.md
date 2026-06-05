@@ -47,7 +47,7 @@ Env vars always take precedence over config file values.
 |----------|---------|------|-------------|
 | `TOKENPAK_UPSTREAM_TIMEOUT` | `300` | int | Upstream request timeout in seconds |
 | `TOKENPAK_ROUTER_ENABLED` | `true` | bool | Enable model/provider router |
-| `TOKENPAK_OLLAMA_UPSTREAM` | `http://100.80.241.118:11434` | str | Ollama upstream URL |
+| `TOKENPAK_OLLAMA_UPSTREAM` | `http://localhost:11434` | str | Ollama upstream URL |
 | `TOKENPAK_OLLAMA_TIMEOUT` | `20` | int | Ollama connection timeout in seconds |
 | `TOKENPAK_MAX_RETRIES` | `3` | int | Max upstream retry attempts |
 | `TOKENPAK_BACKOFF_BASE` | `1.0` | float | Retry backoff base multiplier (seconds) |
