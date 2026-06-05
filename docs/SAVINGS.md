@@ -151,7 +151,7 @@ client = Anthropic(base_url="http://localhost:8766")
 ```
 
 **Pros:** Works with any SDK, automatic for all requests, easy to scale
-**Cons:** One extra hop (negligible latency: ~5ms)
+**Cons:** One extra network hop; the added latency depends on your deployment path (run the proxy on the same machine/network to minimize it)
 
 ### Option 2: SDK Mode
 
@@ -260,7 +260,7 @@ In `aggressive` mode, we trade ~5% accuracy (on some tasks) for 30–40% cost sa
 ## Questions?
 
 - **How do I verify the savings are real?** → Check `tokenpak stats` or `tokenpak report --json` for token-by-token breakdown
-- **Will this slow down my requests?** → Proxy adds ~5ms latency (negligible); SDK mode adds no latency
+- **Will this slow down my requests?** → The proxy adds a network hop; the added latency depends on your deployment path (run it on the same machine/network to minimize it). SDK mode adds no network hop.
 - **Can I bypass TokenPak for specific requests?** → Yes, set header `X-TokenPak-Bypass: true`
 - **What if the LLM needs the exact original tokens?** → Use bypass header or switch to `safe` profile
 - **Does this work with streaming?** → Yes, with caveats (cache hits are less frequent in stream mode)
