@@ -1,221 +1,70 @@
 # Recipe: Model Routing by Use Case
 
-**What this solves:** Automatically route requests to the best model for the task — GPT-4 for code generation, Claude Haiku for simple chat — without application code changes.
+> **Status: Conceptual.** This recipe describes a use-case-based routing *pattern*. The declarative `routing:` / `routes:` / `keywords:` / `cost_aware_routing:` config block, the inline `model` / `provider` response fields, and the `tokenpak usage-report` command shown below are **illustrative** — they are not part of the validated config surface or shipped CLI of the current TokenPak release. The proxy is a byte-preserving passthrough and does not inject a chosen-model field into the response body. Confirm any CLI command against `tokenpak --help`.
+
+**What this solves:** The pattern of sending each request to a model suited to the task — a stronger model for code, a smaller/cheaper one for simple chat.
 
 ## Prerequisites
-- TokenPak installed
-- API keys for multiple providers (OpenAI, Anthropic)
-- Understanding of your models' strengths (GPT-4 = code, Claude = reasoning, Haiku = chat)
+- TokenPak installed (`tokenpak --help`)
+- API keys for the providers you intend to use
+- An understanding of which models suit which tasks
 
-## Config Snippet
+## The pattern (illustrative config)
+
+The idea is to map request intent to a preferred model with a fallback. The YAML below is a **conceptual** illustration only — this routing schema is not the validated TokenPak config surface:
 
 ```yaml
-# config.yaml
-providers:
-  openai:
-    type: openai
-    api_key: ${OPENAI_API_KEY}
-
-  anthropic:
-    type: anthropic
-    api_key: ${ANTHROPIC_API_KEY}
-
-models:
-  gpt-4:
-    provider: openai
-    cost_per_1k_input: 3
-    cost_per_1k_output: 6
-
-  gpt-3.5-turbo:
-    provider: openai
-    cost_per_1k_input: 0.5
-    cost_per_1k_output: 1.5
-
-  claude-opus:
-    provider: anthropic
-    cost_per_1k_input: 15
-    cost_per_1k_output: 75
-
-  claude-haiku:
-    provider: anthropic
-    cost_per_1k_input: 0.25
-    cost_per_1k_output: 1.25
-
-# Use-case routing: map request intent to best model
+# ILLUSTRATIVE ONLY — not a validated TokenPak config schema
 routing:
   enabled: true
-
-  # Detect use case from system prompt keywords
   routes:
     - name: code_generation
-      keywords: [code, function, class, debug, refactor, algorithm, optimize]
+      keywords: [code, function, debug, refactor, algorithm]
       preferred_model: gpt-4
       fallback_model: gpt-3.5-turbo
-
-    - name: reasoning_heavy
-      keywords: [reason, explain, think, complex, architecture, strategy]
-      preferred_model: claude-opus
-      fallback_model: claude-haiku
-
     - name: simple_chat
-      keywords: [greet, hello, chat, casual, small-talk]
+      keywords: [greet, hello, chat, casual]
       preferred_model: claude-haiku
       fallback_model: gpt-3.5-turbo
-
-    - name: creative_writing
-      keywords: [write, story, poem, creative, fiction, narrative]
-      preferred_model: claude-opus
-      fallback_model: gpt-4
-
     - name: default
-      # Catch-all: balanced cost/quality
       preferred_model: gpt-3.5-turbo
       fallback_model: claude-haiku
 
-# Cost optimization: route to cheaper model if budget tight
 cost_aware_routing:
   enabled: true
-  # If daily budget >80% consumed, downgrade to cheaper model
   degrade_above_budget_pct: 80
   degradation_map:
     gpt-4: gpt-3.5-turbo
-    claude-opus: claude-haiku
 ```
 
-## Test & Verify
+## What's real today
 
-**Step 1:** Validate config:
+- Start the proxy with `tokenpak serve` (default `http://127.0.0.1:8766`).
+- The proxy forwards request and response bodies verbatim. The model that served a request is whatever your request specified and whatever the upstream returns — TokenPak does **not** add a `model_used` or `provider` field to the response body.
+- Validate a proxy config file with `tokenpak config-check <file.json>`. The keyword-routing graph above is **not** part of that validated surface.
+- To see recorded usage and cost, use `tokenpak status` (there is no `tokenpak usage-report` verb in the current release).
+
+If you want per-request model selection today, choose the model in your application and send it in the request body:
+
 ```bash
-tokenpak validate-config config.yaml
-# Expected output:
-# ✓ Config valid
-# ✓ Routing: 5 routes configured (code_generation, reasoning_heavy, simple_chat, creative_writing, default)
-# ✓ Fallbacks configured for all routes
-```
+tokenpak serve   # http://127.0.0.1:8766
 
-**Step 2:** Test code generation route:
-```bash
-tokenpak proxy --config config.yaml
-
-# Code-related prompt
-curl -X POST http://localhost:8000/v1/messages \
+curl -X POST http://127.0.0.1:8766/v1/messages \
   -H "Content-Type: application/json" \
-  -d '{
-    "model": "routing/code_generation",
-    "messages": [
-      {
-        "role": "system",
-        "content": "You are an expert Python developer. Debug this function."
-      },
-      {
-        "role": "user",
-        "content": "Why is this code slow? [function code here]"
-      }
-    ]
-  }' -s | jq '{model_used: .model, provider: .provider}'
-
-# Expected output:
-# {
-#   "model_used": "gpt-4",
-#   "provider": "openai"
-# }
+  -H "x-api-key: $ANTHROPIC_API_KEY" \
+  -H "anthropic-version: 2023-06-01" \
+  -d '{"model": "claude-3-5-haiku-20241022", "max_tokens": 64,
+       "messages": [{"role": "user", "content": "Hello, how are you?"}]}'
 ```
 
-**Step 3:** Test simple chat route:
-```bash
-# Simple greeting
-curl -X POST http://localhost:8000/v1/messages \
-  -H "Content-Type: application/json" \
-  -d '{
-    "model": "routing/simple_chat",
-    "messages": [
-      {
-        "role": "system",
-        "content": "You are a friendly chatbot. Greet the user casually."
-      },
-      {
-        "role": "user",
-        "content": "Hello, how are you?"
-      }
-    ]
-  }' -s | jq '{model_used: .model, provider: .provider}'
+## Designing a routing strategy
 
-# Expected output:
-# {
-#   "model_used": "claude-haiku",
-#   "provider": "anthropic"
-# }
-```
+If you implement routing in your application or an upstream layer, these principles apply:
 
-**Step 4:** Test reasoning route:
-```bash
-# Complex reasoning prompt
-curl -X POST http://localhost:8000/v1/messages \
-  -H "Content-Type: application/json" \
-  -d '{
-    "model": "routing/reasoning_heavy",
-    "messages": [
-      {
-        "role": "system",
-        "content": "You are a strategic thinker. Reason through this architecture decision."
-      },
-      {
-        "role": "user",
-        "content": "How should we design our API gateway strategy?"
-      }
-    ]
-  }' -s | jq '{model_used: .model, provider: .provider}'
+- **Keep keywords specific** — overly broad terms match too much.
+- **Always define a fallback** so an unavailable preferred model doesn't fail the request outright.
+- **Degrade conservatively** — downgrade to a cheaper model only when the budget is genuinely tight, not early, to avoid hurting quality.
+- **Resolve conflicts deterministically** — define a clear priority (e.g. longest/most-specific match wins) when multiple rules match.
+- **Route on intent signals** (e.g. a system prompt), not on noisy user body text, to reduce false matches.
 
-# Expected output:
-# {
-#   "model_used": "claude-opus",
-#   "provider": "anthropic"
-# }
-```
-
-**Step 5:** Verify cost savings over time:
-```bash
-# Check usage report
-tokenpak usage-report --period day
-# Expected output showing cost per use case:
-# code_generation (gpt-4):    5 req, $0.45
-# reasoning_heavy (claude-opus): 3 req, $0.12
-# simple_chat (claude-haiku):  12 req, $0.04
-# creative_writing (claude-opus): 2 req, $0.08
-# default (gpt-3.5-turbo):     8 req, $0.06
-# TOTAL: $0.75 (60% cheaper than always using gpt-4)
-```
-
-## What Just Happened
-
-TokenPak analyzed incoming requests and automatically selected the right model:
-
-1. **Request arrives** with system prompt containing keywords
-2. **Keyword matching** against configured routes (code_generation, reasoning_heavy, etc.)
-3. **Model selection** based on matched route (e.g., code → gpt-4)
-4. **Fallback routing** if preferred model unavailable (code → gpt-3.5-turbo)
-5. **Cost check** — if budget tight, downgrade to cheaper alternative (gpt-4 → gpt-3.5-turbo)
-
-Your application doesn't need to know about model selection — TokenPak handles it transparently, optimizing for cost and quality simultaneously.
-
-## Common Pitfalls
-
-**Pitfall 1: Keywords are too broad**
-- ❌ Wrong: `keywords: [write]` matches everything (emails, logs, responses)
-- ✅ Right: Narrow context: `[write, story, creative, fiction]` for creative writing only
-
-**Pitfall 2: No fallback model**
-- ❌ Wrong: Preferred model unavailable → request fails
-- ✅ Right: Always have a fallback: `preferred_model: gpt-4, fallback_model: gpt-3.5-turbo`
-
-**Pitfall 3: Cost-aware degradation is too aggressive**
-- ❌ Wrong: Degrade to Haiku at 50% budget (degrades too early, bad user experience)
-- ✅ Right: Degrade at 80-90% budget, giving yourself room to recover
-
-**Pitfall 4: Routing rules contradict each other**
-- ❌ Wrong: "code" → gpt-4, but "optimize code" → claude-haiku
-- ✅ Right: Clear hierarchy: longest match wins, or explicit priority order
-
-**Pitfall 5: Keyword matching on entire message**
-- ❌ Wrong: Matches body text (too noisy, catches false positives)
-- ✅ Right: Match on system prompt only (intent signal, not user content)
+Routing a request to a smaller model where it suffices can reduce cost; the actual savings depend on your traffic mix and the models involved.

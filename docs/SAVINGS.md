@@ -50,7 +50,7 @@ The only way to know your number is to run TokenPak on your traffic and read the
 
 ```bash
 export ANTHROPIC_API_KEY=sk-ant-...
-tokenpak proxy
+tokenpak serve
 ```
 
 ### 2. Point Your Code at It
@@ -117,7 +117,7 @@ This is the workload shape where TokenPak helps most — but the actual saving d
 Sit TokenPak between your code and the LLM API. No code changes.
 
 ```bash
-tokenpak proxy --port 8766
+tokenpak serve --port 8766
 ```
 
 Then swap one URL in your client:
@@ -166,7 +166,7 @@ Set your profile:
 
 ```bash
 export TOKENPAK_PROFILE=balanced  # default
-tokenpak proxy
+tokenpak serve
 ```
 
 Or per-request:
@@ -174,7 +174,7 @@ Or per-request:
 ```python
 # This request uses aggressive compression
 response = client.messages.create(
-    model="claude-opus-4-6",
+    model="claude-opus-4-8",
     messages=[...],
     extra_headers={"X-TokenPak-Profile": "aggressive"}
 )
@@ -224,7 +224,7 @@ In `aggressive` mode, TokenPak compresses more heavily to favor cost savings, wh
 
 ## Next Steps
 
-1. **Start simple:** `tokenpak proxy` + swap one URL
+1. **Start simple:** `tokenpak serve` + swap one URL
 2. **Measure:** Run `tokenpak savings` / `tokenpak stats` after a few requests
 3. **Optimize:** Test different profiles with your workload
 4. **Scale:** Deploy to production when comfortable
@@ -239,4 +239,4 @@ In `aggressive` mode, TokenPak compresses more heavily to favor cost savings, wh
 - **What if the LLM needs the exact original tokens?** → Use bypass header or switch to `safe` profile
 - **Does this work with streaming?** → Yes, with caveats (cache hits are less frequent in stream mode)
 
-See [TROUBLESHOOTING.md](./TROUBLESHOOTING.md) for more.
+See [Troubleshooting](./troubleshooting.md) for more.

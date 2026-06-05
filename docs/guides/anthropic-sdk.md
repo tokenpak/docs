@@ -58,7 +58,7 @@ Expected response shape:
 {
   "status": "ok",
   "uptime_seconds": 3,
-  "version": "1.5.0",
+  "version": "1.7.1",
   "requests_total": 0,
   "requests_errors": 0,
   "compression_ratio_avg": 0.0
@@ -84,7 +84,7 @@ from anthropic import Anthropic
 
 client = Anthropic()  # reads ANTHROPIC_BASE_URL and ANTHROPIC_API_KEY from env
 message = client.messages.create(
-    model="claude-3-5-haiku-latest",
+    model="claude-haiku-4-5",
     max_tokens=64,
     messages=[{"role": "user", "content": "Say hello from TokenPak."}],
 )
@@ -204,7 +204,7 @@ In notebooks, restart the kernel after changing shell environment variables.
 
 ### savings shows 0 after several requests
 
-Compression runs on prompts above the default threshold (4,500 tokens). Short chat messages are passed through unchanged. For larger prompts, use `tokenpak status` and check `compression_ratio_avg` in the `/health` response.
+Compression runs on prompts above a configurable default threshold. Short chat messages are passed through unchanged. For larger prompts, use `tokenpak status` and check `compression_ratio_avg` in the `/health` response.
 
 ---
 

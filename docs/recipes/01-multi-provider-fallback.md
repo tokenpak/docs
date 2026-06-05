@@ -1,108 +1,67 @@
 # Recipe: Multi-Provider Fallback
 
-**What this solves:** Route requests to Anthropic if your primary provider (OpenAI) experiences an outage or rate limit.
+> **Status: Conceptual.** This recipe describes a failover *pattern*. The declarative `fallback_to` config keys and the failover log output shown below are **illustrative** — they are not a validated config surface of the current TokenPak release, and the proxy does not emit those messages inline. Treat this as a design sketch, not a copy-paste runbook. Confirm any CLI command against `tokenpak --help` before relying on it.
+
+**What this solves:** The pattern of routing requests to a backup provider when your primary provider experiences an outage or rate limit.
 
 ## Prerequisites
 - TokenPak installed: `pip install tokenpak`
-- Valid API keys for both Anthropic and OpenAI
-- `tokenpak` CLI available in your shell
+- Valid API keys for the providers you intend to use
+- `tokenpak` CLI available in your shell (`tokenpak --help`)
 
-## Config Snippet
+## The pattern (illustrative config)
+
+The idea is to declare a primary model and a fallback target so that a failed request retries against a different provider. The YAML below is a **conceptual** illustration of how such a config might read — it is not the validated schema of the shipped proxy:
 
 ```yaml
-# config.yaml
+# ILLUSTRATIVE ONLY — not a validated TokenPak config schema
 providers:
   openai:
     type: openai
     api_key: ${OPENAI_API_KEY}
-    models:
-      gpt-4: {}
-      gpt-3.5-turbo: {}
-
   anthropic:
     type: anthropic
     api_key: ${ANTHROPIC_API_KEY}
-    models:
-      claude-3-sonnet: {}
-      claude-3-opus: {}
 
 models:
   gpt-4:
     provider: openai
-    # Fallback chain: try OpenAI first, then Anthropic
+    # Conceptual: try OpenAI first, then Anthropic
     fallback_to: claude-3-sonnet
-
-  gpt-3.5-turbo:
-    provider: openai
-    fallback_to: claude-3-sonnet
-
   claude-3-sonnet:
     provider: anthropic
-
-  claude-3-opus:
-    provider: anthropic
 ```
 
-## Test & Verify
+## What's real today
 
-**Step 1:** Save the config above to `config.yaml` and validate it:
+- Start the proxy with `tokenpak serve` (default `http://127.0.0.1:8766`).
+- Validate a proxy config file with `tokenpak config-check <file.json>`. The shipped proxy config surface is a JSON file; for the server block, `config-check` recommends `server: { port: 8766, host: '127.0.0.1' }`. The elaborate `fallback_to` model graph above is **not** part of that validated surface.
+- TokenPak's proxy is a **byte-preserving passthrough** — it forwards request and response bodies verbatim. It does **not** inject failover status messages or extra fields into the response body.
+
+A request against the proxy looks like:
+
 ```bash
-tokenpak validate-config config.yaml
-# Expected output:
-# ✓ Config valid
-# ✓ Providers: openai, anthropic
-# ✓ Models: gpt-4, gpt-3.5-turbo, claude-3-sonnet, claude-3-opus
-# ✓ Fallback chains verified
-```
+tokenpak serve   # listens on http://127.0.0.1:8766
 
-**Step 2:** Simulate OpenAI being down (set a fake key):
-```bash
-export OPENAI_API_KEY="sk-fake-key-for-testing"
-export ANTHROPIC_API_KEY="sk-ant-real-key"
-
-# Try to use OpenAI — should fail over to Anthropic
-tokenpak proxy --config config.yaml
 # In another terminal:
-curl -X POST http://localhost:8000/v1/messages \
-  -H "Authorization: Bearer test" \
+curl -X POST http://127.0.0.1:8766/v1/messages \
+  -H "Content-Type: application/json" \
+  -H "x-api-key: $ANTHROPIC_API_KEY" \
+  -H "anthropic-version: 2023-06-01" \
   -d '{
-    "model": "gpt-4",
+    "model": "claude-3-5-sonnet-20241022",
+    "max_tokens": 64,
     "messages": [{"role": "user", "content": "Say OK"}]
-  }' 2>&1 | grep -q '"content"'
+  }'
 ```
 
-**Expected output:**
-```
-Request to OpenAI gpt-4 failed (connection refused).
-Falling back to Anthropic claude-3-sonnet.
-✓ Anthropic responded successfully.
-```
+The response body is whatever the upstream provider returns, passed through unchanged.
 
-## What Just Happened
+## Designing a fallback strategy
 
-TokenPak evaluated the request against `gpt-4` (mapped to OpenAI). The provider was unavailable, so TokenPak:
+If you implement failover (in your application or via your own orchestration in front of the proxy), the principles below apply regardless of how the routing is configured:
 
-1. Checked the `fallback_to` chain in the config
-2. Found `claude-3-sonnet` in the fallback
-3. Routed the request to Anthropic instead
-4. Returned the response to the client
-
-The client received a valid response without needing to know about the failover — it's transparent to your application.
-
-## Common Pitfalls
-
-**Pitfall 1: Fallback chain is too short**
-- ❌ Wrong: Single provider with no fallback
-- ✅ Right: Chain at least 2 providers: `openai → anthropic → vertex-ai`
-
-**Pitfall 2: Fallback loops**
-- ❌ Wrong: `gpt-4 → gpt-3.5-turbo → gpt-4` (circular)
-- ✅ Right: Always point to a different provider down the chain
-
-**Pitfall 3: API keys for fallback not configured**
-- ❌ Wrong: Forget to set `ANTHROPIC_API_KEY` env var, fallback fails
-- ✅ Right: Pre-check all keys in the chain before deploying: `tokenpak list-keys`
-
-**Pitfall 4: Rate limits on fallback**
-- ❌ Wrong: Fallback provider has lower rate limits than primary
-- ✅ Right: Verify fallback provider limits are sufficient: `tokenpak show-limits --provider anthropic`
+- **Chain across different providers**, not just different models of the same provider — an outage often takes out a whole provider.
+- **Avoid fallback loops** — never let a chain point back to a model already tried.
+- **Pre-check every key in the chain** so the fallback isn't itself unauthenticated.
+- **Check the fallback's rate limits** — a fallback with a much lower limit can become the new bottleneck during an incident.

@@ -33,17 +33,18 @@ provider: anthropic
 
 ### Basic Usage
 
-```python
-from tokenpak import Client
+Point the standard Anthropic SDK at the proxy via `base_url`:
 
-client = Client(
+```python
+import anthropic
+
+client = anthropic.Anthropic(
     base_url="http://127.0.0.1:8766",
     api_key="sk-ant-...",
-    model="claude-opus-4-6"
 )
 
 response = client.messages.create(
-    model="claude-opus-4-6",
+    model="claude-opus-4-8",
     max_tokens=100,
     messages=[
         {"role": "user", "content": "What is 2 + 2?"}
@@ -53,11 +54,25 @@ response = client.messages.create(
 print(response.content[0].text)  # "4"
 ```
 
+Or use the TokenPak SDK adapter directly:
+
+```python
+from tokenpak.sdk import AnthropicAdapter
+
+adapter = AnthropicAdapter(base_url="http://127.0.0.1:8766", api_key="sk-ant-...")
+response = adapter.call({
+    "model": "claude-opus-4-8",
+    "max_tokens": 100,
+    "messages": [{"role": "user", "content": "What is 2 + 2?"}],
+})
+print(response["content"][0]["text"])
+```
+
 ### With System Prompt
 
 ```python
 response = client.messages.create(
-    model="claude-opus-4-6",
+    model="claude-opus-4-8",
     max_tokens=100,
     system="You are a helpful math tutor.",
     messages=[
@@ -70,7 +85,7 @@ response = client.messages.create(
 
 ```python
 response = client.messages.create(
-    model="claude-opus-4-6",
+    model="claude-opus-4-8",
     max_tokens=100,
     tools=[
         {
@@ -103,16 +118,15 @@ if response.stop_reason == "tool_use":
 ### Streaming
 
 ```python
-stream = client.messages.stream(
-    model="claude-opus-4-6",
+with client.messages.stream(
+    model="claude-opus-4-8",
     max_tokens=100,
     messages=[
         {"role": "user", "content": "Write a poem about tokenization"}
     ]
-)
-
-for text in stream.text_stream:
-    print(text, end="", flush=True)
+) as stream:
+    for text in stream.text_stream:
+        print(text, end="", flush=True)
 ```
 
 ---
@@ -130,16 +144,17 @@ model: gpt-4o
 
 ### Basic Usage
 
-```python
-from tokenpak import Client
+Point the standard OpenAI SDK at the proxy via `base_url` (note the `/v1` suffix):
 
-client = Client(
-    base_url="http://127.0.0.1:8766",
+```python
+from openai import OpenAI
+
+client = OpenAI(
+    base_url="http://127.0.0.1:8766/v1",
     api_key="sk-...",  # OpenAI key
-    model="gpt-4o"
 )
 
-response = client.messages.create(
+response = client.chat.completions.create(
     model="gpt-4o",
     max_tokens=100,
     messages=[
@@ -147,13 +162,25 @@ response = client.messages.create(
     ]
 )
 
-print(response.content[0].text)
+print(response.choices[0].message.content)
+```
+
+Or use the TokenPak SDK adapter:
+
+```python
+from tokenpak.sdk import OpenAIAdapter
+
+adapter = OpenAIAdapter(base_url="http://127.0.0.1:8766", api_key="sk-...")
+response = adapter.call({
+    "model": "gpt-4o",
+    "messages": [{"role": "user", "content": "Hello"}],
+})
 ```
 
 ### Temperature & Top-P
 
 ```python
-response = client.messages.create(
+response = client.chat.completions.create(
     model="gpt-4o",
     max_tokens=100,
     temperature=0.7,  # 0 = deterministic, 2 = creative
@@ -164,23 +191,26 @@ response = client.messages.create(
 )
 ```
 
-### Function Calling (OpenAI style)
+### Function / Tool Calling (OpenAI style)
 
 ```python
-response = client.messages.create(
+response = client.chat.completions.create(
     model="gpt-4o",
     max_tokens=100,
-    functions=[
+    tools=[
         {
-            "name": "get_weather",
-            "description": "Get weather for a location",
-            "parameters": {
-                "type": "object",
-                "properties": {
-                    "location": {"type": "string"},
-                    "unit": {"type": "string", "enum": ["C", "F"]}
-                },
-                "required": ["location"]
+            "type": "function",
+            "function": {
+                "name": "get_weather",
+                "description": "Get weather for a location",
+                "parameters": {
+                    "type": "object",
+                    "properties": {
+                        "location": {"type": "string"},
+                        "unit": {"type": "string", "enum": ["C", "F"]}
+                    },
+                    "required": ["location"]
+                }
             }
         }
     ],
@@ -193,7 +223,9 @@ response = client.messages.create(
 ### JSON Mode
 
 ```python
-response = client.messages.create(
+import json
+
+response = client.chat.completions.create(
     model="gpt-4o",
     max_tokens=200,
     response_format={"type": "json_object"},
@@ -205,169 +237,68 @@ response = client.messages.create(
     ]
 )
 
-# response.content[0].text is valid JSON
-import json
-data = json.loads(response.content[0].text)
+data = json.loads(response.choices[0].message.content)
 ```
 
 ### Streaming
 
 ```python
-stream = client.messages.stream(
+stream = client.chat.completions.create(
     model="gpt-4o",
+    stream=True,
     messages=[
         {"role": "user", "content": "Write a haiku"}
     ]
 )
 
 for chunk in stream:
-    print(chunk.choices[0].delta.content, end="", flush=True)
+    print(chunk.choices[0].delta.content or "", end="", flush=True)
 ```
 
 ---
 
 ## 3. OpenAI Responses Adapter (Legacy)
 
-For older integrations using the OpenAI Responses API. **Not recommended for new projects** (OpenAI deprecated this).
-
-### Configuration
-
-```yaml
-provider: openai_responses
-model: text-davinci-003
-```
-
-### Basic Usage
+For older integrations using the OpenAI Responses/Completions API. **Not recommended for new projects** (OpenAI deprecated this). Route legacy completions through the proxy using the standard OpenAI SDK pointed at the proxy `base_url`:
 
 ```python
-client = Client(
-    base_url="http://127.0.0.1:8766",
-    api_key="sk-...",
-    model="text-davinci-003"
-)
+from openai import OpenAI
 
-# Note: Different response format than Chat API
+client = OpenAI(base_url="http://127.0.0.1:8766/v1", api_key="sk-...")
+
 response = client.completions.create(
-    model="text-davinci-003",
+    model="gpt-3.5-turbo-instruct",
     prompt="Q: What is the capital of France?\nA:",
     max_tokens=10
 )
-
-print(response.choices[0].text)  # "Paris"
+print(response.choices[0].text)
 ```
 
-**Use OpenAI Chat adapter for new code.**
+**Use the OpenAI Chat adapter for new code.**
 
 ---
 
-## 4. Google Gemini Adapter
+## 4. Google Gemini Provider
 
-Routes requests to Google's Gemini API.
+> **Note:** The `tokenpak.sdk` adapter layer ships Anthropic, OpenAI, LangChain, and LiteLLM adapters. Gemini is reachable through the proxy via the OpenAI-compatible path or LiteLLM-style routing, rather than a dedicated Gemini SDK adapter. The example below is conceptual and uses the proxy's OpenAI-compatible endpoint.
 
-### Configuration
-
-```yaml
-provider: google
-model: gemini-pro
-```
-
-### Basic Usage
+### Via LiteLLM-style routing
 
 ```python
-from tokenpak import Client
+from tokenpak.sdk import LiteLLMAdapter
 
-client = Client(
-    base_url="http://127.0.0.1:8766",
-    api_key="AIza...",  # Google API key
-    model="gemini-pro"
-)
-
-response = client.messages.create(
-    model="gemini-pro",
-    max_tokens=100,
-    messages=[
-        {"role": "user", "content": "What makes a good API design?"}
-    ]
-)
-
-print(response.content[0].text)
+adapter = LiteLLMAdapter(base_url="http://127.0.0.1:8766", api_key="AIza...")
+response = adapter.call({
+    "model": "gemini/gemini-1.5-pro",
+    "messages": [{"role": "user", "content": "What makes a good API design?"}],
+})
 ```
 
-### With System Instruction
-
-```python
-response = client.messages.create(
-    model="gemini-pro",
-    max_tokens=100,
-    system="You are a world-class software architect.",
-    messages=[
-        {"role": "user", "content": "Design a payment system"}
-    ]
-)
-```
-
-### Function Calling (Google style)
-
-```python
-response = client.messages.create(
-    model="gemini-pro",
-    max_tokens=100,
-    tools=[
-        {
-            "type": "function",
-            "function": {
-                "name": "search_web",
-                "description": "Search the web",
-                "parameters": {
-                    "type": "object",
-                    "properties": {
-                        "query": {"type": "string"}
-                    },
-                    "required": ["query"]
-                }
-            }
-        }
-    ],
-    messages=[
-        {"role": "user", "content": "What is the latest version of Python?"}
-    ]
-)
-```
-
-### Vision/Multimodal
-
-```python
-import base64
-
-# Read image
-with open("image.jpg", "rb") as f:
-    image_data = base64.standard_b64encode(f.read()).decode()
-
-response = client.messages.create(
-    model="gemini-pro-vision",
-    max_tokens=200,
-    messages=[
-        {
-            "role": "user",
-            "content": [
-                {"type": "text", "text": "Describe this image"},
-                {
-                    "type": "image",
-                    "source": {
-                        "type": "base64",
-                        "media_type": "image/jpeg",
-                        "data": image_data
-                    }
-                }
-            ]
-        }
-    ]
-)
-```
+Multimodal/vision support depends on the upstream provider and the request shape it accepts; send images using that provider's native content format.
 
 ---
 
-## 5. Passthrough Adapter
+## 5. Passthrough Usage
 
 For debugging, custom providers, or testing. Sends raw JSON to the provider.
 
@@ -386,7 +317,7 @@ import httpx
 response = httpx.post(
     "http://127.0.0.1:8766/v1/messages",
     json={
-        "model": "claude-opus-4-6",
+        "model": "claude-opus-4-8",
         "max_tokens": 100,
         "messages": [
             {"role": "user", "content": "Hello"}
@@ -446,7 +377,7 @@ fallback:
 
 providers:
   anthropic:
-    model: claude-opus-4-6
+    model: claude-opus-4-8
   google:
     model: gemini-pro
   openai:
@@ -459,25 +390,32 @@ providers:
 # Use cheaper Haiku for simple tasks, Opus for complex
 provider: anthropic
 routing:
-  simple_tasks: claude-haiku-3-5  # Cheaper
-  complex_tasks: claude-opus-4-6  # More capable
+  simple_tasks: claude-haiku-4-5  # Cheaper
+  complex_tasks: claude-opus-4-8  # More capable
 ```
 
 ---
 
 ## Error Handling
 
-All adapters use the same error handling. See [Error Handling Guide](./error-handling.md).
+The TokenPak SDK adapters raise a canonical exception hierarchy. See [Error Handling Guide](./error-handling.md).
 
 ```python
+from tokenpak.sdk.base import (
+    TokenPakAdapterError,
+    TokenPakTimeoutError,
+    TokenPakAuthError,
+    TokenPakConfigError,
+)
+
 try:
-    response = client.messages.create(...)
-except TokenLimitError as e:
-    print(f"Token limit: {e.message}")
-except ProviderError as e:
-    print(f"Provider error: {e.message}")
-except Exception as e:
-    print(f"Unknown error: {e}")
+    response = adapter.call(request)
+except TokenPakTimeoutError:
+    print("Proxy timed out")
+except TokenPakAuthError as e:
+    print(f"Auth failed (HTTP {e.status_code})")
+except TokenPakAdapterError as e:
+    print(f"Adapter error: {e}")
 ```
 
 ---

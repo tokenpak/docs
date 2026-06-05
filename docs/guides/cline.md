@@ -65,7 +65,7 @@ Expected response shape:
 {
   "status": "ok",
   "uptime_seconds": 3,
-  "version": "1.5.0",
+  "version": "1.7.1",
   "requests_total": 0,
   "requests_errors": 0,
   "compression_ratio_avg": 0.0
@@ -203,7 +203,7 @@ In remote VS Code sessions, `localhost` means the machine where the Cline extens
 
 ### savings shows 0 after several turns
 
-Compression runs on prompts above the default threshold (4,500 tokens). Short Cline tasks are passed through unchanged. For larger tasks, use `tokenpak status` and check `compression_ratio_avg` in the `/health` response.
+Compression runs on prompts above a configurable default threshold. Short Cline tasks are passed through unchanged. For larger tasks, use `tokenpak status` and check `compression_ratio_avg` in the `/health` response.
 
 ---
 

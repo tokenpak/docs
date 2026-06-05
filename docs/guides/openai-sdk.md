@@ -57,7 +57,7 @@ Expected response:
 {
   "status": "ok",
   "uptime_seconds": 3,
-  "version": "1.5.0",
+  "version": "1.7.1",
   "requests_total": 0,
   "requests_errors": 0,
   "compression_ratio_avg": 0.0
@@ -180,7 +180,7 @@ TokenPak forwards your `OPENAI_API_KEY` to OpenAI unmodified. If you see a 401:
 
 ### Responses look correct but savings are zero
 
-Compression runs on prompts above 4,500 tokens by default. Short chat messages are passed through unchanged. For larger prompts, use `tokenpak status` and check `compression_ratio_avg` in the `/health` response — a value of `0.0` after many requests suggests all prompts fell below the threshold. Lower the threshold with:
+Compression runs on prompts above a configurable default threshold. Short chat messages are passed through unchanged. For larger prompts, use `tokenpak status` and check `compression_ratio_avg` in the `/health` response — a value of `0.0` after many requests suggests all prompts fell below the threshold. Lower the threshold with:
 
 ```bash
 export TOKENPAK_COMPACT_THRESHOLD_TOKENS=1000

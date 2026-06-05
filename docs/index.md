@@ -20,7 +20,7 @@ TokenPak sits between your AI tools and the upstream LLM provider, running entir
 - **Prompt Packing pipeline** — deterministic context reduction; ≥30% floor pinned in CI on an agent-style fixture, 90%+ routinely observed on direct-API / CLI / uncached workloads. Provider-cached flows (Claude Code) show lower incremental gains.
 - **Local proxy on 127.0.0.1** — byte-preserved passthrough; your prompts and credentials never leave your machine.
 - **Spend Guard** — pre-send circuit breaker with rolling caps; blocks runaway requests before they reach the provider and returns a clear release directive.
-- **Nine client integrations** — Claude Code, Cursor, Cline, Continue, Aider, OpenAI SDK, Anthropic SDK, LiteLLM, Codex.
+- **Nine client integrations** — Claude Code, Cursor, Cline, Continue, Aider, Codex CLI, Gemini CLI, OpenAI SDK, Anthropic SDK.
 - **Savings Ledger + local dashboard** — every request logged to a local SQLite store with causal attribution; TUI + web dashboard.
 - **Vault indexing + semantic search** — index your codebase, search without an LLM call.
 - **TIP-1.0 protocol contracts** — canonical headers, metadata fields, capability labels, manifest schemas. Conformance gate runnable via `tokenpak doctor --conformance`.

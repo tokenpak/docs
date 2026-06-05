@@ -55,7 +55,7 @@ Expected response:
 {
   "status": "ok",
   "uptime_seconds": 3,
-  "version": "1.5.0",
+  "version": "1.7.1",
   "requests_total": 0,
   "requests_errors": 0,
   "compression_ratio_avg": 0.0
@@ -158,7 +158,7 @@ Some package managers (Homebrew, conda) reset PATH and environment on upgrade. A
 
 ### tokenpak savings shows 0 after several prompts
 
-Compression applies to prompts above the default threshold (4,500 tokens). Short prompts are passed through unchanged. To confirm compression is running for longer prompts, use `tokenpak status` — the `compression_ratio_avg` field in `/health` shows the running average.
+Compression applies to prompts above a configurable default threshold. Short prompts are passed through unchanged. To confirm compression is running for longer prompts, use `tokenpak status` — the `compression_ratio_avg` field in `/health` shows the running average.
 
 ---
 

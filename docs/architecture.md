@@ -172,7 +172,7 @@ Node 1       Node 2       Node 3
 ```mermaid
 graph TD
     A["StageTrace & PipelineTrace"]
-    B["VaultIndex<br/>Token Counting & Compression"]
+    B["VaultIndex<br/>Vault Retrieval & Semantic Search"]
     C["Provider Router<br/>Route Selection & Failover"]
     D["Validation Gate<br/>Content Security"]
     E["Cache Manager<br/>Response & Prompt Cache"]
@@ -193,7 +193,7 @@ graph TD
 ```
 
 - **StageTrace & PipelineTrace:** Request tracing for debugging and performance analysis
-- **VaultIndex:** Token counting, semantic compression, and cost calculation
+- **VaultIndex:** Vault retrieval and semantic-search index — selects relevant indexed blocks for context injection (not the token counter)
 - **Provider Router:** Logic for selecting which LLM provider to use
 - **Validation Gate:** Content scanning and policy enforcement
 - **Cache Manager:** Response caching and prompt cache integration
@@ -258,26 +258,26 @@ curl http://localhost:8766/stats
 
 ## Configuration
 
-TokenPak is configured via environment variables and a local config file:
+TokenPak is configured via environment variables and a local config file (`~/.tokenpak/config.yaml`). Environment variables override config file values:
 
 ```env
 # Core settings
-TOKENPAK_BIND=0.0.0.0:8766
-TOKENPAK_UPSTREAM=https://api.anthropic.com
+TOKENPAK_BIND_ADDRESS=127.0.0.1   # default bind host (loopback only)
+TOKENPAK_PORT=8766                # default listen port
+TOKENPAK_MODE=hybrid              # compression mode: strict | hybrid | aggressive
+TOKENPAK_COMPACT=1                # master compression switch (0 = off)
 
-# Cache settings
-CACHE_ENABLED=true
-CACHE_TTL_SECONDS=3600
+# Storage
+TOKENPAK_DB=.tokenpak/monitor.db  # SQLite database path
 
-# Rate limiting
-RATE_LIMIT_PER_IP=100  # requests per minute
-COST_LIMIT_PER_MINUTE=10.0  # dollars per minute
+# Logging
+TOKENPAK_LOG_LEVEL=info           # debug | info | warning | error
 
-# Validation gate
-VALIDATION_GATE_ENABLED=true
+# Spend guard
+TOKENPAK_SPEND_GUARD_ENABLED=true
 ```
 
-See `docs/CONFIG.md` for full options.
+See [configuration.md](./configuration.md) and [env-vars.md](./env-vars.md) for the full set of options.
 
 ---
 
@@ -291,4 +291,4 @@ TokenPak is designed to be extended:
 - **Custom routing logic** — Implement custom provider selection rules
 - **Custom metrics exporters** — Send stats to your monitoring system
 
-See `docs/CONTRIBUTING.md` for extension patterns.
+See the [Plugin Guide](./plugin-guide.md) for extension patterns, and the [tokenpak/tokenpak](https://github.com/tokenpak/tokenpak) repository for contribution guidelines.

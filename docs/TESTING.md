@@ -67,7 +67,7 @@ pytest -m "not integration and not slow" -v
 ```bash
 pytest -m phase2 \
   --cov=tokenpak.validation \
-  --cov=tokenpak.error_handling \
+  --cov=tokenpak.core.error_handling \
   --cov=tokenpak.cache \
   --cov-report=term-missing
 ```
@@ -153,7 +153,7 @@ def test_cache_ttl_expiry():
 import pytest
 from unittest import mock
 from tokenpak.validation import validate_config
-from tokenpak.errors import ValidationError
+from tokenpak.core.error_handling import ValidationError
 
 @pytest.mark.phase2
 def test_meaningful_name_describes_behavior():
@@ -210,7 +210,7 @@ from unittest import mock
 @pytest.mark.phase2
 def test_with_mock():
     """Test in isolation by mocking external calls."""
-    with mock.patch('tokenpak.adapters.anthropic.call_api') as mock_call:
+    with mock.patch('tokenpak.sdk.anthropic.call_api') as mock_call:
         mock_call.return_value = {"content": "Mocked response"}
         
         result = adapter.get_completion("Hello")
@@ -243,9 +243,9 @@ Example output:
 Name                                   Stmts   Miss Cover   Missing
 ------------------------------------------------------------------------
 tokenpak/__init__.py                      5      0   100%
-tokenpak/adapters.py                     60      8    87%   120-125,134
-tokenpak/validation.py                   45      3    93%   78,102,115
-tokenpak/cache.py                        55     12    78%   45-60,88-92
+tokenpak/sdk/base.py                      60      8    87%   120-125,134
+tokenpak/validation/__init__.py          45      3    93%   78,102,115
+tokenpak/cache/__init__.py               55     12    78%   45-60,88-92
 ------------------------------------------------------------------------
 TOTAL                                   165     23    86%
 ```
@@ -344,38 +344,12 @@ pytest tests/ --cov=tokenpak --cov-report=html
 
 ---
 
-## Known Issues & Historical Root Causes
+## Troubleshooting Test Collection
 
-### proxy_v4.py — Import Path (Resolved 2026-03-26)
+### Slow or hanging collection
 
-**Symptom:** Pytest collection hangs or `FileNotFoundError` on test files that reference `proxy_v4.py`.
+If `pytest --collect-only` is unusually slow or appears to hang, the most common cause is a fixture or module-level import that does expensive work at import time (network calls, large model loads, or reading a missing file path).
 
-**Affected test files:**
-- `tests/test_proxy_error_paths.py`
-- `tests/test_classifier_first_router.py`
-- `tests/test_proxy_v4_cache_stats.py`
-- `tests/test_proxy_v4_upstream_routes.py`
-- `tests/test_ingest_proxy_v4.py`
-
-**Root cause:** These tests load `proxy_v4.py` directly as a standalone module (not a package import) using a hardcoded path:
-```python
-_PROXY_V4_PATH = Path(__file__).parent.parent / "packages/core/proxy_v4.py"
-```
-If `proxy_v4.py` is missing from `packages/core/` or if a stale/wrong-size copy exists at vault root, tests fail with `FileNotFoundError` at collection time, causing apparent "hangs".
-
-**Fix:** The canonical file is `packages/core/proxy_v4.py` (211,859 bytes as of 2026-03-25). Do NOT use the vault-root `proxy_v4.py` (smaller, older copy — stale). If tests fail to collect, verify:
-```bash
-ls -la packages/core/proxy_v4.py   # should be ~211KB
-```
-
-**Resolution:** Removed stale vault-root `proxy_v4.py`; canonical path is `packages/core/proxy_v4.py`.
-
-### Collection speed baseline
-
-- Expected: `pytest --collect-only tests/ -q` completes in **7–10 seconds** (1175 tests)
-- If collection exceeds 30s, check for hanging fixture imports (see above)
-- Run `pytest --collect-only --trace-config` to identify slow plugin/fixture loads
-
----
-
-**Last updated:** 2026-03-26 (Phase 2 integration + proxy_v4 root cause docs)
+- Run `pytest --collect-only --trace-config` to identify slow plugin/fixture loads.
+- Prefer package imports (`from tokenpak.core import ...`) over loading a module from a hardcoded filesystem path — path-based loading breaks when the working directory or layout changes.
+- If a test references a file that may be absent, guard it with `pytest.importorskip` or a fixture that skips cleanly rather than failing at collection time.

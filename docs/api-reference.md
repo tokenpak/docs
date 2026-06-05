@@ -59,7 +59,7 @@ Welcome / status endpoint. Returns proxy identity and available endpoints.
 ```json
 {
   "name": "TokenPak",
-  "version": "0.5.0",
+  "version": "1.7.1",
   "status": "running",
   "endpoints": {
     "health": "/health",
@@ -229,29 +229,6 @@ Savings report, optionally filtered by start date.
 #### `GET /cache-stats`
 
 Detailed cache hit/miss breakdown.
-
----
-
-#### `GET /recent`
-
-Last 50 requests with per-request metadata.
-
-**Response:**
-```json
-{
-  "recent": [
-    {
-      "timestamp": "2026-03-28T16:00:00Z",
-      "model": "claude-sonnet-4-6",
-      "input_tokens": 4380,
-      "output_tokens": 512,
-      "latency_ms": 320,
-      "status_code": 200,
-      "tokens_saved": 1240
-    }
-  ]
-}
-```
 
 ---
 
@@ -582,7 +559,7 @@ TokenPak provides adapters that route requests through the proxy while preservin
 All adapters inherit from `TokenPakAdapter` and implement four lifecycle hooks.
 
 ```python
-from tokenpak.adapters.base import TokenPakAdapter
+from tokenpak.sdk.base import TokenPakAdapter
 ```
 
 **Constructor Parameters:**
@@ -620,7 +597,7 @@ tokens = adapter.extract_tokens(response)
 Routes requests to `/v1/messages` on the proxy.
 
 ```python
-from tokenpak.adapters import AnthropicAdapter
+from tokenpak.sdk import AnthropicAdapter
 
 adapter = AnthropicAdapter(
     base_url="http://127.0.0.1:8766",
@@ -673,7 +650,7 @@ print(f"Input tokens: {tokens['input_tokens']}")
 Routes requests to `/v1/chat/completions` on the proxy.
 
 ```python
-from tokenpak.adapters import OpenAIAdapter
+from tokenpak.sdk import OpenAIAdapter
 
 adapter = OpenAIAdapter(
     base_url="http://127.0.0.1:8766",
@@ -704,7 +681,7 @@ response = adapter.call({
 Drop-in adapter for LangChain integrations.
 
 ```python
-from tokenpak.adapters import LangChainAdapter
+from tokenpak.sdk import LangChainAdapter
 
 adapter = LangChainAdapter(
     base_url="http://127.0.0.1:8766",
@@ -727,7 +704,7 @@ adapter = LangChainAdapter(
 Drop-in adapter for LiteLLM integrations.
 
 ```python
-from tokenpak.adapters import LiteLLMAdapter
+from tokenpak.sdk import LiteLLMAdapter
 
 adapter = LiteLLMAdapter(
     base_url="http://127.0.0.1:8766",
@@ -758,7 +735,7 @@ TokenPakAdapterError (base)
 
 **Usage:**
 ```python
-from tokenpak.adapters.base import (
+from tokenpak.sdk.base import (
     TokenPakAdapterError,
     TokenPakTimeoutError,
     TokenPakAuthError,
@@ -1425,4 +1402,4 @@ advanced:
 
 ---
 
-*This reference covers TokenPak v0.5.0. For the full changelog, see [CHANGELOG.md](../CHANGELOG.md).*
+*This reference covers TokenPak v1.7.1.*

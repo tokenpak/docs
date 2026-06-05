@@ -156,7 +156,7 @@ tokenpak start --background
 tokenpak dashboard
 ```
 
-Opens a web dashboard at `http://127.0.0.1:8001` to view cost, token counts, and request history.
+Shows a real-time dashboard of cost, token counts, and request history. The running proxy also serves a built-in HTML dashboard at `http://127.0.0.1:8766/dashboard`.
 
 ---
 
@@ -164,16 +164,15 @@ Opens a web dashboard at `http://127.0.0.1:8001` to view cost, token counts, and
 
 ### Python Client
 
-Create `test_tokenpak.py`:
+Create `test_tokenpak.py` using the standard Anthropic SDK pointed at the proxy:
 
 ```python
-from tokenpak import Client
+import anthropic
 
-# Initialize client pointing to the proxy
-client = Client(
+# Point the standard Anthropic SDK at the local TokenPak proxy
+client = anthropic.Anthropic(
     base_url="http://127.0.0.1:8766",  # Your proxy
-    api_key="sk-ant-...",  # Your API key
-    model="claude-opus-4-8"  # Default model
+    api_key="sk-ant-...",              # Your API key
 )
 
 # Make a request
@@ -188,6 +187,8 @@ response = client.messages.create(
 print("✅ TokenPak works!")
 print(f"Response: {response.content[0].text}")
 ```
+
+(Alternatively, use the TokenPak SDK adapter: `from tokenpak.sdk import AnthropicAdapter`.)
 
 Run it:
 

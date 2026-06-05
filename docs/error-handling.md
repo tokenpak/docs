@@ -83,20 +83,27 @@ Attempt 4: Wait 8 seconds, retry
 ```
 
 **Solution (Manual):**
-```python
-from tokenpak import Client, RateLimitError
-import time
 
-client = Client(api_key="...", model="claude-opus-4-6")
+When a request is rate-limited, the proxy returns a `429` with a `rate_limit_exceeded` error body. With the TokenPak SDK adapter, this surfaces as a `TokenPakAdapterError` carrying `status_code == 429`:
+
+```python
+import time
+from tokenpak.sdk import AnthropicAdapter
+from tokenpak.sdk.base import TokenPakAdapterError
+
+adapter = AnthropicAdapter(base_url="http://127.0.0.1:8766", api_key="sk-ant-...")
+request = {"model": "claude-opus-4-8", "max_tokens": 100,
+           "messages": [{"role": "user", "content": "Hello"}]}
 
 try:
-    response = client.messages.create(...)
-except RateLimitError as e:
-    wait_seconds = int(e.headers.get("Retry-After", 60))
-    print(f"Rate limited. Waiting {wait_seconds}s...")
-    time.sleep(wait_seconds)
-    # Retry
-    response = client.messages.create(...)
+    response = adapter.call(request)
+except TokenPakAdapterError as e:
+    if e.status_code == 429:
+        print("Rate limited. Waiting 60s...")
+        time.sleep(60)
+        response = adapter.call(request)
+    else:
+        raise
 ```
 
 **Prevention:**
@@ -108,33 +115,21 @@ except RateLimitError as e:
 
 ### 4. Model Not Found
 
-**Error Message:**
-```
-ModelNotFoundError: Model 'gpt-7' not found in provider: openai
-Available models: gpt-4o, gpt-4-turbo, gpt-3.5-turbo
-```
+**Cause:** Using a model name that the upstream provider doesn't support. The proxy forwards the request and the upstream provider rejects it — the error is passed back to the client as a `4xx` with the provider's message.
 
-**Cause:** Using a model name that the provider doesn't support.
+**Solution:** Use a valid model name for the target provider. The proxy lists the models it knows about at `GET /v1/models`:
 
-**Solution:**
-```python
-# Check available models for your provider
-client = Client(api_key="...", model="gpt-4o")
-
-# Use a valid model name
-response = client.messages.create(
-    model="gpt-4o",  # Valid
-    messages=[...]
-)
+```bash
+curl http://127.0.0.1:8766/v1/models
 ```
 
 **Common Model Names:**
 
 | Provider | Models |
 |----------|--------|
-| Anthropic | `claude-opus-4-6`, `claude-sonnet-4-6`, `claude-haiku-3-5` |
+| Anthropic | `claude-opus-4-8`, `claude-sonnet-4-6`, `claude-haiku-4-5` |
 | OpenAI | `gpt-4o`, `gpt-4-turbo`, `gpt-3.5-turbo` |
-| Google | `gemini-pro`, `gemini-pro-vision`, `gemini-ultra` |
+| Google | `gemini-1.5-pro`, `gemini-1.5-flash` |
 
 **Prevention:** Hardcode model names; don't accept user input directly.
 
@@ -142,68 +137,51 @@ response = client.messages.create(
 
 ### 5. Provider Timeout
 
-**Error Message:**
-```
-TimeoutError: Request to anthropic timed out after 300 seconds
-```
-
-**Cause:** Provider took too long to respond.
-
-**Solution (TokenPak Automatic):**
-Switches to fallback provider if primary times out.
+**Cause:** The upstream provider took too long to respond. The TokenPak SDK adapter raises `TokenPakTimeoutError` when the proxy does not respond within `timeout_s`.
 
 **Solution (Manual):**
 ```python
-client = Client(
-    api_key="...",
-    model="claude-opus-4-6",
-    timeout=60  # 60 second timeout
+from tokenpak.sdk import AnthropicAdapter
+from tokenpak.sdk.base import TokenPakTimeoutError
+
+adapter = AnthropicAdapter(
+    base_url="http://127.0.0.1:8766",
+    api_key="sk-ant-...",
+    timeout_s=60.0,  # 60 second timeout
 )
 
 try:
-    response = client.messages.create(...)
-except TimeoutError:
-    # Try fallback manually
-    client.model = "gemini-pro"
-    response = client.messages.create(...)
+    response = adapter.call(request)
+except TokenPakTimeoutError:
+    print("Proxy/upstream timed out — retry or use a fallback")
 ```
 
 **Prevention:**
-- Use fallback chains
-- Set reasonable timeouts
+- Set reasonable timeouts (`timeout_s`)
+- Configure fallback chains in `config.yaml`
 - Monitor provider status
 
 ---
 
-### 6. Token Limit Exceeded
+### 6. Request Too Large
 
-**Error Message:**
-```
-TokenLimitError: Message exceeds max_tokens limit (4096 > 4096)
-```
-
-**Cause:** Request too large for the model.
+**Cause:** Request exceeds the target model's context window. The upstream provider rejects oversized requests; the error is passed back through the proxy.
 
 **Solution:**
 ```python
-# Option 1: Reduce message size
+# Option 1: Reduce message size — keep only relevant context
 short_context = "Summary of relevant context only..."
 
-# Option 2: Use compression (automatic)
-client = Client(
-    api_key="...",
-    model="claude-opus-4-6",
-    compression=True  # Auto-compress context
-)
+# Option 2: Let the proxy compress context automatically
+#   (compression is enabled by default; tune via config.yaml / env vars)
 
-# Option 3: Split into multiple requests
-# (batch processing)
+# Option 3: Split into multiple smaller requests
 ```
 
 **Prevention:**
-- Use `count_tokens()` before making requests
-- Implement compression (automatic in FREE)
-- Use document injection selectively
+- Enable compression (on by default — see config.yaml)
+- Use vault context injection selectively
+- Preview compression savings on a file with `tokenpak preview <file>`
 
 ---
 
@@ -231,7 +209,7 @@ compression:
 **Validation:**
 ```bash
 # Validate config before starting
-tokenpak validate --config config.yaml
+tokenpak config validate
 
 # Shows all errors
 ```
@@ -325,72 +303,90 @@ tokenpak serve --log-file /tmp/tokenpak.log
 # Health check endpoint
 curl http://127.0.0.1:8766/health
 
-# Response:
-# {
-#   "status": "healthy",
-#   "providers": {
-#     "anthropic": "ok",
-#     "google": "ok",
-#     "openai": "degraded"
-#   }
-# }
+# Circuit breaker / degradation state
+curl http://127.0.0.1:8766/circuit-breakers
+curl http://127.0.0.1:8766/degradation
 ```
 
-### View Request Log
+### Inspect Recent Requests
 
 ```bash
-# Last 100 requests
-curl http://127.0.0.1:8766/logs?limit=100
+# Stats for the most recent request
+curl http://127.0.0.1:8766/stats/last
 
-# Requests to Anthropic only
-curl 'http://127.0.0.1:8766/logs?provider=anthropic'
+# Full pipeline trace of the last request
+curl http://127.0.0.1:8766/trace/last
 
-# Requests with errors
-curl 'http://127.0.0.1:8766/logs?status=error'
+# All stored pipeline traces
+curl http://127.0.0.1:8766/traces
+
+# Export the request ledger as CSV
+curl http://127.0.0.1:8766/v1/export/csv
 ```
 
-### Test Provider Connectivity
+### Test Proxy Connectivity
 
 ```python
-from tokenpak import Client
+from tokenpak.sdk import AnthropicAdapter
 
-client = Client(api_key="...", model="claude-opus-4-6")
+adapter = AnthropicAdapter(base_url="http://127.0.0.1:8766", api_key="sk-ant-...")
 
-# Quick test
 try:
-    response = client.messages.create(
-        model="claude-opus-4-6",
-        max_tokens=10,
-        messages=[{"role": "user", "content": "test"}]
-    )
-    print("✅ Connected to Anthropic")
+    response = adapter.call({
+        "model": "claude-opus-4-8",
+        "max_tokens": 10,
+        "messages": [{"role": "user", "content": "test"}],
+    })
+    print("✅ Reached upstream via the proxy")
 except Exception as e:
-    print(f"❌ Connection failed: {e}")
+    print(f"❌ Request failed: {e}")
 ```
 
 ---
 
 ## Error Types Reference
 
-### Client Errors (4xx)
+### Proxy HTTP Error Types
 
-| Error | Code | Cause | Solution |
-|-------|------|-------|----------|
-| `AuthenticationError` | 401 | Invalid API key | Check API key in `.env` |
-| `PermissionError` | 403 | Key lacks permissions | Regenerate API key |
-| `NotFoundError` | 404 | Model not found | Check model name |
-| `RateLimitError` | 429 | Too many requests | Use fallback chain |
-| `TokenLimitError` | 413 | Message too large | Compress or split |
-| `ValidationError` | 400 | Invalid request format | Check request structure |
+The proxy returns errors as a JSON object `{"error": {"type": ..., "message": ...}}`. Common types:
 
-### Server Errors (5xx)
+| HTTP Status | `error.type` | Cause |
+|-------------|--------------|-------|
+| 400 | `bad_request` | Malformed request body |
+| 401 | `unauthorized` | Missing or invalid `X-TokenPak-Key` |
+| 403 | `forbidden` | Operation not allowed from this IP |
+| 404 | `not_found` | Unknown endpoint path |
+| 429 | `rate_limit_exceeded` | Too many requests from this IP |
+| 500 | `internal_error` | Proxy-side error |
+| 503 | `circuit_open` | Upstream provider circuit breaker open |
+| 503 | `upstream_unreachable` | Cannot reach upstream provider |
 
-| Error | Code | Cause | Solution |
-|-------|------|-------|----------|
-| `ServerError` | 500 | Provider internal error | Retry with fallback |
-| `ServiceUnavailableError` | 503 | Provider down | Use fallback chain |
-| `GatewayError` | 502 | Network issue | Check connection |
-| `TimeoutError` | 504 | Request took too long | Increase timeout |
+### Core Exception Classes (proxy / core)
+
+Raised internally by the proxy and core library. Base class: `TokenPakError`.
+
+| Exception | Cause |
+|-----------|-------|
+| `AuthenticationError` / `InvalidAPIKeyError` / `MissingAPIKeyError` | API key invalid or absent |
+| `RateLimitError` | Upstream rate limit hit |
+| `UpstreamError` | Upstream provider returned an error |
+| `CircuitOpenError` | Provider circuit breaker is open |
+| `SpendGuardBlocked` | Spend guard blocked the request |
+| `ProxyError` | Generic proxy-side failure |
+| `ConfigError` / `ConfigValidationError` | Invalid configuration |
+| `CacheError` | Cache subsystem failure |
+| `NetworkConnectionError` / `ProviderConnectionError` | Network/connection failure |
+| `PortInUseError` | Configured port already in use |
+
+### SDK Adapter Exceptions
+
+Raised by the `tokenpak.sdk` adapters. Base class: `TokenPakAdapterError` (import from `tokenpak.sdk.base`).
+
+| Exception | Cause |
+|-----------|-------|
+| `TokenPakTimeoutError` | Proxy did not respond within `timeout_s` |
+| `TokenPakConfigError` | Missing required fields / bad config |
+| `TokenPakAuthError` | 401 or 403 from the proxy |
 
 ### Network Errors
 
@@ -416,57 +412,62 @@ fallback:
 ### 2. Wrap Requests in Try-Catch
 
 ```python
+from tokenpak.sdk.base import (
+    TokenPakAdapterError,
+    TokenPakTimeoutError,
+    TokenPakAuthError,
+)
+
 try:
-    response = client.messages.create(...)
-except RateLimitError:
-    # Handle rate limit
+    response = adapter.call(request)
+except TokenPakTimeoutError:
+    # Handle timeout
     pass
-except AuthenticationError:
+except TokenPakAuthError:
     # Handle auth error
     pass
-except Exception as e:
-    # Log unexpected errors
-    logger.error(f"Unexpected: {e}")
+except TokenPakAdapterError as e:
+    # Handle other adapter errors (e.status_code carries the HTTP status)
+    logger.error(f"Adapter error: {e}")
 ```
 
 ### 3. Implement Exponential Backoff
 
-TokenPak does this automatically, but for custom retries:
+The proxy retries upstream failures automatically, but for custom client-side retries:
 
 ```python
 import time
+from tokenpak.sdk.base import TokenPakAdapterError
 
 def call_with_backoff(fn, max_attempts=3):
     for attempt in range(max_attempts):
         try:
             return fn()
-        except RateLimitError:
+        except TokenPakAdapterError as e:
+            if e.status_code != 429:
+                raise
             wait = 2 ** attempt  # 1, 2, 4 seconds
-            print(f"Attempt {attempt + 1} failed. Waiting {wait}s...")
+            print(f"Attempt {attempt + 1} rate-limited. Waiting {wait}s...")
             time.sleep(wait)
     raise Exception("All attempts failed")
 ```
 
-### 4. Monitor Token Usage
+### 4. Preview Compression Before Sending
 
-```python
-# Before making request
-tokens = client.count_tokens(
-    model="claude-opus-4-6",
-    messages=messages
-)
-
-if tokens > 10000:
-    print(f"Warning: {tokens} tokens. Consider compression.")
+```bash
+# Dry-run compression on a file to estimate token savings
+tokenpak preview prompt.txt
 ```
 
 ### 5. Set Timeouts
 
 ```python
-client = Client(
-    api_key="...",
-    timeout=30,  # 30 second timeout
-    model="claude-opus-4-6"
+from tokenpak.sdk import AnthropicAdapter
+
+adapter = AnthropicAdapter(
+    base_url="http://127.0.0.1:8766",
+    api_key="sk-ant-...",
+    timeout_s=30.0,  # 30 second timeout
 )
 ```
 
@@ -474,9 +475,8 @@ client = Client(
 
 ## Getting Help
 
-- **Question?** Check this guide or [FAQ](faq.md)
-- **Bug?** Open an issue on GitHub
-- **Stuck?** Email support or check Discord
+- **Question?** Check this guide or the [FAQ](faq.md)
+- **Bug?** Open an issue on [GitHub](https://github.com/tokenpak/tokenpak)
 
 ---
 
