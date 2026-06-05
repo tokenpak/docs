@@ -670,7 +670,7 @@ Manage event triggers
   - `--json` — Output raw JSON
 - `daemon`
 - `fire`
-  - `EVENT` — Event string to fire (e.g. git:push, agent:finished:cali)
+  - `EVENT` — Event string to fire (e.g. git:push, agent:finished:agent-1)
 - `hook`
 - `watch`
   - `PATHS` — Paths to watch (default: .)
@@ -746,7 +746,7 @@ Agent coordination
   - `--all` — Include stale agents
   - `--json` — JSON output
 - `register`
-  - `NAME` — Agent name (e.g., trix, sue, cali)
+  - `NAME` — Agent name (e.g., agent-1, agent-2)
   - `--hostname` — Hostname (default: auto-detect)
   - `--gpu` — Has GPU
   - `--memory` — Memory in GB (default: 4.0)

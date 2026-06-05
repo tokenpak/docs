@@ -11,7 +11,7 @@ This comparison covers the most popular LLM proxy and observability solutions. W
 | Feature | TokenPak | LiteLLM | Helicone | OpenRouter |
 |---------|----------|---------|----------|-----------|
 | **Self-hosted** | ✅ Yes | ✅ Yes | ⚠️ Cloud or self-hosted (Docker) | ❌ Cloud only |
-| **Open source** | ✅ Yes (MIT) | ✅ Yes (MIT) | ✅ Yes (Apache 2.0) | ❌ Proprietary |
+| **Open source** | ✅ Yes (Apache 2.0) | ✅ Yes (MIT) | ✅ Yes (Apache 2.0) | ❌ Proprietary |
 | **Provider support** | 4 (Claude, Gemini, OpenAI, Ollama) | 100+ | 20+ | 150+ |
 | **Vault compression** | ✅ Yes (built-in) | ❌ No | ❌ No | ❌ No |
 | **Token counting accuracy** | ✅ Native (per-provider) | ✅ Native (per-provider) | ✅ Native | ⚠️ Approximate |
@@ -39,7 +39,7 @@ This comparison covers the most popular LLM proxy and observability solutions. W
 - **Vault compression** — Built-in prompt caching and vault compression (unique feature) reduces redundant API calls
 - **No data logging** — Requests never leave your infrastructure; full privacy by design
 - **Lightweight proxy** — Designed to add minimal overhead in front of your providers
-- **MIT licensed** — Permissive open source; no restrictions
+- **Apache 2.0 licensed** — Permissive open source; no restrictions
 - **Cost discipline** — Per-request cost tracking with native token counting (not approximated)
 
 **Trade-offs:**

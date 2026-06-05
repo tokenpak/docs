@@ -99,7 +99,7 @@ Pass Anthropic model IDs directly — TokenPak routes them to Anthropic:
 |---|---|
 | `claude-sonnet-4-6` | Anthropic claude-sonnet-4-6 |
 | `claude-haiku-4-5` | Anthropic claude-haiku-4-5 |
-| `claude-opus-4-6` | Anthropic claude-opus-4-6 |
+| `claude-opus-4-8` | Anthropic claude-opus-4-8 |
 
 TokenPak aliases (e.g. `tokenpak-anthropic/claude-sonnet-4-6`) are also accepted.
 

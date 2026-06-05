@@ -2,7 +2,7 @@
 
 All TokenPak proxy settings are controlled via environment variables. This is the single authoritative reference.
 
-Set variables in your shell, `.env` file, or `~/.openclaw/.env` (OpenClaw fleet standard).
+Set variables in your shell or a `.env` file.
 
 ---
 

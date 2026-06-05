@@ -173,12 +173,12 @@ from tokenpak import Client
 client = Client(
     base_url="http://127.0.0.1:8766",  # Your proxy
     api_key="sk-ant-...",  # Your API key
-    model="claude-opus-4-6"  # Default model
+    model="claude-opus-4-8"  # Default model
 )
 
 # Make a request
 response = client.messages.create(
-    model="claude-opus-4-6",
+    model="claude-opus-4-8",
     messages=[
         {"role": "user", "content": "Say 'TokenPak is working!' in one sentence."}
     ],
@@ -208,7 +208,7 @@ curl -X POST http://127.0.0.1:8766/v1/messages \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer sk-ant-..." \
   -d '{
-    "model": "claude-opus-4-6",
+    "model": "claude-opus-4-8",
     "max_tokens": 100,
     "messages": [
       {"role": "user", "content": "Hello"}

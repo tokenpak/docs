@@ -92,7 +92,7 @@ model_list:
 
   - model_name: "claude-opus"
     litellm_params:
-      model: "openai/claude-opus-4-6"
+      model: "openai/claude-opus-4-8"
       api_base: "http://localhost:8766/v1"
       api_key: "sk-ant-..."
 
@@ -132,7 +132,7 @@ Combine LiteLLM's fallback logic with TokenPak's caching for resilient + efficie
 model_list:
   - model_name: "smart-router"
     litellm_params:
-      model: "openai/claude-opus-4-6"
+      model: "openai/claude-opus-4-8"
       api_base: "http://localhost:8766/v1"  # Primary: TokenPak → Claude
       api_key: "sk-ant-..."
 
@@ -161,7 +161,7 @@ TokenPak uses the `openai/<model-name>` pattern for all providers. This tells Li
 
 | Provider | Model Name |
 |----------|-----------|
-| **Anthropic** | `openai/claude-opus-4-6`, `openai/claude-sonnet-4-6` |
+| **Anthropic** | `openai/claude-opus-4-8`, `openai/claude-sonnet-4-6` |
 | **OpenAI** | `openai/gpt-4-turbo`, `openai/gpt-4o` |
 | **Google** | `openai/gemini-2.0-flash` |
 
