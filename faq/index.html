@@ -1980,62 +1980,6 @@
   
   
     <li class="md-nav__item">
-      <a href="../performance/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Performance Overview
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../PERFORMANCE/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Performance Benchmarks
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
       <a href="../COMPRESSION_TUNING/" class="md-nav__link">
         
   
@@ -2075,34 +2019,6 @@
     
   
     Latency Analysis
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../performance/memory-analysis/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Memory Analysis
   
 
     
@@ -3724,8 +3640,8 @@
 <hr />
 <h2 id="performance-operations">Performance &amp; Operations<a class="headerlink" href="#performance-operations" title="Permanent link">&para;</a></h2>
 <h3 id="whats-the-performance-overhead">What's the performance overhead?<a class="headerlink" href="#whats-the-performance-overhead" title="Permanent link">&para;</a></h3>
-<p><strong>Proxy internals:</strong> TokenPak adds <strong>&lt;50ms</strong> of compression overhead per request on typical agent prompts. Routing, token counting, and cache lookup are sub-millisecond.</p>
-<p><strong>End-to-end latency:</strong> when measured against direct API calls, the proxy adds a few hundred ms due to the network round-trip and connection-pooling differences. This is expected for any local proxy.</p>
+<p><strong>Proxy internals:</strong> TokenPak adds modest compression overhead per request on typical agent prompts. Routing, token counting, and cache lookup are lightweight, in-memory operations.</p>
+<p><strong>End-to-end latency:</strong> when measured against direct API calls, the proxy adds some overhead due to the network round-trip and connection-pooling differences. This is expected for any local proxy.</p>
 <p><strong>Context:</strong> the latency overhead is acceptable because:</p>
 <ul>
 <li>Token savings dwarf the latency cost on real agent workloads.</li>

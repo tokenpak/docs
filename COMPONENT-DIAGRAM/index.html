@@ -2126,62 +2126,6 @@
   
   
     <li class="md-nav__item">
-      <a href="../performance/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Performance Overview
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../PERFORMANCE/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Performance Benchmarks
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
       <a href="../COMPRESSION_TUNING/" class="md-nav__link">
         
   
@@ -2221,34 +2165,6 @@
     
   
     Latency Analysis
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../performance/memory-analysis/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Memory Analysis
   
 
     
@@ -3222,54 +3138,54 @@
 <thead>
 <tr>
 <th>Component</th>
-<th>Latency Impact</th>
+<th>Cost Profile</th>
 <th>Notes</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>Request Router</td>
-<td>&lt; 1ms</td>
+<td>Lightweight</td>
 <td>Parsing only</td>
 </tr>
 <tr>
 <td>FormatAdapter</td>
-<td>&lt; 1ms</td>
+<td>Lightweight</td>
 <td>Format conversion</td>
 </tr>
 <tr>
 <td>Validation Gate</td>
-<td>10-50ms</td>
-<td>Depends on content size &amp; policy complexity</td>
+<td>Content-dependent</td>
+<td>Scales with content size &amp; policy complexity</td>
 </tr>
 <tr>
 <td>Cache Lookup</td>
-<td>&lt; 5ms</td>
+<td>In-memory / local</td>
 <td>Local database query</td>
 </tr>
 <tr>
 <td>Token Counter</td>
-<td>5-20ms</td>
+<td>Tokenizer-bound</td>
 <td>Tokenizer operation</td>
 </tr>
 <tr>
 <td>Rate Limiter</td>
-<td>&lt; 1ms</td>
+<td>Lightweight</td>
 <td>Hash table lookup</td>
 </tr>
 <tr>
 <td>Provider Router</td>
-<td>&lt; 1ms</td>
+<td>In-memory</td>
 <td>In-memory logic</td>
 </tr>
 <tr>
 <td>Circuit Breaker</td>
-<td>&lt; 1ms</td>
+<td>In-memory</td>
 <td>In-memory health state</td>
 </tr>
 </tbody>
 </table>
-<p><strong>Typical end-to-end latency (cache miss):</strong> 150-500ms (most time spent waiting for provider response)</p>
+<p><strong>Typical end-to-end latency (cache miss):</strong> dominated by the upstream provider response time; the proxy's own pipeline adds comparatively little.</p>
 <h2 id="testing-strategy">Testing Strategy<a class="headerlink" href="#testing-strategy" title="Permanent link">&para;</a></h2>
 <p>Each module has unit and integration tests:</p>
 <div class="highlight"><pre><span></span><code>tests/
