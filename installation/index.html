@@ -3609,12 +3609,12 @@ tokenpak<span class="w"> </span>start<span class="w"> </span>--background
 <span class="n">client</span> <span class="o">=</span> <span class="n">Client</span><span class="p">(</span>
     <span class="n">base_url</span><span class="o">=</span><span class="s2">&quot;http://127.0.0.1:8766&quot;</span><span class="p">,</span>  <span class="c1"># Your proxy</span>
     <span class="n">api_key</span><span class="o">=</span><span class="s2">&quot;sk-ant-...&quot;</span><span class="p">,</span>  <span class="c1"># Your API key</span>
-    <span class="n">model</span><span class="o">=</span><span class="s2">&quot;claude-opus-4-6&quot;</span>  <span class="c1"># Default model</span>
+    <span class="n">model</span><span class="o">=</span><span class="s2">&quot;claude-opus-4-8&quot;</span>  <span class="c1"># Default model</span>
 <span class="p">)</span>
 
 <span class="c1"># Make a request</span>
 <span class="n">response</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">messages</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
-    <span class="n">model</span><span class="o">=</span><span class="s2">&quot;claude-opus-4-6&quot;</span><span class="p">,</span>
+    <span class="n">model</span><span class="o">=</span><span class="s2">&quot;claude-opus-4-8&quot;</span><span class="p">,</span>
     <span class="n">messages</span><span class="o">=</span><span class="p">[</span>
         <span class="p">{</span><span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;user&quot;</span><span class="p">,</span> <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="s2">&quot;Say &#39;TokenPak is working!&#39; in one sentence.&quot;</span><span class="p">}</span>
     <span class="p">],</span>
@@ -3636,7 +3636,7 @@ Response: TokenPak is working!
 <span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;Content-Type: application/json&quot;</span><span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;Authorization: Bearer sk-ant-...&quot;</span><span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;{</span>
-<span class="s1">    &quot;model&quot;: &quot;claude-opus-4-6&quot;,</span>
+<span class="s1">    &quot;model&quot;: &quot;claude-opus-4-8&quot;,</span>
 <span class="s1">    &quot;max_tokens&quot;: 100,</span>
 <span class="s1">    &quot;messages&quot;: [</span>
 <span class="s1">      {&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: &quot;Hello&quot;}</span>
