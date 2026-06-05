@@ -85,15 +85,23 @@ Self-hosted users can integrate their own logging backend via webhooks.
 
 ### What's the performance overhead?
 
-**Proxy internals:** TokenPak adds **<2ms of latency** per request for routing, token counting, and cache lookup.
+TokenPak is a proxy, so — depending on how you deploy it — it can add network
+round-trip overhead between your app and the upstream API. It's worth measuring
+two things separately:
 
-**End-to-end latency:** When measured against direct API calls, the proxy adds ~**280ms (50%) overhead** due to network round-trip, request serialization, and connection pooling differences. This is expected for any network proxy.
+- **TokenPak's own processing** (routing, token counting, cache lookup) is
+  distinct from the network round-trip it sits on.
+- **End-to-end latency** depends mostly on your deployment path (network hops,
+  connection reuse), not on TokenPak's internal work.
 
-**Context:** The latency overhead is *acceptable* because:
-- Token savings (10–40% cost reduction) dwarf the latency cost
-- Cache hits (common in production) eliminate latency overhead entirely
-- Compression batching improves throughput for batch/async workloads
-- For interactive latency-sensitive apps, run the proxy on the same network/machine as your app
+For most workloads the overhead is acceptable because:
+- Cache hits (common in production) take re-sending and recomputing context off the request path
+- Batch and async workloads tolerate added latency
+- For interactive, latency-sensitive apps, run the proxy on the same machine/network as your app to minimize avoidable network overhead
+
+We deliberately don't quote a specific latency figure yet: receipt-backed numbers
+will publish once TokenPak's benchmark suite produces a validated run. See
+[Latency](LATENCY.md) for details.
 
 For applications where sub-millisecond response time is critical, either self-host TokenPak on the same machine as your client, or use the SDK mode (no network overhead) with a direct API key.
 
