@@ -1285,34 +1285,6 @@
   
   
     <li class="md-nav__item">
-      <a href="../plugin-system-architecture/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Plugin System Architecture
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
       <a href="../assets/DIAGRAMS/" class="md-nav__link">
         
   
@@ -3172,7 +3144,7 @@ tokenpak<span class="w"> </span>serve
 
 <span class="c1"># Your existing code works unchanged</span>
 <span class="n">message</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">messages</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
-    <span class="n">model</span><span class="o">=</span><span class="s2">&quot;claude-opus-4-5&quot;</span><span class="p">,</span>
+    <span class="n">model</span><span class="o">=</span><span class="s2">&quot;claude-opus-4-8&quot;</span><span class="p">,</span>
     <span class="n">max_tokens</span><span class="o">=</span><span class="mi">1024</span><span class="p">,</span>
     <span class="n">messages</span><span class="o">=</span><span class="p">[{</span><span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;user&quot;</span><span class="p">,</span> <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="s2">&quot;Explain quantum entanglement.&quot;</span><span class="p">}]</span>
 <span class="p">)</span>
@@ -3180,13 +3152,12 @@ tokenpak<span class="w"> </span>serve
 </code></pre></div>
 <h3 id="expected-output">Expected Output<a class="headerlink" href="#expected-output" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code># Proxy startup:
-TokenPak Forward Proxy v4
+TokenPak proxy
 Listening: http://0.0.0.0:8766
 Mode: hybrid (Protected/Code strict, Narrative compressed)
-Vault: 2,943 blocks
 
-# Per-request log:
-[req] claude-opus-4-5 | 1,240 in → 892 sent (28% saved) | 156 out | $0.0089
+# Per-request log (illustrative; your tokens, savings, and cost depend on your traffic):
+[req] claude-opus-4-8 | &lt;in&gt; in → &lt;sent&gt; sent (&lt;saved&gt;% saved) | &lt;out&gt; out | $&lt;cost&gt;
 </code></pre></div>
 <hr />
 <h2 id="example-2-custom-compression-mode">Example 2: Custom Compression Mode<a class="headerlink" href="#example-2-custom-compression-mode" title="Permanent link">&para;</a></h2>
@@ -3206,7 +3177,7 @@ Vault: 2,943 blocks
         <span class="s2">&quot;Content-Type&quot;</span><span class="p">:</span> <span class="s2">&quot;application/json&quot;</span><span class="p">,</span>
     <span class="p">},</span>
     <span class="n">json</span><span class="o">=</span><span class="p">{</span>
-        <span class="s2">&quot;model&quot;</span><span class="p">:</span> <span class="s2">&quot;claude-sonnet-4-5&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;model&quot;</span><span class="p">:</span> <span class="s2">&quot;claude-sonnet-4-6&quot;</span><span class="p">,</span>
         <span class="s2">&quot;max_tokens&quot;</span><span class="p">:</span> <span class="mi">512</span><span class="p">,</span>
         <span class="s2">&quot;messages&quot;</span><span class="p">:</span> <span class="p">[</span>
             <span class="p">{</span>
@@ -3282,7 +3253,7 @@ tokenpak<span class="w"> </span>index<span class="w"> </span>~/my-project/docs<s
 <span class="c1"># This request will automatically get relevant docs injected</span>
 <span class="c1"># from your vault without you doing anything</span>
 <span class="n">message</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">messages</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
-    <span class="n">model</span><span class="o">=</span><span class="s2">&quot;claude-sonnet-4-5&quot;</span><span class="p">,</span>
+    <span class="n">model</span><span class="o">=</span><span class="s2">&quot;claude-sonnet-4-6&quot;</span><span class="p">,</span>
     <span class="n">max_tokens</span><span class="o">=</span><span class="mi">1024</span><span class="p">,</span>
     <span class="n">messages</span><span class="o">=</span><span class="p">[{</span>
         <span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;user&quot;</span><span class="p">,</span>
@@ -3292,7 +3263,7 @@ tokenpak<span class="w"> </span>index<span class="w"> </span>~/my-project/docs<s
 <span class="c1"># Response will have context from your docs injected automatically</span>
 </code></pre></div>
 <div class="highlight"><pre><span></span><code><span class="c1"># Check what was injected in the last request</span>
-curl<span class="w"> </span>http://localhost:8766/recent<span class="w"> </span><span class="p">|</span><span class="w"> </span>python3<span class="w"> </span>-m<span class="w"> </span>json.tool<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-A5<span class="w"> </span><span class="s2">&quot;vault_injection&quot;</span>
+curl<span class="w"> </span>http://localhost:8766/stats/last<span class="w"> </span><span class="p">|</span><span class="w"> </span>python3<span class="w"> </span>-m<span class="w"> </span>json.tool<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-A5<span class="w"> </span><span class="s2">&quot;vault_injection&quot;</span>
 <span class="c1"># {</span>
 <span class="c1">#   &quot;vault_injection&quot;: {</span>
 <span class="c1">#     &quot;chunks_injected&quot;: 3,</span>
@@ -3348,7 +3319,7 @@ curl<span class="w"> </span>http://localhost:8766/recent<span class="w"> </span>
 
 <span class="k">def</span><span class="w"> </span><span class="nf">chat_with_retry</span><span class="p">(</span>
     <span class="n">prompt</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-    <span class="n">model</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;claude-sonnet-4-5&quot;</span><span class="p">,</span>
+    <span class="n">model</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;claude-sonnet-4-6&quot;</span><span class="p">,</span>
     <span class="n">proxy_url</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;http://localhost:8766&quot;</span><span class="p">,</span>
     <span class="n">api_key</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
@@ -3409,7 +3380,7 @@ curl<span class="w"> </span>http://localhost:8766/recent<span class="w"> </span>
 
 <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">stream_chat</span><span class="p">(</span>
     <span class="n">prompt</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-    <span class="n">model</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;claude-sonnet-4-5&quot;</span><span class="p">,</span>
+    <span class="n">model</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;claude-sonnet-4-6&quot;</span><span class="p">,</span>
     <span class="n">ws_url</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;ws://localhost:8767/ws&quot;</span><span class="p">,</span>
     <span class="n">api_key</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">):</span>
@@ -3506,7 +3477,7 @@ curl<span class="w"> </span>http://localhost:8766/health<span class="w"> </span>
 </tr>
 <tr>
 <td>See last request</td>
-<td><code>curl http://localhost:8766/recent</code></td>
+<td><code>curl http://localhost:8766/stats/last</code></td>
 </tr>
 <tr>
 <td>Rebuild vault index</td>
@@ -3542,7 +3513,6 @@ curl<span class="w"> </span>http://localhost:8766/health<span class="w"> </span>
 <h2 id="see-also">See Also<a class="headerlink" href="#see-also" title="Permanent link">&para;</a></h2>
 <ul>
 <li><a href="../api-reference/">API Reference</a> — Full endpoint documentation</li>
-<li><a href="../production-sla/">Production SLA</a> — Performance targets</li>
 <li>Compression Benchmark — Compression analysis and optimization guide</li>
 </ul>
 

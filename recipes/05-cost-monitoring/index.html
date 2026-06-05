@@ -1285,34 +1285,6 @@
   
   
     <li class="md-nav__item">
-      <a href="../../plugin-system-architecture/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Plugin System Architecture
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
       <a href="../../assets/DIAGRAMS/" class="md-nav__link">
         
   
@@ -2314,10 +2286,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#config-snippet" class="md-nav__link">
+  <a href="#whats-real-today" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Config Snippet
+        What's real today
       
     </span>
   </a>
@@ -2325,10 +2297,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#test-verify" class="md-nav__link">
+  <a href="#the-pattern-illustrative-external-metrics-pipeline" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Test &amp; Verify
+        The pattern (illustrative — external metrics pipeline)
       
     </span>
   </a>
@@ -2336,21 +2308,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#what-just-happened" class="md-nav__link">
+  <a href="#designing-cost-observability" class="md-nav__link">
     <span class="md-ellipsis">
       
-        What Just Happened
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#common-pitfalls" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Common Pitfalls
+        Designing cost observability
       
     </span>
   </a>
@@ -2865,10 +2826,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#config-snippet" class="md-nav__link">
+  <a href="#whats-real-today" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Config Snippet
+        What's real today
       
     </span>
   </a>
@@ -2876,10 +2837,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#test-verify" class="md-nav__link">
+  <a href="#the-pattern-illustrative-external-metrics-pipeline" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Test &amp; Verify
+        The pattern (illustrative — external metrics pipeline)
       
     </span>
   </a>
@@ -2887,21 +2848,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#what-just-happened" class="md-nav__link">
+  <a href="#designing-cost-observability" class="md-nav__link">
     <span class="md-ellipsis">
       
-        What Just Happened
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#common-pitfalls" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Common Pitfalls
+        Designing cost observability
       
     </span>
   </a>
@@ -2929,195 +2879,57 @@
 
 
 <h1 id="recipe-cost-monitoring-observability">Recipe: Cost Monitoring &amp; Observability<a class="headerlink" href="#recipe-cost-monitoring-observability" title="Permanent link">&para;</a></h1>
-<p><strong>What this solves:</strong> Export TokenPak usage and cost metrics to Prometheus or Grafana for real-time dashboards and alerts on spending trends.</p>
+<blockquote>
+<p><strong>Status: Conceptual.</strong> This recipe describes a cost-observability <em>pattern</em>. The declarative <code>metrics:</code> / <code>prometheus:</code> / <code>custom_metrics:</code> config block, a built-in Prometheus metrics endpoint, and the specific <code>tokenpak_*</code> metric values shown below are <strong>illustrative</strong> — they are not part of the validated config surface of the current TokenPak release, and the proxy does <strong>not</strong> expose a built-in Prometheus exporter (there is no <code>:8001/metrics</code> endpoint). The real, shipped way to see usage and cost is <code>tokenpak status</code>. Confirm any CLI command against <code>tokenpak --help</code>.</p>
+</blockquote>
+<p><strong>What this solves:</strong> The pattern of getting visibility into request volume, token usage, and cost over time.</p>
 <h2 id="prerequisites">Prerequisites<a class="headerlink" href="#prerequisites" title="Permanent link">&para;</a></h2>
 <ul>
-<li>TokenPak installed</li>
-<li>Prometheus or Grafana running (local or cloud)</li>
-<li>API keys for providers</li>
-<li>Understanding of metrics (requests, tokens, cost)</li>
+<li>TokenPak installed (<code>tokenpak --help</code>)</li>
+<li>API keys for your providers</li>
+<li>(For the conceptual dashboard pattern) a metrics store such as Prometheus + Grafana</li>
 </ul>
-<h2 id="config-snippet">Config Snippet<a class="headerlink" href="#config-snippet" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code><span class="c1"># config.yaml</span>
+<h2 id="whats-real-today">What's real today<a class="headerlink" href="#whats-real-today" title="Permanent link">&para;</a></h2>
+<p>The shipped proxy listens on <code>http://127.0.0.1:8766</code> and records usage out-of-band. To see it:</p>
+<div class="highlight"><pre><span></span><code>tokenpak<span class="w"> </span>serve<span class="w">     </span><span class="c1"># proxy on http://127.0.0.1:8766</span>
+
+<span class="c1"># After sending some traffic through the proxy:</span>
+tokenpak<span class="w"> </span>status<span class="w">    </span><span class="c1"># recorded request, token, and cost summary</span>
+</code></pre></div>
+<p>TokenPak's proxy is a <strong>byte-preserving passthrough</strong> — it does not inject cost fields into the response body, and it does not run a separate Prometheus metrics server. Usage/cost accounting is recorded server-side and surfaced via the CLI (<code>tokenpak status</code>), not scraped from a <code>:8001/metrics</code> endpoint.</p>
+<h2 id="the-pattern-illustrative-external-metrics-pipeline">The pattern (illustrative — external metrics pipeline)<a class="headerlink" href="#the-pattern-illustrative-external-metrics-pipeline" title="Permanent link">&para;</a></h2>
+<p>If you want dashboards in Prometheus/Grafana, the <strong>conceptual</strong> pattern is to export TokenPak's recorded usage into a metrics store with your own shim (for example, a small exporter that reads TokenPak's recorded usage and republishes it as Prometheus metrics). The config and metric names below are <strong>illustrative only</strong> — they do not describe a built-in TokenPak exporter:</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># ILLUSTRATIVE ONLY — not a validated TokenPak config schema,</span>
+<span class="c1"># and not a built-in TokenPak metrics exporter.</span>
 <span class="nt">metrics</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
-
-<span class="w">  </span><span class="c1"># Export to Prometheus</span>
 <span class="w">  </span><span class="nt">prometheus</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
-<span class="w">    </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">8001</span><span class="w">  </span><span class="c1"># Metrics endpoint: http://localhost:8001/metrics</span>
-<span class="w">    </span><span class="nt">push_interval_seconds</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">60</span><span class="w">  </span><span class="c1"># Push to Prometheus every 60s</span>
-
-<span class="w">  </span><span class="c1"># Dimensions to track</span>
-<span class="w">  </span><span class="nt">track_by</span><span class="p">:</span>
-<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">user_id</span>
-<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">model</span>
-<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">provider</span>
-<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">endpoint</span>
-<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">status_code</span>
-
-<span class="w">  </span><span class="c1"># Custom metrics</span>
-<span class="w">  </span><span class="nt">custom_metrics</span><span class="p">:</span>
-<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">tokenpak_cost_by_user_daily</span>
-<span class="w">      </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">gauge</span>
-<span class="w">      </span><span class="nt">dimension</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">user_id</span>
-<span class="w">      </span><span class="nt">period</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1d</span>
-
-<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">tokenpak_tokens_per_request</span>
-<span class="w">      </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">histogram</span>
-<span class="w">      </span><span class="nt">buckets</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">100</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">250</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">500</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">1000</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">2000</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">5000</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">10000</span><span class="p p-Indicator">]</span>
-
-<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">tokenpak_latency_by_provider</span>
-<span class="w">      </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">histogram</span>
-<span class="w">      </span><span class="nt">dimension</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">provider</span>
-<span class="w">      </span><span class="nt">buckets</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">10</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">50</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">100</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">250</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">500</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">1000</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">2000</span><span class="p p-Indicator">]</span>
-
-<span class="nt">providers</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">openai</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">openai</span>
-<span class="w">    </span><span class="nt">api_key</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${OPENAI_API_KEY}</span>
-
-<span class="w">  </span><span class="nt">anthropic</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">anthropic</span>
-<span class="w">    </span><span class="nt">api_key</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${ANTHROPIC_API_KEY}</span>
-
-<span class="nt">models</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">gpt-4</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt"> provider</span><span class="p">:</span><span class="w"> </span><span class="nv">openai</span><span class="p p-Indicator">,</span><span class="nt"> cost_per_1k_input</span><span class="p">:</span><span class="w"> </span><span class="nv">3</span><span class="p p-Indicator">,</span><span class="nt"> cost_per_1k_output</span><span class="p">:</span><span class="w"> </span><span class="nv">6</span><span class="w"> </span><span class="p p-Indicator">}</span>
-<span class="w">  </span><span class="nt">gpt-3.5-turbo</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt"> provider</span><span class="p">:</span><span class="w"> </span><span class="nv">openai</span><span class="p p-Indicator">,</span><span class="nt"> cost_per_1k_input</span><span class="p">:</span><span class="w"> </span><span class="nv">0.5</span><span class="p p-Indicator">,</span><span class="nt"> cost_per_1k_output</span><span class="p">:</span><span class="w"> </span><span class="nv">1.5</span><span class="w"> </span><span class="p p-Indicator">}</span>
-<span class="w">  </span><span class="nt">claude-opus</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt"> provider</span><span class="p">:</span><span class="w"> </span><span class="nv">anthropic</span><span class="p p-Indicator">,</span><span class="nt"> cost_per_1k_input</span><span class="p">:</span><span class="w"> </span><span class="nv">15</span><span class="p p-Indicator">,</span><span class="nt"> cost_per_1k_output</span><span class="p">:</span><span class="w"> </span><span class="nv">75</span><span class="w"> </span><span class="p p-Indicator">}</span>
+<span class="w">    </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">9464</span><span class="w">          </span><span class="c1"># your own exporter&#39;s port (example)</span>
+<span class="w">  </span><span class="nt">track_by</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">user_id</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">model</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">provider</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">status_code</span><span class="p p-Indicator">]</span>
 </code></pre></div>
-<p><strong>Prometheus scrape config (prometheus.yml):</strong>
-<div class="highlight"><pre><span></span><code><span class="nt">global</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">scrape_interval</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">15s</span>
-
+<div class="highlight"><pre><span></span><code><span class="c1"># Example Prometheus scrape config pointing at YOUR exporter (illustrative):</span>
 <span class="nt">scrape_configs</span><span class="p">:</span>
 <span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">job_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">tokenpak</span>
 <span class="w">    </span><span class="nt">static_configs</span><span class="p">:</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">targets</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&#39;localhost:8001&#39;</span><span class="p p-Indicator">]</span>
-</code></pre></div></p>
-<p><strong>Grafana dashboard example:</strong>
-<div class="highlight"><pre><span></span><code><span class="p">{</span>
-<span class="w">  </span><span class="nt">&quot;dashboard&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;TokenPak Cost Monitoring&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;panels&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">      </span><span class="p">{</span>
-<span class="w">        </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Daily Cost by User&quot;</span><span class="p">,</span>
-<span class="w">        </span><span class="nt">&quot;targets&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">          </span><span class="p">{</span>
-<span class="w">            </span><span class="nt">&quot;expr&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;tokenpak_cost_by_user_daily&quot;</span><span class="p">,</span>
-<span class="w">            </span><span class="nt">&quot;legendFormat&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;{{ user_id }}&quot;</span>
-<span class="w">          </span><span class="p">}</span>
-<span class="w">        </span><span class="p">],</span>
-<span class="w">        </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;graph&quot;</span>
-<span class="w">      </span><span class="p">},</span>
-<span class="w">      </span><span class="p">{</span>
-<span class="w">        </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Total Spend (24h)&quot;</span><span class="p">,</span>
-<span class="w">        </span><span class="nt">&quot;targets&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">          </span><span class="p">{</span>
-<span class="w">            </span><span class="nt">&quot;expr&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;sum(increase(tokenpak_cost_usd[24h]))&quot;</span>
-<span class="w">          </span><span class="p">}</span>
-<span class="w">        </span><span class="p">],</span>
-<span class="w">        </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;stat&quot;</span>
-<span class="w">      </span><span class="p">},</span>
-<span class="w">      </span><span class="p">{</span>
-<span class="w">        </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Requests by Model&quot;</span><span class="p">,</span>
-<span class="w">        </span><span class="nt">&quot;targets&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">          </span><span class="p">{</span>
-<span class="w">            </span><span class="nt">&quot;expr&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;sum(rate(tokenpak_requests_total[5m])) by (model)&quot;</span>
-<span class="w">          </span><span class="p">}</span>
-<span class="w">        </span><span class="p">],</span>
-<span class="w">        </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;piechart&quot;</span>
-<span class="w">      </span><span class="p">}</span>
-<span class="w">    </span><span class="p">]</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div></p>
-<h2 id="test-verify">Test &amp; Verify<a class="headerlink" href="#test-verify" title="Permanent link">&para;</a></h2>
-<p><strong>Step 1:</strong> Start Prometheus and Grafana locally:
-<div class="highlight"><pre><span></span><code><span class="c1"># Start Prometheus (example, adjust path)</span>
-prometheus<span class="w"> </span>--config.file<span class="o">=</span>prometheus.yml<span class="w"> </span><span class="p">&amp;</span>
-
-<span class="c1"># Start Grafana (Docker example)</span>
-docker<span class="w"> </span>run<span class="w"> </span>-p<span class="w"> </span><span class="m">3000</span>:3000<span class="w"> </span>grafana/grafana<span class="w"> </span><span class="p">&amp;</span>
-</code></pre></div></p>
-<p><strong>Step 2:</strong> Start TokenPak proxy:
-<div class="highlight"><pre><span></span><code>tokenpak<span class="w"> </span>proxy<span class="w"> </span>--config<span class="w"> </span>config.yaml
-<span class="c1"># Metrics available at: http://localhost:8001/metrics</span>
-</code></pre></div></p>
-<p><strong>Step 3:</strong> Make some requests to generate metrics:
-<div class="highlight"><pre><span></span><code><span class="k">for</span><span class="w"> </span>i<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="o">{</span><span class="m">1</span>..10<span class="o">}</span><span class="p">;</span><span class="w"> </span><span class="k">do</span>
-<span class="w">  </span>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>http://localhost:8000/v1/messages<span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>-H<span class="w"> </span><span class="s2">&quot;Authorization: Bearer user-</span><span class="k">$((</span><span class="nv">i</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="m">3</span><span class="k">))</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>-d<span class="w"> </span><span class="s1">&#39;{&quot;model&quot;: &quot;gpt-4&quot;, &quot;messages&quot;: [{&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: &quot;Hello&quot;}]}&#39;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>-s<span class="w"> </span>&gt;<span class="w"> </span>/dev/null<span class="w"> </span><span class="p">&amp;</span>
-<span class="k">done</span>
-<span class="nb">wait</span>
-</code></pre></div></p>
-<p><strong>Step 4:</strong> Verify metrics are being exported:
-<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-s<span class="w"> </span>http://localhost:8001/metrics<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>tokenpak
-<span class="c1"># Expected output:</span>
-<span class="c1"># tokenpak_requests_total{model=&quot;gpt-4&quot;,provider=&quot;openai&quot;,status=&quot;200&quot;} 10</span>
-<span class="c1"># tokenpak_cost_usd_total{model=&quot;gpt-4&quot;,provider=&quot;openai&quot;} 0.45</span>
-<span class="c1"># tokenpak_tokens_sent_total{model=&quot;gpt-4&quot;} 245</span>
-<span class="c1"># tokenpak_tokens_received_total{model=&quot;gpt-4&quot;} 1203</span>
-<span class="c1"># tokenpak_latency_seconds_bucket{le=&quot;0.05&quot;,provider=&quot;openai&quot;} 2</span>
-<span class="c1"># tokenpak_latency_seconds_bucket{le=&quot;0.1&quot;,provider=&quot;openai&quot;} 8</span>
-<span class="c1"># tokenpak_latency_seconds_bucket{le=&quot;+Inf&quot;,provider=&quot;openai&quot;} 10</span>
-</code></pre></div></p>
-<p><strong>Step 5:</strong> View in Grafana dashboard:
-- Log in to Grafana (http://localhost:3000, default creds admin/admin)
-- Add Prometheus data source (http://localhost:9090)
-- Create a panel with query: <code>tokenpak_cost_by_user_daily</code>
-- Expected: Gauge showing per-user cost</p>
-<p><strong>Step 6:</strong> Set up cost alerting rule:
-<div class="highlight"><pre><span></span><code><span class="c1"># alert-rules.yaml (Prometheus)</span>
-<span class="nt">groups</span><span class="p">:</span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">tokenpak_alerts</span>
-<span class="w">    </span><span class="nt">rules</span><span class="p">:</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">alert</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">HighDailyCost</span>
-<span class="w">        </span><span class="nt">expr</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sum(increase(tokenpak_cost_usd[24h])) &gt; 50</span>
-<span class="w">        </span><span class="nt">for</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5m</span>
-<span class="w">        </span><span class="nt">annotations</span><span class="p">:</span>
-<span class="w">          </span><span class="nt">summary</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Daily</span><span class="nv"> </span><span class="s">TokenPak</span><span class="nv"> </span><span class="s">cost</span><span class="nv"> </span><span class="s">exceeded</span><span class="nv"> </span><span class="s">$50&quot;</span>
-<span class="w">          </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Current</span><span class="nv"> </span><span class="s">24h</span><span class="nv"> </span><span class="s">spend:</span><span class="nv"> </span><span class="s">{{</span><span class="nv"> </span><span class="s">$value</span><span class="nv"> </span><span class="s">}}&quot;</span>
-
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">alert</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">UnusualLatency</span>
-<span class="w">        </span><span class="nt">expr</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">tokenpak_latency_seconds &gt; 5</span>
-<span class="w">        </span><span class="nt">for</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2m</span>
-<span class="w">        </span><span class="nt">annotations</span><span class="p">:</span>
-<span class="w">          </span><span class="nt">summary</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;TokenPak</span><span class="nv"> </span><span class="s">requests</span><span class="nv"> </span><span class="s">slower</span><span class="nv"> </span><span class="s">than</span><span class="nv"> </span><span class="s">5s</span><span class="nv"> </span><span class="s">(unusual)&quot;</span>
-<span class="w">          </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Provider:</span><span class="nv"> </span><span class="s">{{</span><span class="nv"> </span><span class="s">$labels.provider</span><span class="nv"> </span><span class="s">}},</span><span class="nv"> </span><span class="s">latency:</span><span class="nv"> </span><span class="s">{{</span><span class="nv"> </span><span class="s">$value</span><span class="nv"> </span><span class="s">}}s&quot;</span>
-</code></pre></div></p>
-<h2 id="what-just-happened">What Just Happened<a class="headerlink" href="#what-just-happened" title="Permanent link">&para;</a></h2>
-<p>TokenPak continuously exported metrics in Prometheus text format:</p>
-<ol>
-<li><strong>Each request</strong> increments counters: <code>tokenpak_requests_total</code></li>
-<li><strong>Cost calculated</strong> based on tokens and model pricing, exported as <code>tokenpak_cost_usd_total</code></li>
-<li><strong>Latencies recorded</strong> in histogram buckets for percentile analysis</li>
-<li><strong>Prometheus scrapes</strong> metrics every 15 seconds (configurable)</li>
-<li><strong>Grafana queries</strong> Prometheus and renders dashboards</li>
-<li><strong>Alerts fire</strong> when thresholds (e.g., daily cost &gt; $50) are exceeded</li>
-</ol>
-<p>You have a real-time view of what you're spending and where — no manual billing exports, no surprise invoices.</p>
-<h2 id="common-pitfalls">Common Pitfalls<a class="headerlink" href="#common-pitfalls" title="Permanent link">&para;</a></h2>
-<p><strong>Pitfall 1: Metrics are high-cardinality</strong>
-- ❌ Wrong: Track every user_id separately (1000s of series = Prometheus overload)
-- ✅ Right: Aggregate by tier: <code>track_by: [user_tier, model]</code> (10s of series)</p>
-<p><strong>Pitfall 2: Scrape interval too frequent</strong>
-- ❌ Wrong: <code>scrape_interval: 1s</code> (high overhead, no additional insight)
-- ✅ Right: <code>scrape_interval: 15s</code> - 30s (captures trends, manageable load)</p>
-<p><strong>Pitfall 3: Alert thresholds are arbitrary</strong>
-- ❌ Wrong: Alert at $100/day (but you budgeted $500)
-- ✅ Right: Alert at 75% of your daily budget: <code>&gt; (daily_budget * 0.75)</code></p>
-<p><strong>Pitfall 4: Missing cost dimension</strong>
-- ❌ Wrong: Only track request counts (requests ≠ cost)
-- ✅ Right: Always export cost alongside requests: <code>tokenpak_cost_usd_total</code></p>
-<p><strong>Pitfall 5: No long-term retention</strong>
-- ❌ Wrong: Prometheus default 15d retention (trends disappear)
-- ✅ Right: Push metrics to long-term storage: <code>external_write</code> → S3, InfluxDB, or Datadog</p>
-<p><strong>Pitfall 6: Forgetting user dimension</strong>
-- ❌ Wrong: Only per-model cost (don't know if one user is abusing service)
-- ✅ Right: Always include <code>user_id</code> or <code>user_tier</code> dimension for billing audits</p>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">targets</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&#39;localhost:9464&#39;</span><span class="p p-Indicator">]</span><span class="w">   </span><span class="c1"># your exporter, not a TokenPak built-in</span>
+</code></pre></div>
+<p>Example metric series your exporter might publish (names and values are <strong>illustrative</strong>, not emitted by TokenPak itself):</p>
+<div class="highlight"><pre><span></span><code># ILLUSTRATIVE metric shapes — define and emit these yourself
+tokenpak_requests_total{model=&quot;...&quot;,provider=&quot;...&quot;,status=&quot;200&quot;}
+tokenpak_cost_usd_total{model=&quot;...&quot;,provider=&quot;...&quot;}
+tokenpak_tokens_sent_total{model=&quot;...&quot;}
+</code></pre></div>
+<h2 id="designing-cost-observability">Designing cost observability<a class="headerlink" href="#designing-cost-observability" title="Permanent link">&para;</a></h2>
+<p>Whether you use <code>tokenpak status</code> directly or build an external pipeline, these principles apply:</p>
+<ul>
+<li><strong>Watch cardinality.</strong> Per-user-id series can explode; aggregate by tier or model where you can.</li>
+<li><strong>Don't scrape too aggressively.</strong> A modest interval captures trends without overhead.</li>
+<li><strong>Tie alert thresholds to your budget</strong>, not to arbitrary round numbers.</li>
+<li><strong>Always track cost, not just request counts</strong> — requests are not a proxy for spend.</li>
+<li><strong>Retain long-term data</strong> if you need historical trends; short default retention loses history.</li>
+<li><strong>Keep a user or tier dimension</strong> so you can spot a single heavy consumer.</li>
+</ul>
 
 
 

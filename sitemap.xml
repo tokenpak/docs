@@ -113,10 +113,6 @@
          <lastmod>2026-06-05</lastmod>
     </url>
     <url>
-         <loc>https://docs.tokenpak.ai/plugin-system-architecture/</loc>
-         <lastmod>2026-06-05</lastmod>
-    </url>
-    <url>
          <loc>https://docs.tokenpak.ai/release-checklist/</loc>
          <lastmod>2026-06-05</lastmod>
     </url>
@@ -206,6 +202,10 @@
     </url>
     <url>
          <loc>https://docs.tokenpak.ai/recall/selection-explanation/</loc>
+         <lastmod>2026-06-05</lastmod>
+    </url>
+    <url>
+         <loc>https://docs.tokenpak.ai/recipes/</loc>
          <lastmod>2026-06-05</lastmod>
     </url>
     <url>

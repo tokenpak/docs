@@ -1681,34 +1681,6 @@
   
   
     <li class="md-nav__item">
-      <a href="../plugin-system-architecture/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Plugin System Architecture
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
       <a href="../assets/DIAGRAMS/" class="md-nav__link">
         
   
@@ -3598,18 +3570,17 @@ tokenpak<span class="w"> </span>start<span class="w"> </span>--background
 <h3 id="optional-with-dashboard">(Optional) With Dashboard<a class="headerlink" href="#optional-with-dashboard" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code>tokenpak<span class="w"> </span>dashboard
 </code></pre></div>
-<p>Opens a web dashboard at <code>http://127.0.0.1:8001</code> to view cost, token counts, and request history.</p>
+<p>Shows a real-time dashboard of cost, token counts, and request history. The running proxy also serves a built-in HTML dashboard at <code>http://127.0.0.1:8766/dashboard</code>.</p>
 <hr />
 <h2 id="step-4-test-the-installation">Step 4: Test the Installation<a class="headerlink" href="#step-4-test-the-installation" title="Permanent link">&para;</a></h2>
 <h3 id="python-client">Python Client<a class="headerlink" href="#python-client" title="Permanent link">&para;</a></h3>
-<p>Create <code>test_tokenpak.py</code>:</p>
-<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">tokenpak</span><span class="w"> </span><span class="kn">import</span> <span class="n">Client</span>
+<p>Create <code>test_tokenpak.py</code> using the standard Anthropic SDK pointed at the proxy:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">anthropic</span>
 
-<span class="c1"># Initialize client pointing to the proxy</span>
-<span class="n">client</span> <span class="o">=</span> <span class="n">Client</span><span class="p">(</span>
+<span class="c1"># Point the standard Anthropic SDK at the local TokenPak proxy</span>
+<span class="n">client</span> <span class="o">=</span> <span class="n">anthropic</span><span class="o">.</span><span class="n">Anthropic</span><span class="p">(</span>
     <span class="n">base_url</span><span class="o">=</span><span class="s2">&quot;http://127.0.0.1:8766&quot;</span><span class="p">,</span>  <span class="c1"># Your proxy</span>
-    <span class="n">api_key</span><span class="o">=</span><span class="s2">&quot;sk-ant-...&quot;</span><span class="p">,</span>  <span class="c1"># Your API key</span>
-    <span class="n">model</span><span class="o">=</span><span class="s2">&quot;claude-opus-4-8&quot;</span>  <span class="c1"># Default model</span>
+    <span class="n">api_key</span><span class="o">=</span><span class="s2">&quot;sk-ant-...&quot;</span><span class="p">,</span>              <span class="c1"># Your API key</span>
 <span class="p">)</span>
 
 <span class="c1"># Make a request</span>
@@ -3624,6 +3595,7 @@ tokenpak<span class="w"> </span>start<span class="w"> </span>--background
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;✅ TokenPak works!&quot;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Response: </span><span class="si">{</span><span class="n">response</span><span class="o">.</span><span class="n">content</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">text</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </code></pre></div>
+<p>(Alternatively, use the TokenPak SDK adapter: <code>from tokenpak.sdk import AnthropicAdapter</code>.)</p>
 <p>Run it:</p>
 <div class="highlight"><pre><span></span><code>python<span class="w"> </span>test_tokenpak.py
 </code></pre></div>

@@ -1285,34 +1285,6 @@
   
   
     <li class="md-nav__item">
-      <a href="../../plugin-system-architecture/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Plugin System Architecture
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
       <a href="../../assets/DIAGRAMS/" class="md-nav__link">
         
   
@@ -3350,14 +3322,14 @@
 <hr />
 <h2 id="setup">Setup<a class="headerlink" href="#setup" title="Permanent link">&para;</a></h2>
 <h3 id="1-install-tokenpak-and-litellm">1. Install TokenPak and LiteLLM<a class="headerlink" href="#1-install-tokenpak-and-litellm" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code>pip<span class="w"> </span>install<span class="w"> </span>litellm
+<div class="highlight"><pre><span></span><code>pip<span class="w"> </span>install<span class="w"> </span>litellm<span class="w"> </span>tokenpak
 
 <span class="c1"># TokenPak runs as a standalone proxy service</span>
-<span class="c1"># See: https://github.com/...tokenpak#getting-started</span>
+<span class="c1"># See: https://github.com/tokenpak/tokenpak</span>
 </code></pre></div>
 <h3 id="2-start-tokenpak-proxy">2. Start TokenPak Proxy<a class="headerlink" href="#2-start-tokenpak-proxy" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="c1"># TokenPak default: http://localhost:8766/v1</span>
-python<span class="w"> </span>-m<span class="w"> </span>tokenpak.proxy<span class="w"> </span>--port<span class="w"> </span><span class="m">8766</span>
+tokenpak<span class="w"> </span>serve<span class="w"> </span>--port<span class="w"> </span><span class="m">8766</span>
 </code></pre></div>
 <p>Verify proxy is running:
 <div class="highlight"><pre><span></span><code>curl<span class="w"> </span>http://localhost:8766/health
@@ -3478,21 +3450,20 @@ python<span class="w"> </span>-m<span class="w"> </span>tokenpak.proxy<span clas
 <hr />
 <h2 id="verify-routing">Verify Routing<a class="headerlink" href="#verify-routing" title="Permanent link">&para;</a></h2>
 <p>Check that requests are flowing through TokenPak correctly:</p>
-<div class="highlight"><pre><span></span><code><span class="c1"># Check TokenPak stats endpoint</span>
+<div class="highlight"><pre><span></span><code><span class="c1"># Per-session stats (counters + cache attribution by origin)</span>
 curl<span class="w"> </span>http://localhost:8766/stats<span class="w"> </span><span class="p">|</span><span class="w"> </span>jq<span class="w"> </span>.
 
-<span class="c1"># Example output:</span>
+<span class="c1"># Cache-hit metrics</span>
+curl<span class="w"> </span>http://localhost:8766/cache-stats<span class="w"> </span><span class="p">|</span><span class="w"> </span>jq<span class="w"> </span>.
+
+<span class="c1"># The cache-stats endpoint reports keys such as:</span>
 <span class="o">{</span>
-<span class="w">  </span><span class="s2">&quot;cached&quot;</span>:<span class="w"> </span><span class="m">12</span>,
-<span class="w">  </span><span class="s2">&quot;compressed_requests&quot;</span>:<span class="w"> </span><span class="m">45</span>,
-<span class="w">  </span><span class="s2">&quot;token_usage&quot;</span>:<span class="w"> </span><span class="o">{</span>
-<span class="w">    </span><span class="s2">&quot;input&quot;</span>:<span class="w"> </span><span class="m">2840</span>,
-<span class="w">    </span><span class="s2">&quot;output&quot;</span>:<span class="w"> </span><span class="m">1230</span>,
-<span class="w">    </span><span class="s2">&quot;cached&quot;</span>:<span class="w"> </span><span class="m">340</span><span class="w">  </span><span class="c1"># Tokens saved by caching</span>
-<span class="w">  </span><span class="o">}</span>
+<span class="w">  </span><span class="s2">&quot;total_requests&quot;</span>:<span class="w"> </span><span class="m">45</span>,
+<span class="w">  </span><span class="s2">&quot;cache_hits&quot;</span>:<span class="w"> </span><span class="m">12</span>,
+<span class="w">  </span><span class="s2">&quot;hit_rate&quot;</span>:<span class="w"> </span><span class="m">0</span>.27
 <span class="o">}</span>
 </code></pre></div>
-<p>If your request doesn't appear in stats, check:
+<p>The exact fields depend on your TokenPak version; run the commands above to see the current shape. If your request doesn't appear in stats, check:
 1. TokenPak is running (<code>curl http://localhost:8766/health</code>)
 2. <code>api_base</code> in LiteLLM config matches TokenPak port (default <code>8766</code>)
 3. Firewall/network allows <code>localhost:8766</code> connection</p>
@@ -3570,10 +3541,10 @@ curl<span class="w"> </span>http://localhost:8766/stats<span class="w"> </span><
 <p><strong>Fix:</strong>
 1. Verify <code>ANTHROPIC_API_KEY</code> is set correctly
 2. TokenPak passes your API key upstream — check it matches your provider (Anthropic, OpenAI, etc.)
-3. Test directly against TokenPak: <code>curl -H "Authorization: Bearer sk-ant-..." http://localhost:8766/v1/models</code></p>
+3. Test directly against TokenPak's health endpoint: <code>curl http://localhost:8766/health</code></p>
 <hr />
 <h3 id="requests-not-cached">Requests not cached<a class="headerlink" href="#requests-not-cached" title="Permanent link">&para;</a></h3>
-<p><strong>Symptom:</strong> Stats show <code>cached: 0</code> even after repeated identical requests</p>
+<p><strong>Symptom:</strong> <code>cache-stats</code> shows <code>cache_hits: 0</code> even after repeated identical requests</p>
 <p><strong>Cause:</strong> Likely mismatch in request parameters (temperature, top_p, etc.)</p>
 <p><strong>Fix:</strong>
 1. Cache key = model + prompt hash. Other parameters are ignored.

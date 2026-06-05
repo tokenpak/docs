@@ -1328,10 +1328,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#token-counting" class="md-nav__link">
+  <a href="#token-cost-tracking" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Token Counting
+        Token &amp; Cost Tracking
       
     </span>
   </a>
@@ -1461,34 +1461,6 @@
     
   
     Plugin Guide
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../plugin-system-architecture/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Plugin System Architecture
   
 
     
@@ -2977,10 +2949,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#token-counting" class="md-nav__link">
+  <a href="#token-cost-tracking" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Token Counting
+        Token &amp; Cost Tracking
       
     </span>
   </a>
@@ -3260,13 +3232,13 @@
 </tr>
 <tr>
 <td></td>
-<td><code>count</code> command</td>
+<td><code>preview</code> command</td>
 <td>✅</td>
-<td>Count tokens in a file</td>
+<td>Dry-run compression on a file (shows token savings)</td>
 </tr>
 <tr>
 <td></td>
-<td><code>compress</code> command</td>
+<td><code>benchmark</code> command</td>
 <td>✅</td>
 <td>Test compression on a document</td>
 </tr>
@@ -3274,7 +3246,7 @@
 <td></td>
 <td><code>validate</code> command</td>
 <td>✅</td>
-<td>Check config and connectivity</td>
+<td>Validate a TokenPak JSON file against the schema</td>
 </tr>
 <tr>
 <td></td>
@@ -3287,29 +3259,35 @@
 <hr />
 <h2 id="feature-details">Feature Details<a class="headerlink" href="#feature-details" title="Permanent link">&para;</a></h2>
 <h3 id="core-proxy">Core Proxy<a class="headerlink" href="#core-proxy" title="Permanent link">&para;</a></h3>
-<p>Provider routing, adapters, tool schema handling, fallback chains, circuit breaker, streaming, passthrough</p>
-<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">tokenpak</span><span class="w"> </span><span class="kn">import</span> <span class="n">Client</span>
-
-<span class="c1"># Works out-of-the-box</span>
-<span class="n">client</span> <span class="o">=</span> <span class="n">Client</span><span class="p">(</span><span class="n">api_key</span><span class="o">=</span><span class="s2">&quot;...&quot;</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="s2">&quot;claude-opus-4-6&quot;</span><span class="p">)</span>
-<span class="n">response</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">messages</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+<p>Provider routing, adapters, tool schema handling, fallback chains, circuit breaker, streaming, passthrough.</p>
+<p>TokenPak's primary usage model is to run the local proxy and point your existing provider SDK or tool at it via a base URL — no application code changes required:</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Start the proxy (default: http://127.0.0.1:8766)</span>
+tokenpak<span class="w"> </span>serve
 </code></pre></div>
-<h3 id="token-counting">Token Counting<a class="headerlink" href="#token-counting" title="Permanent link">&para;</a></h3>
-<p>Accurate token counts across all providers</p>
-<div class="highlight"><pre><span></span><code><span class="n">tokens</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">count_tokens</span><span class="p">(</span>
-    <span class="n">model</span><span class="o">=</span><span class="s2">&quot;claude-opus-4-6&quot;</span><span class="p">,</span>
-    <span class="n">messages</span><span class="o">=</span><span class="p">[{</span><span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;user&quot;</span><span class="p">,</span> <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="s2">&quot;...&quot;</span><span class="p">}]</span>
+<div class="highlight"><pre><span></span><code><span class="c1"># Use the standard Anthropic SDK, routed through TokenPak</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">anthropic</span>
+
+<span class="n">client</span> <span class="o">=</span> <span class="n">anthropic</span><span class="o">.</span><span class="n">Anthropic</span><span class="p">(</span>
+    <span class="n">base_url</span><span class="o">=</span><span class="s2">&quot;http://127.0.0.1:8766&quot;</span><span class="p">,</span>
+    <span class="n">api_key</span><span class="o">=</span><span class="s2">&quot;sk-ant-...&quot;</span><span class="p">,</span>
 <span class="p">)</span>
+<span class="n">response</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">messages</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
+    <span class="n">model</span><span class="o">=</span><span class="s2">&quot;claude-sonnet-4-6&quot;</span><span class="p">,</span>
+    <span class="n">max_tokens</span><span class="o">=</span><span class="mi">1024</span><span class="p">,</span>
+    <span class="n">messages</span><span class="o">=</span><span class="p">[{</span><span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;user&quot;</span><span class="p">,</span> <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="s2">&quot;Hello&quot;</span><span class="p">}],</span>
+<span class="p">)</span>
+</code></pre></div>
+<h3 id="token-cost-tracking">Token &amp; Cost Tracking<a class="headerlink" href="#token-cost-tracking" title="Permanent link">&para;</a></h3>
+<p>TokenPak tracks per-request token usage and savings server-side. Inspect them over HTTP or via the CLI:</p>
+<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>http://127.0.0.1:8766/stats/last<span class="w">    </span><span class="c1"># most recent request</span>
+tokenpak<span class="w"> </span>stats<span class="w">                           </span><span class="c1"># registry totals</span>
+tokenpak<span class="w"> </span>savings<span class="w">                         </span><span class="c1"># tokens and cost saved</span>
 </code></pre></div>
 <h3 id="compression">Compression<a class="headerlink" href="#compression" title="Permanent link">&para;</a></h3>
 <p>Deduplication, doc compression, instruction table, budget tracking, fidelity tiers</p>
 <p>Automatically applied. Semantic equivalence guaranteed.</p>
 <h3 id="error-handling">Error Handling<a class="headerlink" href="#error-handling" title="Permanent link">&para;</a></h3>
-<p>Normalized errors, automatic retries with exponential backoff</p>
-<div class="highlight"><pre><span></span><code><span class="c1"># Retries automatically with circuit breaker</span>
-<span class="n">response</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">messages</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
-<span class="c1"># If provider fails, falls back to next in chain</span>
-</code></pre></div>
+<p>Normalized errors, automatic retries with exponential backoff, and circuit breaking are applied transparently by the proxy. When an upstream provider fails repeatedly, the proxy opens a circuit breaker (visible at <code>GET /circuit-breakers</code>) and surfaces a consistent JSON error to the client. See the <a href="../error-handling/">Error Handling Guide</a>.</p>
 <h3 id="vault-features">Vault Features<a class="headerlink" href="#vault-features" title="Permanent link">&para;</a></h3>
 <p>Indexing, search, auto-injection, symbol extraction, AST parsing, chunking, watcher, SQLite backend</p>
 <div class="highlight"><pre><span></span><code><span class="nt">vault</span><span class="p">:</span>
@@ -3326,7 +3304,8 @@ tokenpak<span class="w"> </span>serve
 <h2 id="configuration-reference">Configuration Reference<a class="headerlink" href="#configuration-reference" title="Permanent link">&para;</a></h2>
 <h3 id="basic-configyaml">Basic config.yaml<a class="headerlink" href="#basic-configyaml" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="nt">proxy</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">8000</span>
+<span class="w">  </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">8766</span>
+<span class="w">  </span><span class="nt">host</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">127.0.0.1</span>
 
 <span class="nt">provider</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">anthropic</span>
 <span class="nt">fallback</span><span class="p">:</span>

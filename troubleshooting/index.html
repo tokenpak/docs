@@ -1681,34 +1681,6 @@
   
   
     <li class="md-nav__item">
-      <a href="../plugin-system-architecture/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Plugin System Architecture
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
       <a href="../assets/DIAGRAMS/" class="md-nav__link">
         
   
@@ -3575,7 +3547,7 @@ pip<span class="w"> </span>install<span class="w"> </span>tokenpak
 python3<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;import yaml; yaml.safe_load(open(&#39;proxy.yaml&#39;))&quot;</span>
 
 <span class="c1"># If that works, check TokenPak parsing</span>
-tokenpak<span class="w"> </span>validate-config<span class="w"> </span>proxy.yaml
+tokenpak<span class="w"> </span>config-check<span class="w"> </span>proxy.json
 
 <span class="c1"># Common mistakes:</span>
 <span class="c1"># - Tabs instead of spaces (use spaces only)</span>
@@ -3623,9 +3595,8 @@ tokenpak<span class="w"> </span>doctor
 <p><strong>Symptom:</strong> Requests fail with "Model not found" or "Invalid model."</p>
 <p><strong>Likely cause:</strong> The model isn't available for that provider, or TokenPak doesn't recognize it.</p>
 <p><strong>Fix:</strong>
-<div class="highlight"><pre><span></span><code><span class="c1"># Check what models the provider supports</span>
-tokenpak<span class="w"> </span>list-models<span class="w"> </span>anthropic
-tokenpak<span class="w"> </span>list-models<span class="w"> </span>openai
+<div class="highlight"><pre><span></span><code><span class="c1"># Check the models the proxy currently knows about</span>
+curl<span class="w"> </span>http://localhost:8766/v1/models
 
 <span class="c1"># Use a valid model name:</span>
 <span class="c1"># Anthropic: claude-3-opus, claude-3-sonnet, claude-3-haiku</span>
@@ -3692,8 +3663,9 @@ tokenpak<span class="w"> </span>serve<span class="w"> </span>--config<span class
 <span class="w">  </span><span class="nt">anthropic</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">timeout_seconds</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">60</span><span class="w">  </span><span class="c1"># Default is 30</span>
 
-<span class="c1"># Or check provider status</span>
-<span class="l l-Scalar l-Scalar-Plain">tokenpak provider-status anthropic</span>
+<span class="c1"># Or check provider/circuit-breaker health</span>
+<span class="l l-Scalar l-Scalar-Plain">curl http://localhost:8766/circuit-breakers</span>
+<span class="l l-Scalar l-Scalar-Plain">curl http://localhost:8766/degradation</span>
 
 <span class="c1"># If the provider is actually down:</span>
 <span class="c1"># TokenPak will automatically try fallback providers</span>
@@ -3722,8 +3694,8 @@ curl<span class="w"> </span>https://api.openai.com/v1/models<span class="w"> </s
 <p><strong>Symptom:</strong> You request GPT-4, but the provider only has GPT-3.5.</p>
 <p><strong>Likely cause:</strong> The model isn't available in the provider, or it's not in your API tier.</p>
 <p><strong>Fix:</strong>
-<div class="highlight"><pre><span></span><code><span class="c1"># Check available models:</span>
-tokenpak<span class="w"> </span>list-models<span class="w"> </span>openai
+<div class="highlight"><pre><span></span><code><span class="c1"># Check the models the proxy currently knows about:</span>
+curl<span class="w"> </span>http://localhost:8766/v1/models
 
 <span class="c1"># If the model exists but isn&#39;t available to you:</span>
 <span class="c1"># - Check your API tier (free vs paid)</span>
@@ -3757,17 +3729,14 @@ tokenpak<span class="w"> </span>list-models<span class="w"> </span>openai
 <p><strong>Symptom:</strong> Request fails even though both primary and fallback providers are configured.</p>
 <p><strong>Likely cause:</strong> Both providers are either down, rate-limited, or having auth issues.</p>
 <p><strong>Fix:</strong>
-<div class="highlight"><pre><span></span><code><span class="c1"># Check provider status</span>
-tokenpak<span class="w"> </span>provider-status
+<div class="highlight"><pre><span></span><code><span class="c1"># Check provider/circuit-breaker health</span>
+curl<span class="w"> </span>http://localhost:8766/circuit-breakers
 
 <span class="c1"># Check API keys for all providers</span>
 tokenpak<span class="w"> </span>doctor
 
 <span class="c1"># If a provider is temporarily down, TokenPak will mark it as unhealthy</span>
 <span class="c1"># and only use it again after a recovery check (default 30s)</span>
-
-<span class="c1"># To force a provider back into rotation</span>
-tokenpak<span class="w"> </span>provider-force-health<span class="w"> </span>anthropic<span class="w"> </span>healthy
 
 <span class="c1"># Add more fallbacks in proxy.yaml:</span>
 routing:
@@ -3788,7 +3757,7 @@ routing:
 <span class="w">      </span><span class="nt">output_cost_per_1m_tokens</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">15.00</span>
 
 <span class="c1"># Check TokenPak&#39;s calculated costs:</span>
-<span class="l l-Scalar l-Scalar-Plain">tokenpak cost-breakdown</span>
+<span class="l l-Scalar l-Scalar-Plain">tokenpak cost</span>
 
 <span class="c1"># If you have enterprise pricing, contact us for custom rates</span>
 </code></pre></div></p>
@@ -3796,10 +3765,7 @@ routing:
 <p><strong>Symptom:</strong> TokenPak doesn't have pricing for a new model you're using.</p>
 <p><strong>Likely cause:</strong> The model was released recently, or it's in beta.</p>
 <p><strong>Fix:</strong>
-<div class="highlight"><pre><span></span><code><span class="c1"># Check what models have pricing</span>
-tokenpak<span class="w"> </span>list-pricing
-
-<span class="c1"># If a model is missing, add it manually:</span>
+<div class="highlight"><pre><span></span><code><span class="c1"># If a model is missing pricing, add it manually:</span>
 <span class="c1"># Edit proxy.yaml with the pricing from the provider&#39;s docs</span>
 
 <span class="c1"># Or request it be added to TokenPak</span>
@@ -3830,7 +3796,7 @@ tokenpak<span class="w"> </span>list-pricing
 <p><strong>Likely cause:</strong> Vault index is corrupted or out of sync.</p>
 <p><strong>Fix:</strong>
 <div class="highlight"><pre><span></span><code><span class="c1"># Rebuild the vault index</span>
-tokenpak<span class="w"> </span>rebuild-vault-index
+tokenpak<span class="w"> </span>vault<span class="w"> </span>reindex
 
 <span class="c1"># Or clear and let it regenerate</span>
 rm<span class="w"> </span>-f<span class="w"> </span>~/.tokenpak/vault-index.json
@@ -3846,8 +3812,9 @@ tokenpak<span class="w"> </span>serve<span class="w">  </span><span class="c1">#
 <span class="w">  </span><span class="nt">ttl_seconds</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3600</span><span class="w">  </span><span class="c1"># Entries expire after 1 hour</span>
 <span class="w">  </span><span class="nt">eviction_policy</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;lru&quot;</span><span class="w">  </span><span class="c1"># Least recently used</span>
 
-<span class="c1"># Check cache stats:</span>
-<span class="l l-Scalar l-Scalar-Plain">tokenpak cache-stats</span>
+<span class="c1"># Check proxy stats (includes cache activity):</span>
+<span class="l l-Scalar l-Scalar-Plain">tokenpak status</span>
+<span class="l l-Scalar l-Scalar-Plain">curl http://localhost:8766/stats</span>
 
 <span class="c1"># If memory still grows, file a bug with logs:</span>
 <span class="l l-Scalar l-Scalar-Plain">tokenpak serve --debug &gt; tokenpak.log 2&gt;&amp;1</span>

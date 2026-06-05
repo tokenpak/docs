@@ -1285,34 +1285,6 @@
   
   
     <li class="md-nav__item">
-      <a href="../../plugin-system-architecture/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Plugin System Architecture
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
       <a href="../../assets/DIAGRAMS/" class="md-nav__link">
         
   
@@ -2342,10 +2314,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#config-snippet" class="md-nav__link">
+  <a href="#start-the-proxy" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Config Snippet
+        Start the proxy
       
     </span>
   </a>
@@ -2865,10 +2837,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#config-snippet" class="md-nav__link">
+  <a href="#start-the-proxy" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Config Snippet
+        Start the proxy
       
     </span>
   </a>
@@ -2929,175 +2901,114 @@
 
 
 <h1 id="recipe-streaming-responses">Recipe: Streaming Responses<a class="headerlink" href="#recipe-streaming-responses" title="Permanent link">&para;</a></h1>
-<p><strong>What this solves:</strong> Use TokenPak with streaming-capable clients to receive responses token-by-token instead of waiting for the full response, improving perceived latency and enabling real-time UX.</p>
+<blockquote>
+<p><strong>Status: Verified runnable.</strong> TokenPak's proxy is a byte-preserving passthrough, so streaming works transparently: when your client requests a streaming response, the proxy forwards the upstream provider's stream (server-sent events) back to your client verbatim. The commands below run against the default proxy at <code>http://127.0.0.1:8766</code>.</p>
+<p>Note: there is <strong>no</strong> dedicated <code>streaming:</code> config block, no separate <code>-streaming</code> model names, and no proxy-side token buffering in the current release — streaming is enabled by the <code>"stream": true</code> flag in the request body and the provider's own SSE response, which the proxy passes through unchanged.</p>
+</blockquote>
+<p><strong>What this solves:</strong> Receiving responses token-by-token instead of waiting for the full response, improving perceived latency.</p>
 <h2 id="prerequisites">Prerequisites<a class="headerlink" href="#prerequisites" title="Permanent link">&para;</a></h2>
 <ul>
-<li>TokenPak installed</li>
-<li>A streaming-aware client (curl with <code>--no-buffer</code>, Python <code>requests-stream</code>, Node.js streams)</li>
-<li>Understanding of server-sent events (SSE) or chunked transfer encoding</li>
-<li>API keys for providers</li>
+<li>TokenPak installed (<code>tokenpak --help</code>)</li>
+<li>A streaming-aware client (<code>curl --no-buffer</code>, Python <code>requests</code> with <code>stream=True</code>, Node.js streams)</li>
+<li>A valid API key for your provider</li>
 </ul>
-<h2 id="config-snippet">Config Snippet<a class="headerlink" href="#config-snippet" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code><span class="c1"># config.yaml</span>
-<span class="nt">streaming</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
-<span class="w">  </span><span class="c1"># Support both SSE (server-sent events) and chunked encoding</span>
-<span class="w">  </span><span class="nt">formats</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">sse</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">chunked</span><span class="p p-Indicator">]</span>
-
-<span class="w">  </span><span class="c1"># Buffer size: larger = fewer roundtrips, smaller = lower latency</span>
-<span class="w">  </span><span class="nt">buffer_tokens</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5</span><span class="w">  </span><span class="c1"># Send every 5 tokens or every 500ms, whichever comes first</span>
-<span class="w">  </span><span class="nt">flush_interval_ms</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">500</span>
-
-<span class="w">  </span><span class="c1"># Streaming-aware batching (optional)</span>
-<span class="w">  </span><span class="c1"># If multiple streaming requests come in, batch them for efficiency</span>
-<span class="w">  </span><span class="nt">max_concurrent_streams</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">100</span>
-
-<span class="nt">providers</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">openai</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">openai</span>
-<span class="w">    </span><span class="nt">api_key</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${OPENAI_API_KEY}</span>
-<span class="w">    </span><span class="c1"># OpenAI supports streaming natively</span>
-<span class="w">    </span><span class="nt">supports_streaming</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
-
-<span class="w">  </span><span class="nt">anthropic</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">anthropic</span>
-<span class="w">    </span><span class="nt">api_key</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${ANTHROPIC_API_KEY}</span>
-<span class="w">    </span><span class="nt">supports_streaming</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
-
-<span class="nt">models</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">gpt-4</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt"> provider</span><span class="p">:</span><span class="w"> </span><span class="nv">openai</span><span class="w"> </span><span class="p p-Indicator">}</span>
-<span class="w">  </span><span class="nt">gpt-4-streaming</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt"> provider</span><span class="p">:</span><span class="w"> </span><span class="nv">openai</span><span class="p p-Indicator">,</span><span class="nt"> stream</span><span class="p">:</span><span class="w"> </span><span class="nv">true</span><span class="w"> </span><span class="p p-Indicator">}</span>
-<span class="w">  </span><span class="nt">claude-opus</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt"> provider</span><span class="p">:</span><span class="w"> </span><span class="nv">anthropic</span><span class="w"> </span><span class="p p-Indicator">}</span>
-<span class="w">  </span><span class="nt">claude-opus-streaming</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt"> provider</span><span class="p">:</span><span class="w"> </span><span class="nv">anthropic</span><span class="p p-Indicator">,</span><span class="nt"> stream</span><span class="p">:</span><span class="w"> </span><span class="nv">true</span><span class="w"> </span><span class="p p-Indicator">}</span>
+<h2 id="start-the-proxy">Start the proxy<a class="headerlink" href="#start-the-proxy" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>tokenpak<span class="w"> </span>serve<span class="w">   </span><span class="c1"># listens on http://127.0.0.1:8766</span>
 </code></pre></div>
+<p>No special config is required for streaming — the proxy forwards the upstream stream as-is.</p>
 <h2 id="test-verify">Test &amp; Verify<a class="headerlink" href="#test-verify" title="Permanent link">&para;</a></h2>
-<p><strong>Step 1:</strong> Validate config:
-<div class="highlight"><pre><span></span><code>tokenpak<span class="w"> </span>validate-config<span class="w"> </span>config.yaml
-<span class="c1"># Expected output:</span>
-<span class="c1"># ✓ Config valid</span>
-<span class="c1"># ✓ Streaming enabled (SSE + chunked)</span>
-<span class="c1"># ✓ Streaming models available</span>
-</code></pre></div></p>
-<p><strong>Step 2:</strong> Start TokenPak proxy:
-<div class="highlight"><pre><span></span><code>tokenpak<span class="w"> </span>proxy<span class="w"> </span>--config<span class="w"> </span>config.yaml
-</code></pre></div></p>
-<p><strong>Step 3:</strong> Test streaming with curl (server-sent events):
-<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>http://localhost:8000/v1/messages<span class="w"> </span><span class="se">\</span>
+<p><strong>Streaming with curl (server-sent events):</strong>
+<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-N<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>http://127.0.0.1:8766/v1/messages<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;Content-Type: application/json&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;x-api-key: </span><span class="nv">$ANTHROPIC_API_KEY</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;anthropic-version: 2023-06-01&quot;</span><span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;{</span>
-<span class="s1">    &quot;model&quot;: &quot;gpt-4-streaming&quot;,</span>
+<span class="s1">    &quot;model&quot;: &quot;claude-3-5-sonnet-20241022&quot;,</span>
+<span class="s1">    &quot;max_tokens&quot;: 128,</span>
 <span class="s1">    &quot;stream&quot;: true,</span>
-<span class="s1">    &quot;messages&quot;: [</span>
-<span class="s1">      {&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: &quot;Write a haiku about API proxies&quot;}</span>
-<span class="s1">    ]</span>
-<span class="s1">  }&#39;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--no-buffer
+<span class="s1">    &quot;messages&quot;: [{&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: &quot;Write a haiku about API proxies&quot;}]</span>
+<span class="s1">  }&#39;</span>
 
-<span class="c1"># Expected output (streaming):</span>
-<span class="c1"># data: {&quot;delta&quot;:{&quot;type&quot;:&quot;content_block_delta&quot;,&quot;delta&quot;:{&quot;type&quot;:&quot;text_delta&quot;,&quot;text&quot;:&quot;API&quot;}}}</span>
-<span class="c1"># data: {&quot;delta&quot;:{&quot;type&quot;:&quot;content_block_delta&quot;,&quot;delta&quot;:{&quot;type&quot;:&quot;text_delta&quot;,&quot;text&quot;:&quot; proxies&quot;}}}</span>
-<span class="c1"># data: {&quot;delta&quot;:{&quot;type&quot;:&quot;content_block_delta&quot;,&quot;delta&quot;:{&quot;type&quot;:&quot;text_delta&quot;,&quot;text&quot;:&quot; pass&quot;}}}</span>
+<span class="c1"># Output (illustrative shape — exact events come from the upstream provider):</span>
+<span class="c1"># event: content_block_delta</span>
+<span class="c1"># data: {&quot;type&quot;:&quot;content_block_delta&quot;,&quot;delta&quot;:{&quot;type&quot;:&quot;text_delta&quot;,&quot;text&quot;:&quot;API&quot;}}</span>
+<span class="c1"># event: content_block_delta</span>
+<span class="c1"># data: {&quot;type&quot;:&quot;content_block_delta&quot;,&quot;delta&quot;:{&quot;type&quot;:&quot;text_delta&quot;,&quot;text&quot;:&quot; proxies&quot;}}</span>
 <span class="c1"># ...</span>
-<span class="c1"># (tokens arrive in real-time, one by one)</span>
 </code></pre></div></p>
-<p><strong>Step 4:</strong> Test streaming with Python (chunked response):
-<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">requests</span>
+<p><code>curl -N</code> (<code>--no-buffer</code>) disables curl's output buffering so you see events as they arrive.</p>
+<p><strong>Streaming with Python:</strong>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">requests</span>
 
-<span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span>
-    <span class="s1">&#39;http://localhost:8000/v1/messages&#39;</span><span class="p">,</span>
-    <span class="n">json</span><span class="o">=</span><span class="p">{</span>
-        <span class="s1">&#39;model&#39;</span><span class="p">:</span> <span class="s1">&#39;gpt-4-streaming&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;stream&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
-        <span class="s1">&#39;messages&#39;</span><span class="p">:</span> <span class="p">[</span>
-            <span class="p">{</span><span class="s1">&#39;role&#39;</span><span class="p">:</span> <span class="s1">&#39;user&#39;</span><span class="p">,</span> <span class="s1">&#39;content&#39;</span><span class="p">:</span> <span class="s1">&#39;Write a 2-sentence story&#39;</span><span class="p">}</span>
-        <span class="p">]</span>
+<span class="k">with</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span>
+    <span class="s2">&quot;http://127.0.0.1:8766/v1/messages&quot;</span><span class="p">,</span>
+    <span class="n">headers</span><span class="o">=</span><span class="p">{</span>
+        <span class="s2">&quot;Content-Type&quot;</span><span class="p">:</span> <span class="s2">&quot;application/json&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;x-api-key&quot;</span><span class="p">:</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;ANTHROPIC_API_KEY&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;anthropic-version&quot;</span><span class="p">:</span> <span class="s2">&quot;2023-06-01&quot;</span><span class="p">,</span>
     <span class="p">},</span>
-    <span class="n">stream</span><span class="o">=</span><span class="kc">True</span>  <span class="c1"># Enable streaming</span>
-<span class="p">)</span>
-
-<span class="c1"># Iterate over streaming chunks</span>
-<span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">response</span><span class="o">.</span><span class="n">iter_lines</span><span class="p">():</span>
-    <span class="k">if</span> <span class="n">line</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Received: </span><span class="si">{</span><span class="n">line</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-
-<span class="c1"># Expected output:</span>
-<span class="c1"># Received: data: {&quot;delta&quot;:{&quot;text&quot;:&quot;Once&quot;}}</span>
-<span class="c1"># Received: data: {&quot;delta&quot;:{&quot;text&quot;:&quot; upon&quot;}}</span>
-<span class="c1"># Received: data: {&quot;delta&quot;:{&quot;text&quot;:&quot; a&quot;}}</span>
-<span class="c1"># ...</span>
+    <span class="n">json</span><span class="o">=</span><span class="p">{</span>
+        <span class="s2">&quot;model&quot;</span><span class="p">:</span> <span class="s2">&quot;claude-3-5-sonnet-20241022&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;max_tokens&quot;</span><span class="p">:</span> <span class="mi">128</span><span class="p">,</span>
+        <span class="s2">&quot;stream&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="s2">&quot;messages&quot;</span><span class="p">:</span> <span class="p">[{</span><span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;user&quot;</span><span class="p">,</span> <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="s2">&quot;Write a 2-sentence story&quot;</span><span class="p">}],</span>
+    <span class="p">},</span>
+    <span class="n">stream</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="p">)</span> <span class="k">as</span> <span class="n">response</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">response</span><span class="o">.</span><span class="n">iter_lines</span><span class="p">():</span>
+        <span class="k">if</span> <span class="n">line</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">line</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">))</span>
 </code></pre></div></p>
-<p><strong>Step 5:</strong> Test streaming with Node.js:
-<div class="highlight"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">fetch</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;node-fetch&#39;</span><span class="p">);</span>
-
-<span class="k">async</span><span class="w"> </span><span class="kd">function</span><span class="w"> </span><span class="nx">streamResponse</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">response</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">fetch</span><span class="p">(</span><span class="s1">&#39;http://localhost:8000/v1/messages&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">{</span>
+<p><strong>Streaming with Node.js:</strong>
+<div class="highlight"><pre><span></span><code><span class="k">async</span><span class="w"> </span><span class="kd">function</span><span class="w"> </span><span class="nx">streamResponse</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">response</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">fetch</span><span class="p">(</span><span class="s1">&#39;http://127.0.0.1:8766/v1/messages&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="nx">method</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;POST&#39;</span><span class="p">,</span>
-<span class="w">    </span><span class="nx">headers</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="s1">&#39;Content-Type&#39;</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;application/json&#39;</span><span class="w"> </span><span class="p">},</span>
+<span class="w">    </span><span class="nx">headers</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="s1">&#39;Content-Type&#39;</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;application/json&#39;</span><span class="p">,</span>
+<span class="w">      </span><span class="s1">&#39;x-api-key&#39;</span><span class="o">:</span><span class="w"> </span><span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">ANTHROPIC_API_KEY</span><span class="p">,</span>
+<span class="w">      </span><span class="s1">&#39;anthropic-version&#39;</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;2023-06-01&#39;</span><span class="p">,</span>
+<span class="w">    </span><span class="p">},</span>
 <span class="w">    </span><span class="nx">body</span><span class="o">:</span><span class="w"> </span><span class="nb">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">({</span>
-<span class="w">      </span><span class="nx">model</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;gpt-4-streaming&#39;</span><span class="p">,</span>
+<span class="w">      </span><span class="nx">model</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;claude-3-5-sonnet-20241022&#39;</span><span class="p">,</span>
+<span class="w">      </span><span class="nx">max_tokens</span><span class="o">:</span><span class="w"> </span><span class="mf">128</span><span class="p">,</span>
 <span class="w">      </span><span class="nx">stream</span><span class="o">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
-<span class="w">      </span><span class="nx">messages</span><span class="o">:</span><span class="w"> </span><span class="p">[{</span><span class="w"> </span><span class="nx">role</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;user&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">content</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;Count to 5&#39;</span><span class="w"> </span><span class="p">}]</span>
-<span class="w">    </span><span class="p">})</span>
+<span class="w">      </span><span class="nx">messages</span><span class="o">:</span><span class="w"> </span><span class="p">[{</span><span class="w"> </span><span class="nx">role</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;user&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">content</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;Count to 5&#39;</span><span class="w"> </span><span class="p">}],</span>
+<span class="w">    </span><span class="p">}),</span>
 <span class="w">  </span><span class="p">});</span>
 
-<span class="w">  </span><span class="c1">// Read streaming response</span>
 <span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">reader</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">response</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">getReader</span><span class="p">();</span>
 <span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">decoder</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">TextDecoder</span><span class="p">();</span>
-
 <span class="w">  </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="kc">true</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">done</span><span class="p">,</span><span class="w"> </span><span class="nx">value</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">reader</span><span class="p">.</span><span class="nx">read</span><span class="p">();</span>
 <span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">done</span><span class="p">)</span><span class="w"> </span><span class="k">break</span><span class="p">;</span>
-<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">chunk</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">decoder</span><span class="p">.</span><span class="nx">decode</span><span class="p">(</span><span class="nx">value</span><span class="p">);</span>
-<span class="w">    </span><span class="nx">process</span><span class="p">.</span><span class="nx">stdout</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="nx">chunk</span><span class="p">);</span>
+<span class="w">    </span><span class="nx">process</span><span class="p">.</span><span class="nx">stdout</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="nx">decoder</span><span class="p">.</span><span class="nx">decode</span><span class="p">(</span><span class="nx">value</span><span class="p">));</span>
 <span class="w">  </span><span class="p">}</span>
 <span class="p">}</span>
 
 <span class="nx">streamResponse</span><span class="p">();</span>
-<span class="c1">// Expected output: tokens streaming in real-time</span>
-</code></pre></div></p>
-<p><strong>Step 6:</strong> Observe the latency difference:
-<div class="highlight"><pre><span></span><code><span class="c1"># Non-streaming (wait for full response)</span>
-<span class="nb">time</span><span class="w"> </span>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>http://localhost:8000/v1/messages<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;{&quot;model&quot;: &quot;gpt-4&quot;, &quot;messages&quot;: [{&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: &quot;Write 500 words&quot;}]}&#39;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>-s<span class="w"> </span>&gt;<span class="w"> </span>/dev/null
-<span class="c1"># Result: the client blocks until the full response is generated</span>
-
-<span class="c1"># Streaming (first token appears sooner)</span>
-<span class="nb">time</span><span class="w"> </span>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>http://localhost:8000/v1/messages<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;{&quot;model&quot;: &quot;gpt-4-streaming&quot;, &quot;stream&quot;: true, &quot;messages&quot;: [{&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: &quot;Write 500 words&quot;}]}&#39;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--no-buffer<span class="w"> </span>-s<span class="w"> </span><span class="p">|</span><span class="w"> </span>head<span class="w"> </span>-1
-<span class="c1"># Result: the first token arrives shortly after the request is sent</span>
-<span class="c1"># Users see tokens stream in immediately instead of waiting for the full response</span>
 </code></pre></div></p>
 <h2 id="what-just-happened">What Just Happened<a class="headerlink" href="#what-just-happened" title="Permanent link">&para;</a></h2>
-<p>TokenPak streamed the response back to your client in real-time:</p>
 <ol>
-<li><strong>Client sends</strong> request with <code>stream: true</code> flag</li>
-<li><strong>TokenPak proxies</strong> to OpenAI/Anthropic with streaming enabled</li>
-<li><strong>As tokens arrive</strong>, TokenPak immediately forwards them to your client</li>
-<li><strong>Client receives</strong> deltas (token fragments) and can display them as they arrive</li>
-<li><strong>Full response</strong> completes, connection closes cleanly</li>
+<li><strong>Client sends</strong> a request with <code>"stream": true</code>.</li>
+<li><strong>The proxy forwards</strong> the request to the upstream provider with streaming enabled.</li>
+<li><strong>As the provider emits SSE events</strong>, the proxy passes them through to your client verbatim (byte-preserving passthrough).</li>
+<li><strong>Your client renders</strong> the deltas as they arrive.</li>
 </ol>
-<p>Your UI can display tokens as they arrive, making the experience feel noticeably faster than waiting for a full response.</p>
+<p>Because the proxy does not buffer or rewrite the stream, the streaming behavior your client sees is the provider's own — TokenPak adds transport pass-through, not a separate streaming engine.</p>
 <h2 id="common-pitfalls">Common Pitfalls<a class="headerlink" href="#common-pitfalls" title="Permanent link">&para;</a></h2>
-<p><strong>Pitfall 1: Buffering too much</strong>
-- ❌ Wrong: <code>buffer_tokens: 1000</code> (waits for 1000 tokens before sending)
-- ✅ Right: <code>buffer_tokens: 5</code> - 10 (low latency, reasonable efficiency)</p>
-<p><strong>Pitfall 2: Not handling connection drops</strong>
-- ❌ Wrong: Assume streaming connection never breaks
-- ✅ Right: Implement reconnect logic: exponential backoff, state tracking</p>
-<p><strong>Pitfall 3: Client doesn't handle streaming format</strong>
-- ❌ Wrong: Try to <code>json.parse()</code> streaming SSE (it's not valid JSON)
-- ✅ Right: Parse SSE line-by-line: <code>data: {json}</code>, extract JSON payload</p>
-<p><strong>Pitfall 4: Streaming and non-streaming models mixed</strong>
-- ❌ Wrong: Same model name used for both streaming and non-streaming
-- ✅ Right: Separate models: <code>gpt-4</code> (non-streaming) vs <code>gpt-4-streaming</code></p>
-<p><strong>Pitfall 5: Missing flush on timeout</strong>
-- ❌ Wrong: Tokens buffered for 500ms, but response finishes in 200ms (stuck tokens)
-- ✅ Right: Flush on timeout OR <code>buffer_tokens</code> reached, whichever comes first</p>
-<p><strong>Pitfall 6: Not measuring time-to-first-token</strong>
-- ❌ Wrong: Report "response time" as total time (includes buffering)
-- ✅ Right: Track TTFT separately from total time for true latency insight</p>
+<p><strong>Client doesn't handle the SSE format</strong>
+- ❌ Wrong: <code>JSON.parse()</code> the whole streamed body (it is a sequence of <code>data:</code> lines, not one JSON document).
+- ✅ Right: Parse SSE line-by-line; each <code>data:</code> line carries a JSON payload.</p>
+<p><strong>Output buffering hides the stream</strong>
+- ❌ Wrong: Plain <code>curl</code> (buffers output) makes the response look non-streaming.
+- ✅ Right: Use <code>curl -N</code> / <code>--no-buffer</code>, or a client that reads incrementally.</p>
+<p><strong>Not handling connection drops</strong>
+- ❌ Wrong: Assume the streaming connection never breaks.
+- ✅ Right: Implement reconnect/retry logic for long streams.</p>
+<p><strong>Measuring total time instead of time-to-first-token</strong>
+- ❌ Wrong: Report total response time as "latency."
+- ✅ Right: Track time-to-first-token separately — that's where streaming helps perceived latency.</p>
 
 
 
