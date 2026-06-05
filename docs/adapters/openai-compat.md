@@ -126,4 +126,4 @@ TokenPak aliases (e.g. `tokenpak-anthropic/claude-sonnet-4-6`) are also accepted
 - The proxy runs at `http://localhost:8766` by default. Change via `TOKENPAK_PORT`.
 - Your API key is forwarded to Anthropic — use your real `ANTHROPIC_API_KEY`.
 - Response format matches OpenAI Chat Completions shape (`.choices[0].message.content`).
-- See [Getting Started](../getting-started.md) for proxy setup.
+- See [Quick Start](../QUICKSTART.md) for proxy setup.

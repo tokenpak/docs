@@ -174,4 +174,4 @@ export TOKENPAK_REQUEST_LOGGER=1
 
 ---
 
-*See [Getting Started](getting-started.md) for setup. See [proxy.py](https://github.com/tokenpak/tokenpak/blob/main/packages/core/tokenpak/proxy.py) for the source of truth (search for `_cfg(`).*
+*See [Quick Start](QUICKSTART.md) for setup and [Environment Variables](env-vars.md) for the full configuration reference.*

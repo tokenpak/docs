@@ -13,20 +13,20 @@ docker build -t tokenpak .
 ### Run a Single Container
 
 ```bash
-# Basic (uses defaults)
-docker run -p 8766:8766 tokenpak
+# Basic (uses defaults) — the container starts the proxy with `tokenpak serve`
+docker run -p 8766:8766 tokenpak tokenpak serve
 
 # With config volume
 docker run -p 8766:8766 \
   -v $(pwd)/config/tokenpack.config.json:/app/tokenpack.config.json:ro \
   -v tokenpak-logs:/logs \
-  tokenpak
+  tokenpak tokenpak serve
 
 # With environment variables
 docker run -p 8766:8766 \
   -e TOKENPAK_LOG_LEVEL=debug \
   -e TOKENPAK_ENABLE_METRICS=true \
-  tokenpak
+  tokenpak tokenpak serve
 ```
 
 ### Docker Compose (Recommended)
@@ -57,7 +57,7 @@ docker-compose down
 
 ```bash
 docker build -t tokenpak:latest .
-docker build -t tokenpak:v1.0.0 .  # With version tag
+docker build -t tokenpak:v1.7.1 .  # With version tag
 ```
 
 ### Build with Custom Base Image
@@ -207,7 +207,7 @@ curl http://localhost:8766/health
 ```json
 {
   "status": "healthy",
-  "version": "1.0.0",
+  "version": "1.7.1",
   "uptime_seconds": 3600,
   "request_count": 15000,
   "last_request": "2026-03-10T06:30:00Z"

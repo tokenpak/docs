@@ -234,12 +234,17 @@ Actual cost impact depends on your traffic and how much repeated context your wo
 
 ### TokenPak
 ```python
-from tokenpack import TokenPakClient
+# Point your existing provider SDK at the local TokenPak proxy
+import anthropic
 
-client = TokenPakClient(base_url="http://localhost:8766")
+client = anthropic.Anthropic(
+    base_url="http://127.0.0.1:8766",
+    api_key="sk-ant-...",
+)
 response = client.messages.create(
-    model="anthropic/claude-3-5-sonnet",  # or openai/gpt-4o
-    messages=[{"role": "user", "content": "Hello!"}]
+    model="claude-sonnet-4-6",
+    max_tokens=1024,
+    messages=[{"role": "user", "content": "Hello!"}],
 )
 ```
 

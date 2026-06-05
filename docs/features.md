@@ -35,9 +35,9 @@ All features are **FREE and open source** under the Apache 2.0 license.
 | | Chunk optimization | ✅ | Smart chunking for injection |
 | | Watcher mode | ✅ | Live re-index on file changes |
 | **CLI** | `serve` command | ✅ | Start the proxy |
-| | `count` command | ✅ | Count tokens in a file |
-| | `compress` command | ✅ | Test compression on a document |
-| | `validate` command | ✅ | Check config and connectivity |
+| | `preview` command | ✅ | Dry-run compression on a file (shows token savings) |
+| | `benchmark` command | ✅ | Test compression on a document |
+| | `validate` command | ✅ | Validate a TokenPak JSON file against the schema |
 | | `report` command | ✅ | Generate usage reports |
 
 ---
@@ -46,25 +46,38 @@ All features are **FREE and open source** under the Apache 2.0 license.
 
 ### Core Proxy
 
-Provider routing, adapters, tool schema handling, fallback chains, circuit breaker, streaming, passthrough
+Provider routing, adapters, tool schema handling, fallback chains, circuit breaker, streaming, passthrough.
 
-```python
-from tokenpak import Client
+TokenPak's primary usage model is to run the local proxy and point your existing provider SDK or tool at it via a base URL — no application code changes required:
 
-# Works out-of-the-box
-client = Client(api_key="...", model="claude-opus-4-6")
-response = client.messages.create(...)
+```bash
+# Start the proxy (default: http://127.0.0.1:8766)
+tokenpak serve
 ```
 
-### Token Counting
-
-Accurate token counts across all providers
-
 ```python
-tokens = client.count_tokens(
-    model="claude-opus-4-6",
-    messages=[{"role": "user", "content": "..."}]
+# Use the standard Anthropic SDK, routed through TokenPak
+import anthropic
+
+client = anthropic.Anthropic(
+    base_url="http://127.0.0.1:8766",
+    api_key="sk-ant-...",
 )
+response = client.messages.create(
+    model="claude-sonnet-4-6",
+    max_tokens=1024,
+    messages=[{"role": "user", "content": "Hello"}],
+)
+```
+
+### Token & Cost Tracking
+
+TokenPak tracks per-request token usage and savings server-side. Inspect them over HTTP or via the CLI:
+
+```bash
+curl http://127.0.0.1:8766/stats/last    # most recent request
+tokenpak stats                           # registry totals
+tokenpak savings                         # tokens and cost saved
 ```
 
 ### Compression
@@ -75,13 +88,7 @@ Automatically applied. Semantic equivalence guaranteed.
 
 ### Error Handling
 
-Normalized errors, automatic retries with exponential backoff
-
-```python
-# Retries automatically with circuit breaker
-response = client.messages.create(...)
-# If provider fails, falls back to next in chain
-```
+Normalized errors, automatic retries with exponential backoff, and circuit breaking are applied transparently by the proxy. When an upstream provider fails repeatedly, the proxy opens a circuit breaker (visible at `GET /circuit-breakers`) and surfaces a consistent JSON error to the client. See the [Error Handling Guide](./error-handling.md).
 
 ### Vault Features
 
@@ -111,7 +118,8 @@ tokenpak serve
 
 ```yaml
 proxy:
-  port: 8000
+  port: 8766
+  host: 127.0.0.1
 
 provider: anthropic
 fallback:

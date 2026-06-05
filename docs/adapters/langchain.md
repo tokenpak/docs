@@ -14,7 +14,7 @@ Route your LangChain applications through the TokenPak proxy for cost tracking, 
 
 1. **TokenPak proxy running locally**
    ```bash
-   python3 tokenpak serve &
+   tokenpak serve &
    # Proxy starts on http://localhost:8766 by default
    ```
 
@@ -35,7 +35,7 @@ from langchain_anthropic import ChatAnthropic
 
 # Point ChatAnthropic at the TokenPak proxy instead of Anthropic directly
 llm = ChatAnthropic(
-    model="claude-3-5-sonnet-20241022",
+    model="claude-sonnet-4-6",
     base_url="http://localhost:8766/v1",  # TokenPak proxy endpoint
     api_key="sk-ant-..."  # Proxy forwards this to Anthropic
 )
@@ -65,7 +65,7 @@ from langchain_anthropic import ChatAnthropic
 import os
 
 llm = ChatAnthropic(
-    model="claude-3-5-sonnet-20241022",
+    model="claude-sonnet-4-6",
     base_url=os.getenv("TOKENPAK_PROXY_URL", "http://localhost:8766/v1"),
     api_key=os.getenv("ANTHROPIC_API_KEY"),
     timeout=30,  # request timeout in seconds
@@ -77,26 +77,21 @@ llm = ChatAnthropic(
 After making a few requests, verify they went through TokenPak:
 
 ```bash
-# View proxy stats
+# View proxy stats (per-session counters + cache attribution)
 curl http://localhost:8766/stats | python3 -m json.tool
 
-# Expected output:
+# View cache-hit metrics
+curl http://localhost:8766/cache-stats | python3 -m json.tool
+
+# The cache-stats endpoint reports keys such as:
 # {
-#   "requests_processed": 5,
-#   "total_input_tokens": 1250,
-#   "total_output_tokens": 480,
+#   "total_requests": 5,
 #   "cache_hits": 1,
-#   "models": {
-#     "claude-3-5-sonnet-20241022": {
-#       "calls": 5,
-#       "input_tokens": 1250,
-#       "output_tokens": 480
-#     }
-#   }
+#   "hit_rate": 0.2
 # }
 ```
 
-If you see requests recorded, traffic is flowing correctly through the proxy.
+The exact fields returned depend on your TokenPak version; run the commands above to see the current shape. If you see request counts climbing, traffic is flowing correctly through the proxy.
 
 ## Common Errors & Fixes
 
@@ -107,7 +102,7 @@ If you see requests recorded, traffic is flowing correctly through the proxy.
 **Fix:**
 ```bash
 # Start proxy in background
-python3 tokenpak serve &
+tokenpak serve &
 
 # Verify it's listening
 curl http://localhost:8766/health
@@ -127,7 +122,7 @@ echo $ANTHROPIC_API_KEY  # Should print your key, not be empty
 
 # Or pass explicitly
 llm = ChatAnthropic(
-    model="claude-3-5-sonnet-20241022",
+    model="claude-sonnet-4-6",
     base_url="http://localhost:8766/v1",
     api_key="sk-ant-YOUR_KEY_HERE"  # Explicit > env var for debugging
 )
@@ -181,7 +176,7 @@ from langchain_core.messages import HumanMessage, SystemMessage
 
 # Initialize with proxy endpoint
 llm = ChatAnthropic(
-    model="claude-3-5-sonnet-20241022",
+    model="claude-sonnet-4-6",
     base_url=os.getenv("TOKENPAK_PROXY_URL", "http://localhost:8766/v1"),
     api_key=os.getenv("ANTHROPIC_API_KEY"),
     timeout=60,
@@ -200,8 +195,8 @@ print("Assistant:", response.content)
 
 # Check proxy recorded it
 import requests
-stats = requests.get("http://localhost:8766/stats").json()
-print(f"\nProxy stats: {stats['requests_processed']} requests processed")
+stats = requests.get("http://localhost:8766/cache-stats").json()
+print(f"\nProxy stats: {stats['total_requests']} requests processed")
 ```
 
 ## Advanced: Request Injection & Compression
@@ -213,7 +208,7 @@ import os
 from langchain_anthropic import ChatAnthropic
 
 llm = ChatAnthropic(
-    model="claude-3-5-sonnet-20241022",
+    model="claude-sonnet-4-6",
     base_url="http://localhost:8766/v1",
     api_key=os.getenv("ANTHROPIC_API_KEY"),
     # Optional: custom headers for injection/compression directives

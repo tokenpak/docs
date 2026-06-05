@@ -1,137 +1,81 @@
 # TokenPak Recipes
 
-A collection of practical, tested how-to guides for real-world TokenPak use cases. Each recipe is a complete example you can copy-paste and adapt to your needs.
+A collection of how-to guides for real-world TokenPak use cases.
+
+> **Read this first — recipe status labels.** Each recipe is labeled at the top with one of:
+>
+> - **Verified runnable** — the commands and config shown work against the current TokenPak release (default proxy `http://127.0.0.1:8766`).
+> - **Conceptual** — an illustrative pattern, not a copy-paste-runnable script. Some config keys, CLI verbs, or response fields shown are *design illustrations* and are **not** part of the shipped product surface. Read these for the idea, not as a tested runbook.
+>
+> TokenPak's proxy is a **byte-preserving passthrough**: it forwards request and response bodies verbatim and does **not** inject fields such as `cost_cents`, `status`, or `provider` into the JSON response body. Cost and usage data are recorded out-of-band (see [`tokenpak status`](../cli-reference.md) and the cost-monitoring recipe), not returned inline in the response.
 
 ## Recipe Index
 
-| # | Recipe | Use Case | Difficulty | Time |
-|---|--------|----------|-----------|------|
-| 1 | [Multi-Provider Fallback](./01-multi-provider-fallback.md) | Route to Anthropic if OpenAI is down | Beginner | 10 min |
-| 2 | [Budget Caps & Spend Alerts](./02-budget-caps.md) | Set daily/monthly spend limits with alerts | Intermediate | 15 min |
-| 3 | [Per-User Rate Limiting](./03-per-user-rate-limiting.md) | Assign different rate limits to different users | Intermediate | 12 min |
-| 4 | [Model Routing by Use Case](./04-model-routing-by-use-case.md) | Route coding to GPT-4, chat to Haiku automatically | Intermediate | 15 min |
-| 5 | [Cost Monitoring & Observability](./05-cost-monitoring.md) | Export metrics to Prometheus/Grafana dashboards | Advanced | 20 min |
-| 6 | [Streaming Responses](./06-streaming-responses.md) | Receive responses token-by-token in real-time | Advanced | 15 min |
-| 7 | [Local Development with Mock](./07-local-development-mock.md) | Test with mock provider, zero API costs in dev | Beginner | 10 min |
+| # | Recipe | Use Case | Status |
+|---|--------|----------|--------|
+| 1 | [Multi-Provider Fallback](./01-multi-provider-fallback.md) | Route to a backup provider on outage | Conceptual |
+| 2 | [Budget Caps & Spend Alerts](./02-budget-caps.md) | Set spend limits with alerts | Conceptual |
+| 3 | [Per-User Rate Limiting](./03-per-user-rate-limiting.md) | Different rate limits per user tier | Conceptual |
+| 4 | [Model Routing by Use Case](./04-model-routing-by-use-case.md) | Route by task type | Conceptual |
+| 5 | [Cost Monitoring & Observability](./05-cost-monitoring.md) | Track usage and cost | Conceptual |
+| 6 | [Streaming Responses](./06-streaming-responses.md) | Receive responses token-by-token | Verified runnable |
+| 7 | [Local Development with Mock](./07-local-development-mock.md) | Test without real API costs | Conceptual |
 
 ---
 
 ## Quick Start by Use Case
 
 ### "I want to save money"
-1. Start with **[Local Development with Mock](./07-local-development-mock.md)** — dev environment costs nothing
-2. Add **[Budget Caps](./02-budget-caps.md)** — production guardrails
-3. Implement **[Model Routing by Use Case](./04-model-routing-by-use-case.md)** — choose the right model for each task
+1. Look at **[Local Development with Mock](./07-local-development-mock.md)** for a cost-free dev pattern.
+2. Read **[Budget Caps](./02-budget-caps.md)** for the spend-guard pattern.
+3. Consider **[Model Routing by Use Case](./04-model-routing-by-use-case.md)** to use a smaller model where it fits.
 
 ### "I want reliability"
-1. Start with **[Multi-Provider Fallback](./01-multi-provider-fallback.md)** — handle provider outages
-2. Add **[Per-User Rate Limiting](./03-per-user-rate-limiting.md)** — prevent users from overwhelming you
-3. Implement **[Cost Monitoring](./05-cost-monitoring.md)** — see problems before they surprise you
+1. Read **[Multi-Provider Fallback](./01-multi-provider-fallback.md)** for the failover pattern.
+2. Read **[Per-User Rate Limiting](./03-per-user-rate-limiting.md)** for fairness across users.
+3. Read **[Cost Monitoring](./05-cost-monitoring.md)** for visibility into spend.
 
 ### "I want the best user experience"
-1. Start with **[Streaming Responses](./06-streaming-responses.md)** — feel 10x faster
-2. Add **[Model Routing by Use Case](./04-model-routing-by-use-case.md)** — best model for each request
-3. Implement **[Cost Monitoring](./05-cost-monitoring.md)** — ensure reliability
+1. Start with **[Streaming Responses](./06-streaming-responses.md)** — stream tokens as they arrive.
+2. Add **[Model Routing by Use Case](./04-model-routing-by-use-case.md)** — pick a model per request.
+3. Add **[Cost Monitoring](./05-cost-monitoring.md)** — keep an eye on spend.
 
 ---
 
-## Recipe Format
+## How to read a recipe
 
 Every recipe follows this structure:
 
-1. **What this solves** — one-sentence summary
-2. **Prerequisites** — what you need to have set up
-3. **Config Snippet** — copy-paste-ready YAML configuration
-4. **Test & Verify** — step-by-step commands to validate it works
-5. **What Just Happened** — explanation of how it works
-6. **Common Pitfalls** — mistakes to avoid (with ✅ correct way)
+1. **Status** — Verified runnable or Conceptual (see banner above).
+2. **What this solves** — one-sentence summary.
+3. **Prerequisites** — what you need set up.
+4. **Pattern / Config** — the idea, with a config or command sketch.
+5. **What's real today** — which parts are shipped product behavior vs. illustrative.
 
-## Testing Recipes
+## Verifying a Verified-runnable recipe
 
-All recipes are **runnable and tested**. To verify a recipe:
+For recipes labeled **Verified runnable**:
 
-1. Copy the **Config Snippet** to `config.yaml`
-2. Run the **Test & Verify** commands
-3. You should see the **Expected output** shown in the recipe
+1. Start the proxy: `tokenpak serve` (listens on `http://127.0.0.1:8766` by default).
+2. If the recipe ships a config file, check it with `tokenpak config-check <file.json>`.
+3. Run the commands shown and compare against the described behavior.
 
-If you get different output, check the **Common Pitfalls** section.
+Conceptual recipes are not expected to run as written — they illustrate a pattern.
 
-## Combining Recipes
+## Real CLI surface
 
-Recipes can be combined! For example:
+The commands referenced in these recipes that are part of the shipped CLI include:
 
-```yaml
-# config.yaml: "Production Hardened" setup
-# - Multi-provider fallback (reliability)
-# - Budget caps (cost control)
-# - Per-user rate limiting (fairness)
-# - Cost monitoring (visibility)
-# - Streaming (UX)
+- `tokenpak serve` — start the proxy (default `http://127.0.0.1:8766`).
+- `tokenpak config-check <file.json>` — validate a proxy config file. For the proxy config it recommends a `server: { port: 8766, host: '127.0.0.1' }` block.
+- `tokenpak status` — health and recorded usage.
 
-providers:
-  openai: { type: openai, api_key: ${OPENAI_API_KEY} }
-  anthropic: { type: anthropic, api_key: ${ANTHROPIC_API_KEY} }
-
-models:
-  gpt-4:
-    provider: openai
-    fallback_to: claude-3-sonnet  # From recipe 1
-
-budget:  # From recipe 2
-  enabled: true
-  daily_limit_cents: 1000
-  alert_threshold_pct: 80
-
-rate_limit:  # From recipe 3
-  enabled: true
-  default_rps: 10
-  user_tiers:
-    free: { rps: 5 }
-    pro: { rps: 50 }
-
-metrics:  # From recipe 5
-  enabled: true
-  prometheus: { enabled: true, port: 8001 }
-
-streaming:  # From recipe 6
-  enabled: true
-  formats: [sse, chunked]
-```
-
-## Troubleshooting
-
-### "tokenpak validate-config fails"
-- Check syntax: YAML is whitespace-sensitive
-- Verify all keys exist: `providers`, `models`, etc.
-- Run: `tokenpak validate-config config.yaml --verbose` for details
-
-### "Config validates but recipe doesn't work"
-- Check environment variables: `echo $OPENAI_API_KEY`
-- Check provider keys are valid: `tokenpak test-provider openai`
-- Check TokenPak version: `tokenpak --version` (need v1.0+)
-
-### "Recipe works locally but not in production"
-- Config differences: check `config.prod.yaml` vs dev
-- Environment variables: prod machine has different `.env`?
-- Resource limits: token rate limits too low? Check `tokenpak status`
-
----
-
-## Next Steps
-
-After completing a recipe:
-
-1. **Modify it** — adapt config to your use case (different budgets, models, users)
-2. **Automate it** — integrate into CI/CD or systemd service
-3. **Monitor it** — add alerting, metrics, dashboards (see recipe 5)
-4. **Document it** — save your final config, add comments for team
+Run `tokenpak --help` to see the full, authoritative list of subcommands for your installed version. Commands shown in **Conceptual** recipes (for example provider/model listing, spend reconciliation, or usage reports) may not exist in your installed version — always confirm with `tokenpak --help`.
 
 ---
 
 ## Questions?
 
-- **Config help:** `tokenpak validate-config --help`
-- **List all providers:** `tokenpak list-providers`
-- **List all models:** `tokenpak list-models`
+- **Validate a proxy config:** `tokenpak config-check <file.json>`
 - **Health check:** `tokenpak status`
-- **Logs:** `tokenpak logs [--provider openai] [--tail 50]`
+- **Full command list:** `tokenpak --help`

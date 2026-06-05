@@ -19,7 +19,7 @@
 - [ ] **Version command works:** `tokenpak version` shows the correct version
 - [ ] **Update detection:** `tokenpak update --check` detects the new version as available
 - [ ] **Update applies cleanly:** `tokenpak update --dry-run` runs without errors
-- [ ] **Rollback works:** After a test update, `tokenpak rollback` restores previous version
+- [ ] **Downgrade works:** A previous version can be reinstalled cleanly (`pip install tokenpak==<previous>`) and starts without errors
 
 ---
 
@@ -98,4 +98,4 @@ After publishing:
 
 - **No half-releases:** If any check fails, fix it before moving to the next section.
 - **Dry-run first:** Always test `update --dry-run` before committing to a real update.
-- **Rollback tested:** If rollback fails, **do not ship** — fix the rollback mechanism first.
+- **Downgrade tested:** If reinstalling a previous version fails to start cleanly, **do not ship** — investigate before publishing.

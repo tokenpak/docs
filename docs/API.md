@@ -1,6 +1,6 @@
 # TokenPak API Reference
 
-**Complete reference for TokenPak SDK classes, adapters, and utilities.**
+**Complete reference for TokenPak SDK adapters and the local proxy usage pattern.**
 
 ---
 
@@ -8,177 +8,89 @@
 
 | Use Case | Class | Import |
 |----------|-------|--------|
-| Compress context | `HeuristicEngine` | `from tokenpak import HeuristicEngine` |
-| Track token counts | `CompletionTracker` | `from tokenpak import CompletionTracker` |
-| Manage cache | `CacheManager` | `from tokenpak import CacheManager` |
-| Validate requests | `RequestValidator` | `from tokenpak.validation import RequestValidator` |
-| Anthropic SDK | `AnthropicAdapter` | `from tokenpak.adapters import AnthropicAdapter` |
-| OpenAI SDK | `OpenAIAdapter` | `from tokenpak.adapters import OpenAIAdapter` |
-| LangChain | `LangChainAdapter` | `from tokenpak.adapters import LangChainAdapter` |
-| LiteLLM | `LiteLLMAdapter` | `from tokenpak.adapters import LiteLLMAdapter` |
+| Anthropic SDK | `AnthropicAdapter` | `from tokenpak.sdk import AnthropicAdapter` |
+| OpenAI SDK | `OpenAIAdapter` | `from tokenpak.sdk import OpenAIAdapter` |
+| LangChain | `LangChainAdapter` | `from tokenpak.sdk import LangChainAdapter` |
+| LiteLLM | `LiteLLMAdapter` | `from tokenpak.sdk import LiteLLMAdapter` |
+| Adapter base + exceptions | `TokenPakAdapter` | `from tokenpak.sdk.base import TokenPakAdapter` |
 
 ---
 
-## Core Classes
+## Primary Usage Pattern — Point Your Existing SDK at the Proxy
 
-### HeuristicEngine
+The most common way to use TokenPak is to run the local proxy and point your **existing** provider SDK or tool at it via a base URL. No code changes to your provider client are required beyond the base URL.
 
-Fast, rule-based compression engine. No external dependencies.
-
-```python
-from tokenpak import HeuristicEngine
-from tokenpak.engines.base import CompactionHints
-
-engine = HeuristicEngine()
-
-# Basic compression
-compressed = engine.compact(text)
-
-# With target budget
-hints = CompactionHints(target_tokens=2048)
-compressed = engine.compact(text, hints)
-
-# Get compression stats
-result = engine.compress_with_stats(text)
-print(f"Reduction: {result['compression_ratio']:.1%}")
+```bash
+# Start the proxy (default: http://127.0.0.1:8766)
+tokenpak serve
 ```
 
-**Methods:**
-- `compress(text: str) -> str` — Compress text to best effort
-- `compact(text: str, hints: CompactionHints) -> str` — Compress with budget constraints
-- `compress_with_stats(text: str) -> dict` — Return compressed text + metrics
-
----
-
-### CompletionTracker
-
-Track API spend, token counts, and latency.
+```bash
+# Point an existing tool/SDK at the proxy
+export ANTHROPIC_BASE_URL=http://127.0.0.1:8766
+export OPENAI_BASE_URL=http://127.0.0.1:8766/v1
+```
 
 ```python
-from tokenpak import CompletionTracker
+# Using the standard Anthropic SDK, routed through TokenPak
+import anthropic
 
-tracker = CompletionTracker()
-
-# Record a completion
-tracker.record(
-    model="claude-3-5-sonnet-20241022",
-    tokens_in=1200,
-    tokens_out=300,
-    cost_usd=0.0156,
-    latency_ms=1250
+client = anthropic.Anthropic(
+    base_url="http://127.0.0.1:8766",
+    api_key="sk-ant-...",
 )
 
-# Summarize stats
-summary = tracker.summary()
-print(f"Total cost: ${summary['total_cost']:.4f}")
-print(f"Requests: {summary['num_requests']}")
-print(f"Avg latency: {summary['avg_latency_ms']:.0f}ms")
-
-# Get top models by cost
-expensive = tracker.top_models_by_cost(limit=5)
+response = client.messages.create(
+    model="claude-sonnet-4-6",
+    max_tokens=1024,
+    messages=[{"role": "user", "content": "Explain quantum computing"}],
+)
+print(response.content[0].text)
 ```
 
-**Methods:**
-- `record(model, tokens_in, tokens_out, cost_usd, latency_ms=None)`
-- `summary() -> dict` — Aggregate statistics
-- `top_models_by_cost(limit=5) -> list` — Most expensive models
-- `stats_by_model(model: str) -> dict` — Stats for one model
+The proxy transparently applies compression and context handling, then forwards to the upstream provider.
 
 ---
 
-### CacheManager
+## SDK Adapters
 
-In-process cache with hit-rate tracking.
+The `tokenpak.sdk` adapter layer provides a thin, uniform wrapper around the proxy for callers that prefer a plain-dict request/response interface. All adapters share the `TokenPakAdapter` base contract:
 
-```python
-from tokenpak import CacheManager
+- `prepare_request(request: dict) -> dict` — Validate and normalize the request
+- `send(prepared: dict) -> dict` — POST to the proxy, return the raw response
+- `parse_response(response: dict) -> dict` — Convert to provider-native format
+- `extract_tokens(response: dict) -> dict` — Extract token-usage counts
+- `call(request: dict) -> dict` — Convenience: `prepare_request` → `send` → `parse_response`
 
-cache = CacheManager(ttl_seconds=3600)
+**Constructor parameters** (all adapters):
 
-# Set and get
-cache.set("key1", {"response": "data"})
-value = cache.get("key1")
-
-# Stats
-stats = cache.stats()
-print(f"Hit rate: {stats['hit_rate']:.1%}")
-
-# Clear
-cache.clear()
-```
-
-**Methods:**
-- `set(key: str, value: Any, ttl_seconds: int = None)`
-- `get(key: str) -> Any | None`
-- `delete(key: str)`
-- `clear()`
-- `stats() -> dict` — Hit rate, size, evictions
-
----
-
-### RequestValidator
-
-Validate and normalize incoming LLM requests.
-
-```python
-from tokenpak.validation import RequestValidator
-
-validator = RequestValidator()
-
-# Validate request
-result = validator.validate({
-    "model": "gpt-4",
-    "messages": [{"role": "user", "content": "Hello"}],
-    "max_tokens": 100
-})
-
-if result.is_valid:
-    print("Request OK")
-else:
-    print(f"Errors: {result.errors}")
-```
-
-**Methods:**
-- `validate(request: dict) -> ValidationResult` — Check request validity
-- `normalize(request: dict) -> dict` — Normalize to standard format
-
----
-
-## Adapters
-
-Adapters let you use TokenPak with different LLM SDKs.
-
-### Base Adapter Pattern
-
-All adapters implement:
-- `prepare_request(request: dict) -> dict` — Validate and normalize
-- `send(request: dict) -> dict` — POST to proxy
-- `parse_response(response: dict) -> dict` — Convert response to SDK format
-- `extract_tokens(response: dict) -> dict` — Get token counts
-- `call(request: dict) -> dict` — Full pipeline
+| Parameter | Type | Required | Default | Description |
+|-----------|------|----------|---------|-------------|
+| `base_url` | str | Yes | — | Proxy URL, e.g. `http://127.0.0.1:8766` |
+| `api_key` | str | No | `""` | Provider API key (forwarded to upstream) |
+| `timeout_s` | float | No | `120.0` | Request timeout in seconds |
 
 ### AnthropicAdapter
 
-Use TokenPak proxy with Anthropic SDK.
+Routes requests to `/v1/messages` on the proxy.
 
 ```python
-from tokenpak.adapters import AnthropicAdapter
+from tokenpak.sdk import AnthropicAdapter
 
 adapter = AnthropicAdapter(
-    base_url="http://localhost:8766",
-    api_key="sk-ant-..."
+    base_url="http://127.0.0.1:8766",
+    api_key="sk-ant-...",
 )
 
-# Full request
 response = adapter.call({
-    "model": "claude-3-5-sonnet-20241022",
+    "model": "claude-sonnet-4-6",
     "max_tokens": 1024,
     "messages": [
         {"role": "user", "content": "Explain quantum computing"}
-    ]
+    ],
 })
 
-# Extract tokens
+# Extract token usage
 tokens = adapter.extract_tokens(response)
 print(f"Input: {tokens['input_tokens']}")
 print(f"Output: {tokens['output_tokens']}")
@@ -186,19 +98,19 @@ print(f"Output: {tokens['output_tokens']}")
 
 ### OpenAIAdapter
 
-Use TokenPak proxy with OpenAI SDK.
+Routes requests to `/v1/chat/completions` on the proxy.
 
 ```python
-from tokenpak.adapters import OpenAIAdapter
+from tokenpak.sdk import OpenAIAdapter
 
 adapter = OpenAIAdapter(
-    base_url="http://localhost:8766/v1",
-    api_key="sk-..."
+    base_url="http://127.0.0.1:8766",
+    api_key="sk-...",
 )
 
 response = adapter.call({
-    "model": "gpt-4",
-    "messages": [{"role": "user", "content": "Hello"}]
+    "model": "gpt-4o",
+    "messages": [{"role": "user", "content": "Hello"}],
 })
 
 tokens = adapter.extract_tokens(response)
@@ -206,47 +118,38 @@ tokens = adapter.extract_tokens(response)
 
 ### LangChainAdapter
 
-Route LangChain requests through TokenPak.
+Adapter for LangChain integrations.
 
 ```python
-from tokenpak.adapters import LangChainAdapter
+from tokenpak.sdk import LangChainAdapter
 
 adapter = LangChainAdapter(
-    base_url="http://localhost:8766",
-    api_key="sk-..."
+    base_url="http://127.0.0.1:8766",
+    api_key="sk-...",
 )
 
-# Automatically routes to Anthropic or OpenAI based on provider field
 response = adapter.call({
-    "provider": "openai",
-    "model": "gpt-4",
-    "messages": [{"role": "user", "content": "Hi"}]
+    "model": "gpt-4o",
+    "messages": [{"role": "user", "content": "Hi"}],
 })
 ```
 
 ### LiteLLMAdapter
 
-Use TokenPak with LiteLLM-style model strings.
+Adapter for LiteLLM-style provider-agnostic routing.
 
 ```python
-from tokenpak.adapters import LiteLLMAdapter
+from tokenpak.sdk import LiteLLMAdapter
 
 adapter = LiteLLMAdapter(
-    base_url="http://localhost:8766",
-    api_key="sk-..."
+    base_url="http://127.0.0.1:8766",
+    api_key="sk-...",
 )
 
-# Provider inferred from model string
 response = adapter.call({
-    "model": "openai/gpt-4o",
-    "messages": [{"role": "user", "content": "Hi"}]
-})
-
-# Or Anthropic
-response = adapter.call({
-    "model": "anthropic/claude-3-5-sonnet-20241022",
+    "model": "claude-sonnet-4-6",
     "messages": [{"role": "user", "content": "Hi"}],
-    "max_tokens": 512
+    "max_tokens": 512,
 })
 ```
 
@@ -254,143 +157,88 @@ response = adapter.call({
 
 ## Exceptions
 
-### TokenPakAdapterError
+All adapter exceptions derive from `TokenPakAdapterError` and are importable from `tokenpak.sdk.base`.
 
-Base exception for all adapter errors.
+```
+TokenPakAdapterError (base)
+├── TokenPakTimeoutError   — proxy did not respond within timeout_s
+├── TokenPakConfigError    — missing required fields / bad config
+└── TokenPakAuthError      — 401 or 403 from the proxy
+```
 
 ```python
-from tokenpak.adapters import TokenPakAdapterError
+from tokenpak.sdk.base import (
+    TokenPakAdapterError,
+    TokenPakTimeoutError,
+    TokenPakConfigError,
+    TokenPakAuthError,
+)
 
 try:
     response = adapter.call(request)
+except TokenPakTimeoutError:
+    print("Proxy timed out")
+except TokenPakAuthError as e:
+    print(f"Auth failed: {e} (HTTP {e.status_code})")
+except TokenPakConfigError as e:
+    print(f"Config error: {e}")
 except TokenPakAdapterError as e:
-    print(f"Adapter error (HTTP {e.status_code}): {e.message}")
-    print(f"Raw response: {e.raw}")
+    print(f"Adapter error: {e} (HTTP {e.status_code})")
 ```
 
-**Attributes:**
+**`TokenPakAdapterError` attributes:**
 - `message: str` — Error description
-- `status_code: int | None` — HTTP status code
-- `raw: Any` — Raw response body
+- `status_code: int | None` — HTTP status code, if any
+- `raw: Any` — Raw response body, if any
 
 ---
 
 ## Common Patterns
 
-### Pattern: Track Costs Per Request
+### Pattern: Extract Token Usage Per Request
 
 ```python
-from tokenpak.adapters import AnthropicAdapter
-from tokenpak import CompletionTracker
-import time
+from tokenpak.sdk import AnthropicAdapter
 
-adapter = AnthropicAdapter(...)
-tracker = CompletionTracker()
+adapter = AnthropicAdapter(
+    base_url="http://127.0.0.1:8766",
+    api_key="sk-ant-...",
+)
 
-start = time.time()
-response = adapter.call(request)
-latency_ms = (time.time() - start) * 1000
+response = adapter.call({
+    "model": "claude-sonnet-4-6",
+    "max_tokens": 1024,
+    "messages": [{"role": "user", "content": "Summarize this"}],
+})
 
 tokens = adapter.extract_tokens(response)
-tracker.record(
-    model=request["model"],
-    tokens_in=tokens["input_tokens"],
-    tokens_out=tokens["output_tokens"],
-    cost_usd=compute_cost(tokens),
-    latency_ms=latency_ms
-)
+# tokens = {"input_tokens": ..., "output_tokens": ..., "cache_read_input_tokens": ..., ...}
 ```
 
-### Pattern: Compress Before Sending
+### Pattern: Inspect Savings via the Proxy
 
-```python
-from tokenpak import HeuristicEngine
-from tokenpak.engines.base import CompactionHints
+The proxy tracks savings and exposes them over HTTP. After a request, query the last-request stats:
 
-engine = HeuristicEngine()
-
-# Compress long context
-original_context = "... very long file contents ..."
-compressed = engine.compact(
-    original_context,
-    CompactionHints(target_tokens=2048)
-)
-
-# Use in request
-response = adapter.call({
-    "model": "claude-3-5-sonnet-20241022",
-    "messages": [
-        {
-            "role": "user",
-            "content": f"Context:\n{compressed}\n\nQuestion: ?"
-        }
-    ],
-    "max_tokens": 500
-})
+```bash
+curl http://127.0.0.1:8766/stats/last
 ```
 
-### Pattern: Validate Request Before Sending
+Or via the CLI:
 
-```python
-from tokenpak.validation import RequestValidator
-
-validator = RequestValidator()
-request = {
-    "model": "gpt-4",
-    "messages": [...],
-    "max_tokens": 100
-}
-
-result = validator.validate(request)
-if not result.is_valid:
-    print(f"Invalid request: {result.errors}")
-else:
-    response = adapter.call(request)
+```bash
+tokenpak stats
+tokenpak savings
 ```
 
 ---
 
 ## Type Hints
 
-Common type patterns used across TokenPak:
+Common type patterns used across the SDK:
 
-- `Optional[T]` — Value may be None
-- `Union[A, B]` or `A | B` — Either type accepted
-- `list[T]` — List of items of type T
-- `dict[K, V]` — Dictionary mapping K → V
-- `Any` — Dynamically typed
-
-Example:
-```python
-def compress(
-    text: str,
-    hints: CompactionHints | None = None
-) -> str:
-    ...
-```
-
----
-
-## Module Organization
-
-```
-tokenpak/
-├── adapters/
-│   ├── __init__.py        # AnthropicAdapter, OpenAIAdapter, etc.
-│   ├── base.py            # TokenPakAdapter (base class)
-│   ├── anthropic.py       # Anthropic SDK adapter
-│   ├── openai.py          # OpenAI SDK adapter
-│   ├── langchain.py       # LangChain adapter
-│   └── litellm.py         # LiteLLM adapter
-├── engines/
-│   ├── base.py            # CompressionEngine (base), CompactionHints
-│   └── heuristic.py       # HeuristicEngine (default)
-├── validation/
-│   └── request_validator.py  # RequestValidator
-├── __init__.py            # Top-level imports
-└── telemetry/
-    └── ...                # CacheManager, CompletionTracker
-```
+- `Optional[T]` / `T | None` — Value may be `None`
+- `dict[str, Any]` — Request and response payloads
+- `list[dict]` — Message lists
 
 ---
 
@@ -398,9 +246,9 @@ tokenpak/
 
 - **Examples:** See the [`examples/`](https://github.com/tokenpak/tokenpak/tree/main/examples) directory in the repository
 - **Tests:** See the [`tests/`](https://github.com/tokenpak/tokenpak/tree/main/tests) directory in the repository
-- **Troubleshooting:** See [QUICKSTART.md](./QUICKSTART.md#troubleshooting)
+- **Quick start:** See [QUICKSTART.md](./QUICKSTART.md)
 - **Issues:** Open a GitHub issue on [tokenpak/tokenpak](https://github.com/tokenpak/tokenpak)
 
 ---
 
-**Last updated:** 2026-03-27 | **TokenPak v1.0.2+**
+**TokenPak v1.7.1** — Licensed under Apache 2.0.

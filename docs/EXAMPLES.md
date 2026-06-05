@@ -43,7 +43,7 @@ client = anthropic.Anthropic(
 
 # Your existing code works unchanged
 message = client.messages.create(
-    model="claude-opus-4-5",
+    model="claude-opus-4-8",
     max_tokens=1024,
     messages=[{"role": "user", "content": "Explain quantum entanglement."}]
 )
@@ -54,13 +54,12 @@ print(message.content[0].text)
 
 ```
 # Proxy startup:
-TokenPak Forward Proxy v4
+TokenPak proxy
 Listening: http://0.0.0.0:8766
 Mode: hybrid (Protected/Code strict, Narrative compressed)
-Vault: 2,943 blocks
 
-# Per-request log:
-[req] claude-opus-4-5 | 1,240 in → 892 sent (28% saved) | 156 out | $0.0089
+# Per-request log (illustrative; your tokens, savings, and cost depend on your traffic):
+[req] claude-opus-4-8 | <in> in → <sent> sent (<saved>% saved) | <out> out | $<cost>
 ```
 
 ---
@@ -88,7 +87,7 @@ response = requests.post(
         "Content-Type": "application/json",
     },
     json={
-        "model": "claude-sonnet-4-5",
+        "model": "claude-sonnet-4-6",
         "max_tokens": 512,
         "messages": [
             {
@@ -146,7 +145,7 @@ client = anthropic.Anthropic(
 # This request will automatically get relevant docs injected
 # from your vault without you doing anything
 message = client.messages.create(
-    model="claude-sonnet-4-5",
+    model="claude-sonnet-4-6",
     max_tokens=1024,
     messages=[{
         "role": "user",
@@ -158,7 +157,7 @@ message = client.messages.create(
 
 ```bash
 # Check what was injected in the last request
-curl http://localhost:8766/recent | python3 -m json.tool | grep -A5 "vault_injection"
+curl http://localhost:8766/stats/last | python3 -m json.tool | grep -A5 "vault_injection"
 # {
 #   "vault_injection": {
 #     "chunks_injected": 3,
@@ -220,7 +219,7 @@ def check_proxy_health(proxy_url: str = "http://localhost:8766") -> dict:
 
 def chat_with_retry(
     prompt: str,
-    model: str = "claude-sonnet-4-5",
+    model: str = "claude-sonnet-4-6",
     proxy_url: str = "http://localhost:8766",
     api_key: str = None,
 ) -> str:
@@ -287,7 +286,7 @@ import websockets
 
 async def stream_chat(
     prompt: str,
-    model: str = "claude-sonnet-4-5",
+    model: str = "claude-sonnet-4-6",
     ws_url: str = "ws://localhost:8767/ws",
     api_key: str = None,
 ):
@@ -373,7 +372,7 @@ echo '{"model":"claude-haiku-4-5","messages":[{"role":"user","content":"hi"}],"m
 | Start proxy | `tokenpak serve` |
 | Check health | `curl http://localhost:8766/health` |
 | View stats | `curl http://localhost:8766/stats` |
-| See last request | `curl http://localhost:8766/recent` |
+| See last request | `curl http://localhost:8766/stats/last` |
 | Rebuild vault index | `tokenpak vault reindex` |
 | Hybrid mode | `TOKENPAK_MODE=hybrid tokenpak serve` |
 | Aggressive mode | `TOKENPAK_MODE=aggressive tokenpak serve` |
@@ -395,5 +394,4 @@ TOKENPAK_INJECT_MIN_SCORE=0.6   # Minimum similarity score for vault injection
 ## See Also
 
 - [API Reference](api-reference.md) — Full endpoint documentation
-- [Production SLA](production-sla.md) — Performance targets
 - Compression Benchmark — Compression analysis and optimization guide

@@ -1,237 +1,73 @@
-# Recipe: Local Development with Mock Provider
+# Recipe: Local Development with a Mock Provider
 
-**What this solves:** Use a mock/stub provider in development to avoid API costs and rate limits while testing, then switch to real providers in production with zero code changes.
+> **Status: Conceptual.** This recipe describes a cost-free local-testing *pattern*. The declarative `mock` provider with canned `responses:` / `patterns:`, the `enabled: false` / `fallback_provider` config keys, the inline `content` / `cost_cents` response fields, and the `tokenpak logs --provider` command shown below are **illustrative** — they are not part of the validated config surface or shipped CLI of the current TokenPak release. There is no built-in `mock` provider type in the current proxy config schema. Confirm any CLI command against `tokenpak --help`.
+
+**What this solves:** The pattern of testing your integration against a stub instead of a real provider, so development costs nothing and is deterministic.
 
 ## Prerequisites
-- TokenPak installed
-- Python or local environment for testing
-- Understanding of mock responses (deterministic, predictable)
+- TokenPak installed (`tokenpak --help`)
+- A local environment for testing
 
-## Config Snippet
+## The pattern (illustrative config)
+
+The idea is to point your dev environment at a stub that returns canned responses, then swap to real providers in production with no application code change. The YAML below is a **conceptual** illustration only — a built-in `mock` provider type is not part of the validated TokenPak config surface:
 
 ```yaml
-# config.yaml (local development)
+# ILLUSTRATIVE ONLY — not a validated TokenPak config schema.
+# A built-in "mock" provider type does not exist in the current release.
 providers:
-  # Mock provider: responds instantly with fake data
   mock:
     type: mock
-    # Mock responses follow patterns:
-    # - latency: fake delay (simulate real provider)
-    # - deterministic: same input = same output
-    latency_ms: 200  # Simulate 200ms API latency
-
-    # Canned responses (by model)
+    latency_ms: 200
     responses:
       gpt-4:
-        default: "Mock GPT-4 response: [mock output for testing]"
-        # Override by keyword
+        default: "Mock GPT-4 response"
         patterns:
-          debug: "Mock response: Debugged your code successfully"
-          refactor: "Mock response: Code refactored for clarity"
-
-      claude-3-sonnet:
-        default: "Mock Claude response: [test output]"
-        patterns:
-          explain: "Mock response: Explained the concept clearly"
-
-  # Real providers: configured but not used in dev
-  openai:
-    type: openai
-    api_key: ${OPENAI_API_KEY}
-    enabled: false  # Disabled in dev
-
-  anthropic:
-    type: anthropic
-    api_key: ${ANTHROPIC_API_KEY}
-    enabled: false
-
-models:
-  # Development: use mock
-  gpt-4:
-    provider: mock
-    fallback_provider: mock  # Never fall back to real API in dev
-
-  gpt-3.5-turbo:
-    provider: mock
-    fallback_provider: mock
-
-  claude-3-sonnet:
-    provider: mock
-    fallback_provider: mock
-
-  # Real providers commented out for dev
-  # gpt-4-prod: { provider: openai }
-  # claude-3-sonnet-prod: { provider: anthropic }
+          debug: "Mock response: Debugged your code"
 ```
 
-**Production config (config.prod.yaml):**
-```yaml
-providers:
-  openai:
-    type: openai
-    api_key: ${OPENAI_API_KEY}
-    enabled: true
+## What's real today
 
-  anthropic:
-    type: anthropic
-    api_key: ${ANTHROPIC_API_KEY}
-    enabled: true
+- Start the proxy with `tokenpak serve` (default `http://127.0.0.1:8766`).
+- The proxy is a byte-preserving passthrough: responses are the upstream provider's bodies, unchanged. TokenPak does **not** inject a `content` or `cost_cents` field, and there is no `tokenpak logs --provider` verb. Use `tokenpak status` for recorded usage.
+- Validate a proxy config file with `tokenpak config-check <file.json>`. The `mock` provider block above is **not** part of that validated surface.
 
-  # Mock disabled in production
-  mock:
-    type: mock
-    enabled: false
+### A real way to get the same benefit today
 
-models:
-  gpt-4: { provider: openai, fallback_provider: anthropic }
-  gpt-3.5-turbo: { provider: openai, fallback_provider: anthropic }
-  claude-3-sonnet: { provider: anthropic, fallback_provider: openai }
-```
-
-## Test & Verify
-
-**Step 1:** Validate dev config:
-```bash
-tokenpak validate-config config.yaml
-# Expected output:
-# ✓ Config valid
-# ✓ Providers: mock (enabled)
-# ✓ Real providers: openai (disabled), anthropic (disabled)
-# ✓ All models route to mock
-```
-
-**Step 2:** Start proxy in dev mode:
-```bash
-tokenpak proxy --config config.yaml
-# Should start instantly (no API key validation)
-```
-
-**Step 3:** Make a request (mock response, instant):
-```bash
-time curl -X POST http://localhost:8000/v1/messages \
-  -H "Content-Type: application/json" \
-  -d '{
-    "model": "gpt-4",
-    "messages": [{"role": "user", "content": "Debug my code"}]
-  }' -s | jq '.content'
-
-# Expected output:
-# "Mock response: Debugged your code successfully"
-# real 0.2s (includes mock latency, very fast)
-```
-
-**Step 4:** Make many requests without API costs:
-```bash
-# Simulate high-volume testing
-for i in {1..100}; do
-  curl -X POST http://localhost:8000/v1/messages \
-    -d '{"model": "gpt-4", "messages": [{"role": "user", "content": "request $i"}]}' \
-    -s > /dev/null
-done
-echo "Made 100 requests, $0 cost!"
-```
-
-**Step 5:** Verify no real API calls (check logs):
-```bash
-tokenpak logs --provider openai
-# Expected output: EMPTY (no real API calls)
-
-tokenpak logs --provider mock
-# Expected output: 100 calls to mock provider
-```
-
-**Step 6:** Switch to production config:
-```bash
-# Stop dev proxy
-pkill -f "tokenpak proxy --config config.yaml"
-
-# Start production proxy
-tokenpak proxy --config config.prod.yaml
-# Now real API calls will be made
-```
-
-**Step 7:** Verify switch worked:
-```bash
-curl -X POST http://localhost:8000/v1/messages \
-  -d '{"model": "gpt-4", "messages": [{"role": "user", "content": "Real request"}]}' \
-  -s | jq '.cost_cents'
-
-# Expected output: non-zero cost (real API call)
-```
-
-## Integration Example (Python)
+Run your own local stub server that speaks the provider's HTTP API, and point your client (or the proxy's upstream URL) at it during development. Your application code stays identical; only the endpoint differs between dev and prod.
 
 ```python
-# app.py - Same code works in dev or prod
-import requests
-import os
+# stub_server.py — a tiny deterministic stand-in for the provider API.
+# Run this locally and point your app/proxy upstream at it in dev.
+from http.server import BaseHTTPRequestHandler, HTTPServer
+import json
 
-def get_ai_response(prompt):
-    response = requests.post(
-        'http://localhost:8000/v1/messages',
-        json={
-            'model': 'gpt-4',  # Uses mock in dev, real in prod
-            'messages': [{'role': 'user', 'content': prompt}]
-        }
-    )
-    return response.json()['content']
+class Handler(BaseHTTPRequestHandler):
+    def do_POST(self):
+        length = int(self.headers.get("Content-Length", 0))
+        _ = self.rfile.read(length)  # ignore body; return a canned reply
+        body = json.dumps({
+            "id": "msg_stub",
+            "type": "message",
+            "role": "assistant",
+            "content": [{"type": "text", "text": "Mock response for local dev"}],
+        }).encode()
+        self.send_response(200)
+        self.send_header("Content-Type", "application/json")
+        self.end_headers()
+        self.wfile.write(body)
 
-# Run in dev: fast, free, deterministic
-# Run in prod: slow, costs money, real answers
-
-if __name__ == '__main__':
-    mode = os.getenv('ENV', 'dev')
-    print(f"Running in {mode} mode")
-    print(get_ai_response("Hello"))
+if __name__ == "__main__":
+    HTTPServer(("127.0.0.1", 8099), Handler).serve_forever()
 ```
 
-**Run in dev:**
-```bash
-ENV=dev python app.py
-# Output: Mock response: [test output]
-# No API calls, instant
-```
+Your application talks to the proxy (`http://127.0.0.1:8766`) the same way in dev and prod; you switch the upstream between the stub and the real provider via configuration/environment, with no code change.
 
-**Run in prod:**
-```bash
-ENV=prod python app.py
-# Output: Real GPT-4 response
-# Costs money, realistic
-```
+## Designing a dev-mock strategy
 
-## What Just Happened
-
-TokenPak routed your request to the mock provider in development:
-
-1. **Request arrives** with model `gpt-4`
-2. **Provider lookup** finds `gpt-4 → mock`
-3. **Mock provider** returns canned response instantly
-4. **Client receives** response without any real API call
-
-In production, the same code routes to real providers — no application changes needed.
-
-## Common Pitfalls
-
-**Pitfall 1: Mock responses are too different from reality**
-- ❌ Wrong: Mock always says "success", real API has variability
-- ✅ Right: Make mocks realistic: include error cases, vary response lengths
-
-**Pitfall 2: Forgetting to switch configs**
-- ❌ Wrong: Deploy to production with `config.yaml` (dev mocks enabled)
-- ✅ Right: CI/CD enforces `config.prod.yaml` on production deployments
-
-**Pitfall 3: Mock latency is too low**
-- ❌ Wrong: `latency_ms: 0` (tests pass in dev, timeout in prod)
-- ✅ Right: `latency_ms: 200` - 500 (realistic, catches slow code paths)
-
-**Pitfall 4: Real providers still enabled in dev**
-- ❌ Wrong: `enabled: true` for OpenAI in dev, can accidentally burn budget
-- ✅ Right: Explicitly `enabled: false` for real providers in dev config
-
-**Pitfall 5: Mock responses are too static**
-- ❌ Wrong: Every request returns identical response
-- ✅ Right: Vary by prompt keyword: `patterns: {debug: "...", refactor: "..."}`
-
-**Pitfall 6: No way to test fallback logic**
-- ❌ Wrong: Can't test "what if primary provider fails?" in dev
-- ✅ Right: Add mock provider with `failure_rate: 0.2` to test fallbacks
+- **Keep mocks realistic.** Include error cases and varied response lengths, not just a single "success."
+- **Don't ship dev config to prod.** Make CI/CD select the production config explicitly.
+- **Simulate latency.** A zero-latency stub can hide slow code paths that only appear against a real provider.
+- **Don't leave real providers reachable in dev** if the point is to avoid spend — make the dev path point only at the stub.
+- **Vary responses** by input where it matters, so tests exercise more than one branch.
+- **Be able to simulate failures** (e.g. a stub that returns errors some of the time) so you can test your fallback/retry logic.

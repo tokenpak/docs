@@ -24,17 +24,17 @@
 ### 1. Install TokenPak and LiteLLM
 
 ```bash
-pip install litellm
+pip install litellm tokenpak
 
 # TokenPak runs as a standalone proxy service
-# See: https://github.com/...tokenpak#getting-started
+# See: https://github.com/tokenpak/tokenpak
 ```
 
 ### 2. Start TokenPak Proxy
 
 ```bash
 # TokenPak default: http://localhost:8766/v1
-python -m tokenpak.proxy --port 8766
+tokenpak serve --port 8766
 ```
 
 Verify proxy is running:
@@ -174,22 +174,21 @@ See TokenPak Model Support for the full list.
 Check that requests are flowing through TokenPak correctly:
 
 ```bash
-# Check TokenPak stats endpoint
+# Per-session stats (counters + cache attribution by origin)
 curl http://localhost:8766/stats | jq .
 
-# Example output:
+# Cache-hit metrics
+curl http://localhost:8766/cache-stats | jq .
+
+# The cache-stats endpoint reports keys such as:
 {
-  "cached": 12,
-  "compressed_requests": 45,
-  "token_usage": {
-    "input": 2840,
-    "output": 1230,
-    "cached": 340  # Tokens saved by caching
-  }
+  "total_requests": 45,
+  "cache_hits": 12,
+  "hit_rate": 0.27
 }
 ```
 
-If your request doesn't appear in stats, check:
+The exact fields depend on your TokenPak version; run the commands above to see the current shape. If your request doesn't appear in stats, check:
 1. TokenPak is running (`curl http://localhost:8766/health`)
 2. `api_base` in LiteLLM config matches TokenPak port (default `8766`)
 3. Firewall/network allows `localhost:8766` connection
@@ -242,13 +241,13 @@ litellm.exceptions.AuthenticationError: Invalid API key
 **Fix:**
 1. Verify `ANTHROPIC_API_KEY` is set correctly
 2. TokenPak passes your API key upstream — check it matches your provider (Anthropic, OpenAI, etc.)
-3. Test directly against TokenPak: `curl -H "Authorization: Bearer sk-ant-..." http://localhost:8766/v1/models`
+3. Test directly against TokenPak's health endpoint: `curl http://localhost:8766/health`
 
 ---
 
 ### Requests not cached
 
-**Symptom:** Stats show `cached: 0` even after repeated identical requests
+**Symptom:** `cache-stats` shows `cache_hits: 0` even after repeated identical requests
 
 **Cause:** Likely mismatch in request parameters (temperature, top_p, etc.)
 

@@ -92,7 +92,7 @@ pip install tokenpak
 python3 -c "import yaml; yaml.safe_load(open('proxy.yaml'))"
 
 # If that works, check TokenPak parsing
-tokenpak validate-config proxy.yaml
+tokenpak config-check proxy.json
 
 # Common mistakes:
 # - Tabs instead of spaces (use spaces only)
@@ -152,9 +152,8 @@ custom_providers:
 
 **Fix:**
 ```bash
-# Check what models the provider supports
-tokenpak list-models anthropic
-tokenpak list-models openai
+# Check the models the proxy currently knows about
+curl http://localhost:8766/v1/models
 
 # Use a valid model name:
 # Anthropic: claude-3-opus, claude-3-sonnet, claude-3-haiku
@@ -241,8 +240,9 @@ providers:
   anthropic:
     timeout_seconds: 60  # Default is 30
 
-# Or check provider status
-tokenpak provider-status anthropic
+# Or check provider/circuit-breaker health
+curl http://localhost:8766/circuit-breakers
+curl http://localhost:8766/degradation
 
 # If the provider is actually down:
 # TokenPak will automatically try fallback providers
@@ -279,8 +279,8 @@ curl https://api.openai.com/v1/models \
 
 **Fix:**
 ```bash
-# Check available models:
-tokenpak list-models openai
+# Check the models the proxy currently knows about:
+curl http://localhost:8766/v1/models
 
 # If the model exists but isn't available to you:
 # - Check your API tier (free vs paid)
@@ -322,17 +322,14 @@ rate_limiting:
 
 **Fix:**
 ```bash
-# Check provider status
-tokenpak provider-status
+# Check provider/circuit-breaker health
+curl http://localhost:8766/circuit-breakers
 
 # Check API keys for all providers
 tokenpak doctor
 
 # If a provider is temporarily down, TokenPak will mark it as unhealthy
 # and only use it again after a recovery check (default 30s)
-
-# To force a provider back into rotation
-tokenpak provider-force-health anthropic healthy
 
 # Add more fallbacks in proxy.yaml:
 routing:
@@ -359,7 +356,7 @@ providers:
       output_cost_per_1m_tokens: 15.00
 
 # Check TokenPak's calculated costs:
-tokenpak cost-breakdown
+tokenpak cost
 
 # If you have enterprise pricing, contact us for custom rates
 ```
@@ -371,10 +368,7 @@ tokenpak cost-breakdown
 
 **Fix:**
 ```bash
-# Check what models have pricing
-tokenpak list-pricing
-
-# If a model is missing, add it manually:
+# If a model is missing pricing, add it manually:
 # Edit proxy.yaml with the pricing from the provider's docs
 
 # Or request it be added to TokenPak
@@ -415,7 +409,7 @@ curl -X POST http://localhost:8766/v1/messages \
 **Fix:**
 ```bash
 # Rebuild the vault index
-tokenpak rebuild-vault-index
+tokenpak vault reindex
 
 # Or clear and let it regenerate
 rm -f ~/.tokenpak/vault-index.json
@@ -435,8 +429,9 @@ cache:
   ttl_seconds: 3600  # Entries expire after 1 hour
   eviction_policy: "lru"  # Least recently used
 
-# Check cache stats:
-tokenpak cache-stats
+# Check proxy stats (includes cache activity):
+tokenpak status
+curl http://localhost:8766/stats
 
 # If memory still grows, file a bug with logs:
 tokenpak serve --debug > tokenpak.log 2>&1

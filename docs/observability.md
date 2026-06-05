@@ -14,7 +14,7 @@ TokenPak includes comprehensive error tracking and telemetry for production depl
 The error logger automatically captures exceptions with context for post-mortem analysis.
 
 ```python
-from tokenpak.telemetry import get_error_logger
+from tokenpak.telemetry.error_logger import get_error_logger
 
 logger = get_error_logger()
 
@@ -39,7 +39,7 @@ except Exception as e:
 For automatic exception logging, use the `@log_exception` decorator:
 
 ```python
-from tokenpak.telemetry import log_exception
+from tokenpak.telemetry.error_logger import log_exception
 
 @log_exception(
     request_id="req-456",
@@ -95,76 +95,48 @@ This keeps active logs lean while preserving historical data for analysis.
 
 ## CLI Commands
 
-### Generate Error Report
+### Export Telemetry Events
+
+Export telemetry/event data to JSON or CSV with `tokenpak telemetry export`:
 
 ```bash
-# Report for last 1 day (default)
-tokenpak telemetry error-report
+# Export to JSON (default format)
+tokenpak telemetry export --format json
 
-# Report for last 7 days
-tokenpak telemetry error-report --days 7
+# Export to CSV
+tokenpak telemetry export --format csv
 
-# Filter by error type
-tokenpak telemetry error-report --type ValueError
+# Filter by time window
+tokenpak telemetry export --since 2026-03-01 --until 2026-03-31
 
-# JSON format for scripting
-tokenpak telemetry error-report --format json
+# Filter by provider
+tokenpak telemetry export --provider anthropic
 ```
 
-Output example:
-```
-============================================================
-Error Report — Last 1 day(s)
-Generated: 2026-03-24T17:35:22Z
-============================================================
+**Options:**
 
-Total Errors: 42
+| Option | Description |
+|--------|-------------|
+| `--format` | Output format: `json` or `csv` |
+| `--since` | Include events on/after this date |
+| `--until` | Include events on/before this date |
+| `--provider` | Filter to a single provider |
 
-By Error Type:
-  ValueError: 18
-  TimeoutError: 12
-  AuthenticationError: 8
-  KeyError: 4
-
-By Provider:
-  openai: 22
-  anthropic: 15
-  azure: 5
-
-============================================================
-```
-
-### List Log Files
-
-```bash
-# List recent logs
-tokenpak telemetry logs
-
-# Show more files
-tokenpak telemetry logs --limit 20
-```
-
-### Export for Analysis
-
-```bash
-# Export all logs from last 7 days
-tokenpak telemetry export logs.json
-
-# Export last 30 days
-tokenpak telemetry export logs.json --days 30
-```
-
-Exported format is a JSON array of log entries, suitable for:
+The exported data is suitable for:
 - External analysis tools
 - Visualization dashboards
 - Integration with error tracking services (Sentry, DataDog, etc.)
+
+### Inspect Errors Programmatically
+
+Error counts and metrics are available through the error logger API (see below). To browse the raw error log files, read the JSON Lines files under `~/.tokenpak/logs/` directly.
 
 ## Prometheus Metrics
 
 Error counts by type are tracked for Prometheus integration:
 
 ```python
-from tokenpak.telemetry import get_error_logger
+from tokenpak.telemetry.error_logger import get_error_logger
 
 logger = get_error_logger()
 metrics = logger.get_metrics()
@@ -195,7 +167,7 @@ The error logger is fully thread-safe. Multiple threads can log errors concurren
 
 ```python
 import threading
-from tokenpak.telemetry import get_error_logger
+from tokenpak.telemetry.error_logger import get_error_logger
 
 logger = get_error_logger()
 
@@ -234,10 +206,10 @@ chmod 755 ~/.tokenpak/logs/
 
 ### "Malformed log line"
 
-Log files can be partially corrupt if the process crashes. This is non-fatal — the logger skips malformed lines and continues. Use the `export` command to clean and extract valid entries:
+Log files can be partially corrupt if the process crashes. This is non-fatal — the logger skips malformed lines and continues. Use the `export` command to re-emit valid entries:
 
 ```bash
-tokenpak telemetry export clean-logs.json --days 7
+tokenpak telemetry export --format json
 ```
 
 ### Large log files
