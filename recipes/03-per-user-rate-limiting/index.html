@@ -1285,34 +1285,6 @@
   
   
     <li class="md-nav__item">
-      <a href="../../plugin-system-architecture/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Plugin System Architecture
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
       <a href="../../assets/DIAGRAMS/" class="md-nav__link">
         
   
@@ -2258,10 +2230,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#config-snippet" class="md-nav__link">
+  <a href="#the-pattern-illustrative-config" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Config Snippet
+        The pattern (illustrative config)
       
     </span>
   </a>
@@ -2269,10 +2241,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#test-verify" class="md-nav__link">
+  <a href="#whats-real-today" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Test &amp; Verify
+        What's real today
       
     </span>
   </a>
@@ -2280,21 +2252,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#what-just-happened" class="md-nav__link">
+  <a href="#designing-per-user-rate-limits" class="md-nav__link">
     <span class="md-ellipsis">
       
-        What Just Happened
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#common-pitfalls" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Common Pitfalls
+        Designing per-user rate limits
       
     </span>
   </a>
@@ -2865,10 +2826,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#config-snippet" class="md-nav__link">
+  <a href="#the-pattern-illustrative-config" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Config Snippet
+        The pattern (illustrative config)
       
     </span>
   </a>
@@ -2876,10 +2837,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#test-verify" class="md-nav__link">
+  <a href="#whats-real-today" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Test &amp; Verify
+        What's real today
       
     </span>
   </a>
@@ -2887,21 +2848,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#what-just-happened" class="md-nav__link">
+  <a href="#designing-per-user-rate-limits" class="md-nav__link">
     <span class="md-ellipsis">
       
-        What Just Happened
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#common-pitfalls" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Common Pitfalls
+        Designing per-user rate limits
       
     </span>
   </a>
@@ -2929,135 +2879,56 @@
 
 
 <h1 id="recipe-per-user-rate-limiting">Recipe: Per-User Rate Limiting<a class="headerlink" href="#recipe-per-user-rate-limiting" title="Permanent link">&para;</a></h1>
-<p><strong>What this solves:</strong> Assign different rate limits (requests/minute) to different users so power users aren't throttled by casual users' consumption.</p>
+<blockquote>
+<p><strong>Status: Conceptual.</strong> This recipe describes a per-user rate-limiting <em>pattern</em>. The elaborate <code>user_tiers</code> / <code>user_assignments</code> config block (per-tier <code>rps</code>, <code>burst</code>, <code>enforce: queue|degrade</code>, etc.) and the inline <code>status</code> / <code>cost_cents</code> response fields shown below are <strong>illustrative</strong> — they are not part of the validated config surface of the current TokenPak release, and the proxy does not inject those fields into the response body. A flat, global rate-limit setting <em>does</em> exist (see "What's real today"). Confirm any CLI command against <code>tokenpak --help</code>.</p>
+</blockquote>
+<p><strong>What this solves:</strong> The pattern of giving different users different request-rate budgets so heavy users don't throttle casual ones.</p>
 <h2 id="prerequisites">Prerequisites<a class="headerlink" href="#prerequisites" title="Permanent link">&para;</a></h2>
 <ul>
-<li>TokenPak installed with <code>rate-limit</code> plugin enabled</li>
-<li>User authentication configured (API keys or JWT tokens)</li>
-<li>Understanding of your expected usage pattern (requests per minute per user tier)</li>
+<li>TokenPak installed (<code>tokenpak --help</code>)</li>
+<li>A way to identify users (API key or token) in your requests</li>
+<li>A sense of your expected per-user request rates</li>
 </ul>
-<h2 id="config-snippet">Config Snippet<a class="headerlink" href="#config-snippet" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code><span class="c1"># config.yaml</span>
+<h2 id="the-pattern-illustrative-config">The pattern (illustrative config)<a class="headerlink" href="#the-pattern-illustrative-config" title="Permanent link">&para;</a></h2>
+<p>The idea is to assign each user a tier with its own rate budget. The YAML below is a <strong>conceptual</strong> illustration only — the tiered schema is not the validated TokenPak config surface:</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># ILLUSTRATIVE ONLY — not a validated TokenPak config schema</span>
 <span class="nt">rate_limit</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
-<span class="w">  </span><span class="c1"># Global default: 10 requests per minute</span>
 <span class="w">  </span><span class="nt">default_rps</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10</span>
-
-<span class="w">  </span><span class="c1"># Per-user tiers with different limits</span>
 <span class="w">  </span><span class="nt">user_tiers</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">free</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">rps</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5</span><span class="w">  </span><span class="c1"># Free tier: 5 req/min</span>
-<span class="w">      </span><span class="nt">burst</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2</span><span class="w">  </span><span class="c1"># Allow 2 extra in a burst</span>
-<span class="w">      </span><span class="nt">window_seconds</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">60</span>
-
-<span class="w">    </span><span class="nt">standard</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">rps</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">50</span><span class="w">  </span><span class="c1"># Standard tier: 50 req/min</span>
-<span class="w">      </span><span class="nt">burst</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10</span>
-<span class="w">      </span><span class="nt">window_seconds</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">60</span>
-
-<span class="w">    </span><span class="nt">enterprise</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">rps</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">500</span><span class="w">  </span><span class="c1"># Enterprise: 500 req/min (unlimited in practice)</span>
-<span class="w">      </span><span class="nt">burst</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">100</span>
-<span class="w">      </span><span class="nt">window_seconds</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">60</span>
-
-<span class="w">  </span><span class="c1"># Map users to tiers</span>
+<span class="w">    </span><span class="nt">free</span><span class="p">:</span><span class="w">       </span><span class="p p-Indicator">{</span><span class="nt"> rps</span><span class="p">:</span><span class="w"> </span><span class="nv">5</span><span class="p p-Indicator">,</span><span class="nt">   burst</span><span class="p">:</span><span class="w"> </span><span class="nv">2</span><span class="p p-Indicator">,</span><span class="nt">   window_seconds</span><span class="p">:</span><span class="w"> </span><span class="nv">60</span><span class="w"> </span><span class="p p-Indicator">}</span>
+<span class="w">    </span><span class="nt">standard</span><span class="p">:</span><span class="w">   </span><span class="p p-Indicator">{</span><span class="nt"> rps</span><span class="p">:</span><span class="w"> </span><span class="nv">50</span><span class="p p-Indicator">,</span><span class="nt">  burst</span><span class="p">:</span><span class="w"> </span><span class="nv">10</span><span class="p p-Indicator">,</span><span class="nt">  window_seconds</span><span class="p">:</span><span class="w"> </span><span class="nv">60</span><span class="w"> </span><span class="p p-Indicator">}</span>
+<span class="w">    </span><span class="nt">enterprise</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt"> rps</span><span class="p">:</span><span class="w"> </span><span class="nv">500</span><span class="p p-Indicator">,</span><span class="nt"> burst</span><span class="p">:</span><span class="w"> </span><span class="nv">100</span><span class="p p-Indicator">,</span><span class="nt"> window_seconds</span><span class="p">:</span><span class="w"> </span><span class="nv">60</span><span class="w"> </span><span class="p p-Indicator">}</span>
 <span class="w">  </span><span class="nt">user_assignments</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">user-123</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">tier</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">free</span>
-<span class="w">    </span><span class="nt">user-456</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">tier</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pro</span>
-<span class="w">    </span><span class="nt">user-789</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">tier</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">enterprise</span>
-
-<span class="w">  </span><span class="c1"># Enforcement behavior</span>
-<span class="w">  </span><span class="nt">enforce</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">reject</span><span class="w">  </span><span class="c1"># Options: reject, queue, degrade</span>
-<span class="w">  </span><span class="c1"># reject: return 429 Too Many Requests</span>
-<span class="w">  </span><span class="c1"># queue: hold request, process when rate available</span>
-<span class="w">  </span><span class="c1"># degrade: route to cheaper model if rate exceeded</span>
-
-<span class="nt">providers</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">openai</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">openai</span>
-<span class="w">    </span><span class="nt">api_key</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${OPENAI_API_KEY}</span>
-
-<span class="nt">models</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">gpt-4</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt"> provider</span><span class="p">:</span><span class="w"> </span><span class="nv">openai</span><span class="w"> </span><span class="p p-Indicator">}</span>
-<span class="w">  </span><span class="nt">gpt-3.5-turbo</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt"> provider</span><span class="p">:</span><span class="w"> </span><span class="nv">openai</span><span class="w"> </span><span class="p p-Indicator">}</span>
+<span class="w">    </span><span class="nt">user-123</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt"> tier</span><span class="p">:</span><span class="w"> </span><span class="nv">free</span><span class="w"> </span><span class="p p-Indicator">}</span>
+<span class="w">    </span><span class="nt">user-456</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt"> tier</span><span class="p">:</span><span class="w"> </span><span class="nv">standard</span><span class="w"> </span><span class="p p-Indicator">}</span>
+<span class="w">  </span><span class="nt">enforce</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">reject</span><span class="w">   </span><span class="c1"># conceptual options: reject (429) | queue | degrade</span>
 </code></pre></div>
-<h2 id="test-verify">Test &amp; Verify<a class="headerlink" href="#test-verify" title="Permanent link">&para;</a></h2>
-<p><strong>Step 1:</strong> Validate config:
-<div class="highlight"><pre><span></span><code>tokenpak<span class="w"> </span>validate-config<span class="w"> </span>config.yaml
-<span class="c1"># Expected output:</span>
-<span class="c1"># ✓ Config valid</span>
-<span class="c1"># ✓ Rate limiting: 3 tiers configured (free/standard/enterprise)</span>
-<span class="c1"># ✓ User assignments: 3 users (user-123→free, user-456→pro, user-789→enterprise)</span>
-</code></pre></div></p>
-<p><strong>Step 2:</strong> Start proxy and test free tier user:
-<div class="highlight"><pre><span></span><code>tokenpak<span class="w"> </span>proxy<span class="w"> </span>--config<span class="w"> </span>config.yaml
+<h2 id="whats-real-today">What's real today<a class="headerlink" href="#whats-real-today" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Start the proxy with <code>tokenpak serve</code> (default <code>http://127.0.0.1:8766</code>).</li>
+<li>The shipped proxy config (validated by <code>tokenpak config-check &lt;file.json&gt;</code>) supports <strong>flat, global</strong> rate-limit fields — <code>rate_limit_requests</code> and <code>rate_limit_window</code> — not the per-user tier graph above. There is no validated per-user-tier surface in the current release.</li>
+<li>The proxy is a byte-preserving passthrough: a rejected or accepted request is reflected by the <strong>HTTP status code and body of the actual response</strong>, not by a <code>status</code> or <code>cost_cents</code> field injected into the JSON body.</li>
+</ul>
+<div class="highlight"><pre><span></span><code>tokenpak<span class="w"> </span>serve<span class="w">   </span><span class="c1"># http://127.0.0.1:8766</span>
 
-<span class="c1"># In another terminal, simulate 6 requests from a free-tier user</span>
-<span class="k">for</span><span class="w"> </span>i<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="o">{</span><span class="m">1</span>..6<span class="o">}</span><span class="p">;</span><span class="w"> </span><span class="k">do</span>
-<span class="w">  </span>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>http://localhost:8000/v1/messages<span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>-H<span class="w"> </span><span class="s2">&quot;Authorization: Bearer user-123&quot;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>-d<span class="w"> </span><span class="s1">&#39;{&quot;model&quot;: &quot;gpt-4&quot;, &quot;messages&quot;: [{&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: &quot;Hi&quot;}]}&#39;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>-s<span class="w"> </span><span class="p">|</span><span class="w"> </span>jq<span class="w"> </span><span class="s1">&#39;{status: .status, cost: .cost_cents}&#39;</span>
-<span class="k">done</span>
-
-<span class="c1"># Expected output:</span>
-<span class="c1"># ✓ Request 1-5: { status: 200, cost: 15 }</span>
-<span class="c1"># ✗ Request 6: { status: 429, message: &quot;Rate limit exceeded. Free tier: 5 req/min&quot; }</span>
-</code></pre></div></p>
-<p><strong>Step 3:</strong> Test standard tier user (higher limit):
-<div class="highlight"><pre><span></span><code><span class="c1"># Same 6 requests from standard-tier user</span>
-<span class="k">for</span><span class="w"> </span>i<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="o">{</span><span class="m">1</span>..6<span class="o">}</span><span class="p">;</span><span class="w"> </span><span class="k">do</span>
-<span class="w">  </span>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>http://localhost:8000/v1/messages<span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>-H<span class="w"> </span><span class="s2">&quot;Authorization: Bearer user-456&quot;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>-d<span class="w"> </span><span class="s1">&#39;{&quot;model&quot;: &quot;gpt-4&quot;, &quot;messages&quot;: [{&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: &quot;Hi&quot;}]}&#39;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>-s<span class="w"> </span><span class="p">|</span><span class="w"> </span>jq<span class="w"> </span><span class="s1">&#39;{status: .status}&#39;</span>
-<span class="k">done</span>
-
-<span class="c1"># Expected output:</span>
-<span class="c1"># ✓ Request 1-6: { status: 200 }</span>
-</code></pre></div></p>
-<p><strong>Step 4:</strong> Verify per-user isolation (different windows don't interfere):
-<div class="highlight"><pre><span></span><code><span class="c1"># Hammer free tier user, then check standard tier is unaffected</span>
-ab<span class="w"> </span>-n<span class="w"> </span><span class="m">50</span><span class="w"> </span>-c<span class="w"> </span><span class="m">5</span><span class="w"> </span>-H<span class="w"> </span><span class="s2">&quot;Authorization: Bearer user-123&quot;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>-p<span class="w"> </span>request.json<span class="w"> </span>http://localhost:8000/v1/messages
-<span class="c1"># Results: ~5 success, ~45 rejected (429)</span>
-
-<span class="c1"># Standard tier user still has full quota</span>
-curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>http://localhost:8000/v1/messages<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;Authorization: Bearer user-456&quot;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;{&quot;model&quot;: &quot;gpt-4&quot;, &quot;messages&quot;: [{&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: &quot;Still works?&quot;}]}&#39;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>-s<span class="w"> </span><span class="p">|</span><span class="w"> </span>jq<span class="w"> </span><span class="s1">&#39;.status&#39;</span>
-<span class="c1"># Expected output: 200</span>
-</code></pre></div></p>
-<h2 id="what-just-happened">What Just Happened<a class="headerlink" href="#what-just-happened" title="Permanent link">&para;</a></h2>
-<p>TokenPak tracked each user independently:</p>
-<ol>
-<li><strong>Request arrives</strong> with <code>Authorization: Bearer user-123</code></li>
-<li><strong>User lookup</strong> in <code>user_assignments</code> → tier is <code>free</code></li>
-<li><strong>Rate limit check</strong> against <code>free</code> tier's <code>5 rps</code> window</li>
-<li><strong>If within limit</strong>: request processed normally</li>
-<li><strong>If exceeded</strong>: request rejected with <code>429 Too Many Requests</code></li>
-</ol>
-<p>Each user has their own request counter, resetting every 60 seconds. Users cannot starve each other — high-volume power users operate within their tier limit independently.</p>
-<h2 id="common-pitfalls">Common Pitfalls<a class="headerlink" href="#common-pitfalls" title="Permanent link">&para;</a></h2>
-<p><strong>Pitfall 1: Rate limits are too uniform</strong>
-- ❌ Wrong: All users get 10 req/min regardless of tier
-- ✅ Right: Differentiate clearly: free=5, standard=50, enterprise=500</p>
-<p><strong>Pitfall 2: Burst allowance is missing</strong>
-- ❌ Wrong: Reject immediately on 6th request (no flexibility)
-- ✅ Right: Allow small bursts: <code>burst: 2</code> to handle traffic spikes</p>
-<p><strong>Pitfall 3: User tier assignment is stale</strong>
-- ❌ Wrong: Hardcoded tiers that don't update when user upgrades
-- ✅ Right: Query billing system on every request: <code>user_tier_source: https://api.example.com/user-tier/{user_id}</code></p>
-<p><strong>Pitfall 4: Window reset is unpredictable</strong>
-- ❌ Wrong: Sliding window (60-second window, resets every second) — hard to predict
-- ✅ Right: Fixed windows (resets every minute, hour at 00:00 UTC) — easier to reason about</p>
-<p><strong>Pitfall 5: Burst is too large</strong>
-- ❌ Wrong: <code>rps: 5, burst: 20</code> — allows free user to explode with 25 requests
-- ✅ Right: <code>rps: 5, burst: 2</code> — small buffer for legitimate traffic spikes, not abuse</p>
+<span class="c1"># A normal request; check the HTTP status with -i / -w, not a body field:</span>
+curl<span class="w"> </span>-i<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>http://127.0.0.1:8766/v1/messages<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;Content-Type: application/json&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;x-api-key: </span><span class="nv">$ANTHROPIC_API_KEY</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;anthropic-version: 2023-06-01&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;{&quot;model&quot;: &quot;claude-3-5-sonnet-20241022&quot;, &quot;max_tokens&quot;: 16,</span>
+<span class="s1">       &quot;messages&quot;: [{&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: &quot;Hi&quot;}]}&#39;</span>
+</code></pre></div>
+<h2 id="designing-per-user-rate-limits">Designing per-user rate limits<a class="headerlink" href="#designing-per-user-rate-limits" title="Permanent link">&para;</a></h2>
+<p>If you need true per-user tiers, implement them in your application or an upstream gateway. These principles apply regardless:</p>
+<ul>
+<li><strong>Differentiate tiers clearly</strong> instead of one uniform limit for everyone.</li>
+<li><strong>Allow a small burst</strong> to absorb legitimate traffic spikes without rejecting on the very next request.</li>
+<li><strong>Keep tier assignment fresh</strong> — a user who upgrades should not stay on the old tier.</li>
+<li><strong>Prefer predictable windows</strong> (fixed windows are easier to reason about than fine-grained sliding ones).</li>
+<li><strong>Keep burst small relative to the rate</strong> so it smooths spikes rather than enabling abuse.</li>
+</ul>
 
 
 

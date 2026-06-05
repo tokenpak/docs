@@ -1285,34 +1285,6 @@
   
   
     <li class="md-nav__item">
-      <a href="../../plugin-system-architecture/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Plugin System Architecture
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
       <a href="../../assets/DIAGRAMS/" class="md-nav__link">
         
   
@@ -3155,7 +3127,7 @@ tokenpak<span class="w"> </span>setup
 <div class="highlight"><pre><span></span><code><span class="p">{</span>
 <span class="w">  </span><span class="nt">&quot;status&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ok&quot;</span><span class="p">,</span>
 <span class="w">  </span><span class="nt">&quot;uptime_seconds&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;version&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;1.5.0&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;version&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;1.7.1&quot;</span><span class="p">,</span>
 <span class="w">  </span><span class="nt">&quot;requests_total&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
 <span class="w">  </span><span class="nt">&quot;requests_errors&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
 <span class="w">  </span><span class="nt">&quot;compression_ratio_avg&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.0</span>
@@ -3172,7 +3144,7 @@ tokenpak<span class="w"> </span>setup
 
 <span class="n">client</span> <span class="o">=</span> <span class="n">Anthropic</span><span class="p">()</span>  <span class="c1"># reads ANTHROPIC_BASE_URL and ANTHROPIC_API_KEY from env</span>
 <span class="n">message</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">messages</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
-    <span class="n">model</span><span class="o">=</span><span class="s2">&quot;claude-3-5-haiku-latest&quot;</span><span class="p">,</span>
+    <span class="n">model</span><span class="o">=</span><span class="s2">&quot;claude-haiku-4-5&quot;</span><span class="p">,</span>
     <span class="n">max_tokens</span><span class="o">=</span><span class="mi">64</span><span class="p">,</span>
     <span class="n">messages</span><span class="o">=</span><span class="p">[{</span><span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;user&quot;</span><span class="p">,</span> <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="s2">&quot;Say hello from TokenPak.&quot;</span><span class="p">}],</span>
 <span class="p">)</span>
@@ -3243,7 +3215,7 @@ python<span class="w"> </span>your_script.py
 </code></pre></div>
 <p>In notebooks, restart the kernel after changing shell environment variables.</p>
 <h3 id="savings-shows-0-after-several-requests">savings shows 0 after several requests<a class="headerlink" href="#savings-shows-0-after-several-requests" title="Permanent link">&para;</a></h3>
-<p>Compression runs on prompts above the default threshold (4,500 tokens). Short chat messages are passed through unchanged. For larger prompts, use <code>tokenpak status</code> and check <code>compression_ratio_avg</code> in the <code>/health</code> response.</p>
+<p>Compression runs on prompts above a configurable default threshold. Short chat messages are passed through unchanged. For larger prompts, use <code>tokenpak status</code> and check <code>compression_ratio_avg</code> in the <code>/health</code> response.</p>
 <hr />
 <h2 id="removing-tokenpak">Removing TokenPak<a class="headerlink" href="#removing-tokenpak" title="Permanent link">&para;</a></h2>
 <p>To stop routing Anthropic SDK traffic through TokenPak:</p>

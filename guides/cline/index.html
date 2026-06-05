@@ -1285,34 +1285,6 @@
   
   
     <li class="md-nav__item">
-      <a href="../../plugin-system-architecture/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Plugin System Architecture
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
       <a href="../../assets/DIAGRAMS/" class="md-nav__link">
         
   
@@ -3159,7 +3131,7 @@ tokenpak<span class="w"> </span>setup
 <div class="highlight"><pre><span></span><code><span class="p">{</span>
 <span class="w">  </span><span class="nt">&quot;status&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ok&quot;</span><span class="p">,</span>
 <span class="w">  </span><span class="nt">&quot;uptime_seconds&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;version&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;1.5.0&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;version&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;1.7.1&quot;</span><span class="p">,</span>
 <span class="w">  </span><span class="nt">&quot;requests_total&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
 <span class="w">  </span><span class="nt">&quot;requests_errors&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
 <span class="w">  </span><span class="nt">&quot;compression_ratio_avg&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.0</span>
@@ -3247,7 +3219,7 @@ Anthropic-compatible base URL: http://localhost:8767
 </ol>
 <p>In remote VS Code sessions, <code>localhost</code> means the machine where the Cline extension host runs. If VS Code is connected to a remote host, run TokenPak on that remote host or use a reachable proxy URL.</p>
 <h3 id="savings-shows-0-after-several-turns">savings shows 0 after several turns<a class="headerlink" href="#savings-shows-0-after-several-turns" title="Permanent link">&para;</a></h3>
-<p>Compression runs on prompts above the default threshold (4,500 tokens). Short Cline tasks are passed through unchanged. For larger tasks, use <code>tokenpak status</code> and check <code>compression_ratio_avg</code> in the <code>/health</code> response.</p>
+<p>Compression runs on prompts above a configurable default threshold. Short Cline tasks are passed through unchanged. For larger tasks, use <code>tokenpak status</code> and check <code>compression_ratio_avg</code> in the <code>/health</code> response.</p>
 <hr />
 <h2 id="removing-tokenpak">Removing TokenPak<a class="headerlink" href="#removing-tokenpak" title="Permanent link">&para;</a></h2>
 <p>To stop routing Cline through TokenPak, switch Cline's provider settings back to the provider's default base URL or clear the custom base URL field. Restart the Cline task so the new setting takes effect.</p>

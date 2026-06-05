@@ -1603,34 +1603,6 @@
   
   
     <li class="md-nav__item">
-      <a href="../plugin-system-architecture/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Plugin System Architecture
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
       <a href="../assets/DIAGRAMS/" class="md-nav__link">
         
   
@@ -3412,7 +3384,7 @@
 <h2 id="how-to-measure-your-own-savings">How to Measure Your Own Savings<a class="headerlink" href="#how-to-measure-your-own-savings" title="Permanent link">&para;</a></h2>
 <h3 id="1-start-the-proxy">1. Start the Proxy<a class="headerlink" href="#1-start-the-proxy" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="nb">export</span><span class="w"> </span><span class="nv">ANTHROPIC_API_KEY</span><span class="o">=</span>sk-ant-...
-tokenpak<span class="w"> </span>proxy
+tokenpak<span class="w"> </span>serve
 </code></pre></div>
 <h3 id="2-point-your-code-at-it">2. Point Your Code at It<a class="headerlink" href="#2-point-your-code-at-it" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="c1"># Before: Uses real API directly</span>
@@ -3457,7 +3429,7 @@ tokenpak<span class="w"> </span>report<span class="w"> </span>--json
 <h2 id="setup-options">Setup Options<a class="headerlink" href="#setup-options" title="Permanent link">&para;</a></h2>
 <h3 id="option-1-proxy-recommended">Option 1: Proxy (Recommended)<a class="headerlink" href="#option-1-proxy-recommended" title="Permanent link">&para;</a></h3>
 <p>Sit TokenPak between your code and the LLM API. No code changes.</p>
-<div class="highlight"><pre><span></span><code>tokenpak<span class="w"> </span>proxy<span class="w"> </span>--port<span class="w"> </span><span class="m">8766</span>
+<div class="highlight"><pre><span></span><code>tokenpak<span class="w"> </span>serve<span class="w"> </span>--port<span class="w"> </span><span class="m">8766</span>
 </code></pre></div>
 <p>Then swap one URL in your client:</p>
 <div class="highlight"><pre><span></span><code><span class="n">client</span> <span class="o">=</span> <span class="n">Anthropic</span><span class="p">(</span><span class="n">base_url</span><span class="o">=</span><span class="s2">&quot;http://localhost:8766&quot;</span><span class="p">)</span>
@@ -3518,12 +3490,12 @@ tokenpak<span class="w"> </span>report<span class="w"> </span>--json
 </table>
 <p>Set your profile:</p>
 <div class="highlight"><pre><span></span><code><span class="nb">export</span><span class="w"> </span><span class="nv">TOKENPAK_PROFILE</span><span class="o">=</span>balanced<span class="w">  </span><span class="c1"># default</span>
-tokenpak<span class="w"> </span>proxy
+tokenpak<span class="w"> </span>serve
 </code></pre></div>
 <p>Or per-request:</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># This request uses aggressive compression</span>
 <span class="n">response</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">messages</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
-    <span class="n">model</span><span class="o">=</span><span class="s2">&quot;claude-opus-4-6&quot;</span><span class="p">,</span>
+    <span class="n">model</span><span class="o">=</span><span class="s2">&quot;claude-opus-4-8&quot;</span><span class="p">,</span>
     <span class="n">messages</span><span class="o">=</span><span class="p">[</span><span class="o">...</span><span class="p">],</span>
     <span class="n">extra_headers</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;X-TokenPak-Profile&quot;</span><span class="p">:</span> <span class="s2">&quot;aggressive&quot;</span><span class="p">}</span>
 <span class="p">)</span>
@@ -3564,7 +3536,7 @@ tokenpak<span class="w"> </span>proxy
 <hr />
 <h2 id="next-steps">Next Steps<a class="headerlink" href="#next-steps" title="Permanent link">&para;</a></h2>
 <ol>
-<li><strong>Start simple:</strong> <code>tokenpak proxy</code> + swap one URL</li>
+<li><strong>Start simple:</strong> <code>tokenpak serve</code> + swap one URL</li>
 <li><strong>Measure:</strong> Run <code>tokenpak savings</code> / <code>tokenpak stats</code> after a few requests</li>
 <li><strong>Optimize:</strong> Test different profiles with your workload</li>
 <li><strong>Scale:</strong> Deploy to production when comfortable</li>
@@ -3578,7 +3550,7 @@ tokenpak<span class="w"> </span>proxy
 <li><strong>What if the LLM needs the exact original tokens?</strong> → Use bypass header or switch to <code>safe</code> profile</li>
 <li><strong>Does this work with streaming?</strong> → Yes, with caveats (cache hits are less frequent in stream mode)</li>
 </ul>
-<p>See <a href="../TROUBLESHOOTING/">TROUBLESHOOTING.md</a> for more.</p>
+<p>See <a href="../troubleshooting/">Troubleshooting</a> for more.</p>
 
 
 

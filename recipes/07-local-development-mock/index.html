@@ -80,7 +80,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#recipe-local-development-with-mock-provider" class="md-skip">
+        <a href="#recipe-local-development-with-a-mock-provider" class="md-skip">
           Skip to content
         </a>
       
@@ -1285,34 +1285,6 @@
   
   
     <li class="md-nav__item">
-      <a href="../../plugin-system-architecture/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Plugin System Architecture
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
       <a href="../../assets/DIAGRAMS/" class="md-nav__link">
         
   
@@ -2370,10 +2342,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#config-snippet" class="md-nav__link">
+  <a href="#the-pattern-illustrative-config" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Config Snippet
+        The pattern (illustrative config)
       
     </span>
   </a>
@@ -2381,43 +2353,38 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#test-verify" class="md-nav__link">
+  <a href="#whats-real-today" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Test &amp; Verify
+        What's real today
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="What&#39;s real today">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#a-real-way-to-get-the-same-benefit-today" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A real way to get the same benefit today
       
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#integration-example-python" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Integration Example (Python)
-      
-    </span>
-  </a>
+        
+      </ul>
+    </nav>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#what-just-happened" class="md-nav__link">
+  <a href="#designing-a-dev-mock-strategy" class="md-nav__link">
     <span class="md-ellipsis">
       
-        What Just Happened
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#common-pitfalls" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Common Pitfalls
+        Designing a dev-mock strategy
       
     </span>
   </a>
@@ -2876,10 +2843,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#config-snippet" class="md-nav__link">
+  <a href="#the-pattern-illustrative-config" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Config Snippet
+        The pattern (illustrative config)
       
     </span>
   </a>
@@ -2887,43 +2854,38 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#test-verify" class="md-nav__link">
+  <a href="#whats-real-today" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Test &amp; Verify
+        What's real today
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="What&#39;s real today">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#a-real-way-to-get-the-same-benefit-today" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A real way to get the same benefit today
       
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#integration-example-python" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Integration Example (Python)
-      
-    </span>
-  </a>
+        
+      </ul>
+    </nav>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#what-just-happened" class="md-nav__link">
+  <a href="#designing-a-dev-mock-strategy" class="md-nav__link">
     <span class="md-ellipsis">
       
-        What Just Happened
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#common-pitfalls" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Common Pitfalls
+        Designing a dev-mock strategy
       
     </span>
   </a>
@@ -2950,207 +2912,71 @@
   
 
 
-<h1 id="recipe-local-development-with-mock-provider">Recipe: Local Development with Mock Provider<a class="headerlink" href="#recipe-local-development-with-mock-provider" title="Permanent link">&para;</a></h1>
-<p><strong>What this solves:</strong> Use a mock/stub provider in development to avoid API costs and rate limits while testing, then switch to real providers in production with zero code changes.</p>
+<h1 id="recipe-local-development-with-a-mock-provider">Recipe: Local Development with a Mock Provider<a class="headerlink" href="#recipe-local-development-with-a-mock-provider" title="Permanent link">&para;</a></h1>
+<blockquote>
+<p><strong>Status: Conceptual.</strong> This recipe describes a cost-free local-testing <em>pattern</em>. The declarative <code>mock</code> provider with canned <code>responses:</code> / <code>patterns:</code>, the <code>enabled: false</code> / <code>fallback_provider</code> config keys, the inline <code>content</code> / <code>cost_cents</code> response fields, and the <code>tokenpak logs --provider</code> command shown below are <strong>illustrative</strong> — they are not part of the validated config surface or shipped CLI of the current TokenPak release. There is no built-in <code>mock</code> provider type in the current proxy config schema. Confirm any CLI command against <code>tokenpak --help</code>.</p>
+</blockquote>
+<p><strong>What this solves:</strong> The pattern of testing your integration against a stub instead of a real provider, so development costs nothing and is deterministic.</p>
 <h2 id="prerequisites">Prerequisites<a class="headerlink" href="#prerequisites" title="Permanent link">&para;</a></h2>
 <ul>
-<li>TokenPak installed</li>
-<li>Python or local environment for testing</li>
-<li>Understanding of mock responses (deterministic, predictable)</li>
+<li>TokenPak installed (<code>tokenpak --help</code>)</li>
+<li>A local environment for testing</li>
 </ul>
-<h2 id="config-snippet">Config Snippet<a class="headerlink" href="#config-snippet" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code><span class="c1"># config.yaml (local development)</span>
+<h2 id="the-pattern-illustrative-config">The pattern (illustrative config)<a class="headerlink" href="#the-pattern-illustrative-config" title="Permanent link">&para;</a></h2>
+<p>The idea is to point your dev environment at a stub that returns canned responses, then swap to real providers in production with no application code change. The YAML below is a <strong>conceptual</strong> illustration only — a built-in <code>mock</code> provider type is not part of the validated TokenPak config surface:</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># ILLUSTRATIVE ONLY — not a validated TokenPak config schema.</span>
+<span class="c1"># A built-in &quot;mock&quot; provider type does not exist in the current release.</span>
 <span class="nt">providers</span><span class="p">:</span>
-<span class="w">  </span><span class="c1"># Mock provider: responds instantly with fake data</span>
 <span class="w">  </span><span class="nt">mock</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">mock</span>
-<span class="w">    </span><span class="c1"># Mock responses follow patterns:</span>
-<span class="w">    </span><span class="c1"># - latency: fake delay (simulate real provider)</span>
-<span class="w">    </span><span class="c1"># - deterministic: same input = same output</span>
-<span class="w">    </span><span class="nt">latency_ms</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">200</span><span class="w">  </span><span class="c1"># Simulate 200ms API latency</span>
-
-<span class="w">    </span><span class="c1"># Canned responses (by model)</span>
+<span class="w">    </span><span class="nt">latency_ms</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">200</span>
 <span class="w">    </span><span class="nt">responses</span><span class="p">:</span>
 <span class="w">      </span><span class="nt">gpt-4</span><span class="p">:</span>
-<span class="w">        </span><span class="nt">default</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Mock</span><span class="nv"> </span><span class="s">GPT-4</span><span class="nv"> </span><span class="s">response:</span><span class="nv"> </span><span class="s">[mock</span><span class="nv"> </span><span class="s">output</span><span class="nv"> </span><span class="s">for</span><span class="nv"> </span><span class="s">testing]&quot;</span>
-<span class="w">        </span><span class="c1"># Override by keyword</span>
+<span class="w">        </span><span class="nt">default</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Mock</span><span class="nv"> </span><span class="s">GPT-4</span><span class="nv"> </span><span class="s">response&quot;</span>
 <span class="w">        </span><span class="nt">patterns</span><span class="p">:</span>
-<span class="w">          </span><span class="nt">debug</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Mock</span><span class="nv"> </span><span class="s">response:</span><span class="nv"> </span><span class="s">Debugged</span><span class="nv"> </span><span class="s">your</span><span class="nv"> </span><span class="s">code</span><span class="nv"> </span><span class="s">successfully&quot;</span>
-<span class="w">          </span><span class="nt">refactor</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Mock</span><span class="nv"> </span><span class="s">response:</span><span class="nv"> </span><span class="s">Code</span><span class="nv"> </span><span class="s">refactored</span><span class="nv"> </span><span class="s">for</span><span class="nv"> </span><span class="s">clarity&quot;</span>
-
-<span class="w">      </span><span class="nt">claude-3-sonnet</span><span class="p">:</span>
-<span class="w">        </span><span class="nt">default</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Mock</span><span class="nv"> </span><span class="s">Claude</span><span class="nv"> </span><span class="s">response:</span><span class="nv"> </span><span class="s">[test</span><span class="nv"> </span><span class="s">output]&quot;</span>
-<span class="w">        </span><span class="nt">patterns</span><span class="p">:</span>
-<span class="w">          </span><span class="nt">explain</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Mock</span><span class="nv"> </span><span class="s">response:</span><span class="nv"> </span><span class="s">Explained</span><span class="nv"> </span><span class="s">the</span><span class="nv"> </span><span class="s">concept</span><span class="nv"> </span><span class="s">clearly&quot;</span>
-
-<span class="w">  </span><span class="c1"># Real providers: configured but not used in dev</span>
-<span class="w">  </span><span class="nt">openai</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">openai</span>
-<span class="w">    </span><span class="nt">api_key</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${OPENAI_API_KEY}</span>
-<span class="w">    </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span><span class="w">  </span><span class="c1"># Disabled in dev</span>
-
-<span class="w">  </span><span class="nt">anthropic</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">anthropic</span>
-<span class="w">    </span><span class="nt">api_key</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${ANTHROPIC_API_KEY}</span>
-<span class="w">    </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
-
-<span class="nt">models</span><span class="p">:</span>
-<span class="w">  </span><span class="c1"># Development: use mock</span>
-<span class="w">  </span><span class="nt">gpt-4</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">provider</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">mock</span>
-<span class="w">    </span><span class="nt">fallback_provider</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">mock</span><span class="w">  </span><span class="c1"># Never fall back to real API in dev</span>
-
-<span class="w">  </span><span class="nt">gpt-3.5-turbo</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">provider</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">mock</span>
-<span class="w">    </span><span class="nt">fallback_provider</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">mock</span>
-
-<span class="w">  </span><span class="nt">claude-3-sonnet</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">provider</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">mock</span>
-<span class="w">    </span><span class="nt">fallback_provider</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">mock</span>
-
-<span class="w">  </span><span class="c1"># Real providers commented out for dev</span>
-<span class="w">  </span><span class="c1"># gpt-4-prod: { provider: openai }</span>
-<span class="w">  </span><span class="c1"># claude-3-sonnet-prod: { provider: anthropic }</span>
+<span class="w">          </span><span class="nt">debug</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Mock</span><span class="nv"> </span><span class="s">response:</span><span class="nv"> </span><span class="s">Debugged</span><span class="nv"> </span><span class="s">your</span><span class="nv"> </span><span class="s">code&quot;</span>
 </code></pre></div>
-<p><strong>Production config (config.prod.yaml):</strong>
-<div class="highlight"><pre><span></span><code><span class="nt">providers</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">openai</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">openai</span>
-<span class="w">    </span><span class="nt">api_key</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${OPENAI_API_KEY}</span>
-<span class="w">    </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<h2 id="whats-real-today">What's real today<a class="headerlink" href="#whats-real-today" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Start the proxy with <code>tokenpak serve</code> (default <code>http://127.0.0.1:8766</code>).</li>
+<li>The proxy is a byte-preserving passthrough: responses are the upstream provider's bodies, unchanged. TokenPak does <strong>not</strong> inject a <code>content</code> or <code>cost_cents</code> field, and there is no <code>tokenpak logs --provider</code> verb. Use <code>tokenpak status</code> for recorded usage.</li>
+<li>Validate a proxy config file with <code>tokenpak config-check &lt;file.json&gt;</code>. The <code>mock</code> provider block above is <strong>not</strong> part of that validated surface.</li>
+</ul>
+<h3 id="a-real-way-to-get-the-same-benefit-today">A real way to get the same benefit today<a class="headerlink" href="#a-real-way-to-get-the-same-benefit-today" title="Permanent link">&para;</a></h3>
+<p>Run your own local stub server that speaks the provider's HTTP API, and point your client (or the proxy's upstream URL) at it during development. Your application code stays identical; only the endpoint differs between dev and prod.</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># stub_server.py — a tiny deterministic stand-in for the provider API.</span>
+<span class="c1"># Run this locally and point your app/proxy upstream at it in dev.</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">http.server</span><span class="w"> </span><span class="kn">import</span> <span class="n">BaseHTTPRequestHandler</span><span class="p">,</span> <span class="n">HTTPServer</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
 
-<span class="w">  </span><span class="nt">anthropic</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">anthropic</span>
-<span class="w">    </span><span class="nt">api_key</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${ANTHROPIC_API_KEY}</span>
-<span class="w">    </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">Handler</span><span class="p">(</span><span class="n">BaseHTTPRequestHandler</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">do_POST</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">length</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">headers</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;Content-Length&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+        <span class="n">_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rfile</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">length</span><span class="p">)</span>  <span class="c1"># ignore body; return a canned reply</span>
+        <span class="n">body</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">({</span>
+            <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;msg_stub&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;message&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;assistant&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="p">[{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;text&quot;</span><span class="p">,</span> <span class="s2">&quot;text&quot;</span><span class="p">:</span> <span class="s2">&quot;Mock response for local dev&quot;</span><span class="p">}],</span>
+        <span class="p">})</span><span class="o">.</span><span class="n">encode</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">send_response</span><span class="p">(</span><span class="mi">200</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">send_header</span><span class="p">(</span><span class="s2">&quot;Content-Type&quot;</span><span class="p">,</span> <span class="s2">&quot;application/json&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">end_headers</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">wfile</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">body</span><span class="p">)</span>
 
-<span class="w">  </span><span class="c1"># Mock disabled in production</span>
-<span class="w">  </span><span class="nt">mock</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">mock</span>
-<span class="w">    </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
-
-<span class="nt">models</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">gpt-4</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt"> provider</span><span class="p">:</span><span class="w"> </span><span class="nv">openai</span><span class="p p-Indicator">,</span><span class="nt"> fallback_provider</span><span class="p">:</span><span class="w"> </span><span class="nv">anthropic</span><span class="w"> </span><span class="p p-Indicator">}</span>
-<span class="w">  </span><span class="nt">gpt-3.5-turbo</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt"> provider</span><span class="p">:</span><span class="w"> </span><span class="nv">openai</span><span class="p p-Indicator">,</span><span class="nt"> fallback_provider</span><span class="p">:</span><span class="w"> </span><span class="nv">anthropic</span><span class="w"> </span><span class="p p-Indicator">}</span>
-<span class="w">  </span><span class="nt">claude-3-sonnet</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt"> provider</span><span class="p">:</span><span class="w"> </span><span class="nv">anthropic</span><span class="p p-Indicator">,</span><span class="nt"> fallback_provider</span><span class="p">:</span><span class="w"> </span><span class="nv">openai</span><span class="w"> </span><span class="p p-Indicator">}</span>
-</code></pre></div></p>
-<h2 id="test-verify">Test &amp; Verify<a class="headerlink" href="#test-verify" title="Permanent link">&para;</a></h2>
-<p><strong>Step 1:</strong> Validate dev config:
-<div class="highlight"><pre><span></span><code>tokenpak<span class="w"> </span>validate-config<span class="w"> </span>config.yaml
-<span class="c1"># Expected output:</span>
-<span class="c1"># ✓ Config valid</span>
-<span class="c1"># ✓ Providers: mock (enabled)</span>
-<span class="c1"># ✓ Real providers: openai (disabled), anthropic (disabled)</span>
-<span class="c1"># ✓ All models route to mock</span>
-</code></pre></div></p>
-<p><strong>Step 2:</strong> Start proxy in dev mode:
-<div class="highlight"><pre><span></span><code>tokenpak<span class="w"> </span>proxy<span class="w"> </span>--config<span class="w"> </span>config.yaml
-<span class="c1"># Should start instantly (no API key validation)</span>
-</code></pre></div></p>
-<p><strong>Step 3:</strong> Make a request (mock response, instant):
-<div class="highlight"><pre><span></span><code><span class="nb">time</span><span class="w"> </span>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>http://localhost:8000/v1/messages<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;Content-Type: application/json&quot;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;{</span>
-<span class="s1">    &quot;model&quot;: &quot;gpt-4&quot;,</span>
-<span class="s1">    &quot;messages&quot;: [{&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: &quot;Debug my code&quot;}]</span>
-<span class="s1">  }&#39;</span><span class="w"> </span>-s<span class="w"> </span><span class="p">|</span><span class="w"> </span>jq<span class="w"> </span><span class="s1">&#39;.content&#39;</span>
-
-<span class="c1"># Expected output:</span>
-<span class="c1"># &quot;Mock response: Debugged your code successfully&quot;</span>
-<span class="c1"># real 0.2s (includes mock latency, very fast)</span>
-</code></pre></div></p>
-<p><strong>Step 4:</strong> Make many requests without API costs:
-<div class="highlight"><pre><span></span><code><span class="c1"># Simulate high-volume testing</span>
-<span class="k">for</span><span class="w"> </span>i<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="o">{</span><span class="m">1</span>..100<span class="o">}</span><span class="p">;</span><span class="w"> </span><span class="k">do</span>
-<span class="w">  </span>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>http://localhost:8000/v1/messages<span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>-d<span class="w"> </span><span class="s1">&#39;{&quot;model&quot;: &quot;gpt-4&quot;, &quot;messages&quot;: [{&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: &quot;request $i&quot;}]}&#39;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>-s<span class="w"> </span>&gt;<span class="w"> </span>/dev/null
-<span class="k">done</span>
-<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Made 100 requests, </span><span class="nv">$0</span><span class="s2"> cost!&quot;</span>
-</code></pre></div></p>
-<p><strong>Step 5:</strong> Verify no real API calls (check logs):
-<div class="highlight"><pre><span></span><code>tokenpak<span class="w"> </span>logs<span class="w"> </span>--provider<span class="w"> </span>openai
-<span class="c1"># Expected output: EMPTY (no real API calls)</span>
-
-tokenpak<span class="w"> </span>logs<span class="w"> </span>--provider<span class="w"> </span>mock
-<span class="c1"># Expected output: 100 calls to mock provider</span>
-</code></pre></div></p>
-<p><strong>Step 6:</strong> Switch to production config:
-<div class="highlight"><pre><span></span><code><span class="c1"># Stop dev proxy</span>
-pkill<span class="w"> </span>-f<span class="w"> </span><span class="s2">&quot;tokenpak proxy --config config.yaml&quot;</span>
-
-<span class="c1"># Start production proxy</span>
-tokenpak<span class="w"> </span>proxy<span class="w"> </span>--config<span class="w"> </span>config.prod.yaml
-<span class="c1"># Now real API calls will be made</span>
-</code></pre></div></p>
-<p><strong>Step 7:</strong> Verify switch worked:
-<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>http://localhost:8000/v1/messages<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;{&quot;model&quot;: &quot;gpt-4&quot;, &quot;messages&quot;: [{&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: &quot;Real request&quot;}]}&#39;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>-s<span class="w"> </span><span class="p">|</span><span class="w"> </span>jq<span class="w"> </span><span class="s1">&#39;.cost_cents&#39;</span>
-
-<span class="c1"># Expected output: non-zero cost (real API call)</span>
-</code></pre></div></p>
-<h2 id="integration-example-python">Integration Example (Python)<a class="headerlink" href="#integration-example-python" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code><span class="c1"># app.py - Same code works in dev or prod</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">requests</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
-
-<span class="k">def</span><span class="w"> </span><span class="nf">get_ai_response</span><span class="p">(</span><span class="n">prompt</span><span class="p">):</span>
-    <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span>
-        <span class="s1">&#39;http://localhost:8000/v1/messages&#39;</span><span class="p">,</span>
-        <span class="n">json</span><span class="o">=</span><span class="p">{</span>
-            <span class="s1">&#39;model&#39;</span><span class="p">:</span> <span class="s1">&#39;gpt-4&#39;</span><span class="p">,</span>  <span class="c1"># Uses mock in dev, real in prod</span>
-            <span class="s1">&#39;messages&#39;</span><span class="p">:</span> <span class="p">[{</span><span class="s1">&#39;role&#39;</span><span class="p">:</span> <span class="s1">&#39;user&#39;</span><span class="p">,</span> <span class="s1">&#39;content&#39;</span><span class="p">:</span> <span class="n">prompt</span><span class="p">}]</span>
-        <span class="p">}</span>
-    <span class="p">)</span>
-    <span class="k">return</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s1">&#39;content&#39;</span><span class="p">]</span>
-
-<span class="c1"># Run in dev: fast, free, deterministic</span>
-<span class="c1"># Run in prod: slow, costs money, real answers</span>
-
-<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
-    <span class="n">mode</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s1">&#39;ENV&#39;</span><span class="p">,</span> <span class="s1">&#39;dev&#39;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Running in </span><span class="si">{</span><span class="n">mode</span><span class="si">}</span><span class="s2"> mode&quot;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">get_ai_response</span><span class="p">(</span><span class="s2">&quot;Hello&quot;</span><span class="p">))</span>
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">HTTPServer</span><span class="p">((</span><span class="s2">&quot;127.0.0.1&quot;</span><span class="p">,</span> <span class="mi">8099</span><span class="p">),</span> <span class="n">Handler</span><span class="p">)</span><span class="o">.</span><span class="n">serve_forever</span><span class="p">()</span>
 </code></pre></div>
-<p><strong>Run in dev:</strong>
-<div class="highlight"><pre><span></span><code><span class="nv">ENV</span><span class="o">=</span>dev<span class="w"> </span>python<span class="w"> </span>app.py
-<span class="c1"># Output: Mock response: [test output]</span>
-<span class="c1"># No API calls, instant</span>
-</code></pre></div></p>
-<p><strong>Run in prod:</strong>
-<div class="highlight"><pre><span></span><code><span class="nv">ENV</span><span class="o">=</span>prod<span class="w"> </span>python<span class="w"> </span>app.py
-<span class="c1"># Output: Real GPT-4 response</span>
-<span class="c1"># Costs money, realistic</span>
-</code></pre></div></p>
-<h2 id="what-just-happened">What Just Happened<a class="headerlink" href="#what-just-happened" title="Permanent link">&para;</a></h2>
-<p>TokenPak routed your request to the mock provider in development:</p>
-<ol>
-<li><strong>Request arrives</strong> with model <code>gpt-4</code></li>
-<li><strong>Provider lookup</strong> finds <code>gpt-4 → mock</code></li>
-<li><strong>Mock provider</strong> returns canned response instantly</li>
-<li><strong>Client receives</strong> response without any real API call</li>
-</ol>
-<p>In production, the same code routes to real providers — no application changes needed.</p>
-<h2 id="common-pitfalls">Common Pitfalls<a class="headerlink" href="#common-pitfalls" title="Permanent link">&para;</a></h2>
-<p><strong>Pitfall 1: Mock responses are too different from reality</strong>
-- ❌ Wrong: Mock always says "success", real API has variability
-- ✅ Right: Make mocks realistic: include error cases, vary response lengths</p>
-<p><strong>Pitfall 2: Forgetting to switch configs</strong>
-- ❌ Wrong: Deploy to production with <code>config.yaml</code> (dev mocks enabled)
-- ✅ Right: CI/CD enforces <code>config.prod.yaml</code> on production deployments</p>
-<p><strong>Pitfall 3: Mock latency is too low</strong>
-- ❌ Wrong: <code>latency_ms: 0</code> (tests pass in dev, timeout in prod)
-- ✅ Right: <code>latency_ms: 200</code> - 500 (realistic, catches slow code paths)</p>
-<p><strong>Pitfall 4: Real providers still enabled in dev</strong>
-- ❌ Wrong: <code>enabled: true</code> for OpenAI in dev, can accidentally burn budget
-- ✅ Right: Explicitly <code>enabled: false</code> for real providers in dev config</p>
-<p><strong>Pitfall 5: Mock responses are too static</strong>
-- ❌ Wrong: Every request returns identical response
-- ✅ Right: Vary by prompt keyword: <code>patterns: {debug: "...", refactor: "..."}</code></p>
-<p><strong>Pitfall 6: No way to test fallback logic</strong>
-- ❌ Wrong: Can't test "what if primary provider fails?" in dev
-- ✅ Right: Add mock provider with <code>failure_rate: 0.2</code> to test fallbacks</p>
+<p>Your application talks to the proxy (<code>http://127.0.0.1:8766</code>) the same way in dev and prod; you switch the upstream between the stub and the real provider via configuration/environment, with no code change.</p>
+<h2 id="designing-a-dev-mock-strategy">Designing a dev-mock strategy<a class="headerlink" href="#designing-a-dev-mock-strategy" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Keep mocks realistic.</strong> Include error cases and varied response lengths, not just a single "success."</li>
+<li><strong>Don't ship dev config to prod.</strong> Make CI/CD select the production config explicitly.</li>
+<li><strong>Simulate latency.</strong> A zero-latency stub can hide slow code paths that only appear against a real provider.</li>
+<li><strong>Don't leave real providers reachable in dev</strong> if the point is to avoid spend — make the dev path point only at the stub.</li>
+<li><strong>Vary responses</strong> by input where it matters, so tests exercise more than one branch.</li>
+<li><strong>Be able to simulate failures</strong> (e.g. a stub that returns errors some of the time) so you can test your fallback/retry logic.</li>
+</ul>
 
 
 

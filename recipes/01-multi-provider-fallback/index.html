@@ -1285,34 +1285,6 @@
   
   
     <li class="md-nav__item">
-      <a href="../../plugin-system-architecture/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Plugin System Architecture
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
       <a href="../../assets/DIAGRAMS/" class="md-nav__link">
         
   
@@ -2202,10 +2174,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#config-snippet" class="md-nav__link">
+  <a href="#the-pattern-illustrative-config" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Config Snippet
+        The pattern (illustrative config)
       
     </span>
   </a>
@@ -2213,10 +2185,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#test-verify" class="md-nav__link">
+  <a href="#whats-real-today" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Test &amp; Verify
+        What's real today
       
     </span>
   </a>
@@ -2224,21 +2196,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#what-just-happened" class="md-nav__link">
+  <a href="#designing-a-fallback-strategy" class="md-nav__link">
     <span class="md-ellipsis">
       
-        What Just Happened
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#common-pitfalls" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Common Pitfalls
+        Designing a fallback strategy
       
     </span>
   </a>
@@ -2865,10 +2826,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#config-snippet" class="md-nav__link">
+  <a href="#the-pattern-illustrative-config" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Config Snippet
+        The pattern (illustrative config)
       
     </span>
   </a>
@@ -2876,10 +2837,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#test-verify" class="md-nav__link">
+  <a href="#whats-real-today" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Test &amp; Verify
+        What's real today
       
     </span>
   </a>
@@ -2887,21 +2848,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#what-just-happened" class="md-nav__link">
+  <a href="#designing-a-fallback-strategy" class="md-nav__link">
     <span class="md-ellipsis">
       
-        What Just Happened
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#common-pitfalls" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Common Pitfalls
+        Designing a fallback strategy
       
     </span>
   </a>
@@ -2929,96 +2879,64 @@
 
 
 <h1 id="recipe-multi-provider-fallback">Recipe: Multi-Provider Fallback<a class="headerlink" href="#recipe-multi-provider-fallback" title="Permanent link">&para;</a></h1>
-<p><strong>What this solves:</strong> Route requests to Anthropic if your primary provider (OpenAI) experiences an outage or rate limit.</p>
+<blockquote>
+<p><strong>Status: Conceptual.</strong> This recipe describes a failover <em>pattern</em>. The declarative <code>fallback_to</code> config keys and the failover log output shown below are <strong>illustrative</strong> — they are not a validated config surface of the current TokenPak release, and the proxy does not emit those messages inline. Treat this as a design sketch, not a copy-paste runbook. Confirm any CLI command against <code>tokenpak --help</code> before relying on it.</p>
+</blockquote>
+<p><strong>What this solves:</strong> The pattern of routing requests to a backup provider when your primary provider experiences an outage or rate limit.</p>
 <h2 id="prerequisites">Prerequisites<a class="headerlink" href="#prerequisites" title="Permanent link">&para;</a></h2>
 <ul>
 <li>TokenPak installed: <code>pip install tokenpak</code></li>
-<li>Valid API keys for both Anthropic and OpenAI</li>
-<li><code>tokenpak</code> CLI available in your shell</li>
+<li>Valid API keys for the providers you intend to use</li>
+<li><code>tokenpak</code> CLI available in your shell (<code>tokenpak --help</code>)</li>
 </ul>
-<h2 id="config-snippet">Config Snippet<a class="headerlink" href="#config-snippet" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code><span class="c1"># config.yaml</span>
+<h2 id="the-pattern-illustrative-config">The pattern (illustrative config)<a class="headerlink" href="#the-pattern-illustrative-config" title="Permanent link">&para;</a></h2>
+<p>The idea is to declare a primary model and a fallback target so that a failed request retries against a different provider. The YAML below is a <strong>conceptual</strong> illustration of how such a config might read — it is not the validated schema of the shipped proxy:</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># ILLUSTRATIVE ONLY — not a validated TokenPak config schema</span>
 <span class="nt">providers</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">openai</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">openai</span>
 <span class="w">    </span><span class="nt">api_key</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${OPENAI_API_KEY}</span>
-<span class="w">    </span><span class="nt">models</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">gpt-4</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{}</span>
-<span class="w">      </span><span class="nt">gpt-3.5-turbo</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{}</span>
-
 <span class="w">  </span><span class="nt">anthropic</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">anthropic</span>
 <span class="w">    </span><span class="nt">api_key</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${ANTHROPIC_API_KEY}</span>
-<span class="w">    </span><span class="nt">models</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">claude-3-sonnet</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{}</span>
-<span class="w">      </span><span class="nt">claude-3-opus</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{}</span>
 
 <span class="nt">models</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">gpt-4</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">provider</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">openai</span>
-<span class="w">    </span><span class="c1"># Fallback chain: try OpenAI first, then Anthropic</span>
+<span class="w">    </span><span class="c1"># Conceptual: try OpenAI first, then Anthropic</span>
 <span class="w">    </span><span class="nt">fallback_to</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">claude-3-sonnet</span>
-
-<span class="w">  </span><span class="nt">gpt-3.5-turbo</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">provider</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">openai</span>
-<span class="w">    </span><span class="nt">fallback_to</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">claude-3-sonnet</span>
-
 <span class="w">  </span><span class="nt">claude-3-sonnet</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">provider</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">anthropic</span>
-
-<span class="w">  </span><span class="nt">claude-3-opus</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">provider</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">anthropic</span>
 </code></pre></div>
-<h2 id="test-verify">Test &amp; Verify<a class="headerlink" href="#test-verify" title="Permanent link">&para;</a></h2>
-<p><strong>Step 1:</strong> Save the config above to <code>config.yaml</code> and validate it:
-<div class="highlight"><pre><span></span><code>tokenpak<span class="w"> </span>validate-config<span class="w"> </span>config.yaml
-<span class="c1"># Expected output:</span>
-<span class="c1"># ✓ Config valid</span>
-<span class="c1"># ✓ Providers: openai, anthropic</span>
-<span class="c1"># ✓ Models: gpt-4, gpt-3.5-turbo, claude-3-sonnet, claude-3-opus</span>
-<span class="c1"># ✓ Fallback chains verified</span>
-</code></pre></div></p>
-<p><strong>Step 2:</strong> Simulate OpenAI being down (set a fake key):
-<div class="highlight"><pre><span></span><code><span class="nb">export</span><span class="w"> </span><span class="nv">OPENAI_API_KEY</span><span class="o">=</span><span class="s2">&quot;sk-fake-key-for-testing&quot;</span>
-<span class="nb">export</span><span class="w"> </span><span class="nv">ANTHROPIC_API_KEY</span><span class="o">=</span><span class="s2">&quot;sk-ant-real-key&quot;</span>
+<h2 id="whats-real-today">What's real today<a class="headerlink" href="#whats-real-today" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Start the proxy with <code>tokenpak serve</code> (default <code>http://127.0.0.1:8766</code>).</li>
+<li>Validate a proxy config file with <code>tokenpak config-check &lt;file.json&gt;</code>. The shipped proxy config surface is a JSON file; for the server block, <code>config-check</code> recommends <code>server: { port: 8766, host: '127.0.0.1' }</code>. The elaborate <code>fallback_to</code> model graph above is <strong>not</strong> part of that validated surface.</li>
+<li>TokenPak's proxy is a <strong>byte-preserving passthrough</strong> — it forwards request and response bodies verbatim. It does <strong>not</strong> inject failover status messages or extra fields into the response body.</li>
+</ul>
+<p>A request against the proxy looks like:</p>
+<div class="highlight"><pre><span></span><code>tokenpak<span class="w"> </span>serve<span class="w">   </span><span class="c1"># listens on http://127.0.0.1:8766</span>
 
-<span class="c1"># Try to use OpenAI — should fail over to Anthropic</span>
-tokenpak<span class="w"> </span>proxy<span class="w"> </span>--config<span class="w"> </span>config.yaml
 <span class="c1"># In another terminal:</span>
-curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>http://localhost:8000/v1/messages<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;Authorization: Bearer test&quot;</span><span class="w"> </span><span class="se">\</span>
+curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>http://127.0.0.1:8766/v1/messages<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;Content-Type: application/json&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;x-api-key: </span><span class="nv">$ANTHROPIC_API_KEY</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;anthropic-version: 2023-06-01&quot;</span><span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;{</span>
-<span class="s1">    &quot;model&quot;: &quot;gpt-4&quot;,</span>
+<span class="s1">    &quot;model&quot;: &quot;claude-3-5-sonnet-20241022&quot;,</span>
+<span class="s1">    &quot;max_tokens&quot;: 64,</span>
 <span class="s1">    &quot;messages&quot;: [{&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: &quot;Say OK&quot;}]</span>
-<span class="s1">  }&#39;</span><span class="w"> </span><span class="m">2</span>&gt;<span class="p">&amp;</span><span class="m">1</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-q<span class="w"> </span><span class="s1">&#39;&quot;content&quot;&#39;</span>
-</code></pre></div></p>
-<p><strong>Expected output:</strong>
-<div class="highlight"><pre><span></span><code>Request to OpenAI gpt-4 failed (connection refused).
-Falling back to Anthropic claude-3-sonnet.
-✓ Anthropic responded successfully.
-</code></pre></div></p>
-<h2 id="what-just-happened">What Just Happened<a class="headerlink" href="#what-just-happened" title="Permanent link">&para;</a></h2>
-<p>TokenPak evaluated the request against <code>gpt-4</code> (mapped to OpenAI). The provider was unavailable, so TokenPak:</p>
-<ol>
-<li>Checked the <code>fallback_to</code> chain in the config</li>
-<li>Found <code>claude-3-sonnet</code> in the fallback</li>
-<li>Routed the request to Anthropic instead</li>
-<li>Returned the response to the client</li>
-</ol>
-<p>The client received a valid response without needing to know about the failover — it's transparent to your application.</p>
-<h2 id="common-pitfalls">Common Pitfalls<a class="headerlink" href="#common-pitfalls" title="Permanent link">&para;</a></h2>
-<p><strong>Pitfall 1: Fallback chain is too short</strong>
-- ❌ Wrong: Single provider with no fallback
-- ✅ Right: Chain at least 2 providers: <code>openai → anthropic → vertex-ai</code></p>
-<p><strong>Pitfall 2: Fallback loops</strong>
-- ❌ Wrong: <code>gpt-4 → gpt-3.5-turbo → gpt-4</code> (circular)
-- ✅ Right: Always point to a different provider down the chain</p>
-<p><strong>Pitfall 3: API keys for fallback not configured</strong>
-- ❌ Wrong: Forget to set <code>ANTHROPIC_API_KEY</code> env var, fallback fails
-- ✅ Right: Pre-check all keys in the chain before deploying: <code>tokenpak list-keys</code></p>
-<p><strong>Pitfall 4: Rate limits on fallback</strong>
-- ❌ Wrong: Fallback provider has lower rate limits than primary
-- ✅ Right: Verify fallback provider limits are sufficient: <code>tokenpak show-limits --provider anthropic</code></p>
+<span class="s1">  }&#39;</span>
+</code></pre></div>
+<p>The response body is whatever the upstream provider returns, passed through unchanged.</p>
+<h2 id="designing-a-fallback-strategy">Designing a fallback strategy<a class="headerlink" href="#designing-a-fallback-strategy" title="Permanent link">&para;</a></h2>
+<p>If you implement failover (in your application or via your own orchestration in front of the proxy), the principles below apply regardless of how the routing is configured:</p>
+<ul>
+<li><strong>Chain across different providers</strong>, not just different models of the same provider — an outage often takes out a whole provider.</li>
+<li><strong>Avoid fallback loops</strong> — never let a chain point back to a model already tried.</li>
+<li><strong>Pre-check every key in the chain</strong> so the fallback isn't itself unauthenticated.</li>
+<li><strong>Check the fallback's rate limits</strong> — a fallback with a much lower limit can become the new bottleneck during an incident.</li>
+</ul>
 
 
 

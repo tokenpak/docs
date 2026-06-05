@@ -1285,34 +1285,6 @@
   
   
     <li class="md-nav__item">
-      <a href="../../plugin-system-architecture/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Plugin System Architecture
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
       <a href="../../assets/DIAGRAMS/" class="md-nav__link">
         
   
@@ -3109,7 +3081,7 @@ tokenpak<span class="w"> </span>setup
 <div class="highlight"><pre><span></span><code><span class="p">{</span>
 <span class="w">  </span><span class="nt">&quot;status&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ok&quot;</span><span class="p">,</span>
 <span class="w">  </span><span class="nt">&quot;uptime_seconds&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;version&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;1.5.0&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;version&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;1.7.1&quot;</span><span class="p">,</span>
 <span class="w">  </span><span class="nt">&quot;requests_total&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
 <span class="w">  </span><span class="nt">&quot;requests_errors&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
 <span class="w">  </span><span class="nt">&quot;compression_ratio_avg&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.0</span>
@@ -3168,7 +3140,7 @@ tokenpak<span class="w"> </span>savings<span class="w">          </span><span cl
 <h3 id="the-env-var-is-set-but-claude-code-ignores-it-after-a-system-update">The env var is set but Claude Code ignores it after a system update<a class="headerlink" href="#the-env-var-is-set-but-claude-code-ignores-it-after-a-system-update" title="Permanent link">&para;</a></h3>
 <p>Some package managers (Homebrew, conda) reset PATH and environment on upgrade. After a Claude Code or shell update, re-check <code>echo $ANTHROPIC_BASE_URL</code> in a fresh terminal and re-add the export to your shell profile if it disappeared.</p>
 <h3 id="tokenpak-savings-shows-0-after-several-prompts">tokenpak savings shows 0 after several prompts<a class="headerlink" href="#tokenpak-savings-shows-0-after-several-prompts" title="Permanent link">&para;</a></h3>
-<p>Compression applies to prompts above the default threshold (4,500 tokens). Short prompts are passed through unchanged. To confirm compression is running for longer prompts, use <code>tokenpak status</code> — the <code>compression_ratio_avg</code> field in <code>/health</code> shows the running average.</p>
+<p>Compression applies to prompts above a configurable default threshold. Short prompts are passed through unchanged. To confirm compression is running for longer prompts, use <code>tokenpak status</code> — the <code>compression_ratio_avg</code> field in <code>/health</code> shows the running average.</p>
 <hr />
 <h2 id="removing-tokenpak">Removing TokenPak<a class="headerlink" href="#removing-tokenpak" title="Permanent link">&para;</a></h2>
 <p>To stop routing Claude Code through TokenPak:</p>

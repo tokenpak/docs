@@ -1285,34 +1285,6 @@
   
   
     <li class="md-nav__item">
-      <a href="../../plugin-system-architecture/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Plugin System Architecture
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
       <a href="../../assets/DIAGRAMS/" class="md-nav__link">
         
   
@@ -3208,7 +3180,7 @@
 <ol>
 <li>
 <p><strong>TokenPak proxy running locally</strong>
-   <div class="highlight"><pre><span></span><code>python3<span class="w"> </span>tokenpak<span class="w"> </span>serve<span class="w"> </span><span class="p">&amp;</span>
+   <div class="highlight"><pre><span></span><code>tokenpak<span class="w"> </span>serve<span class="w"> </span><span class="p">&amp;</span>
 <span class="c1"># Proxy starts on http://localhost:8766 by default</span>
 </code></pre></div></p>
 </li>
@@ -3228,7 +3200,7 @@
 
 <span class="c1"># Point ChatAnthropic at the TokenPak proxy instead of Anthropic directly</span>
 <span class="n">llm</span> <span class="o">=</span> <span class="n">ChatAnthropic</span><span class="p">(</span>
-    <span class="n">model</span><span class="o">=</span><span class="s2">&quot;claude-3-5-sonnet-20241022&quot;</span><span class="p">,</span>
+    <span class="n">model</span><span class="o">=</span><span class="s2">&quot;claude-sonnet-4-6&quot;</span><span class="p">,</span>
     <span class="n">base_url</span><span class="o">=</span><span class="s2">&quot;http://localhost:8766/v1&quot;</span><span class="p">,</span>  <span class="c1"># TokenPak proxy endpoint</span>
     <span class="n">api_key</span><span class="o">=</span><span class="s2">&quot;sk-ant-...&quot;</span>  <span class="c1"># Proxy forwards this to Anthropic</span>
 <span class="p">)</span>
@@ -3276,7 +3248,7 @@
 <span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
 
 <span class="n">llm</span> <span class="o">=</span> <span class="n">ChatAnthropic</span><span class="p">(</span>
-    <span class="n">model</span><span class="o">=</span><span class="s2">&quot;claude-3-5-sonnet-20241022&quot;</span><span class="p">,</span>
+    <span class="n">model</span><span class="o">=</span><span class="s2">&quot;claude-sonnet-4-6&quot;</span><span class="p">,</span>
     <span class="n">base_url</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;TOKENPAK_PROXY_URL&quot;</span><span class="p">,</span> <span class="s2">&quot;http://localhost:8766/v1&quot;</span><span class="p">),</span>
     <span class="n">api_key</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;ANTHROPIC_API_KEY&quot;</span><span class="p">),</span>
     <span class="n">timeout</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span>  <span class="c1"># request timeout in seconds</span>
@@ -3284,31 +3256,26 @@
 </code></pre></div>
 <h2 id="verification-check-the-proxy">Verification — Check the Proxy<a class="headerlink" href="#verification-check-the-proxy" title="Permanent link">&para;</a></h2>
 <p>After making a few requests, verify they went through TokenPak:</p>
-<div class="highlight"><pre><span></span><code><span class="c1"># View proxy stats</span>
+<div class="highlight"><pre><span></span><code><span class="c1"># View proxy stats (per-session counters + cache attribution)</span>
 curl<span class="w"> </span>http://localhost:8766/stats<span class="w"> </span><span class="p">|</span><span class="w"> </span>python3<span class="w"> </span>-m<span class="w"> </span>json.tool
 
-<span class="c1"># Expected output:</span>
+<span class="c1"># View cache-hit metrics</span>
+curl<span class="w"> </span>http://localhost:8766/cache-stats<span class="w"> </span><span class="p">|</span><span class="w"> </span>python3<span class="w"> </span>-m<span class="w"> </span>json.tool
+
+<span class="c1"># The cache-stats endpoint reports keys such as:</span>
 <span class="c1"># {</span>
-<span class="c1">#   &quot;requests_processed&quot;: 5,</span>
-<span class="c1">#   &quot;total_input_tokens&quot;: 1250,</span>
-<span class="c1">#   &quot;total_output_tokens&quot;: 480,</span>
+<span class="c1">#   &quot;total_requests&quot;: 5,</span>
 <span class="c1">#   &quot;cache_hits&quot;: 1,</span>
-<span class="c1">#   &quot;models&quot;: {</span>
-<span class="c1">#     &quot;claude-3-5-sonnet-20241022&quot;: {</span>
-<span class="c1">#       &quot;calls&quot;: 5,</span>
-<span class="c1">#       &quot;input_tokens&quot;: 1250,</span>
-<span class="c1">#       &quot;output_tokens&quot;: 480</span>
-<span class="c1">#     }</span>
-<span class="c1">#   }</span>
+<span class="c1">#   &quot;hit_rate&quot;: 0.2</span>
 <span class="c1"># }</span>
 </code></pre></div>
-<p>If you see requests recorded, traffic is flowing correctly through the proxy.</p>
+<p>The exact fields returned depend on your TokenPak version; run the commands above to see the current shape. If you see request counts climbing, traffic is flowing correctly through the proxy.</p>
 <h2 id="common-errors-fixes">Common Errors &amp; Fixes<a class="headerlink" href="#common-errors-fixes" title="Permanent link">&para;</a></h2>
 <h3 id="connection-refused-cannot-connect-to-proxy">❌ <code>Connection refused</code> / <code>Cannot connect to proxy</code><a class="headerlink" href="#connection-refused-cannot-connect-to-proxy" title="Permanent link">&para;</a></h3>
 <p><strong>Cause:</strong> Proxy not running or listening on wrong port.</p>
 <p><strong>Fix:</strong>
 <div class="highlight"><pre><span></span><code><span class="c1"># Start proxy in background</span>
-python3<span class="w"> </span>tokenpak<span class="w"> </span>serve<span class="w"> </span><span class="p">&amp;</span>
+tokenpak<span class="w"> </span>serve<span class="w"> </span><span class="p">&amp;</span>
 
 <span class="c1"># Verify it&#39;s listening</span>
 curl<span class="w"> </span>http://localhost:8766/health
@@ -3323,7 +3290,7 @@ curl<span class="w"> </span>http://localhost:8766/health
 
 <span class="c1"># Or pass explicitly</span>
 <span class="nv">llm</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>ChatAnthropic<span class="o">(</span>
-<span class="w">    </span><span class="nv">model</span><span class="o">=</span><span class="s2">&quot;claude-3-5-sonnet-20241022&quot;</span>,
+<span class="w">    </span><span class="nv">model</span><span class="o">=</span><span class="s2">&quot;claude-sonnet-4-6&quot;</span>,
 <span class="w">    </span><span class="nv">base_url</span><span class="o">=</span><span class="s2">&quot;http://localhost:8766/v1&quot;</span>,
 <span class="w">    </span><span class="nv">api_key</span><span class="o">=</span><span class="s2">&quot;sk-ant-YOUR_KEY_HERE&quot;</span><span class="w">  </span><span class="c1"># Explicit &gt; env var for debugging</span>
 <span class="o">)</span>
@@ -3363,7 +3330,7 @@ llm.invoke<span class="o">(</span><span class="s2">&quot;test&quot;</span><span 
 
 <span class="c1"># Initialize with proxy endpoint</span>
 <span class="n">llm</span> <span class="o">=</span> <span class="n">ChatAnthropic</span><span class="p">(</span>
-    <span class="n">model</span><span class="o">=</span><span class="s2">&quot;claude-3-5-sonnet-20241022&quot;</span><span class="p">,</span>
+    <span class="n">model</span><span class="o">=</span><span class="s2">&quot;claude-sonnet-4-6&quot;</span><span class="p">,</span>
     <span class="n">base_url</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;TOKENPAK_PROXY_URL&quot;</span><span class="p">,</span> <span class="s2">&quot;http://localhost:8766/v1&quot;</span><span class="p">),</span>
     <span class="n">api_key</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;ANTHROPIC_API_KEY&quot;</span><span class="p">),</span>
     <span class="n">timeout</span><span class="o">=</span><span class="mi">60</span><span class="p">,</span>
@@ -3382,8 +3349,8 @@ llm.invoke<span class="o">(</span><span class="s2">&quot;test&quot;</span><span 
 
 <span class="c1"># Check proxy recorded it</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">requests</span>
-<span class="n">stats</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;http://localhost:8766/stats&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Proxy stats: </span><span class="si">{</span><span class="n">stats</span><span class="p">[</span><span class="s1">&#39;requests_processed&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2"> requests processed&quot;</span><span class="p">)</span>
+<span class="n">stats</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;http://localhost:8766/cache-stats&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Proxy stats: </span><span class="si">{</span><span class="n">stats</span><span class="p">[</span><span class="s1">&#39;total_requests&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2"> requests processed&quot;</span><span class="p">)</span>
 </code></pre></div>
 <h2 id="advanced-request-injection-compression">Advanced: Request Injection &amp; Compression<a class="headerlink" href="#advanced-request-injection-compression" title="Permanent link">&para;</a></h2>
 <p>TokenPak supports vault injection (prepend your knowledge base) and automatic compression. These work transparently with LangChain:</p>
@@ -3391,7 +3358,7 @@ llm.invoke<span class="o">(</span><span class="s2">&quot;test&quot;</span><span 
 <span class="kn">from</span><span class="w"> </span><span class="nn">langchain_anthropic</span><span class="w"> </span><span class="kn">import</span> <span class="n">ChatAnthropic</span>
 
 <span class="n">llm</span> <span class="o">=</span> <span class="n">ChatAnthropic</span><span class="p">(</span>
-    <span class="n">model</span><span class="o">=</span><span class="s2">&quot;claude-3-5-sonnet-20241022&quot;</span><span class="p">,</span>
+    <span class="n">model</span><span class="o">=</span><span class="s2">&quot;claude-sonnet-4-6&quot;</span><span class="p">,</span>
     <span class="n">base_url</span><span class="o">=</span><span class="s2">&quot;http://localhost:8766/v1&quot;</span><span class="p">,</span>
     <span class="n">api_key</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;ANTHROPIC_API_KEY&quot;</span><span class="p">),</span>
     <span class="c1"># Optional: custom headers for injection/compression directives</span>

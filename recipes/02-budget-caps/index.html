@@ -1285,34 +1285,6 @@
   
   
     <li class="md-nav__item">
-      <a href="../../plugin-system-architecture/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Plugin System Architecture
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
       <a href="../../assets/DIAGRAMS/" class="md-nav__link">
         
   
@@ -2230,10 +2202,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#config-snippet" class="md-nav__link">
+  <a href="#the-pattern-illustrative-config" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Config Snippet
+        The pattern (illustrative config)
       
     </span>
   </a>
@@ -2241,10 +2213,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#test-verify" class="md-nav__link">
+  <a href="#whats-real-today" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Test &amp; Verify
+        What's real today
       
     </span>
   </a>
@@ -2252,21 +2224,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#what-just-happened" class="md-nav__link">
+  <a href="#designing-a-budget-guard" class="md-nav__link">
     <span class="md-ellipsis">
       
-        What Just Happened
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#common-pitfalls" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Common Pitfalls
+        Designing a budget guard
       
     </span>
   </a>
@@ -2865,10 +2826,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#config-snippet" class="md-nav__link">
+  <a href="#the-pattern-illustrative-config" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Config Snippet
+        The pattern (illustrative config)
       
     </span>
   </a>
@@ -2876,10 +2837,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#test-verify" class="md-nav__link">
+  <a href="#whats-real-today" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Test &amp; Verify
+        What's real today
       
     </span>
   </a>
@@ -2887,21 +2848,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#what-just-happened" class="md-nav__link">
+  <a href="#designing-a-budget-guard" class="md-nav__link">
     <span class="md-ellipsis">
       
-        What Just Happened
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#common-pitfalls" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Common Pitfalls
+        Designing a budget guard
       
     </span>
   </a>
@@ -2929,129 +2879,55 @@
 
 
 <h1 id="recipe-budget-caps-spend-alerts">Recipe: Budget Caps &amp; Spend Alerts<a class="headerlink" href="#recipe-budget-caps-spend-alerts" title="Permanent link">&para;</a></h1>
-<p><strong>What this solves:</strong> Set a daily or monthly spending limit and automatically reject requests when approaching or exceeding the cap.</p>
+<blockquote>
+<p><strong>Status: Conceptual.</strong> This recipe describes a spend-guard <em>pattern</em>. The declarative <code>budget:</code> config block, per-user limits, the inline <code>cost_cents</code> / <code>budget_exceeded</code> response fields, and the <code>sync-pricing</code> / <code>reconcile-spend</code> commands shown below are <strong>illustrative</strong> — they are not part of the validated config surface or shipped CLI of the current TokenPak release. The proxy is a byte-preserving passthrough and does not inject cost or error fields into the response body. Treat this as a design sketch, not a copy-paste runbook. Confirm any CLI command against <code>tokenpak --help</code>.</p>
+</blockquote>
+<p><strong>What this solves:</strong> The pattern of capping daily/monthly spend and reacting (alert, reject, or downgrade) as a budget is approached or exceeded.</p>
 <h2 id="prerequisites">Prerequisites<a class="headerlink" href="#prerequisites" title="Permanent link">&para;</a></h2>
 <ul>
-<li>TokenPak installed with <code>budget</code> plugin enabled</li>
-<li>A billing API key or webhook endpoint to track spend</li>
-<li>Access to logs or monitoring system for alerts</li>
+<li>TokenPak installed (<code>tokenpak --help</code>)</li>
 <li>Valid API keys for your providers</li>
+<li>A monitoring sink (logs, webhook, or metrics store) if you want alerts</li>
 </ul>
-<h2 id="config-snippet">Config Snippet<a class="headerlink" href="#config-snippet" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code><span class="c1"># config.yaml</span>
+<h2 id="the-pattern-illustrative-config">The pattern (illustrative config)<a class="headerlink" href="#the-pattern-illustrative-config" title="Permanent link">&para;</a></h2>
+<p>The idea is to track estimated spend and take an action at thresholds. The YAML below is a <strong>conceptual</strong> illustration only — it is not the validated TokenPak proxy config schema:</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># ILLUSTRATIVE ONLY — not a validated TokenPak config schema</span>
 <span class="nt">budget</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
-<span class="w">  </span><span class="c1"># Daily cap: $10.00 USD</span>
-<span class="w">  </span><span class="nt">daily_limit_cents</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1000</span>
-<span class="w">  </span><span class="c1"># Monthly cap: $200.00 USD</span>
-<span class="w">  </span><span class="nt">monthly_limit_cents</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">20000</span>
-
-<span class="w">  </span><span class="c1"># Alert when spend reaches 80% of cap</span>
+<span class="w">  </span><span class="nt">daily_limit_cents</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1000</span><span class="w">     </span><span class="c1"># $10.00/day</span>
+<span class="w">  </span><span class="nt">monthly_limit_cents</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">20000</span><span class="w">  </span><span class="c1"># $200.00/month</span>
 <span class="w">  </span><span class="nt">alert_threshold_pct</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">80</span>
 <span class="w">  </span><span class="nt">alert_webhook</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://monitoring.example.com/budget-alert</span>
-
-<span class="w">  </span><span class="c1"># Action when limit exceeded</span>
 <span class="w">  </span><span class="nt">reject_on_exceed</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
-<span class="w">  </span><span class="c1"># Optional: graceful degradation (route to cheaper model instead)</span>
+<span class="w">  </span><span class="c1"># Optional graceful degradation: route to a cheaper model instead</span>
 <span class="w">  </span><span class="nt">fallback_model_on_exceed</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">gpt-3.5-turbo</span>
-
-<span class="w">  </span><span class="c1"># Track spend per user (optional)</span>
-<span class="w">  </span><span class="nt">per_user_limits</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
-<span class="w">    </span><span class="nt">user_limits</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">user-a</span><span class="p">:</span>
-<span class="w">        </span><span class="nt">daily_limit_cents</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">300</span>
-<span class="w">      </span><span class="nt">user-b</span><span class="p">:</span>
-<span class="w">        </span><span class="nt">daily_limit_cents</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">500</span>
-
-<span class="nt">providers</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">openai</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">openai</span>
-<span class="w">    </span><span class="nt">api_key</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${OPENAI_API_KEY}</span>
-
-<span class="nt">models</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">gpt-4</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">provider</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">openai</span>
-<span class="w">    </span><span class="nt">estimated_input_cost_per_1k</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3</span><span class="w">  </span><span class="c1"># cents</span>
-<span class="w">    </span><span class="nt">estimated_output_cost_per_1k</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">6</span><span class="w">  </span><span class="c1"># cents</span>
-
-<span class="w">  </span><span class="nt">gpt-3.5-turbo</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">provider</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">openai</span>
-<span class="w">    </span><span class="nt">estimated_input_cost_per_1k</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.5</span>
-<span class="w">    </span><span class="nt">estimated_output_cost_per_1k</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1.5</span>
 </code></pre></div>
-<h2 id="test-verify">Test &amp; Verify<a class="headerlink" href="#test-verify" title="Permanent link">&para;</a></h2>
-<p><strong>Step 1:</strong> Validate the config:
-<div class="highlight"><pre><span></span><code>tokenpak<span class="w"> </span>validate-config<span class="w"> </span>config.yaml
-<span class="c1"># Expected output:</span>
-<span class="c1"># ✓ Config valid</span>
-<span class="c1"># ✓ Budget tracking enabled (daily: $10.00, monthly: $200.00)</span>
-<span class="c1"># ✓ Per-user limits: user-a ($3.00/day), user-b ($5.00/day)</span>
-</code></pre></div></p>
-<p><strong>Step 2:</strong> Start the proxy and make requests:
-<div class="highlight"><pre><span></span><code><span class="nb">export</span><span class="w"> </span><span class="nv">OPENAI_API_KEY</span><span class="o">=</span><span class="s2">&quot;sk-real-key&quot;</span>
-tokenpak<span class="w"> </span>proxy<span class="w"> </span>--config<span class="w"> </span>config.yaml
+<h2 id="whats-real-today">What's real today<a class="headerlink" href="#whats-real-today" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Start the proxy with <code>tokenpak serve</code> (default <code>http://127.0.0.1:8766</code>).</li>
+<li>TokenPak records usage out-of-band; inspect it with <code>tokenpak status</code>. Cost is <strong>not</strong> returned inline in the response body — the proxy forwards the upstream response verbatim.</li>
+<li>Validate a proxy config file with <code>tokenpak config-check &lt;file.json&gt;</code>. The declarative <code>budget:</code> graph above is <strong>not</strong> part of that validated surface.</li>
+</ul>
+<p>A request against the proxy returns the upstream provider's response unchanged:</p>
+<div class="highlight"><pre><span></span><code>tokenpak<span class="w"> </span>serve<span class="w">   </span><span class="c1"># http://127.0.0.1:8766</span>
 
-<span class="c1"># In another terminal, make 5 requests to consume budget</span>
-<span class="k">for</span><span class="w"> </span>i<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="o">{</span><span class="m">1</span>..5<span class="o">}</span><span class="p">;</span><span class="w"> </span><span class="k">do</span>
-<span class="w">  </span>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>http://localhost:8000/v1/messages<span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>-H<span class="w"> </span><span class="s2">&quot;Authorization: Bearer user-a&quot;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>-d<span class="w"> </span><span class="s1">&#39;{&quot;model&quot;: &quot;gpt-4&quot;, &quot;messages&quot;: [{&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: &quot;Write 100 words of code&quot;}]}&#39;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>-s<span class="w"> </span><span class="p">|</span><span class="w"> </span>jq<span class="w"> </span><span class="s1">&#39;.cost_cents&#39;</span>
-<span class="k">done</span>
-<span class="c1"># Expected output (cumulative):</span>
-<span class="c1"># 180</span>
-<span class="c1"># 360</span>
-<span class="c1"># 540</span>
-<span class="c1"># 720</span>
-<span class="c1"># 900  &lt;- This triggers 80% alert</span>
-</code></pre></div></p>
-<p><strong>Step 3:</strong> Verify alert was sent:
-<div class="highlight"><pre><span></span><code><span class="c1"># Check logs for webhook call</span>
-tail<span class="w"> </span>-f<span class="w"> </span>/var/log/tokenpak/alerts.log<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span><span class="s2">&quot;budget.*threshold&quot;</span>
-<span class="c1"># Expected output:</span>
-<span class="c1"># 2026-03-25T09:45:00Z ALERT budget_threshold_exceeded user=user-a spent=$9.00 daily_limit=$3.00 pct=300%</span>
-</code></pre></div></p>
-<p><strong>Step 4:</strong> Exceed the limit and verify rejection:
-<div class="highlight"><pre><span></span><code><span class="c1"># Make one more request (would exceed daily limit)</span>
-curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>http://localhost:8000/v1/messages<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;Authorization: Bearer user-a&quot;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;{&quot;model&quot;: &quot;gpt-4&quot;, &quot;messages&quot;: [{&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: &quot;One more request&quot;}]}&#39;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>-s<span class="w"> </span><span class="p">|</span><span class="w"> </span>jq<span class="w"> </span><span class="s1">&#39;.error&#39;</span>
-<span class="c1"># Expected output:</span>
-<span class="c1"># {</span>
-<span class="c1">#   &quot;code&quot;: &quot;budget_exceeded&quot;,</span>
-<span class="c1">#   &quot;message&quot;: &quot;User user-a has reached daily budget limit ($3.00). Rejecting request.&quot;,</span>
-<span class="c1">#   &quot;daily_spent&quot;: &quot;$9.00&quot;,</span>
-<span class="c1">#   &quot;daily_limit&quot;: &quot;$3.00&quot;</span>
-<span class="c1"># }</span>
-</code></pre></div></p>
-<h2 id="what-just-happened">What Just Happened<a class="headerlink" href="#what-just-happened" title="Permanent link">&para;</a></h2>
-<p>TokenPak maintained a running cost tally for each request:</p>
-<ol>
-<li><strong>Request arrives</strong> with user <code>user-a</code> requesting <code>gpt-4</code></li>
-<li><strong>Cost estimation</strong> based on model pricing and estimated token count</li>
-<li><strong>Spend check</strong> against <code>user-a</code>'s daily limit ($3.00)</li>
-<li><strong>When 80% reached</strong> ($2.40), webhook notification sent to your monitoring system</li>
-<li><strong>When limit exceeded</strong> ($3.00+), subsequent requests rejected with <code>budget_exceeded</code> error</li>
-</ol>
-<p>Users are aware of budget constraints without application code changes — TokenPak enforces them transparently.</p>
-<h2 id="common-pitfalls">Common Pitfalls<a class="headerlink" href="#common-pitfalls" title="Permanent link">&para;</a></h2>
-<p><strong>Pitfall 1: Cost estimates are inaccurate</strong>
-- ❌ Wrong: Hardcoded fixed costs that don't match actual provider pricing
-- ✅ Right: Query provider APIs hourly for latest pricing: <code>tokenpak sync-pricing --provider openai</code></p>
-<p><strong>Pitfall 2: Alert webhook is unreliable</strong>
-- ❌ Wrong: Single webhook with no retry logic, silent failures
-- ✅ Right: Configure multiple webhooks or fallback to email: <code>alert_webhook: [https://..., mailto://ops@...</code>]</p>
-<p><strong>Pitfall 3: Per-user limits are too permissive</strong>
-- ❌ Wrong: Set limits equal to total budget (allows one user to consume everything)
-- ✅ Right: Distribute: <code>total_budget / num_users * 1.2</code> with monitoring per user</p>
-<p><strong>Pitfall 4: Forgetting to account for overage</strong>
-- ❌ Wrong: Set monthly limit to $100, but requests are blocking at $100 exactly
-- ✅ Right: Set limit to <code>$100 - (estimated_max_single_request * 2)</code> to allow completion</p>
-<p><strong>Pitfall 5: Cost tracking falls out of sync</strong>
-- ❌ Wrong: Estimate-based tracking drifts from actual billing
-- ✅ Right: Hourly reconciliation with actual provider invoices: <code>tokenpak reconcile-spend --provider openai</code></p>
+curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>http://127.0.0.1:8766/v1/messages<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;Content-Type: application/json&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;x-api-key: </span><span class="nv">$ANTHROPIC_API_KEY</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;anthropic-version: 2023-06-01&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;{&quot;model&quot;: &quot;claude-3-5-sonnet-20241022&quot;, &quot;max_tokens&quot;: 64,</span>
+<span class="s1">       &quot;messages&quot;: [{&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: &quot;Write 100 words&quot;}]}&#39;</span>
+</code></pre></div>
+<p>To see spend after running requests, use <code>tokenpak status</code> (recorded server-side), rather than reading a <code>cost_cents</code> field from the response.</p>
+<h2 id="designing-a-budget-guard">Designing a budget guard<a class="headerlink" href="#designing-a-budget-guard" title="Permanent link">&para;</a></h2>
+<p>If you implement spend control (in your application or your own orchestration), these principles apply:</p>
+<ul>
+<li><strong>Keep cost estimates current.</strong> Provider pricing changes; a stale hardcoded rate drifts from reality. Refresh pricing from an authoritative source rather than hardcoding it indefinitely.</li>
+<li><strong>Make alerting reliable.</strong> A single webhook with no retry can fail silently — use retries or a secondary channel.</li>
+<li><strong>Distribute per-user limits</strong> so a single user can't consume the whole budget.</li>
+<li><strong>Leave headroom for in-flight requests</strong> — block somewhat below the hard cap so a request already underway can complete.</li>
+<li><strong>Reconcile estimates against real invoices</strong> periodically — estimate-based tracking drifts from actual billing over time.</li>
+</ul>
 
 
 

@@ -2,7 +2,7 @@ openapi: "3.1.0"
 
 info:
   title: TokenPak Proxy API
-  version: "1.0.2"
+  version: "1.7.1"
   description: |
     TokenPak is a drop-in HTTP proxy that sits between your app and LLM APIs.
     It compresses requests, deduplicates cache hits, and tracks token spend —
@@ -74,7 +74,7 @@ paths:
             schema:
               $ref: "#/components/schemas/AnthropicMessagesRequest"
             example:
-              model: claude-sonnet-4-5
+              model: claude-sonnet-4-6
               max_tokens: 1024
               messages:
                 - role: user
@@ -189,7 +189,7 @@ paths:
               example:
                 request_id: req_abc123
                 timestamp: "2026-03-25T09:00:00Z"
-                model: claude-sonnet-4-5
+                model: claude-sonnet-4-6
                 tokens_saved: 420
                 percent_saved: 32.1
                 cost_saved: 0.0012
@@ -212,25 +212,6 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/SessionStats"
-
-  /recent:
-    get:
-      operationId: getRecentRequests
-      summary: Recent 50 requests
-      description: Returns metadata for the 50 most recent requests processed by the proxy.
-      tags: [stats]
-      responses:
-        "200":
-          description: Recent requests list
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  recent:
-                    type: array
-                    items:
-                      $ref: "#/components/schemas/RequestSummary"
 
   # ─── Traces ───────────────────────────────────────────────────────────────
 
@@ -474,7 +455,7 @@ components:
       properties:
         model:
           type: string
-          example: claude-sonnet-4-5
+          example: claude-sonnet-4-6
         max_tokens:
           type: integer
           example: 1024

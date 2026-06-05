@@ -1022,10 +1022,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#6-token-limit-exceeded" class="md-nav__link">
+  <a href="#6-request-too-large" class="md-nav__link">
     <span class="md-ellipsis">
       
-        6. Token Limit Exceeded
+        6. Request Too Large
       
     </span>
   </a>
@@ -1133,10 +1133,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#view-request-log" class="md-nav__link">
+  <a href="#inspect-recent-requests" class="md-nav__link">
     <span class="md-ellipsis">
       
-        View Request Log
+        Inspect Recent Requests
       
     </span>
   </a>
@@ -1144,10 +1144,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#test-provider-connectivity" class="md-nav__link">
+  <a href="#test-proxy-connectivity" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Test Provider Connectivity
+        Test Proxy Connectivity
       
     </span>
   </a>
@@ -1172,10 +1172,10 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#client-errors-4xx" class="md-nav__link">
+  <a href="#proxy-http-error-types" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Client Errors (4xx)
+        Proxy HTTP Error Types
       
     </span>
   </a>
@@ -1183,10 +1183,21 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#server-errors-5xx" class="md-nav__link">
+  <a href="#core-exception-classes-proxy-core" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Server Errors (5xx)
+        Core Exception Classes (proxy / core)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sdk-adapter-exceptions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SDK Adapter Exceptions
       
     </span>
   </a>
@@ -1255,10 +1266,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#4-monitor-token-usage" class="md-nav__link">
+  <a href="#4-preview-compression-before-sending" class="md-nav__link">
     <span class="md-ellipsis">
       
-        4. Monitor Token Usage
+        4. Preview Compression Before Sending
       
     </span>
   </a>
@@ -1666,34 +1677,6 @@
     
   
     Plugin Guide
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../plugin-system-architecture/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Plugin System Architecture
   
 
     
@@ -3215,10 +3198,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#6-token-limit-exceeded" class="md-nav__link">
+  <a href="#6-request-too-large" class="md-nav__link">
     <span class="md-ellipsis">
       
-        6. Token Limit Exceeded
+        6. Request Too Large
       
     </span>
   </a>
@@ -3326,10 +3309,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#view-request-log" class="md-nav__link">
+  <a href="#inspect-recent-requests" class="md-nav__link">
     <span class="md-ellipsis">
       
-        View Request Log
+        Inspect Recent Requests
       
     </span>
   </a>
@@ -3337,10 +3320,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#test-provider-connectivity" class="md-nav__link">
+  <a href="#test-proxy-connectivity" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Test Provider Connectivity
+        Test Proxy Connectivity
       
     </span>
   </a>
@@ -3365,10 +3348,10 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#client-errors-4xx" class="md-nav__link">
+  <a href="#proxy-http-error-types" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Client Errors (4xx)
+        Proxy HTTP Error Types
       
     </span>
   </a>
@@ -3376,10 +3359,21 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#server-errors-5xx" class="md-nav__link">
+  <a href="#core-exception-classes-proxy-core" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Server Errors (5xx)
+        Core Exception Classes (proxy / core)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sdk-adapter-exceptions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SDK Adapter Exceptions
       
     </span>
   </a>
@@ -3448,10 +3442,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#4-monitor-token-usage" class="md-nav__link">
+  <a href="#4-preview-compression-before-sending" class="md-nav__link">
     <span class="md-ellipsis">
       
-        4. Monitor Token Usage
+        4. Preview Compression Before Sending
       
     </span>
   </a>
@@ -3570,42 +3564,36 @@ Attempt 3: Wait 4 seconds, retry
 Attempt 4: Wait 8 seconds, retry
 (Circuit breaker opens, switch to fallback provider)
 </code></pre></div></p>
-<p><strong>Solution (Manual):</strong>
-<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">tokenpak</span><span class="w"> </span><span class="kn">import</span> <span class="n">Client</span><span class="p">,</span> <span class="n">RateLimitError</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+<p><strong>Solution (Manual):</strong></p>
+<p>When a request is rate-limited, the proxy returns a <code>429</code> with a <code>rate_limit_exceeded</code> error body. With the TokenPak SDK adapter, this surfaces as a <code>TokenPakAdapterError</code> carrying <code>status_code == 429</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">tokenpak.sdk</span><span class="w"> </span><span class="kn">import</span> <span class="n">AnthropicAdapter</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">tokenpak.sdk.base</span><span class="w"> </span><span class="kn">import</span> <span class="n">TokenPakAdapterError</span>
 
-<span class="n">client</span> <span class="o">=</span> <span class="n">Client</span><span class="p">(</span><span class="n">api_key</span><span class="o">=</span><span class="s2">&quot;...&quot;</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="s2">&quot;claude-opus-4-6&quot;</span><span class="p">)</span>
+<span class="n">adapter</span> <span class="o">=</span> <span class="n">AnthropicAdapter</span><span class="p">(</span><span class="n">base_url</span><span class="o">=</span><span class="s2">&quot;http://127.0.0.1:8766&quot;</span><span class="p">,</span> <span class="n">api_key</span><span class="o">=</span><span class="s2">&quot;sk-ant-...&quot;</span><span class="p">)</span>
+<span class="n">request</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;model&quot;</span><span class="p">:</span> <span class="s2">&quot;claude-opus-4-8&quot;</span><span class="p">,</span> <span class="s2">&quot;max_tokens&quot;</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span>
+           <span class="s2">&quot;messages&quot;</span><span class="p">:</span> <span class="p">[{</span><span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;user&quot;</span><span class="p">,</span> <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="s2">&quot;Hello&quot;</span><span class="p">}]}</span>
 
 <span class="k">try</span><span class="p">:</span>
-    <span class="n">response</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">messages</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
-<span class="k">except</span> <span class="n">RateLimitError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-    <span class="n">wait_seconds</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">headers</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;Retry-After&quot;</span><span class="p">,</span> <span class="mi">60</span><span class="p">))</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Rate limited. Waiting </span><span class="si">{</span><span class="n">wait_seconds</span><span class="si">}</span><span class="s2">s...&quot;</span><span class="p">)</span>
-    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">wait_seconds</span><span class="p">)</span>
-    <span class="c1"># Retry</span>
-    <span class="n">response</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">messages</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
-</code></pre></div></p>
+    <span class="n">response</span> <span class="o">=</span> <span class="n">adapter</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+<span class="k">except</span> <span class="n">TokenPakAdapterError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">e</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">429</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Rate limited. Waiting 60s...&quot;</span><span class="p">)</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">60</span><span class="p">)</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="n">adapter</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span>
+</code></pre></div>
 <p><strong>Prevention:</strong>
 - Implement request batching (fewer, larger requests)
 - Use fallback chains for load balancing
 - Monitor your request frequency</p>
 <hr />
 <h3 id="4-model-not-found">4. Model Not Found<a class="headerlink" href="#4-model-not-found" title="Permanent link">&para;</a></h3>
-<p><strong>Error Message:</strong>
-<div class="highlight"><pre><span></span><code>ModelNotFoundError: Model &#39;gpt-7&#39; not found in provider: openai
-Available models: gpt-4o, gpt-4-turbo, gpt-3.5-turbo
-</code></pre></div></p>
-<p><strong>Cause:</strong> Using a model name that the provider doesn't support.</p>
-<p><strong>Solution:</strong>
-<div class="highlight"><pre><span></span><code><span class="c1"># Check available models for your provider</span>
-<span class="n">client</span> <span class="o">=</span> <span class="n">Client</span><span class="p">(</span><span class="n">api_key</span><span class="o">=</span><span class="s2">&quot;...&quot;</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="s2">&quot;gpt-4o&quot;</span><span class="p">)</span>
-
-<span class="c1"># Use a valid model name</span>
-<span class="n">response</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">messages</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
-    <span class="n">model</span><span class="o">=</span><span class="s2">&quot;gpt-4o&quot;</span><span class="p">,</span>  <span class="c1"># Valid</span>
-    <span class="n">messages</span><span class="o">=</span><span class="p">[</span><span class="o">...</span><span class="p">]</span>
-<span class="p">)</span>
-</code></pre></div></p>
+<p><strong>Cause:</strong> Using a model name that the upstream provider doesn't support. The proxy forwards the request and the upstream provider rejects it — the error is passed back to the client as a <code>4xx</code> with the provider's message.</p>
+<p><strong>Solution:</strong> Use a valid model name for the target provider. The proxy lists the models it knows about at <code>GET /v1/models</code>:</p>
+<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>http://127.0.0.1:8766/v1/models
+</code></pre></div>
 <p><strong>Common Model Names:</strong></p>
 <table>
 <thead>
@@ -3617,7 +3605,7 @@ Available models: gpt-4o, gpt-4-turbo, gpt-3.5-turbo
 <tbody>
 <tr>
 <td>Anthropic</td>
-<td><code>claude-opus-4-6</code>, <code>claude-sonnet-4-6</code>, <code>claude-haiku-3-5</code></td>
+<td><code>claude-opus-4-8</code>, <code>claude-sonnet-4-6</code>, <code>claude-haiku-4-5</code></td>
 </tr>
 <tr>
 <td>OpenAI</td>
@@ -3625,61 +3613,49 @@ Available models: gpt-4o, gpt-4-turbo, gpt-3.5-turbo
 </tr>
 <tr>
 <td>Google</td>
-<td><code>gemini-pro</code>, <code>gemini-pro-vision</code>, <code>gemini-ultra</code></td>
+<td><code>gemini-1.5-pro</code>, <code>gemini-1.5-flash</code></td>
 </tr>
 </tbody>
 </table>
 <p><strong>Prevention:</strong> Hardcode model names; don't accept user input directly.</p>
 <hr />
 <h3 id="5-provider-timeout">5. Provider Timeout<a class="headerlink" href="#5-provider-timeout" title="Permanent link">&para;</a></h3>
-<p><strong>Error Message:</strong>
-<div class="highlight"><pre><span></span><code>TimeoutError: Request to anthropic timed out after 300 seconds
-</code></pre></div></p>
-<p><strong>Cause:</strong> Provider took too long to respond.</p>
-<p><strong>Solution (TokenPak Automatic):</strong>
-Switches to fallback provider if primary times out.</p>
+<p><strong>Cause:</strong> The upstream provider took too long to respond. The TokenPak SDK adapter raises <code>TokenPakTimeoutError</code> when the proxy does not respond within <code>timeout_s</code>.</p>
 <p><strong>Solution (Manual):</strong>
-<div class="highlight"><pre><span></span><code><span class="n">client</span> <span class="o">=</span> <span class="n">Client</span><span class="p">(</span>
-    <span class="n">api_key</span><span class="o">=</span><span class="s2">&quot;...&quot;</span><span class="p">,</span>
-    <span class="n">model</span><span class="o">=</span><span class="s2">&quot;claude-opus-4-6&quot;</span><span class="p">,</span>
-    <span class="n">timeout</span><span class="o">=</span><span class="mi">60</span>  <span class="c1"># 60 second timeout</span>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">tokenpak.sdk</span><span class="w"> </span><span class="kn">import</span> <span class="n">AnthropicAdapter</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">tokenpak.sdk.base</span><span class="w"> </span><span class="kn">import</span> <span class="n">TokenPakTimeoutError</span>
+
+<span class="n">adapter</span> <span class="o">=</span> <span class="n">AnthropicAdapter</span><span class="p">(</span>
+    <span class="n">base_url</span><span class="o">=</span><span class="s2">&quot;http://127.0.0.1:8766&quot;</span><span class="p">,</span>
+    <span class="n">api_key</span><span class="o">=</span><span class="s2">&quot;sk-ant-...&quot;</span><span class="p">,</span>
+    <span class="n">timeout_s</span><span class="o">=</span><span class="mf">60.0</span><span class="p">,</span>  <span class="c1"># 60 second timeout</span>
 <span class="p">)</span>
 
 <span class="k">try</span><span class="p">:</span>
-    <span class="n">response</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">messages</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
-<span class="k">except</span> <span class="ne">TimeoutError</span><span class="p">:</span>
-    <span class="c1"># Try fallback manually</span>
-    <span class="n">client</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="s2">&quot;gemini-pro&quot;</span>
-    <span class="n">response</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">messages</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+    <span class="n">response</span> <span class="o">=</span> <span class="n">adapter</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+<span class="k">except</span> <span class="n">TokenPakTimeoutError</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Proxy/upstream timed out — retry or use a fallback&quot;</span><span class="p">)</span>
 </code></pre></div></p>
 <p><strong>Prevention:</strong>
-- Use fallback chains
-- Set reasonable timeouts
+- Set reasonable timeouts (<code>timeout_s</code>)
+- Configure fallback chains in <code>config.yaml</code>
 - Monitor provider status</p>
 <hr />
-<h3 id="6-token-limit-exceeded">6. Token Limit Exceeded<a class="headerlink" href="#6-token-limit-exceeded" title="Permanent link">&para;</a></h3>
-<p><strong>Error Message:</strong>
-<div class="highlight"><pre><span></span><code>TokenLimitError: Message exceeds max_tokens limit (4096 &gt; 4096)
-</code></pre></div></p>
-<p><strong>Cause:</strong> Request too large for the model.</p>
+<h3 id="6-request-too-large">6. Request Too Large<a class="headerlink" href="#6-request-too-large" title="Permanent link">&para;</a></h3>
+<p><strong>Cause:</strong> Request exceeds the target model's context window. The upstream provider rejects oversized requests; the error is passed back through the proxy.</p>
 <p><strong>Solution:</strong>
-<div class="highlight"><pre><span></span><code><span class="c1"># Option 1: Reduce message size</span>
+<div class="highlight"><pre><span></span><code><span class="c1"># Option 1: Reduce message size — keep only relevant context</span>
 <span class="n">short_context</span> <span class="o">=</span> <span class="s2">&quot;Summary of relevant context only...&quot;</span>
 
-<span class="c1"># Option 2: Use compression (automatic)</span>
-<span class="n">client</span> <span class="o">=</span> <span class="n">Client</span><span class="p">(</span>
-    <span class="n">api_key</span><span class="o">=</span><span class="s2">&quot;...&quot;</span><span class="p">,</span>
-    <span class="n">model</span><span class="o">=</span><span class="s2">&quot;claude-opus-4-6&quot;</span><span class="p">,</span>
-    <span class="n">compression</span><span class="o">=</span><span class="kc">True</span>  <span class="c1"># Auto-compress context</span>
-<span class="p">)</span>
+<span class="c1"># Option 2: Let the proxy compress context automatically</span>
+<span class="c1">#   (compression is enabled by default; tune via config.yaml / env vars)</span>
 
-<span class="c1"># Option 3: Split into multiple requests</span>
-<span class="c1"># (batch processing)</span>
+<span class="c1"># Option 3: Split into multiple smaller requests</span>
 </code></pre></div></p>
 <p><strong>Prevention:</strong>
-- Use <code>count_tokens()</code> before making requests
-- Implement compression (automatic in FREE)
-- Use document injection selectively</p>
+- Enable compression (on by default — see config.yaml)
+- Use vault context injection selectively
+- Preview compression savings on a file with <code>tokenpak preview &lt;file&gt;</code></p>
 <hr />
 <h3 id="7-invalid-configuration">7. Invalid Configuration<a class="headerlink" href="#7-invalid-configuration" title="Permanent link">&para;</a></h3>
 <p><strong>Error Message:</strong>
@@ -3698,7 +3674,7 @@ Switches to fallback provider if primary times out.</p>
 </code></pre></div></p>
 <p><strong>Validation:</strong>
 <div class="highlight"><pre><span></span><code><span class="c1"># Validate config before starting</span>
-tokenpak<span class="w"> </span>validate<span class="w"> </span>--config<span class="w"> </span>config.yaml
+tokenpak<span class="w"> </span>config<span class="w"> </span>validate
 
 <span class="c1"># Shows all errors</span>
 </code></pre></div></p>
@@ -3768,127 +3744,166 @@ tokenpak<span class="w"> </span>serve<span class="w"> </span>--log-file<span cla
 <div class="highlight"><pre><span></span><code><span class="c1"># Health check endpoint</span>
 curl<span class="w"> </span>http://127.0.0.1:8766/health
 
-<span class="c1"># Response:</span>
-<span class="c1"># {</span>
-<span class="c1">#   &quot;status&quot;: &quot;healthy&quot;,</span>
-<span class="c1">#   &quot;providers&quot;: {</span>
-<span class="c1">#     &quot;anthropic&quot;: &quot;ok&quot;,</span>
-<span class="c1">#     &quot;google&quot;: &quot;ok&quot;,</span>
-<span class="c1">#     &quot;openai&quot;: &quot;degraded&quot;</span>
-<span class="c1">#   }</span>
-<span class="c1"># }</span>
+<span class="c1"># Circuit breaker / degradation state</span>
+curl<span class="w"> </span>http://127.0.0.1:8766/circuit-breakers
+curl<span class="w"> </span>http://127.0.0.1:8766/degradation
 </code></pre></div>
-<h3 id="view-request-log">View Request Log<a class="headerlink" href="#view-request-log" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><span class="c1"># Last 100 requests</span>
-curl<span class="w"> </span>http://127.0.0.1:8766/logs?limit<span class="o">=</span><span class="m">100</span>
+<h3 id="inspect-recent-requests">Inspect Recent Requests<a class="headerlink" href="#inspect-recent-requests" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1"># Stats for the most recent request</span>
+curl<span class="w"> </span>http://127.0.0.1:8766/stats/last
 
-<span class="c1"># Requests to Anthropic only</span>
-curl<span class="w"> </span><span class="s1">&#39;http://127.0.0.1:8766/logs?provider=anthropic&#39;</span>
+<span class="c1"># Full pipeline trace of the last request</span>
+curl<span class="w"> </span>http://127.0.0.1:8766/trace/last
 
-<span class="c1"># Requests with errors</span>
-curl<span class="w"> </span><span class="s1">&#39;http://127.0.0.1:8766/logs?status=error&#39;</span>
+<span class="c1"># All stored pipeline traces</span>
+curl<span class="w"> </span>http://127.0.0.1:8766/traces
+
+<span class="c1"># Export the request ledger as CSV</span>
+curl<span class="w"> </span>http://127.0.0.1:8766/v1/export/csv
 </code></pre></div>
-<h3 id="test-provider-connectivity">Test Provider Connectivity<a class="headerlink" href="#test-provider-connectivity" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">tokenpak</span><span class="w"> </span><span class="kn">import</span> <span class="n">Client</span>
+<h3 id="test-proxy-connectivity">Test Proxy Connectivity<a class="headerlink" href="#test-proxy-connectivity" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">tokenpak.sdk</span><span class="w"> </span><span class="kn">import</span> <span class="n">AnthropicAdapter</span>
 
-<span class="n">client</span> <span class="o">=</span> <span class="n">Client</span><span class="p">(</span><span class="n">api_key</span><span class="o">=</span><span class="s2">&quot;...&quot;</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="s2">&quot;claude-opus-4-6&quot;</span><span class="p">)</span>
+<span class="n">adapter</span> <span class="o">=</span> <span class="n">AnthropicAdapter</span><span class="p">(</span><span class="n">base_url</span><span class="o">=</span><span class="s2">&quot;http://127.0.0.1:8766&quot;</span><span class="p">,</span> <span class="n">api_key</span><span class="o">=</span><span class="s2">&quot;sk-ant-...&quot;</span><span class="p">)</span>
 
-<span class="c1"># Quick test</span>
 <span class="k">try</span><span class="p">:</span>
-    <span class="n">response</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">messages</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
-        <span class="n">model</span><span class="o">=</span><span class="s2">&quot;claude-opus-4-6&quot;</span><span class="p">,</span>
-        <span class="n">max_tokens</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
-        <span class="n">messages</span><span class="o">=</span><span class="p">[{</span><span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;user&quot;</span><span class="p">,</span> <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="s2">&quot;test&quot;</span><span class="p">}]</span>
-    <span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;✅ Connected to Anthropic&quot;</span><span class="p">)</span>
+    <span class="n">response</span> <span class="o">=</span> <span class="n">adapter</span><span class="o">.</span><span class="n">call</span><span class="p">({</span>
+        <span class="s2">&quot;model&quot;</span><span class="p">:</span> <span class="s2">&quot;claude-opus-4-8&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;max_tokens&quot;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span>
+        <span class="s2">&quot;messages&quot;</span><span class="p">:</span> <span class="p">[{</span><span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;user&quot;</span><span class="p">,</span> <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="s2">&quot;test&quot;</span><span class="p">}],</span>
+    <span class="p">})</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;✅ Reached upstream via the proxy&quot;</span><span class="p">)</span>
 <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;❌ Connection failed: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;❌ Request failed: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </code></pre></div>
 <hr />
 <h2 id="error-types-reference">Error Types Reference<a class="headerlink" href="#error-types-reference" title="Permanent link">&para;</a></h2>
-<h3 id="client-errors-4xx">Client Errors (4xx)<a class="headerlink" href="#client-errors-4xx" title="Permanent link">&para;</a></h3>
+<h3 id="proxy-http-error-types">Proxy HTTP Error Types<a class="headerlink" href="#proxy-http-error-types" title="Permanent link">&para;</a></h3>
+<p>The proxy returns errors as a JSON object <code>{"error": {"type": ..., "message": ...}}</code>. Common types:</p>
 <table>
 <thead>
 <tr>
-<th>Error</th>
-<th>Code</th>
+<th>HTTP Status</th>
+<th><code>error.type</code></th>
 <th>Cause</th>
-<th>Solution</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><code>AuthenticationError</code></td>
-<td>401</td>
-<td>Invalid API key</td>
-<td>Check API key in <code>.env</code></td>
-</tr>
-<tr>
-<td><code>PermissionError</code></td>
-<td>403</td>
-<td>Key lacks permissions</td>
-<td>Regenerate API key</td>
-</tr>
-<tr>
-<td><code>NotFoundError</code></td>
-<td>404</td>
-<td>Model not found</td>
-<td>Check model name</td>
-</tr>
-<tr>
-<td><code>RateLimitError</code></td>
-<td>429</td>
-<td>Too many requests</td>
-<td>Use fallback chain</td>
-</tr>
-<tr>
-<td><code>TokenLimitError</code></td>
-<td>413</td>
-<td>Message too large</td>
-<td>Compress or split</td>
-</tr>
-<tr>
-<td><code>ValidationError</code></td>
 <td>400</td>
-<td>Invalid request format</td>
-<td>Check request structure</td>
+<td><code>bad_request</code></td>
+<td>Malformed request body</td>
+</tr>
+<tr>
+<td>401</td>
+<td><code>unauthorized</code></td>
+<td>Missing or invalid <code>X-TokenPak-Key</code></td>
+</tr>
+<tr>
+<td>403</td>
+<td><code>forbidden</code></td>
+<td>Operation not allowed from this IP</td>
+</tr>
+<tr>
+<td>404</td>
+<td><code>not_found</code></td>
+<td>Unknown endpoint path</td>
+</tr>
+<tr>
+<td>429</td>
+<td><code>rate_limit_exceeded</code></td>
+<td>Too many requests from this IP</td>
+</tr>
+<tr>
+<td>500</td>
+<td><code>internal_error</code></td>
+<td>Proxy-side error</td>
+</tr>
+<tr>
+<td>503</td>
+<td><code>circuit_open</code></td>
+<td>Upstream provider circuit breaker open</td>
+</tr>
+<tr>
+<td>503</td>
+<td><code>upstream_unreachable</code></td>
+<td>Cannot reach upstream provider</td>
 </tr>
 </tbody>
 </table>
-<h3 id="server-errors-5xx">Server Errors (5xx)<a class="headerlink" href="#server-errors-5xx" title="Permanent link">&para;</a></h3>
+<h3 id="core-exception-classes-proxy-core">Core Exception Classes (proxy / core)<a class="headerlink" href="#core-exception-classes-proxy-core" title="Permanent link">&para;</a></h3>
+<p>Raised internally by the proxy and core library. Base class: <code>TokenPakError</code>.</p>
 <table>
 <thead>
 <tr>
-<th>Error</th>
-<th>Code</th>
+<th>Exception</th>
 <th>Cause</th>
-<th>Solution</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><code>ServerError</code></td>
-<td>500</td>
-<td>Provider internal error</td>
-<td>Retry with fallback</td>
+<td><code>AuthenticationError</code> / <code>InvalidAPIKeyError</code> / <code>MissingAPIKeyError</code></td>
+<td>API key invalid or absent</td>
 </tr>
 <tr>
-<td><code>ServiceUnavailableError</code></td>
-<td>503</td>
-<td>Provider down</td>
-<td>Use fallback chain</td>
+<td><code>RateLimitError</code></td>
+<td>Upstream rate limit hit</td>
 </tr>
 <tr>
-<td><code>GatewayError</code></td>
-<td>502</td>
-<td>Network issue</td>
-<td>Check connection</td>
+<td><code>UpstreamError</code></td>
+<td>Upstream provider returned an error</td>
 </tr>
 <tr>
-<td><code>TimeoutError</code></td>
-<td>504</td>
-<td>Request took too long</td>
-<td>Increase timeout</td>
+<td><code>CircuitOpenError</code></td>
+<td>Provider circuit breaker is open</td>
+</tr>
+<tr>
+<td><code>SpendGuardBlocked</code></td>
+<td>Spend guard blocked the request</td>
+</tr>
+<tr>
+<td><code>ProxyError</code></td>
+<td>Generic proxy-side failure</td>
+</tr>
+<tr>
+<td><code>ConfigError</code> / <code>ConfigValidationError</code></td>
+<td>Invalid configuration</td>
+</tr>
+<tr>
+<td><code>CacheError</code></td>
+<td>Cache subsystem failure</td>
+</tr>
+<tr>
+<td><code>NetworkConnectionError</code> / <code>ProviderConnectionError</code></td>
+<td>Network/connection failure</td>
+</tr>
+<tr>
+<td><code>PortInUseError</code></td>
+<td>Configured port already in use</td>
+</tr>
+</tbody>
+</table>
+<h3 id="sdk-adapter-exceptions">SDK Adapter Exceptions<a class="headerlink" href="#sdk-adapter-exceptions" title="Permanent link">&para;</a></h3>
+<p>Raised by the <code>tokenpak.sdk</code> adapters. Base class: <code>TokenPakAdapterError</code> (import from <code>tokenpak.sdk.base</code>).</p>
+<table>
+<thead>
+<tr>
+<th>Exception</th>
+<th>Cause</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>TokenPakTimeoutError</code></td>
+<td>Proxy did not respond within <code>timeout_s</code></td>
+</tr>
+<tr>
+<td><code>TokenPakConfigError</code></td>
+<td>Missing required fields / bad config</td>
+</tr>
+<tr>
+<td><code>TokenPakAuthError</code></td>
+<td>401 or 403 from the proxy</td>
 </tr>
 </tbody>
 </table>
@@ -3928,55 +3943,59 @@ curl<span class="w"> </span><span class="s1">&#39;http://127.0.0.1:8766/logs?sta
 <span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">openai</span>
 </code></pre></div>
 <h3 id="2-wrap-requests-in-try-catch">2. Wrap Requests in Try-Catch<a class="headerlink" href="#2-wrap-requests-in-try-catch" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><span class="k">try</span><span class="p">:</span>
-    <span class="n">response</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">messages</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
-<span class="k">except</span> <span class="n">RateLimitError</span><span class="p">:</span>
-    <span class="c1"># Handle rate limit</span>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">tokenpak.sdk.base</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">TokenPakAdapterError</span><span class="p">,</span>
+    <span class="n">TokenPakTimeoutError</span><span class="p">,</span>
+    <span class="n">TokenPakAuthError</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">response</span> <span class="o">=</span> <span class="n">adapter</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+<span class="k">except</span> <span class="n">TokenPakTimeoutError</span><span class="p">:</span>
+    <span class="c1"># Handle timeout</span>
     <span class="k">pass</span>
-<span class="k">except</span> <span class="n">AuthenticationError</span><span class="p">:</span>
+<span class="k">except</span> <span class="n">TokenPakAuthError</span><span class="p">:</span>
     <span class="c1"># Handle auth error</span>
     <span class="k">pass</span>
-<span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-    <span class="c1"># Log unexpected errors</span>
-    <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unexpected: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="k">except</span> <span class="n">TokenPakAdapterError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+    <span class="c1"># Handle other adapter errors (e.status_code carries the HTTP status)</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Adapter error: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </code></pre></div>
 <h3 id="3-implement-exponential-backoff">3. Implement Exponential Backoff<a class="headerlink" href="#3-implement-exponential-backoff" title="Permanent link">&para;</a></h3>
-<p>TokenPak does this automatically, but for custom retries:</p>
+<p>The proxy retries upstream failures automatically, but for custom client-side retries:</p>
 <div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">tokenpak.sdk.base</span><span class="w"> </span><span class="kn">import</span> <span class="n">TokenPakAdapterError</span>
 
 <span class="k">def</span><span class="w"> </span><span class="nf">call_with_backoff</span><span class="p">(</span><span class="n">fn</span><span class="p">,</span> <span class="n">max_attempts</span><span class="o">=</span><span class="mi">3</span><span class="p">):</span>
     <span class="k">for</span> <span class="n">attempt</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">max_attempts</span><span class="p">):</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">fn</span><span class="p">()</span>
-        <span class="k">except</span> <span class="n">RateLimitError</span><span class="p">:</span>
+        <span class="k">except</span> <span class="n">TokenPakAdapterError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">e</span><span class="o">.</span><span class="n">status_code</span> <span class="o">!=</span> <span class="mi">429</span><span class="p">:</span>
+                <span class="k">raise</span>
             <span class="n">wait</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">**</span> <span class="n">attempt</span>  <span class="c1"># 1, 2, 4 seconds</span>
-            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Attempt </span><span class="si">{</span><span class="n">attempt</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="si">}</span><span class="s2"> failed. Waiting </span><span class="si">{</span><span class="n">wait</span><span class="si">}</span><span class="s2">s...&quot;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Attempt </span><span class="si">{</span><span class="n">attempt</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="si">}</span><span class="s2"> rate-limited. Waiting </span><span class="si">{</span><span class="n">wait</span><span class="si">}</span><span class="s2">s...&quot;</span><span class="p">)</span>
             <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">wait</span><span class="p">)</span>
     <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;All attempts failed&quot;</span><span class="p">)</span>
 </code></pre></div>
-<h3 id="4-monitor-token-usage">4. Monitor Token Usage<a class="headerlink" href="#4-monitor-token-usage" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><span class="c1"># Before making request</span>
-<span class="n">tokens</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">count_tokens</span><span class="p">(</span>
-    <span class="n">model</span><span class="o">=</span><span class="s2">&quot;claude-opus-4-6&quot;</span><span class="p">,</span>
-    <span class="n">messages</span><span class="o">=</span><span class="n">messages</span>
-<span class="p">)</span>
-
-<span class="k">if</span> <span class="n">tokens</span> <span class="o">&gt;</span> <span class="mi">10000</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Warning: </span><span class="si">{</span><span class="n">tokens</span><span class="si">}</span><span class="s2"> tokens. Consider compression.&quot;</span><span class="p">)</span>
+<h3 id="4-preview-compression-before-sending">4. Preview Compression Before Sending<a class="headerlink" href="#4-preview-compression-before-sending" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1"># Dry-run compression on a file to estimate token savings</span>
+tokenpak<span class="w"> </span>preview<span class="w"> </span>prompt.txt
 </code></pre></div>
 <h3 id="5-set-timeouts">5. Set Timeouts<a class="headerlink" href="#5-set-timeouts" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><span class="n">client</span> <span class="o">=</span> <span class="n">Client</span><span class="p">(</span>
-    <span class="n">api_key</span><span class="o">=</span><span class="s2">&quot;...&quot;</span><span class="p">,</span>
-    <span class="n">timeout</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span>  <span class="c1"># 30 second timeout</span>
-    <span class="n">model</span><span class="o">=</span><span class="s2">&quot;claude-opus-4-6&quot;</span>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">tokenpak.sdk</span><span class="w"> </span><span class="kn">import</span> <span class="n">AnthropicAdapter</span>
+
+<span class="n">adapter</span> <span class="o">=</span> <span class="n">AnthropicAdapter</span><span class="p">(</span>
+    <span class="n">base_url</span><span class="o">=</span><span class="s2">&quot;http://127.0.0.1:8766&quot;</span><span class="p">,</span>
+    <span class="n">api_key</span><span class="o">=</span><span class="s2">&quot;sk-ant-...&quot;</span><span class="p">,</span>
+    <span class="n">timeout_s</span><span class="o">=</span><span class="mf">30.0</span><span class="p">,</span>  <span class="c1"># 30 second timeout</span>
 <span class="p">)</span>
 </code></pre></div>
 <hr />
 <h2 id="getting-help">Getting Help<a class="headerlink" href="#getting-help" title="Permanent link">&para;</a></h2>
 <ul>
-<li><strong>Question?</strong> Check this guide or <a href="../faq/">FAQ</a></li>
-<li><strong>Bug?</strong> Open an issue on GitHub</li>
-<li><strong>Stuck?</strong> Email support or check Discord</li>
+<li><strong>Question?</strong> Check this guide or the <a href="../faq/">FAQ</a></li>
+<li><strong>Bug?</strong> Open an issue on <a href="https://github.com/tokenpak/tokenpak">GitHub</a></li>
 </ul>
 <hr />
 <h2 id="next-steps">Next Steps<a class="headerlink" href="#next-steps" title="Permanent link">&para;</a></h2>

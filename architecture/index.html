@@ -1580,34 +1580,6 @@
   
   
     <li class="md-nav__item">
-      <a href="../plugin-system-architecture/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Plugin System Architecture
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
       <a href="../assets/DIAGRAMS/" class="md-nav__link">
         
   
@@ -3440,7 +3412,7 @@ Node 1       Node 2       Node 3
 <h2 id="internal-module-structure">Internal Module Structure<a class="headerlink" href="#internal-module-structure" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code>graph TD
     A[&quot;StageTrace &amp; PipelineTrace&quot;]
-    B[&quot;VaultIndex&lt;br/&gt;Token Counting &amp; Compression&quot;]
+    B[&quot;VaultIndex&lt;br/&gt;Vault Retrieval &amp; Semantic Search&quot;]
     C[&quot;Provider Router&lt;br/&gt;Route Selection &amp; Failover&quot;]
     D[&quot;Validation Gate&lt;br/&gt;Content Security&quot;]
     E[&quot;Cache Manager&lt;br/&gt;Response &amp; Prompt Cache&quot;]
@@ -3461,7 +3433,7 @@ Node 1       Node 2       Node 3
 </code></pre></div>
 <ul>
 <li><strong>StageTrace &amp; PipelineTrace:</strong> Request tracing for debugging and performance analysis</li>
-<li><strong>VaultIndex:</strong> Token counting, semantic compression, and cost calculation</li>
+<li><strong>VaultIndex:</strong> Vault retrieval and semantic-search index — selects relevant indexed blocks for context injection (not the token counter)</li>
 <li><strong>Provider Router:</strong> Logic for selecting which LLM provider to use</li>
 <li><strong>Validation Gate:</strong> Content scanning and policy enforcement</li>
 <li><strong>Cache Manager:</strong> Response caching and prompt cache integration</li>
@@ -3513,23 +3485,23 @@ Node 1       Node 2       Node 3
 </ul>
 <hr />
 <h2 id="configuration">Configuration<a class="headerlink" href="#configuration" title="Permanent link">&para;</a></h2>
-<p>TokenPak is configured via environment variables and a local config file:</p>
+<p>TokenPak is configured via environment variables and a local config file (<code>~/.tokenpak/config.yaml</code>). Environment variables override config file values:</p>
 <div class="highlight"><pre><span></span><code># Core settings
-TOKENPAK_BIND=0.0.0.0:8766
-TOKENPAK_UPSTREAM=https://api.anthropic.com
+TOKENPAK_BIND_ADDRESS=127.0.0.1   # default bind host (loopback only)
+TOKENPAK_PORT=8766                # default listen port
+TOKENPAK_MODE=hybrid              # compression mode: strict | hybrid | aggressive
+TOKENPAK_COMPACT=1                # master compression switch (0 = off)
 
-# Cache settings
-CACHE_ENABLED=true
-CACHE_TTL_SECONDS=3600
+# Storage
+TOKENPAK_DB=.tokenpak/monitor.db  # SQLite database path
 
-# Rate limiting
-RATE_LIMIT_PER_IP=100  # requests per minute
-COST_LIMIT_PER_MINUTE=10.0  # dollars per minute
+# Logging
+TOKENPAK_LOG_LEVEL=info           # debug | info | warning | error
 
-# Validation gate
-VALIDATION_GATE_ENABLED=true
+# Spend guard
+TOKENPAK_SPEND_GUARD_ENABLED=true
 </code></pre></div>
-<p>See <code>docs/CONFIG.md</code> for full options.</p>
+<p>See <a href="../configuration/">configuration.md</a> and <a href="../env-vars/">env-vars.md</a> for the full set of options.</p>
 <hr />
 <h2 id="extension-points">Extension Points<a class="headerlink" href="#extension-points" title="Permanent link">&para;</a></h2>
 <p>TokenPak is designed to be extended:</p>
@@ -3540,7 +3512,7 @@ VALIDATION_GATE_ENABLED=true
 <li><strong>Custom routing logic</strong> — Implement custom provider selection rules</li>
 <li><strong>Custom metrics exporters</strong> — Send stats to your monitoring system</li>
 </ul>
-<p>See <code>docs/CONTRIBUTING.md</code> for extension patterns.</p>
+<p>See the <a href="../plugin-guide/">Plugin Guide</a> for extension patterns, and the <a href="https://github.com/tokenpak/tokenpak">tokenpak/tokenpak</a> repository for contribution guidelines.</p>
 
 
 

@@ -1283,34 +1283,6 @@
   
   
     <li class="md-nav__item">
-      <a href="../plugin-system-architecture/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Plugin System Architecture
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
       <a href="../assets/DIAGRAMS/" class="md-nav__link">
         
   
@@ -3009,7 +2981,7 @@
 <li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <strong>Version command works:</strong> <code>tokenpak version</code> shows the correct version</li>
 <li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <strong>Update detection:</strong> <code>tokenpak update --check</code> detects the new version as available</li>
 <li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <strong>Update applies cleanly:</strong> <code>tokenpak update --dry-run</code> runs without errors</li>
-<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <strong>Rollback works:</strong> After a test update, <code>tokenpak rollback</code> restores previous version</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <strong>Downgrade works:</strong> A previous version can be reinstalled cleanly (<code>pip install tokenpak==&lt;previous&gt;</code>) and starts without errors</li>
 </ul>
 <hr />
 <h2 id="3-config-safety">3️⃣ Config Safety ⚠️<a class="headerlink" href="#3-config-safety" title="Permanent link">&para;</a></h2>
@@ -3071,7 +3043,7 @@ bash<span class="w"> </span>scripts/publish-pro.sh<span class="w"> </span>X.Y.Z
 <ul>
 <li><strong>No half-releases:</strong> If any check fails, fix it before moving to the next section.</li>
 <li><strong>Dry-run first:</strong> Always test <code>update --dry-run</code> before committing to a real update.</li>
-<li><strong>Rollback tested:</strong> If rollback fails, <strong>do not ship</strong> — fix the rollback mechanism first.</li>
+<li><strong>Downgrade tested:</strong> If reinstalling a previous version fails to start cleanly, <strong>do not ship</strong> — investigate before publishing.</li>
 </ul>
 
 

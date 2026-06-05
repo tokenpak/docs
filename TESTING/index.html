@@ -1285,34 +1285,6 @@
   
   
     <li class="md-nav__item">
-      <a href="../plugin-system-architecture/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Plugin System Architecture
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
       <a href="../assets/DIAGRAMS/" class="md-nav__link">
         
   
@@ -2498,33 +2470,22 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#known-issues-historical-root-causes" class="md-nav__link">
+  <a href="#troubleshooting-test-collection" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Known Issues &amp; Historical Root Causes
+        Troubleshooting Test Collection
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Known Issues &amp; Historical Root Causes">
+    <nav class="md-nav" aria-label="Troubleshooting Test Collection">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#proxy_v4py-import-path-resolved-2026-03-26" class="md-nav__link">
+  <a href="#slow-or-hanging-collection" class="md-nav__link">
     <span class="md-ellipsis">
       
-        proxy_v4.py — Import Path (Resolved 2026-03-26)
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#collection-speed-baseline" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Collection speed baseline
+        Slow or hanging collection
       
     </span>
   </a>
@@ -3626,33 +3587,22 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#known-issues-historical-root-causes" class="md-nav__link">
+  <a href="#troubleshooting-test-collection" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Known Issues &amp; Historical Root Causes
+        Troubleshooting Test Collection
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Known Issues &amp; Historical Root Causes">
+    <nav class="md-nav" aria-label="Troubleshooting Test Collection">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#proxy_v4py-import-path-resolved-2026-03-26" class="md-nav__link">
+  <a href="#slow-or-hanging-collection" class="md-nav__link">
     <span class="md-ellipsis">
       
-        proxy_v4.py — Import Path (Resolved 2026-03-26)
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#collection-speed-baseline" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Collection speed baseline
+        Slow or hanging collection
       
     </span>
   </a>
@@ -3759,7 +3709,7 @@ open<span class="w"> </span>htmlcov/index.html
 <h3 id="run-phase-2-tests-with-coverage">Run Phase 2 tests with coverage<a class="headerlink" href="#run-phase-2-tests-with-coverage" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code>pytest<span class="w"> </span>-m<span class="w"> </span>phase2<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--cov<span class="o">=</span>tokenpak.validation<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--cov<span class="o">=</span>tokenpak.error_handling<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--cov<span class="o">=</span>tokenpak.core.error_handling<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--cov<span class="o">=</span>tokenpak.cache<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--cov-report<span class="o">=</span>term-missing
 </code></pre></div>
@@ -3824,7 +3774,7 @@ open<span class="w"> </span>htmlcov/index.html
 <div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">pytest</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">unittest</span><span class="w"> </span><span class="kn">import</span> <span class="n">mock</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">tokenpak.validation</span><span class="w"> </span><span class="kn">import</span> <span class="n">validate_config</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">tokenpak.errors</span><span class="w"> </span><span class="kn">import</span> <span class="n">ValidationError</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">tokenpak.core.error_handling</span><span class="w"> </span><span class="kn">import</span> <span class="n">ValidationError</span>
 
 <span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">phase2</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">test_meaningful_name_describes_behavior</span><span class="p">():</span>
@@ -3872,7 +3822,7 @@ open<span class="w"> </span>htmlcov/index.html
 <span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">phase2</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">test_with_mock</span><span class="p">():</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Test in isolation by mocking external calls.&quot;&quot;&quot;</span>
-    <span class="k">with</span> <span class="n">mock</span><span class="o">.</span><span class="n">patch</span><span class="p">(</span><span class="s1">&#39;tokenpak.adapters.anthropic.call_api&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">mock_call</span><span class="p">:</span>
+    <span class="k">with</span> <span class="n">mock</span><span class="o">.</span><span class="n">patch</span><span class="p">(</span><span class="s1">&#39;tokenpak.sdk.anthropic.call_api&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">mock_call</span><span class="p">:</span>
         <span class="n">mock_call</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="s2">&quot;Mocked response&quot;</span><span class="p">}</span>
 
         <span class="n">result</span> <span class="o">=</span> <span class="n">adapter</span><span class="o">.</span><span class="n">get_completion</span><span class="p">(</span><span class="s2">&quot;Hello&quot;</span><span class="p">)</span>
@@ -3895,9 +3845,9 @@ open<span class="w"> </span>htmlcov/index.html
 <div class="highlight"><pre><span></span><code>Name                                   Stmts   Miss Cover   Missing
 ------------------------------------------------------------------------
 tokenpak/__init__.py                      5      0   100%
-tokenpak/adapters.py                     60      8    87%   120-125,134
-tokenpak/validation.py                   45      3    93%   78,102,115
-tokenpak/cache.py                        55     12    78%   45-60,88-92
+tokenpak/sdk/base.py                      60      8    87%   120-125,134
+tokenpak/validation/__init__.py          45      3    93%   78,102,115
+tokenpak/cache/__init__.py               55     12    78%   45-60,88-92
 ------------------------------------------------------------------------
 TOTAL                                   165     23    86%
 </code></pre></div></p>
@@ -3976,31 +3926,14 @@ pytest<span class="w"> </span>tests/<span class="w"> </span>--cov<span class="o"
 <li>TokenPak CONTRIBUTING.md (project-specific guidelines)</li>
 </ul>
 <hr />
-<h2 id="known-issues-historical-root-causes">Known Issues &amp; Historical Root Causes<a class="headerlink" href="#known-issues-historical-root-causes" title="Permanent link">&para;</a></h2>
-<h3 id="proxy_v4py-import-path-resolved-2026-03-26">proxy_v4.py — Import Path (Resolved 2026-03-26)<a class="headerlink" href="#proxy_v4py-import-path-resolved-2026-03-26" title="Permanent link">&para;</a></h3>
-<p><strong>Symptom:</strong> Pytest collection hangs or <code>FileNotFoundError</code> on test files that reference <code>proxy_v4.py</code>.</p>
-<p><strong>Affected test files:</strong>
-- <code>tests/test_proxy_error_paths.py</code>
-- <code>tests/test_classifier_first_router.py</code>
-- <code>tests/test_proxy_v4_cache_stats.py</code>
-- <code>tests/test_proxy_v4_upstream_routes.py</code>
-- <code>tests/test_ingest_proxy_v4.py</code></p>
-<p><strong>Root cause:</strong> These tests load <code>proxy_v4.py</code> directly as a standalone module (not a package import) using a hardcoded path:
-<div class="highlight"><pre><span></span><code><span class="n">_PROXY_V4_PATH</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">parent</span> <span class="o">/</span> <span class="s2">&quot;packages/core/proxy_v4.py&quot;</span>
-</code></pre></div>
-If <code>proxy_v4.py</code> is missing from <code>packages/core/</code> or if a stale/wrong-size copy exists at vault root, tests fail with <code>FileNotFoundError</code> at collection time, causing apparent "hangs".</p>
-<p><strong>Fix:</strong> The canonical file is <code>packages/core/proxy_v4.py</code> (211,859 bytes as of 2026-03-25). Do NOT use the vault-root <code>proxy_v4.py</code> (smaller, older copy — stale). If tests fail to collect, verify:
-<div class="highlight"><pre><span></span><code>ls<span class="w"> </span>-la<span class="w"> </span>packages/core/proxy_v4.py<span class="w">   </span><span class="c1"># should be ~211KB</span>
-</code></pre></div></p>
-<p><strong>Resolution:</strong> Removed stale vault-root <code>proxy_v4.py</code>; canonical path is <code>packages/core/proxy_v4.py</code>.</p>
-<h3 id="collection-speed-baseline">Collection speed baseline<a class="headerlink" href="#collection-speed-baseline" title="Permanent link">&para;</a></h3>
+<h2 id="troubleshooting-test-collection">Troubleshooting Test Collection<a class="headerlink" href="#troubleshooting-test-collection" title="Permanent link">&para;</a></h2>
+<h3 id="slow-or-hanging-collection">Slow or hanging collection<a class="headerlink" href="#slow-or-hanging-collection" title="Permanent link">&para;</a></h3>
+<p>If <code>pytest --collect-only</code> is unusually slow or appears to hang, the most common cause is a fixture or module-level import that does expensive work at import time (network calls, large model loads, or reading a missing file path).</p>
 <ul>
-<li>Expected: <code>pytest --collect-only tests/ -q</code> completes in <strong>7–10 seconds</strong> (1175 tests)</li>
-<li>If collection exceeds 30s, check for hanging fixture imports (see above)</li>
-<li>Run <code>pytest --collect-only --trace-config</code> to identify slow plugin/fixture loads</li>
+<li>Run <code>pytest --collect-only --trace-config</code> to identify slow plugin/fixture loads.</li>
+<li>Prefer package imports (<code>from tokenpak.core import ...</code>) over loading a module from a hardcoded filesystem path — path-based loading breaks when the working directory or layout changes.</li>
+<li>If a test references a file that may be absent, guard it with <code>pytest.importorskip</code> or a fixture that skips cleanly rather than failing at collection time.</li>
 </ul>
-<hr />
-<p><strong>Last updated:</strong> 2026-03-26 (Phase 2 integration + proxy_v4 root cause docs)</p>
 
 
 

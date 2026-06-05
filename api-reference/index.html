@@ -1389,17 +1389,6 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#get-recent" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        GET /recent
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
   <a href="#get-tracelast" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2407,34 +2396,6 @@
     
   
     Plugin Guide
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../plugin-system-architecture/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Plugin System Architecture
   
 
     
@@ -4012,17 +3973,6 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#get-recent" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        GET /recent
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
   <a href="#get-tracelast" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -5065,7 +5015,7 @@
 <p><strong>Response:</strong>
 <div class="highlight"><pre><span></span><code><span class="p">{</span>
 <span class="w">  </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;TokenPak&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;version&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;0.5.0&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;version&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;1.7.1&quot;</span><span class="p">,</span>
 <span class="w">  </span><span class="nt">&quot;status&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;running&quot;</span><span class="p">,</span>
 <span class="w">  </span><span class="nt">&quot;endpoints&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="nt">&quot;health&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;/health&quot;</span><span class="p">,</span>
@@ -5216,24 +5166,6 @@
 <hr />
 <h4 id="get-cache-stats"><code>GET /cache-stats</code><a class="headerlink" href="#get-cache-stats" title="Permanent link">&para;</a></h4>
 <p>Detailed cache hit/miss breakdown.</p>
-<hr />
-<h4 id="get-recent"><code>GET /recent</code><a class="headerlink" href="#get-recent" title="Permanent link">&para;</a></h4>
-<p>Last 50 requests with per-request metadata.</p>
-<p><strong>Response:</strong>
-<div class="highlight"><pre><span></span><code><span class="p">{</span>
-<span class="w">  </span><span class="nt">&quot;recent&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">    </span><span class="p">{</span>
-<span class="w">      </span><span class="nt">&quot;timestamp&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2026-03-28T16:00:00Z&quot;</span><span class="p">,</span>
-<span class="w">      </span><span class="nt">&quot;model&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;claude-sonnet-4-6&quot;</span><span class="p">,</span>
-<span class="w">      </span><span class="nt">&quot;input_tokens&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">4380</span><span class="p">,</span>
-<span class="w">      </span><span class="nt">&quot;output_tokens&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">512</span><span class="p">,</span>
-<span class="w">      </span><span class="nt">&quot;latency_ms&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">320</span><span class="p">,</span>
-<span class="w">      </span><span class="nt">&quot;status_code&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">200</span><span class="p">,</span>
-<span class="w">      </span><span class="nt">&quot;tokens_saved&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1240</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="w">  </span><span class="p">]</span>
-<span class="p">}</span>
-</code></pre></div></p>
 <hr />
 <h4 id="get-tracelast"><code>GET /trace/last</code><a class="headerlink" href="#get-tracelast" title="Permanent link">&para;</a></h4>
 <p>Full pipeline trace for the most recent request (debugging).</p>
@@ -5665,7 +5597,7 @@ tokenpak_uptime_seconds 16200
 <p>TokenPak provides adapters that route requests through the proxy while preserving the native API shape of each SDK.</p>
 <h3 id="base-adapter-tokenpakadapter">Base Adapter (<code>TokenPakAdapter</code>)<a class="headerlink" href="#base-adapter-tokenpakadapter" title="Permanent link">&para;</a></h3>
 <p>All adapters inherit from <code>TokenPakAdapter</code> and implement four lifecycle hooks.</p>
-<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">tokenpak.adapters.base</span><span class="w"> </span><span class="kn">import</span> <span class="n">TokenPakAdapter</span>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">tokenpak.sdk.base</span><span class="w"> </span><span class="kn">import</span> <span class="n">TokenPakAdapter</span>
 </code></pre></div>
 <p><strong>Constructor Parameters:</strong></p>
 <table>
@@ -5745,7 +5677,7 @@ tokenpak_uptime_seconds 16200
 <hr />
 <h3 id="anthropicadapter">AnthropicAdapter<a class="headerlink" href="#anthropicadapter" title="Permanent link">&para;</a></h3>
 <p>Routes requests to <code>/v1/messages</code> on the proxy.</p>
-<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">tokenpak.adapters</span><span class="w"> </span><span class="kn">import</span> <span class="n">AnthropicAdapter</span>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">tokenpak.sdk</span><span class="w"> </span><span class="kn">import</span> <span class="n">AnthropicAdapter</span>
 
 <span class="n">adapter</span> <span class="o">=</span> <span class="n">AnthropicAdapter</span><span class="p">(</span>
     <span class="n">base_url</span><span class="o">=</span><span class="s2">&quot;http://127.0.0.1:8766&quot;</span><span class="p">,</span>
@@ -5807,7 +5739,7 @@ tokenpak_uptime_seconds 16200
 <hr />
 <h3 id="openaiadapter">OpenAIAdapter<a class="headerlink" href="#openaiadapter" title="Permanent link">&para;</a></h3>
 <p>Routes requests to <code>/v1/chat/completions</code> on the proxy.</p>
-<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">tokenpak.adapters</span><span class="w"> </span><span class="kn">import</span> <span class="n">OpenAIAdapter</span>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">tokenpak.sdk</span><span class="w"> </span><span class="kn">import</span> <span class="n">OpenAIAdapter</span>
 
 <span class="n">adapter</span> <span class="o">=</span> <span class="n">OpenAIAdapter</span><span class="p">(</span>
     <span class="n">base_url</span><span class="o">=</span><span class="s2">&quot;http://127.0.0.1:8766&quot;</span><span class="p">,</span>
@@ -5847,7 +5779,7 @@ tokenpak_uptime_seconds 16200
 <hr />
 <h3 id="langchainadapter">LangChainAdapter<a class="headerlink" href="#langchainadapter" title="Permanent link">&para;</a></h3>
 <p>Drop-in adapter for LangChain integrations.</p>
-<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">tokenpak.adapters</span><span class="w"> </span><span class="kn">import</span> <span class="n">LangChainAdapter</span>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">tokenpak.sdk</span><span class="w"> </span><span class="kn">import</span> <span class="n">LangChainAdapter</span>
 
 <span class="n">adapter</span> <span class="o">=</span> <span class="n">LangChainAdapter</span><span class="p">(</span>
     <span class="n">base_url</span><span class="o">=</span><span class="s2">&quot;http://127.0.0.1:8766&quot;</span><span class="p">,</span>
@@ -5892,7 +5824,7 @@ tokenpak_uptime_seconds 16200
 <hr />
 <h3 id="litellmadapter">LiteLLMAdapter<a class="headerlink" href="#litellmadapter" title="Permanent link">&para;</a></h3>
 <p>Drop-in adapter for LiteLLM integrations.</p>
-<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">tokenpak.adapters</span><span class="w"> </span><span class="kn">import</span> <span class="n">LiteLLMAdapter</span>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">tokenpak.sdk</span><span class="w"> </span><span class="kn">import</span> <span class="n">LiteLLMAdapter</span>
 
 <span class="n">adapter</span> <span class="o">=</span> <span class="n">LiteLLMAdapter</span><span class="p">(</span>
     <span class="n">base_url</span><span class="o">=</span><span class="s2">&quot;http://127.0.0.1:8766&quot;</span><span class="p">,</span>
@@ -5943,7 +5875,7 @@ tokenpak_uptime_seconds 16200
 └── TokenPakAuthError         — 401 or 403 from proxy
 </code></pre></div>
 <p><strong>Usage:</strong>
-<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">tokenpak.adapters.base</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">tokenpak.sdk.base</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
     <span class="n">TokenPakAdapterError</span><span class="p">,</span>
     <span class="n">TokenPakTimeoutError</span><span class="p">,</span>
     <span class="n">TokenPakAuthError</span><span class="p">,</span>
@@ -6605,7 +6537,7 @@ tokenpak<span class="w"> </span>audit<span class="w"> </span>summary<span class=
 <span class="w">  </span><span class="nt">max_request_size_bytes</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10485760</span><span class="w">    </span><span class="c1"># 10 MB</span>
 </code></pre></div>
 <hr />
-<p><em>This reference covers TokenPak v0.5.0. For the full changelog, see <a href="../CHANGELOG.md">CHANGELOG.md</a>.</em></p>
+<p><em>This reference covers TokenPak v1.7.1.</em></p>
 
 
 

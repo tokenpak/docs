@@ -1285,34 +1285,6 @@
   
   
     <li class="md-nav__item">
-      <a href="../plugin-system-architecture/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Plugin System Architecture
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
       <a href="../assets/DIAGRAMS/" class="md-nav__link">
         
   
@@ -2097,10 +2069,10 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#generate-error-report" class="md-nav__link">
+  <a href="#export-telemetry-events" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Generate Error Report
+        Export Telemetry Events
       
     </span>
   </a>
@@ -2108,21 +2080,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#list-log-files" class="md-nav__link">
+  <a href="#inspect-errors-programmatically" class="md-nav__link">
     <span class="md-ellipsis">
       
-        List Log Files
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#export-for-analysis" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Export for Analysis
+        Inspect Errors Programmatically
       
     </span>
   </a>
@@ -3084,10 +3045,10 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#generate-error-report" class="md-nav__link">
+  <a href="#export-telemetry-events" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Generate Error Report
+        Export Telemetry Events
       
     </span>
   </a>
@@ -3095,21 +3056,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#list-log-files" class="md-nav__link">
+  <a href="#inspect-errors-programmatically" class="md-nav__link">
     <span class="md-ellipsis">
       
-        List Log Files
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#export-for-analysis" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Export for Analysis
+        Inspect Errors Programmatically
       
     </span>
   </a>
@@ -3240,7 +3190,7 @@
 <h2 id="error-logging">Error Logging<a class="headerlink" href="#error-logging" title="Permanent link">&para;</a></h2>
 <h3 id="quick-start">Quick Start<a class="headerlink" href="#quick-start" title="Permanent link">&para;</a></h3>
 <p>The error logger automatically captures exceptions with context for post-mortem analysis.</p>
-<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">tokenpak.telemetry</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_error_logger</span>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">tokenpak.telemetry.error_logger</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_error_logger</span>
 
 <span class="n">logger</span> <span class="o">=</span> <span class="n">get_error_logger</span><span class="p">()</span>
 
@@ -3261,7 +3211,7 @@
 </code></pre></div>
 <h3 id="using-the-decorator">Using the Decorator<a class="headerlink" href="#using-the-decorator" title="Permanent link">&para;</a></h3>
 <p>For automatic exception logging, use the <code>@log_exception</code> decorator:</p>
-<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">tokenpak.telemetry</span><span class="w"> </span><span class="kn">import</span> <span class="n">log_exception</span>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">tokenpak.telemetry.error_logger</span><span class="w"> </span><span class="kn">import</span> <span class="n">log_exception</span>
 
 <span class="nd">@log_exception</span><span class="p">(</span>
     <span class="n">request_id</span><span class="o">=</span><span class="s2">&quot;req-456&quot;</span><span class="p">,</span>
@@ -3304,61 +3254,56 @@
 2. <strong>Moved</strong> to <code>~/.tokenpak/logs/archive/</code></p>
 <p>This keeps active logs lean while preserving historical data for analysis.</p>
 <h2 id="cli-commands">CLI Commands<a class="headerlink" href="#cli-commands" title="Permanent link">&para;</a></h2>
-<h3 id="generate-error-report">Generate Error Report<a class="headerlink" href="#generate-error-report" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><span class="c1"># Report for last 1 day (default)</span>
-tokenpak<span class="w"> </span>telemetry<span class="w"> </span>error-report
+<h3 id="export-telemetry-events">Export Telemetry Events<a class="headerlink" href="#export-telemetry-events" title="Permanent link">&para;</a></h3>
+<p>Export telemetry/event data to JSON or CSV with <code>tokenpak telemetry export</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Export to JSON (default format)</span>
+tokenpak<span class="w"> </span>telemetry<span class="w"> </span><span class="nb">export</span><span class="w"> </span>--format<span class="w"> </span>json
 
-<span class="c1"># Report for last 7 days</span>
-tokenpak<span class="w"> </span>telemetry<span class="w"> </span>error-report<span class="w"> </span>--days<span class="w"> </span><span class="m">7</span>
+<span class="c1"># Export to CSV</span>
+tokenpak<span class="w"> </span>telemetry<span class="w"> </span><span class="nb">export</span><span class="w"> </span>--format<span class="w"> </span>csv
 
-<span class="c1"># Filter by error type</span>
-tokenpak<span class="w"> </span>telemetry<span class="w"> </span>error-report<span class="w"> </span>--type<span class="w"> </span>ValueError
+<span class="c1"># Filter by time window</span>
+tokenpak<span class="w"> </span>telemetry<span class="w"> </span><span class="nb">export</span><span class="w"> </span>--since<span class="w"> </span><span class="m">2026</span>-03-01<span class="w"> </span>--until<span class="w"> </span><span class="m">2026</span>-03-31
 
-<span class="c1"># JSON format for scripting</span>
-tokenpak<span class="w"> </span>telemetry<span class="w"> </span>error-report<span class="w"> </span>--format<span class="w"> </span>json
+<span class="c1"># Filter by provider</span>
+tokenpak<span class="w"> </span>telemetry<span class="w"> </span><span class="nb">export</span><span class="w"> </span>--provider<span class="w"> </span>anthropic
 </code></pre></div>
-<p>Output example:
-<div class="highlight"><pre><span></span><code>============================================================
-Error Report — Last 1 day(s)
-Generated: 2026-03-24T17:35:22Z
-============================================================
-
-Total Errors: 42
-
-By Error Type:
-  ValueError: 18
-  TimeoutError: 12
-  AuthenticationError: 8
-  KeyError: 4
-
-By Provider:
-  openai: 22
-  anthropic: 15
-  azure: 5
-
-============================================================
-</code></pre></div></p>
-<h3 id="list-log-files">List Log Files<a class="headerlink" href="#list-log-files" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><span class="c1"># List recent logs</span>
-tokenpak<span class="w"> </span>telemetry<span class="w"> </span>logs
-
-<span class="c1"># Show more files</span>
-tokenpak<span class="w"> </span>telemetry<span class="w"> </span>logs<span class="w"> </span>--limit<span class="w"> </span><span class="m">20</span>
-</code></pre></div>
-<h3 id="export-for-analysis">Export for Analysis<a class="headerlink" href="#export-for-analysis" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><span class="c1"># Export all logs from last 7 days</span>
-tokenpak<span class="w"> </span>telemetry<span class="w"> </span><span class="nb">export</span><span class="w"> </span>logs.json
-
-<span class="c1"># Export last 30 days</span>
-tokenpak<span class="w"> </span>telemetry<span class="w"> </span><span class="nb">export</span><span class="w"> </span>logs.json<span class="w"> </span>--days<span class="w"> </span><span class="m">30</span>
-</code></pre></div>
-<p>Exported format is a JSON array of log entries, suitable for:
+<p><strong>Options:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--format</code></td>
+<td>Output format: <code>json</code> or <code>csv</code></td>
+</tr>
+<tr>
+<td><code>--since</code></td>
+<td>Include events on/after this date</td>
+</tr>
+<tr>
+<td><code>--until</code></td>
+<td>Include events on/before this date</td>
+</tr>
+<tr>
+<td><code>--provider</code></td>
+<td>Filter to a single provider</td>
+</tr>
+</tbody>
+</table>
+<p>The exported data is suitable for:
 - External analysis tools
 - Visualization dashboards
 - Integration with error tracking services (Sentry, DataDog, etc.)</p>
+<h3 id="inspect-errors-programmatically">Inspect Errors Programmatically<a class="headerlink" href="#inspect-errors-programmatically" title="Permanent link">&para;</a></h3>
+<p>Error counts and metrics are available through the error logger API (see below). To browse the raw error log files, read the JSON Lines files under <code>~/.tokenpak/logs/</code> directly.</p>
 <h2 id="prometheus-metrics">Prometheus Metrics<a class="headerlink" href="#prometheus-metrics" title="Permanent link">&para;</a></h2>
 <p>Error counts by type are tracked for Prometheus integration:</p>
-<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">tokenpak.telemetry</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_error_logger</span>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">tokenpak.telemetry.error_logger</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_error_logger</span>
 
 <span class="n">logger</span> <span class="o">=</span> <span class="n">get_error_logger</span><span class="p">()</span>
 <span class="n">metrics</span> <span class="o">=</span> <span class="n">logger</span><span class="o">.</span><span class="n">get_metrics</span><span class="p">()</span>
@@ -3382,7 +3327,7 @@ tokenpak<span class="w"> </span>telemetry<span class="w"> </span><span class="nb
 <h2 id="thread-safety">Thread Safety<a class="headerlink" href="#thread-safety" title="Permanent link">&para;</a></h2>
 <p>The error logger is fully thread-safe. Multiple threads can log errors concurrently without contention:</p>
 <div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">threading</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">tokenpak.telemetry</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_error_logger</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">tokenpak.telemetry.error_logger</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_error_logger</span>
 
 <span class="n">logger</span> <span class="o">=</span> <span class="n">get_error_logger</span><span class="p">()</span>
 
@@ -3414,8 +3359,8 @@ tokenpak<span class="w"> </span>telemetry<span class="w"> </span><span class="nb
 chmod<span class="w"> </span><span class="m">755</span><span class="w"> </span>~/.tokenpak/logs/
 </code></pre></div>
 <h3 id="malformed-log-line">"Malformed log line"<a class="headerlink" href="#malformed-log-line" title="Permanent link">&para;</a></h3>
-<p>Log files can be partially corrupt if the process crashes. This is non-fatal — the logger skips malformed lines and continues. Use the <code>export</code> command to clean and extract valid entries:</p>
-<div class="highlight"><pre><span></span><code>tokenpak<span class="w"> </span>telemetry<span class="w"> </span><span class="nb">export</span><span class="w"> </span>clean-logs.json<span class="w"> </span>--days<span class="w"> </span><span class="m">7</span>
+<p>Log files can be partially corrupt if the process crashes. This is non-fatal — the logger skips malformed lines and continues. Use the <code>export</code> command to re-emit valid entries:</p>
+<div class="highlight"><pre><span></span><code>tokenpak<span class="w"> </span>telemetry<span class="w"> </span><span class="nb">export</span><span class="w"> </span>--format<span class="w"> </span>json
 </code></pre></div>
 <h3 id="large-log-files">Large log files<a class="headerlink" href="#large-log-files" title="Permanent link">&para;</a></h3>
 <p>If log files grow too quickly, consider:

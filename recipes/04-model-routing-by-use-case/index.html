@@ -1285,34 +1285,6 @@
   
   
     <li class="md-nav__item">
-      <a href="../../plugin-system-architecture/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Plugin System Architecture
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
       <a href="../../assets/DIAGRAMS/" class="md-nav__link">
         
   
@@ -2286,10 +2258,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#config-snippet" class="md-nav__link">
+  <a href="#the-pattern-illustrative-config" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Config Snippet
+        The pattern (illustrative config)
       
     </span>
   </a>
@@ -2297,10 +2269,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#test-verify" class="md-nav__link">
+  <a href="#whats-real-today" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Test &amp; Verify
+        What's real today
       
     </span>
   </a>
@@ -2308,21 +2280,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#what-just-happened" class="md-nav__link">
+  <a href="#designing-a-routing-strategy" class="md-nav__link">
     <span class="md-ellipsis">
       
-        What Just Happened
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#common-pitfalls" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Common Pitfalls
+        Designing a routing strategy
       
     </span>
   </a>
@@ -2865,10 +2826,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#config-snippet" class="md-nav__link">
+  <a href="#the-pattern-illustrative-config" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Config Snippet
+        The pattern (illustrative config)
       
     </span>
   </a>
@@ -2876,10 +2837,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#test-verify" class="md-nav__link">
+  <a href="#whats-real-today" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Test &amp; Verify
+        What's real today
       
     </span>
   </a>
@@ -2887,21 +2848,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#what-just-happened" class="md-nav__link">
+  <a href="#designing-a-routing-strategy" class="md-nav__link">
     <span class="md-ellipsis">
       
-        What Just Happened
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#common-pitfalls" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Common Pitfalls
+        Designing a routing strategy
       
     </span>
   </a>
@@ -2929,204 +2879,67 @@
 
 
 <h1 id="recipe-model-routing-by-use-case">Recipe: Model Routing by Use Case<a class="headerlink" href="#recipe-model-routing-by-use-case" title="Permanent link">&para;</a></h1>
-<p><strong>What this solves:</strong> Automatically route requests to the best model for the task — GPT-4 for code generation, Claude Haiku for simple chat — without application code changes.</p>
+<blockquote>
+<p><strong>Status: Conceptual.</strong> This recipe describes a use-case-based routing <em>pattern</em>. The declarative <code>routing:</code> / <code>routes:</code> / <code>keywords:</code> / <code>cost_aware_routing:</code> config block, the inline <code>model</code> / <code>provider</code> response fields, and the <code>tokenpak usage-report</code> command shown below are <strong>illustrative</strong> — they are not part of the validated config surface or shipped CLI of the current TokenPak release. The proxy is a byte-preserving passthrough and does not inject a chosen-model field into the response body. Confirm any CLI command against <code>tokenpak --help</code>.</p>
+</blockquote>
+<p><strong>What this solves:</strong> The pattern of sending each request to a model suited to the task — a stronger model for code, a smaller/cheaper one for simple chat.</p>
 <h2 id="prerequisites">Prerequisites<a class="headerlink" href="#prerequisites" title="Permanent link">&para;</a></h2>
 <ul>
-<li>TokenPak installed</li>
-<li>API keys for multiple providers (OpenAI, Anthropic)</li>
-<li>Understanding of your models' strengths (GPT-4 = code, Claude = reasoning, Haiku = chat)</li>
+<li>TokenPak installed (<code>tokenpak --help</code>)</li>
+<li>API keys for the providers you intend to use</li>
+<li>An understanding of which models suit which tasks</li>
 </ul>
-<h2 id="config-snippet">Config Snippet<a class="headerlink" href="#config-snippet" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code><span class="c1"># config.yaml</span>
-<span class="nt">providers</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">openai</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">openai</span>
-<span class="w">    </span><span class="nt">api_key</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${OPENAI_API_KEY}</span>
-
-<span class="w">  </span><span class="nt">anthropic</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">anthropic</span>
-<span class="w">    </span><span class="nt">api_key</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${ANTHROPIC_API_KEY}</span>
-
-<span class="nt">models</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">gpt-4</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">provider</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">openai</span>
-<span class="w">    </span><span class="nt">cost_per_1k_input</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3</span>
-<span class="w">    </span><span class="nt">cost_per_1k_output</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">6</span>
-
-<span class="w">  </span><span class="nt">gpt-3.5-turbo</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">provider</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">openai</span>
-<span class="w">    </span><span class="nt">cost_per_1k_input</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.5</span>
-<span class="w">    </span><span class="nt">cost_per_1k_output</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1.5</span>
-
-<span class="w">  </span><span class="nt">claude-opus</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">provider</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">anthropic</span>
-<span class="w">    </span><span class="nt">cost_per_1k_input</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">15</span>
-<span class="w">    </span><span class="nt">cost_per_1k_output</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">75</span>
-
-<span class="w">  </span><span class="nt">claude-haiku</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">provider</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">anthropic</span>
-<span class="w">    </span><span class="nt">cost_per_1k_input</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.25</span>
-<span class="w">    </span><span class="nt">cost_per_1k_output</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1.25</span>
-
-<span class="c1"># Use-case routing: map request intent to best model</span>
+<h2 id="the-pattern-illustrative-config">The pattern (illustrative config)<a class="headerlink" href="#the-pattern-illustrative-config" title="Permanent link">&para;</a></h2>
+<p>The idea is to map request intent to a preferred model with a fallback. The YAML below is a <strong>conceptual</strong> illustration only — this routing schema is not the validated TokenPak config surface:</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># ILLUSTRATIVE ONLY — not a validated TokenPak config schema</span>
 <span class="nt">routing</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
-
-<span class="w">  </span><span class="c1"># Detect use case from system prompt keywords</span>
 <span class="w">  </span><span class="nt">routes</span><span class="p">:</span>
 <span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">code_generation</span>
-<span class="w">      </span><span class="nt">keywords</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">code</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">function</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">class</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">debug</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">refactor</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">algorithm</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">optimize</span><span class="p p-Indicator">]</span>
+<span class="w">      </span><span class="nt">keywords</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">code</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">function</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">debug</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">refactor</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">algorithm</span><span class="p p-Indicator">]</span>
 <span class="w">      </span><span class="nt">preferred_model</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">gpt-4</span>
 <span class="w">      </span><span class="nt">fallback_model</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">gpt-3.5-turbo</span>
-
-<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">reasoning_heavy</span>
-<span class="w">      </span><span class="nt">keywords</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">reason</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">explain</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">think</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">complex</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">architecture</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">strategy</span><span class="p p-Indicator">]</span>
-<span class="w">      </span><span class="nt">preferred_model</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">claude-opus</span>
-<span class="w">      </span><span class="nt">fallback_model</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">claude-haiku</span>
-
 <span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">simple_chat</span>
-<span class="w">      </span><span class="nt">keywords</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">greet</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">hello</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">chat</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">casual</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">small-talk</span><span class="p p-Indicator">]</span>
+<span class="w">      </span><span class="nt">keywords</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">greet</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">hello</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">chat</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">casual</span><span class="p p-Indicator">]</span>
 <span class="w">      </span><span class="nt">preferred_model</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">claude-haiku</span>
 <span class="w">      </span><span class="nt">fallback_model</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">gpt-3.5-turbo</span>
-
-<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">creative_writing</span>
-<span class="w">      </span><span class="nt">keywords</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">write</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">story</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">poem</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">creative</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">fiction</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">narrative</span><span class="p p-Indicator">]</span>
-<span class="w">      </span><span class="nt">preferred_model</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">claude-opus</span>
-<span class="w">      </span><span class="nt">fallback_model</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">gpt-4</span>
-
 <span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">default</span>
-<span class="w">      </span><span class="c1"># Catch-all: balanced cost/quality</span>
 <span class="w">      </span><span class="nt">preferred_model</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">gpt-3.5-turbo</span>
 <span class="w">      </span><span class="nt">fallback_model</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">claude-haiku</span>
 
-<span class="c1"># Cost optimization: route to cheaper model if budget tight</span>
 <span class="nt">cost_aware_routing</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
-<span class="w">  </span><span class="c1"># If daily budget &gt;80% consumed, downgrade to cheaper model</span>
 <span class="w">  </span><span class="nt">degrade_above_budget_pct</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">80</span>
 <span class="w">  </span><span class="nt">degradation_map</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">gpt-4</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">gpt-3.5-turbo</span>
-<span class="w">    </span><span class="nt">claude-opus</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">claude-haiku</span>
 </code></pre></div>
-<h2 id="test-verify">Test &amp; Verify<a class="headerlink" href="#test-verify" title="Permanent link">&para;</a></h2>
-<p><strong>Step 1:</strong> Validate config:
-<div class="highlight"><pre><span></span><code>tokenpak<span class="w"> </span>validate-config<span class="w"> </span>config.yaml
-<span class="c1"># Expected output:</span>
-<span class="c1"># ✓ Config valid</span>
-<span class="c1"># ✓ Routing: 5 routes configured (code_generation, reasoning_heavy, simple_chat, creative_writing, default)</span>
-<span class="c1"># ✓ Fallbacks configured for all routes</span>
-</code></pre></div></p>
-<p><strong>Step 2:</strong> Test code generation route:
-<div class="highlight"><pre><span></span><code>tokenpak<span class="w"> </span>proxy<span class="w"> </span>--config<span class="w"> </span>config.yaml
+<h2 id="whats-real-today">What's real today<a class="headerlink" href="#whats-real-today" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Start the proxy with <code>tokenpak serve</code> (default <code>http://127.0.0.1:8766</code>).</li>
+<li>The proxy forwards request and response bodies verbatim. The model that served a request is whatever your request specified and whatever the upstream returns — TokenPak does <strong>not</strong> add a <code>model_used</code> or <code>provider</code> field to the response body.</li>
+<li>Validate a proxy config file with <code>tokenpak config-check &lt;file.json&gt;</code>. The keyword-routing graph above is <strong>not</strong> part of that validated surface.</li>
+<li>To see recorded usage and cost, use <code>tokenpak status</code> (there is no <code>tokenpak usage-report</code> verb in the current release).</li>
+</ul>
+<p>If you want per-request model selection today, choose the model in your application and send it in the request body:</p>
+<div class="highlight"><pre><span></span><code>tokenpak<span class="w"> </span>serve<span class="w">   </span><span class="c1"># http://127.0.0.1:8766</span>
 
-<span class="c1"># Code-related prompt</span>
-curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>http://localhost:8000/v1/messages<span class="w"> </span><span class="se">\</span>
+curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>http://127.0.0.1:8766/v1/messages<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;Content-Type: application/json&quot;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;{</span>
-<span class="s1">    &quot;model&quot;: &quot;routing/code_generation&quot;,</span>
-<span class="s1">    &quot;messages&quot;: [</span>
-<span class="s1">      {</span>
-<span class="s1">        &quot;role&quot;: &quot;system&quot;,</span>
-<span class="s1">        &quot;content&quot;: &quot;You are an expert Python developer. Debug this function.&quot;</span>
-<span class="s1">      },</span>
-<span class="s1">      {</span>
-<span class="s1">        &quot;role&quot;: &quot;user&quot;,</span>
-<span class="s1">        &quot;content&quot;: &quot;Why is this code slow? [function code here]&quot;</span>
-<span class="s1">      }</span>
-<span class="s1">    ]</span>
-<span class="s1">  }&#39;</span><span class="w"> </span>-s<span class="w"> </span><span class="p">|</span><span class="w"> </span>jq<span class="w"> </span><span class="s1">&#39;{model_used: .model, provider: .provider}&#39;</span>
-
-<span class="c1"># Expected output:</span>
-<span class="c1"># {</span>
-<span class="c1">#   &quot;model_used&quot;: &quot;gpt-4&quot;,</span>
-<span class="c1">#   &quot;provider&quot;: &quot;openai&quot;</span>
-<span class="c1"># }</span>
-</code></pre></div></p>
-<p><strong>Step 3:</strong> Test simple chat route:
-<div class="highlight"><pre><span></span><code><span class="c1"># Simple greeting</span>
-curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>http://localhost:8000/v1/messages<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;Content-Type: application/json&quot;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;{</span>
-<span class="s1">    &quot;model&quot;: &quot;routing/simple_chat&quot;,</span>
-<span class="s1">    &quot;messages&quot;: [</span>
-<span class="s1">      {</span>
-<span class="s1">        &quot;role&quot;: &quot;system&quot;,</span>
-<span class="s1">        &quot;content&quot;: &quot;You are a friendly chatbot. Greet the user casually.&quot;</span>
-<span class="s1">      },</span>
-<span class="s1">      {</span>
-<span class="s1">        &quot;role&quot;: &quot;user&quot;,</span>
-<span class="s1">        &quot;content&quot;: &quot;Hello, how are you?&quot;</span>
-<span class="s1">      }</span>
-<span class="s1">    ]</span>
-<span class="s1">  }&#39;</span><span class="w"> </span>-s<span class="w"> </span><span class="p">|</span><span class="w"> </span>jq<span class="w"> </span><span class="s1">&#39;{model_used: .model, provider: .provider}&#39;</span>
-
-<span class="c1"># Expected output:</span>
-<span class="c1"># {</span>
-<span class="c1">#   &quot;model_used&quot;: &quot;claude-haiku&quot;,</span>
-<span class="c1">#   &quot;provider&quot;: &quot;anthropic&quot;</span>
-<span class="c1"># }</span>
-</code></pre></div></p>
-<p><strong>Step 4:</strong> Test reasoning route:
-<div class="highlight"><pre><span></span><code><span class="c1"># Complex reasoning prompt</span>
-curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>http://localhost:8000/v1/messages<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;Content-Type: application/json&quot;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;{</span>
-<span class="s1">    &quot;model&quot;: &quot;routing/reasoning_heavy&quot;,</span>
-<span class="s1">    &quot;messages&quot;: [</span>
-<span class="s1">      {</span>
-<span class="s1">        &quot;role&quot;: &quot;system&quot;,</span>
-<span class="s1">        &quot;content&quot;: &quot;You are a strategic thinker. Reason through this architecture decision.&quot;</span>
-<span class="s1">      },</span>
-<span class="s1">      {</span>
-<span class="s1">        &quot;role&quot;: &quot;user&quot;,</span>
-<span class="s1">        &quot;content&quot;: &quot;How should we design our API gateway strategy?&quot;</span>
-<span class="s1">      }</span>
-<span class="s1">    ]</span>
-<span class="s1">  }&#39;</span><span class="w"> </span>-s<span class="w"> </span><span class="p">|</span><span class="w"> </span>jq<span class="w"> </span><span class="s1">&#39;{model_used: .model, provider: .provider}&#39;</span>
-
-<span class="c1"># Expected output:</span>
-<span class="c1"># {</span>
-<span class="c1">#   &quot;model_used&quot;: &quot;claude-opus&quot;,</span>
-<span class="c1">#   &quot;provider&quot;: &quot;anthropic&quot;</span>
-<span class="c1"># }</span>
-</code></pre></div></p>
-<p><strong>Step 5:</strong> Verify cost savings over time:
-<div class="highlight"><pre><span></span><code><span class="c1"># Check usage report</span>
-tokenpak<span class="w"> </span>usage-report<span class="w"> </span>--period<span class="w"> </span>day
-<span class="c1"># Expected output showing cost per use case:</span>
-<span class="c1"># code_generation (gpt-4):    5 req, $0.45</span>
-<span class="c1"># reasoning_heavy (claude-opus): 3 req, $0.12</span>
-<span class="c1"># simple_chat (claude-haiku):  12 req, $0.04</span>
-<span class="c1"># creative_writing (claude-opus): 2 req, $0.08</span>
-<span class="c1"># default (gpt-3.5-turbo):     8 req, $0.06</span>
-<span class="c1"># TOTAL: $0.75 (60% cheaper than always using gpt-4)</span>
-</code></pre></div></p>
-<h2 id="what-just-happened">What Just Happened<a class="headerlink" href="#what-just-happened" title="Permanent link">&para;</a></h2>
-<p>TokenPak analyzed incoming requests and automatically selected the right model:</p>
-<ol>
-<li><strong>Request arrives</strong> with system prompt containing keywords</li>
-<li><strong>Keyword matching</strong> against configured routes (code_generation, reasoning_heavy, etc.)</li>
-<li><strong>Model selection</strong> based on matched route (e.g., code → gpt-4)</li>
-<li><strong>Fallback routing</strong> if preferred model unavailable (code → gpt-3.5-turbo)</li>
-<li><strong>Cost check</strong> — if budget tight, downgrade to cheaper alternative (gpt-4 → gpt-3.5-turbo)</li>
-</ol>
-<p>Your application doesn't need to know about model selection — TokenPak handles it transparently, optimizing for cost and quality simultaneously.</p>
-<h2 id="common-pitfalls">Common Pitfalls<a class="headerlink" href="#common-pitfalls" title="Permanent link">&para;</a></h2>
-<p><strong>Pitfall 1: Keywords are too broad</strong>
-- ❌ Wrong: <code>keywords: [write]</code> matches everything (emails, logs, responses)
-- ✅ Right: Narrow context: <code>[write, story, creative, fiction]</code> for creative writing only</p>
-<p><strong>Pitfall 2: No fallback model</strong>
-- ❌ Wrong: Preferred model unavailable → request fails
-- ✅ Right: Always have a fallback: <code>preferred_model: gpt-4, fallback_model: gpt-3.5-turbo</code></p>
-<p><strong>Pitfall 3: Cost-aware degradation is too aggressive</strong>
-- ❌ Wrong: Degrade to Haiku at 50% budget (degrades too early, bad user experience)
-- ✅ Right: Degrade at 80-90% budget, giving yourself room to recover</p>
-<p><strong>Pitfall 4: Routing rules contradict each other</strong>
-- ❌ Wrong: "code" → gpt-4, but "optimize code" → claude-haiku
-- ✅ Right: Clear hierarchy: longest match wins, or explicit priority order</p>
-<p><strong>Pitfall 5: Keyword matching on entire message</strong>
-- ❌ Wrong: Matches body text (too noisy, catches false positives)
-- ✅ Right: Match on system prompt only (intent signal, not user content)</p>
+<span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;x-api-key: </span><span class="nv">$ANTHROPIC_API_KEY</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;anthropic-version: 2023-06-01&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;{&quot;model&quot;: &quot;claude-3-5-haiku-20241022&quot;, &quot;max_tokens&quot;: 64,</span>
+<span class="s1">       &quot;messages&quot;: [{&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: &quot;Hello, how are you?&quot;}]}&#39;</span>
+</code></pre></div>
+<h2 id="designing-a-routing-strategy">Designing a routing strategy<a class="headerlink" href="#designing-a-routing-strategy" title="Permanent link">&para;</a></h2>
+<p>If you implement routing in your application or an upstream layer, these principles apply:</p>
+<ul>
+<li><strong>Keep keywords specific</strong> — overly broad terms match too much.</li>
+<li><strong>Always define a fallback</strong> so an unavailable preferred model doesn't fail the request outright.</li>
+<li><strong>Degrade conservatively</strong> — downgrade to a cheaper model only when the budget is genuinely tight, not early, to avoid hurting quality.</li>
+<li><strong>Resolve conflicts deterministically</strong> — define a clear priority (e.g. longest/most-specific match wins) when multiple rules match.</li>
+<li><strong>Route on intent signals</strong> (e.g. a system prompt), not on noisy user body text, to reduce false matches.</li>
+</ul>
+<p>Routing a request to a smaller model where it suffices can reduce cost; the actual savings depend on your traffic mix and the models involved.</p>
 
 
 
