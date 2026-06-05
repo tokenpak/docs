@@ -396,8 +396,8 @@ tokenpak/
 
 ## Getting Help
 
-- **Examples:** See `~/tokenpak/examples/`
-- **Tests:** See `~/tokenpak/tests/`
+- **Examples:** See the [`examples/`](https://github.com/tokenpak/tokenpak/tree/main/examples) directory in the repository
+- **Tests:** See the [`tests/`](https://github.com/tokenpak/tokenpak/tree/main/tests) directory in the repository
 - **Troubleshooting:** See [QUICKSTART.md](./QUICKSTART.md#troubleshooting)
 - **Issues:** Open a GitHub issue on [tokenpak/tokenpak](https://github.com/tokenpak/tokenpak)
 
