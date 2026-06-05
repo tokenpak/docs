@@ -2270,62 +2270,6 @@
   
   
     <li class="md-nav__item">
-      <a href="../performance/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Performance Overview
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../PERFORMANCE/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Performance Benchmarks
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
       <a href="../COMPRESSION_TUNING/" class="md-nav__link">
         
   
@@ -2365,34 +2309,6 @@
     
   
     Latency Analysis
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../performance/memory-analysis/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Memory Analysis
   
 
     
@@ -3465,11 +3381,11 @@
 <td>❌ Cloud only</td>
 </tr>
 <tr>
-<td><strong>Latency overhead (P95)</strong></td>
-<td>&lt;2ms</td>
-<td>~8ms at 1k RPS</td>
+<td><strong>Proxy overhead</strong></td>
+<td>Designed for minimal local overhead</td>
+<td>Local proxy (self-hosted)</td>
 <td>Depends on self-host</td>
-<td>50-200ms (network bound)</td>
+<td>Network-bound (cloud-routed)</td>
 </tr>
 <tr>
 <td><strong>Caching</strong></td>
@@ -3513,10 +3429,10 @@
 <h3 id="tokenpak">TokenPak<a class="headerlink" href="#tokenpak" title="Permanent link">&para;</a></h3>
 <p><strong>Position:</strong> Lightweight, zero-data-sharing LLM proxy for cost-conscious teams.</p>
 <p><strong>Strengths:</strong>
-- <strong>Minimal setup</strong> — <code>pip install tokenpak &amp;&amp; tokenpak serve</code> — running in 2 minutes
+- <strong>Minimal setup</strong> — <code>pip install tokenpak &amp;&amp; tokenpak serve</code> — running in minutes
 - <strong>Vault compression</strong> — Built-in prompt caching and vault compression (unique feature) reduces redundant API calls
 - <strong>No data logging</strong> — Requests never leave your infrastructure; full privacy by design
-- <strong>Low latency overhead</strong> — &lt;2ms P95 (among the fastest proxies)
+- <strong>Lightweight proxy</strong> — Designed to add minimal overhead in front of your providers
 - <strong>MIT licensed</strong> — Permissive open source; no restrictions
 - <strong>Cost discipline</strong> — Per-request cost tracking with native token counting (not approximated)</p>
 <p><strong>Trade-offs:</strong>
@@ -3527,7 +3443,7 @@
 - Teams that need <strong>cost transparency and privacy</strong> (healthcare, finance, regulated industries)
 - Projects with <strong>Anthropic + OpenAI + Gemini</strong> as primary providers
 - Developers who want to <strong>run locally</strong> with zero external dependencies
-- Applications where <strong>latency matters</strong> (sub-5ms SLAs)
+- Applications where <strong>keeping proxy overhead low</strong> is a priority
 - Teams avoiding vendor lock-in or data sharing concerns</p>
 <p><strong>When NOT to use TokenPak:</strong>
 - If you need support for 50+ niche LLM providers (LiteLLM is better)
@@ -3544,7 +3460,7 @@
 - <strong>Framework integrations</strong> — Works with LangChain, LlamaIndex, Semantic Kernel, etc.
 - <strong>Well-established</strong> — 8+ years of battle-tested routing logic</p>
 <p><strong>Trade-offs:</strong>
-- <strong>Higher latency</strong> — ~8ms P95 at 1k RPS (vs. &lt;2ms for TokenPak)
+- <strong>Heavier footprint</strong> — More moving parts can add overhead compared to a minimal proxy
 - <strong>More complex setup</strong> — Requires database (Postgres), Redis, Prometheus for full features
 - <strong>No vault compression</strong> — Focuses on provider routing, not prompt optimization
 - <strong>Data logging optional</strong> — Default behavior sends telemetry; requires config to disable</p>
@@ -3556,7 +3472,7 @@
 - <strong>Enterprise deployments</strong> with strict SLAs</p>
 <p><strong>When NOT to use LiteLLM:</strong>
 - If you want to <strong>avoid logging infrastructure</strong> (TokenPak is privacy-first)
-- If you need <strong>sub-2ms latency</strong> (TokenPak is faster)
+- If you want the <strong>leanest possible proxy footprint</strong> (TokenPak is intentionally minimal)
 - If you want <strong>vault compression</strong> (TokenPak-specific feature)
 - If you're a solo developer (overkill for small projects)</p>
 <hr />
@@ -3584,7 +3500,7 @@
 <p><strong>When NOT to use Helicone:</strong>
 - If you need <strong>zero data sharing</strong> (TokenPak is better)
 - If you want <strong>minimal setup overhead</strong> (TokenPak or cloud-only solutions better)
-- If you want <strong>lowest latency</strong> (self-hosted observability adds overhead)
+- If you want the <strong>leanest proxy footprint</strong> (a full observability stack adds more moving parts)
 - If you only use 2-3 providers (TokenPak or LiteLLM simpler)</p>
 <hr />
 <h3 id="openrouter">OpenRouter<a class="headerlink" href="#openrouter" title="Permanent link">&para;</a></h3>
@@ -3652,7 +3568,7 @@ Do you want the simplest setup (no local infrastructure)?
 <li>You want <strong>zero infrastructure</strong> (cloud-only)</li>
 <li>You're <strong>trying new models quickly</strong> (150+ available immediately)</li>
 <li>You're <strong>cost-arbitraging</strong> (some models cheaper via OpenRouter)</li>
-<li>You don't care about <strong>latency or data sovereignty</strong> (cloud logging is acceptable)</li>
+<li>You don't need <strong>local request handling or data sovereignty</strong> (cloud routing and logging are acceptable)</li>
 </ul>
 <hr />
 <h2 id="tokenpaks-unique-differentiators">TokenPak's Unique Differentiators<a class="headerlink" href="#tokenpaks-unique-differentiators" title="Permanent link">&para;</a></h2>
@@ -3670,7 +3586,7 @@ Do you want the simplest setup (no local infrastructure)?
 <p><strong>Minimal Setup</strong> — <code>pip install tokenpak &amp;&amp; tokenpak serve</code> — no databases, no Redis, no infrastructure.</p>
 </li>
 <li>
-<p><strong>Sub-2ms Latency</strong> — &lt;2ms P95 overhead. Among the fastest proxies available.</p>
+<p><strong>Lightweight by Design</strong> — A minimal proxy layer intended to add little overhead in front of your providers. Receipt-backed performance figures will publish once TokenPak's benchmark suite produces a validated run.</p>
 </li>
 </ol>
 <hr />
@@ -3701,22 +3617,22 @@ Do you want the simplest setup (no local infrastructure)?
 <td>Pass-through</td>
 </tr>
 <tr>
-<td><strong>Caching savings</strong></td>
-<td>20-50% (via vault compression)</td>
-<td>Minimal (no caching)</td>
-<td>Minimal (observability-focused)</td>
-<td>0% (no caching)</td>
+<td><strong>Repeated-context caching</strong></td>
+<td>✅ Reduces repeated-context cost via caching + vault compression</td>
+<td>❌ No built-in caching</td>
+<td>❌ Observability-focused (no caching)</td>
+<td>❌ No caching</td>
 </tr>
 <tr>
-<td><strong>Total for 100k req/mo</strong></td>
-<td>Lowest (due to caching)</td>
-<td>Medium</td>
-<td>Medium-high</td>
-<td>High</td>
+<td><strong>Cost profile</strong></td>
+<td>Caching can reduce repeated-context spend</td>
+<td>Pass-through only</td>
+<td>Pass-through + platform</td>
+<td>Pass-through (cloud)</td>
 </tr>
 </tbody>
 </table>
-<p><strong>Assumes:</strong> 2,000 tokens/request average, Claude 3.5 Sonnet pricing ($3/1M input, $15/1M output)</p>
+<p>Actual cost impact depends on your traffic and how much repeated context your workload contains. Receipt-backed savings figures will publish once TokenPak's benchmark suite produces a validated run.</p>
 <hr />
 <h2 id="integration-examples">Integration Examples<a class="headerlink" href="#integration-examples" title="Permanent link">&para;</a></h2>
 <h3 id="tokenpak_1">TokenPak<a class="headerlink" href="#tokenpak_1" title="Permanent link">&para;</a></h3>
@@ -3769,7 +3685,7 @@ Do you want the simplest setup (no local infrastructure)?
 <li><strong>LiteLLM:</strong> https://github.com/BerriAI/litellm (Latest commit: 2026-03-25)</li>
 <li><strong>Helicone:</strong> https://github.com/Helicone/helicone (Latest commit: 2026-03-25)</li>
 <li><strong>OpenRouter:</strong> https://openrouter.ai (Public docs: 2026-03-25)</li>
-<li><strong>TokenPak:</strong> https://github.com/tokenpak/tokenpak (Benchmarks: <code>docs/benchmarks.md</code>)</li>
+<li><strong>TokenPak:</strong> https://github.com/tokenpak/tokenpak (Receipt-backed performance figures will publish once TokenPak's benchmark suite produces a validated run.)</li>
 </ul>
 <hr />
 <h2 id="summary">Summary<a class="headerlink" href="#summary" title="Permanent link">&para;</a></h2>

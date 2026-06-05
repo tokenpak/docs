@@ -13,7 +13,7 @@
         <link rel="canonical" href="https://docs.tokenpak.ai/COMPRESSION_TUNING/">
       
       
-        <link rel="prev" href="../PERFORMANCE/">
+        <link rel="prev" href="../observability/">
       
       
         <link rel="next" href="../LATENCY/">
@@ -1982,62 +1982,6 @@
                 
   
   
-  
-  
-    <li class="md-nav__item">
-      <a href="../performance/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Performance Overview
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../PERFORMANCE/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Performance Benchmarks
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
     
   
   
@@ -2117,17 +2061,6 @@
   
     <nav class="md-nav" aria-label="Overview: Why Compression Matters">
       <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#the-math" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        The Math
-      
-    </span>
-  </a>
-  
-</li>
         
           <li class="md-nav__item">
   <a href="#the-tradeoff" class="md-nav__link">
@@ -2230,10 +2163,10 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#measured-on-fleet-march-2026-benchmark" class="md-nav__link">
+  <a href="#relative-cost-of-each-stage" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Measured on Fleet (March 2026 Benchmark)
+        Relative cost of each stage
       
     </span>
   </a>
@@ -2463,34 +2396,6 @@
     
   
     Latency Analysis
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../performance/memory-analysis/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Memory Analysis
   
 
     
@@ -3231,17 +3136,6 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#the-math" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        The Math
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
   <a href="#the-tradeoff" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -3342,10 +3236,10 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#measured-on-fleet-march-2026-benchmark" class="md-nav__link">
+  <a href="#relative-cost-of-each-stage" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Measured on Fleet (March 2026 Benchmark)
+        Relative cost of each stage
       
     </span>
   </a>
@@ -3574,20 +3468,17 @@
 <h1 id="tokenpak-compression-tuning-guide">TokenPak Compression Tuning Guide<a class="headerlink" href="#tokenpak-compression-tuning-guide" title="Permanent link">&para;</a></h1>
 <p>This guide explains <strong>how to tune TokenPak's compression engine</strong> to maximize token savings while minimizing latency impact for your specific workload.</p>
 <h2 id="overview-why-compression-matters">Overview: Why Compression Matters<a class="headerlink" href="#overview-why-compression-matters" title="Permanent link">&para;</a></h2>
-<p>LLM API costs scale with token count. TokenPak's compression pipeline intercepts requests and semantically equivalent content with <strong>2–8% fewer tokens</strong>, depending on your data.</p>
-<h3 id="the-math">The Math<a class="headerlink" href="#the-math" title="Permanent link">&para;</a></h3>
-<ul>
-<li><strong>Without compression:</strong> 10,000-token request = $0.30 (Sonnet)</li>
-<li><strong>With 5% compression:</strong> 9,500 tokens = $0.285 (saves $0.015 per request)</li>
-<li><strong>At 100 requests/day:</strong> ~$5/month saved (or 5% cost reduction)</li>
-</ul>
+<p>LLM API costs scale with token count. TokenPak's compression pipeline intercepts requests and re-expresses semantically equivalent content with fewer tokens, with the magnitude of the reduction depending on your data.</p>
+<blockquote>
+<p><strong>Note on numbers:</strong> This guide intentionally describes savings and latency in qualitative terms. TokenPak does not publish specific latency, savings, or cache-hit figures until they are backed by a validated, frozen-fixture benchmark run. Receipt-backed figures will be added once TokenPak's benchmark suite produces a validated run. In the meantime, <strong>measure savings and latency on your own workload</strong> — see <a href="#monitoring">Monitoring</a> and run <code>tokenpak savings</code> / <code>tokenpak stats</code>.</p>
+</blockquote>
 <h3 id="the-tradeoff">The Tradeoff<a class="headerlink" href="#the-tradeoff" title="Permanent link">&para;</a></h3>
-<p>Compression has latency cost:</p>
+<p>Compression trades a small amount of added latency for a reduction in token count. The right balance depends on your workload: latency-sensitive, real-time paths favor lighter pipelines, while batch and offline work can afford more aggressive compression for larger token reductions.</p>
 <table>
 <thead>
 <tr>
 <th>Strategy</th>
-<th>Latency</th>
+<th>Added Latency</th>
 <th>Token Savings</th>
 <th>Best For</th>
 </tr>
@@ -3595,37 +3486,37 @@
 <tbody>
 <tr>
 <td><strong>Dedup</strong></td>
-<td>&lt;1ms</td>
-<td>2–3% (on repeated context)</td>
+<td>Minimal</td>
+<td>Small (on repeated context)</td>
 <td>Iterative workflows, session context</td>
 </tr>
 <tr>
 <td><strong>Segmentation</strong></td>
-<td>&lt;2ms</td>
-<td>1–2% (metadata, structure)</td>
+<td>Low</td>
+<td>Small (metadata, structure)</td>
 <td>Code review, doc analysis</td>
 </tr>
 <tr>
 <td><strong>Alias compression</strong></td>
-<td>&lt;5ms</td>
-<td>3–5% (long repeated names)</td>
+<td>Moderate</td>
+<td>Moderate (long repeated names)</td>
 <td>Large schemas, entity lists</td>
 </tr>
 <tr>
 <td><strong>Instruction table</strong></td>
-<td>&lt;10ms</td>
-<td>4–6% (cookbook patterns)</td>
+<td>Higher</td>
+<td>Moderate (cookbook patterns)</td>
 <td>Repetitive tasks, templates</td>
 </tr>
 <tr>
 <td><strong>Semantic caching</strong> (off)</td>
 <td>N/A</td>
-<td>15–40% (prompt cache hit)</td>
+<td>Larger (on prompt cache hit)</td>
 <td>Same prompts, different inputs</td>
 </tr>
 </tbody>
 </table>
-<p><strong>Default (all enabled):</strong> ~5ms latency for ~3–5% savings. Acceptable for most workloads.</p>
+<p><strong>Default (all enabled):</strong> low added latency for a modest token reduction. Acceptable for most workloads.</p>
 <hr />
 <h2 id="compression-strategies-how-to-use-each">Compression Strategies: How to Use Each<a class="headerlink" href="#compression-strategies-how-to-use-each" title="Permanent link">&para;</a></h2>
 <h3 id="strategy-1-dedup-fast-safe">Strategy 1: Dedup (Fast, Safe)<a class="headerlink" href="#strategy-1-dedup-fast-safe" title="Permanent link">&para;</a></h3>
@@ -3641,7 +3532,7 @@ Message 3: [Assistant response]
 Message 4: &quot;Here&#39;s the current auth schema:\n&lt;200 lines JSON&gt;&quot;  ← DEDUP removes this
 Message 5: &quot;Now add refresh tokens.&quot;
 </code></pre></div>
-<p><strong>Savings:</strong> 1–3% (depends on how often context repeats)</p>
+<p><strong>Savings:</strong> Small token reduction, scaling with how often context repeats.</p>
 <p><strong>Configuration (in proxy config):</strong></p>
 <div class="highlight"><pre><span></span><code><span class="c1"># tokenpak/proxy.py</span>
 <span class="n">pipeline</span> <span class="o">=</span> <span class="n">CompressionPipeline</span><span class="p">(</span>
@@ -3661,7 +3552,7 @@ Message 5: &quot;Now add refresh tokens.&quot;
 <tr>
 <th>Segment Type</th>
 <th>What Gets Compressed</th>
-<th>Savings</th>
+<th>Relative Savings</th>
 <th>Risk</th>
 </tr>
 </thead>
@@ -3669,37 +3560,37 @@ Message 5: &quot;Now add refresh tokens.&quot;
 <tr>
 <td><strong>Code</strong></td>
 <td>Signature extraction, docstring keep</td>
-<td>5–8%</td>
+<td>Higher</td>
 <td>Low (retains logic)</td>
 </tr>
 <tr>
 <td><strong>Markdown</strong></td>
 <td>Keep headers, strip body text</td>
-<td>3–6%</td>
+<td>Moderate</td>
 <td>Medium (loses details)</td>
 </tr>
 <tr>
 <td><strong>JSON</strong></td>
 <td>Schema + sample data (strip repetitive rows)</td>
-<td>4–7%</td>
+<td>Higher</td>
 <td>Medium (loses volume)</td>
 </tr>
 <tr>
 <td><strong>Tool results</strong></td>
 <td>Truncation (keep first N lines)</td>
-<td>2–4%</td>
+<td>Lower</td>
 <td>Low (summaries)</td>
 </tr>
 <tr>
 <td><strong>Text/prose</strong></td>
 <td>Token filtering by importance</td>
-<td>3–5%</td>
+<td>Moderate</td>
 <td>High (selective)</td>
 </tr>
 </tbody>
 </table>
 <p><strong>Real example — code compression:</strong></p>
-<div class="highlight"><pre><span></span><code><span class="c1"># Before (28 tokens)</span>
+<div class="highlight"><pre><span></span><code><span class="c1"># Before</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">calculate_total</span><span class="p">(</span><span class="n">items</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Calculate the sum of item values.&quot;&quot;&quot;</span>
     <span class="n">result</span> <span class="o">=</span> <span class="mi">0</span>
@@ -3707,7 +3598,7 @@ Message 5: &quot;Now add refresh tokens.&quot;
         <span class="n">result</span> <span class="o">+=</span> <span class="n">item</span><span class="p">[</span><span class="s1">&#39;price&#39;</span><span class="p">]</span>
     <span class="k">return</span> <span class="n">result</span>
 
-<span class="c1"># After (signature only, 8 tokens)</span>
+<span class="c1"># After (signature only)</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">calculate_total</span><span class="p">(</span><span class="n">items</span><span class="p">):</span> <span class="o">...</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Calculate the sum of item values.&quot;&quot;&quot;</span>
 </code></pre></div>
@@ -3722,7 +3613,7 @@ Message 5: &quot;Now add refresh tokens.&quot;
 <span class="c1"># Optionally provide a recipe (directives)</span>
 <span class="c1"># See recipes/oss/*.yaml for examples</span>
 </code></pre></div>
-<p><strong>When to disable:</strong> If you need full code bodies preserved (not just signatures). Saves 2ms latency but gives up 3–6% compression.</p>
+<p><strong>When to disable:</strong> If you need full code bodies preserved (not just signatures). Disabling trims a little added latency but gives up the compression segmentation would otherwise provide.</p>
 <hr />
 <h3 id="strategy-3-alias-compression-moderate">Strategy 3: Alias Compression (Moderate)<a class="headerlink" href="#strategy-3-alias-compression-moderate" title="Permanent link">&para;</a></h3>
 <p><strong>What it does:</strong> Detects long repeated names/entities (variable names, long strings, UUIDs) and replaces them with short aliases.</p>
@@ -3743,7 +3634,7 @@ Mapping: A1 → ManagerInterface.process_authentication_token
 - Long class/function names repeated 3+ times
 - Domain-specific acronyms or entity names
 - Code with verbose variable names</p>
-<p><strong>Savings:</strong> 3–5% (depends on repetition and name length)</p>
+<p><strong>Savings:</strong> Moderate token reduction, scaling with repetition and name length.</p>
 <p><strong>Configuration:</strong></p>
 <div class="highlight"><pre><span></span><code><span class="n">pipeline</span> <span class="o">=</span> <span class="n">CompressionPipeline</span><span class="p">(</span>
     <span class="n">enable_alias</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>              <span class="c1"># ← enable/disable</span>
@@ -3776,7 +3667,7 @@ Lookup table maps [CODE-REVIEW-V2] → full instruction text
 - Batch processing (same role repeated 10+ times)
 - Service agents (standard prompts)
 - Workflows with template instructions</p>
-<p><strong>Savings:</strong> 4–8% (depends on instruction repetition)</p>
+<p><strong>Savings:</strong> Moderate token reduction, scaling with instruction repetition.</p>
 <p><strong>Configuration:</strong></p>
 <div class="highlight"><pre><span></span><code><span class="n">pipeline</span> <span class="o">=</span> <span class="n">CompressionPipeline</span><span class="p">(</span>
     <span class="n">enable_instruction_table</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>                   <span class="c1"># ← enable/disable</span>
@@ -3802,15 +3693,15 @@ Lookup table maps [CODE-REVIEW-V2] → full instruction text
 <h3 id="strategy-5-semantic-caching-native-to-claude-api">Strategy 5: Semantic Caching (Native to Claude API)<a class="headerlink" href="#strategy-5-semantic-caching-native-to-claude-api" title="Permanent link">&para;</a></h3>
 <p><strong>What it does:</strong> Reuses cached prompt prefixes when subsequent requests have similar context.</p>
 <p><strong>How it works:</strong>
-- First request with context → stored in Claude's cache (5 min TTL, by default)
-- Identical or very similar context → reuses cached tokens at ~10% cost</p>
+- First request with context → stored in Claude's prompt cache (the API applies a default cache TTL)
+- Identical or very similar context → reuses cached tokens at a reduced per-token cost on the cached prefix</p>
 <p><strong>Real example:</strong></p>
-<div class="highlight"><pre><span></span><code>Request 1: &quot;Here&#39;s the codebase:\n&lt;50KB context&gt;&quot; → 12 cache creation tokens
-Request 2: &quot;Same codebase, different question&quot; → 24 cache read tokens (10% cost)
+<div class="highlight"><pre><span></span><code>Request 1: &quot;Here&#39;s the codebase:\n&lt;large context&gt;&quot; → cache creation tokens written
+Request 2: &quot;Same codebase, different question&quot; → cache read tokens (reduced cost on the cached prefix)
 
-Savings: (12 - 2.4) tokens per request = ~80% on that chunk
+Effect: the repeated prefix is billed at the lower cache-read rate instead of full input cost.
 </code></pre></div>
-<p><strong>Savings:</strong> 15–40% (only on repeated prefix, but huge when it hits)</p>
+<p><strong>Savings:</strong> Potentially large, but only on the repeated prefix when the cache is hit. Measure on your own traffic, since cache-hit rates depend heavily on how often prompts repeat.</p>
 <p><strong>How to enable (in your client code):</strong></p>
 <div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">anthropic</span>
 
@@ -3843,7 +3734,7 @@ Savings: (12 - 2.4) tokens per request = ~80% on that chunk
 <span class="c1"># Subsequent requests with same codebase will hit the cache</span>
 </code></pre></div>
 <p><strong>When to use:</strong>
-- System prompts (static, reused 100% of the time)
+- System prompts (static, reused on every request)
 - Large context blocks (code, docs, schemas) used in multiple requests
 - Batch workflows where the same context applies to different questions</p>
 <p><strong>When NOT to use:</strong>
@@ -3851,60 +3742,52 @@ Savings: (12 - 2.4) tokens per request = ~80% on that chunk
 - Context that changes every turn</p>
 <hr />
 <h2 id="performance-characteristics-latency-vs-savings">Performance Characteristics: Latency vs Savings<a class="headerlink" href="#performance-characteristics-latency-vs-savings" title="Permanent link">&para;</a></h2>
-<h3 id="measured-on-fleet-march-2026-benchmark">Measured on Fleet (March 2026 Benchmark)<a class="headerlink" href="#measured-on-fleet-march-2026-benchmark" title="Permanent link">&para;</a></h3>
+<blockquote>
+<p><strong>Benchmark figures pending.</strong> Validated latency and savings numbers will be published once TokenPak's benchmark suite produces a receipt-backed, frozen-fixture run. Until then, treat the relative ordering below as guidance and <strong>measure on your own workload</strong> with <code>tokenpak savings</code> / <code>tokenpak stats</code> and the <a href="#monitoring">Monitoring</a> snippet.</p>
+</blockquote>
+<h3 id="relative-cost-of-each-stage">Relative cost of each stage<a class="headerlink" href="#relative-cost-of-each-stage" title="Permanent link">&para;</a></h3>
+<p>The stages differ in how much latency they add and how much token reduction they typically deliver. Ordered from cheapest/lightest to most expensive:</p>
 <table>
 <thead>
 <tr>
-<th>Host</th>
-<th>Compression Mode</th>
+<th>Stage</th>
+<th>Added Latency</th>
 <th>Token Savings</th>
-<th>P50 Latency</th>
-<th>P99 Latency</th>
+<th>When it's worth it</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><strong>Host A</strong></td>
-<td>All enabled (default)</td>
-<td>2.8%</td>
-<td>5.2ms</td>
-<td>12ms</td>
+<td><strong>Dedup</strong></td>
+<td>Minimal</td>
+<td>Small</td>
+<td>Almost always — very cheap, helps whenever context repeats</td>
 </tr>
 <tr>
-<td><strong>Host A</strong></td>
-<td>Dedup + Segment only</td>
-<td>2.1%</td>
-<td>2.1ms</td>
-<td>5ms</td>
+<td><strong>Segmentation</strong></td>
+<td>Low</td>
+<td>Small</td>
+<td>Usually — modest cost, broadly applicable</td>
 </tr>
 <tr>
-<td><strong>Host A</strong></td>
-<td>Dedup only</td>
-<td>1.2%</td>
-<td>0.8ms</td>
-<td>2ms</td>
+<td><strong>Alias</strong></td>
+<td>Moderate</td>
+<td>Moderate</td>
+<td>Worth it for code-heavy / entity-heavy workloads</td>
 </tr>
 <tr>
-<td><strong>Host B</strong></td>
-<td>All enabled</td>
-<td>2.2%</td>
-<td>6.1ms</td>
-<td>14ms</td>
-</tr>
-<tr>
-<td><strong>Host C</strong></td>
-<td>All enabled</td>
-<td>2.8%</td>
-<td>4.9ms</td>
-<td>11ms</td>
+<td><strong>Instruction table</strong></td>
+<td>Higher</td>
+<td>Moderate</td>
+<td>Worth it for batch / service work with repeated prompts</td>
 </tr>
 </tbody>
 </table>
 <p><strong>Analysis:</strong>
-- Dedup: &lt;1ms overhead, 1–2% savings (always worth it)
-- Segmentation: &lt;2ms overhead, 1–2% savings (usually worth it)
-- Alias: &lt;5ms overhead, 3–5% savings (worth it for code-heavy workloads)
-- Instruction table: &lt;10ms overhead, 4–6% savings (worth it for batch/service work)</p>
+- <strong>Dedup:</strong> lowest overhead of any stage; the savings are small but the cost is so low it is almost always worth enabling.
+- <strong>Segmentation:</strong> low overhead, small savings; usually worth keeping on.
+- <strong>Alias:</strong> moderate overhead with a moderate token reduction — most valuable on code-heavy workloads with long repeated names.
+- <strong>Instruction table:</strong> the highest per-request overhead, but a moderate reduction on batch/service work where the same instructions repeat many times.</p>
 <hr />
 <h2 id="configuration-copy-paste-examples">Configuration: Copy-Paste Examples<a class="headerlink" href="#configuration-copy-paste-examples" title="Permanent link">&para;</a></h2>
 <h3 id="example-1-lightweight-low-latency">Example 1: Lightweight (Low Latency)<a class="headerlink" href="#example-1-lightweight-low-latency" title="Permanent link">&para;</a></h3>
@@ -3918,7 +3801,7 @@ Savings: (12 - 2.4) tokens per request = ~80% on that chunk
     <span class="n">enable_directives</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
 <span class="p">)</span>
 </code></pre></div>
-<p><strong>Tradeoff:</strong> &lt;2ms latency, 1–2% savings.</p>
+<p><strong>Tradeoff:</strong> Minimal added latency for a small token reduction.</p>
 <hr />
 <h3 id="example-2-balanced-default">Example 2: Balanced (Default)<a class="headerlink" href="#example-2-balanced-default" title="Permanent link">&para;</a></h3>
 <p>Use this for general workloads (development, analysis).</p>
@@ -3931,7 +3814,7 @@ Savings: (12 - 2.4) tokens per request = ~80% on that chunk
     <span class="n">enable_directives</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
 <span class="p">)</span>
 </code></pre></div>
-<p><strong>Tradeoff:</strong> ~5ms latency, 3–5% savings.</p>
+<p><strong>Tradeoff:</strong> Low added latency for a modest token reduction.</p>
 <hr />
 <h3 id="example-3-aggressive-high-savings">Example 3: Aggressive (High Savings)<a class="headerlink" href="#example-3-aggressive-high-savings" title="Permanent link">&para;</a></h3>
 <p>Use this for batch work, background jobs, offline analysis.</p>
@@ -3947,7 +3830,7 @@ Savings: (12 - 2.4) tokens per request = ~80% on that chunk
     <span class="n">alias_min_length</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span>           <span class="c1"># shorter names too</span>
 <span class="p">)</span>
 </code></pre></div>
-<p><strong>Tradeoff:</strong> ~10–15ms latency, 5–8% savings.</p>
+<p><strong>Tradeoff:</strong> Higher added latency for a larger token reduction.</p>
 <hr />
 <h3 id="example-4-code-review-specialized">Example 4: Code Review Specialized<a class="headerlink" href="#example-4-code-review-specialized" title="Permanent link">&para;</a></h3>
 <p>Optimized for code review tasks.</p>
@@ -3970,7 +3853,7 @@ Savings: (12 - 2.4) tokens per request = ~80% on that chunk
 
 <span class="n">pipeline</span><span class="o">.</span><span class="n">add_hook</span><span class="p">(</span><span class="n">code_priority_hook</span><span class="p">)</span>
 </code></pre></div>
-<p><strong>Tradeoff:</strong> ~8ms latency, 6–8% savings on code.</p>
+<p><strong>Tradeoff:</strong> Moderate added latency for a larger token reduction on code.</p>
 <hr />
 <h2 id="tuning-checklist">Tuning Checklist<a class="headerlink" href="#tuning-checklist" title="Permanent link">&para;</a></h2>
 <p>When you want to optimize compression for YOUR workload:</p>
@@ -3978,7 +3861,7 @@ Savings: (12 - 2.4) tokens per request = ~80% on that chunk
 <li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <strong>Profile your requests:</strong> What's the typical size? Code? Text? JSON?</li>
 <li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <strong>Set a baseline:</strong> Run a week with <code>enable_all=True</code>, measure token savings.</li>
 <li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <strong>Identify bottlenecks:</strong> Which compression stage gives the most savings? (Use <code>PipelineResult.stages_run</code>)</li>
-<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <strong>Disable low-ROI stages:</strong> If alias compression adds 5ms for &lt;0.5% savings, disable it.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <strong>Disable low-ROI stages:</strong> If a stage (e.g. alias compression) adds noticeable latency for negligible savings on your data, disable it.</li>
 <li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <strong>Batch profile:</strong> Test on 100+ requests to get real averages (single-request measurements are noisy).</li>
 <li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <strong>Test in production:</strong> A/B test config changes on real workloads, measure cost + latency.</li>
 </ul>
@@ -3997,11 +3880,11 @@ Savings: (12 - 2.4) tokens per request = ~80% on that chunk
 <h3 id="q-can-i-compress-the-response-too">Q: "Can I compress the response too?"<a class="headerlink" href="#q-can-i-compress-the-response-too" title="Permanent link">&para;</a></h3>
 <p><strong>A:</strong> TokenPak currently compresses <strong>requests only</strong> (to LLM). Response compression would require client-side modifications. Future feature.</p>
 <h3 id="q-how-much-should-i-save">Q: "How much should I save?"<a class="headerlink" href="#q-how-much-should-i-save" title="Permanent link">&para;</a></h3>
-<p><strong>A:</strong> Typical range is <strong>2–6% depending on workload:</strong>
-- Text-heavy (essays, reports): 2–3%
-- Code-heavy (review, analysis): 4–6%
-- JSON/structured: 3–5%
-- Real-time chat (short messages): &lt;1%</p>
+<p><strong>A:</strong> It depends on your workload — there is no single number, and you should measure on your own traffic with <code>tokenpak savings</code> / <code>tokenpak stats</code>. As a rough ordering of where compression helps most to least:
+- Code-heavy (review, analysis): largest reduction
+- JSON/structured: moderate reduction
+- Text-heavy (essays, reports): smaller reduction
+- Real-time chat (short messages): little to none</p>
 <h3 id="q-should-i-use-alias-compression">Q: "Should I use alias compression?"<a class="headerlink" href="#q-should-i-use-alias-compression" title="Permanent link">&para;</a></h3>
 <p><strong>A:</strong> Yes, unless output is user-facing. Aliases make text unreadable in logs/exports.</p>
 <h3 id="q-how-often-should-i-update-the-instruction-table">Q: "How often should I update the instruction table?"<a class="headerlink" href="#q-how-often-should-i-update-the-instruction-table" title="Permanent link">&para;</a></h3>
@@ -4023,7 +3906,7 @@ Savings: (12 - 2.4) tokens per request = ~80% on that chunk
 <ol>
 <li><strong>Start with the balanced config</strong> (Example 2 above).</li>
 <li><strong>Measure token savings</strong> on your workload for 1 week.</li>
-<li><strong>Adjust based on your latency tolerance:</strong> Trade off ~5% savings for &lt;10ms latency most cases.</li>
+<li><strong>Adjust based on your latency tolerance:</strong> Trade a portion of token savings for lower added latency where your path is latency-sensitive.</li>
 <li><strong>Monitor regularly:</strong> Token costs shift as context size changes.</li>
 </ol>
 <hr />

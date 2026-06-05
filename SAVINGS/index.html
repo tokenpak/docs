@@ -80,7 +80,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#tokenpak-savings-real-numbers" class="md-skip">
+        <a href="#tokenpak-savings" class="md-skip">
           Skip to content
         </a>
       
@@ -1106,41 +1106,13 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#real-fleet-data" class="md-nav__link">
+  <a href="#how-savings-behave-in-practice" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Real Fleet Data
+        How Savings Behave in Practice
       
     </span>
   </a>
-  
-    <nav class="md-nav" aria-label="Real Fleet Data">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#session-snapshot-last-24-hours" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Session Snapshot (Last 24 Hours)
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#by-model" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        By Model
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -1278,10 +1250,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#roi-calculator" class="md-nav__link">
+  <a href="#estimating-your-roi" class="md-nav__link">
     <span class="md-ellipsis">
       
-        ROI Calculator
+        Estimating Your ROI
       
     </span>
   </a>
@@ -2326,62 +2298,6 @@
   
   
     <li class="md-nav__item">
-      <a href="../performance/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Performance Overview
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../PERFORMANCE/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Performance Benchmarks
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
       <a href="../COMPRESSION_TUNING/" class="md-nav__link">
         
   
@@ -2421,34 +2337,6 @@
     
   
     Latency Analysis
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../performance/memory-analysis/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Memory Analysis
   
 
     
@@ -3216,41 +3104,13 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#real-fleet-data" class="md-nav__link">
+  <a href="#how-savings-behave-in-practice" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Real Fleet Data
+        How Savings Behave in Practice
       
     </span>
   </a>
-  
-    <nav class="md-nav" aria-label="Real Fleet Data">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#session-snapshot-last-24-hours" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Session Snapshot (Last 24 Hours)
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#by-model" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        By Model
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -3388,10 +3248,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#roi-calculator" class="md-nav__link">
+  <a href="#estimating-your-roi" class="md-nav__link">
     <span class="md-ellipsis">
       
-        ROI Calculator
+        Estimating Your ROI
       
     </span>
   </a>
@@ -3490,122 +3350,64 @@
   
 
 
-<h1 id="tokenpak-savings-real-numbers">TokenPak Savings — Real Numbers<a class="headerlink" href="#tokenpak-savings-real-numbers" title="Permanent link">&para;</a></h1>
+<h1 id="tokenpak-savings">TokenPak Savings<a class="headerlink" href="#tokenpak-savings" title="Permanent link">&para;</a></h1>
 <p><strong>How much will TokenPak save you?</strong></p>
-<p>The simple answer: <strong>10–40% of your LLM bill.</strong></p>
-<p>Here's how we measure it, and what you should expect.</p>
+<p>It depends on your workload — specifically how much of your context repeats and how compressible it is. The honest answer is: measure it on your own traffic. TokenPak gives you the tools to do exactly that.</p>
+<blockquote>
+<p><strong>A note on numbers:</strong> TokenPak does not publish headline savings or cost figures until they are backed by a validated, frozen-fixture benchmark run. Our benchmark suite is in progress; receipt-backed figures will publish once it produces a validated run. Until then, the most reliable savings number is the one you measure on your own workload with <code>tokenpak stats</code> and <code>tokenpak report --json</code>.</p>
+</blockquote>
 <hr />
 <h2 id="the-math-simple-version">The Math (Simple Version)<a class="headerlink" href="#the-math-simple-version" title="Permanent link">&para;</a></h2>
 <h3 id="what-tokenpak-does">What TokenPak Does<a class="headerlink" href="#what-tokenpak-does" title="Permanent link">&para;</a></h3>
 <ol>
-<li><strong>Deduplicates requests</strong> — If you send the same prompt twice, the second one costs less (cache hit)</li>
+<li><strong>Deduplicates requests</strong> — If you send the same prompt twice, the second one can be served from cache instead of re-sent (cache hit)</li>
 <li><strong>Compresses long context</strong> — Summarizes repetitive text blocks before sending to the LLM API</li>
 <li><strong>Injects smart context</strong> — Reuses cached blocks from your vault instead of recomputing every time</li>
-<li><strong>Tracks every optimization</strong> — Reports how many tokens you saved and how much money</li>
+<li><strong>Tracks every optimization</strong> — Reports how many tokens and how much money you saved, per request</li>
 </ol>
 <h3 id="the-impact">The Impact<a class="headerlink" href="#the-impact" title="Permanent link">&para;</a></h3>
+<p>Savings come from two complementary mechanisms:</p>
 <table>
 <thead>
 <tr>
 <th>Technique</th>
-<th>Typical Savings</th>
-<th>When It Happens</th>
+<th>What it does</th>
+<th>When it helps</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td><strong>Request deduplication</strong></td>
-<td>5–15%</td>
+<td>Avoids resending an identical prompt</td>
 <td>Every time you ask the same question twice</td>
 </tr>
 <tr>
 <td><strong>Semantic compression</strong></td>
-<td>10–30%</td>
+<td>Shrinks repetitive or verbose context</td>
 <td>When you send large documents or code contexts</td>
 </tr>
 <tr>
 <td><strong>Vault injection caching</strong></td>
-<td>20–40%+</td>
+<td>Reuses cached context blocks</td>
 <td>In agent loops, batch processing, or knowledge-base lookups</td>
 </tr>
 <tr>
 <td><strong>Combined (balanced mode)</strong></td>
-<td>15–25%</td>
-<td>Default behavior across all requests</td>
+<td>Applies caching + light compression by default</td>
+<td>Across all requests</td>
 </tr>
 </tbody>
 </table>
+<p>How much each of these saves depends entirely on your workload and repeat rate — there is no single number that holds across all traffic.</p>
 <hr />
-<h2 id="real-fleet-data">Real Fleet Data<a class="headerlink" href="#real-fleet-data" title="Permanent link">&para;</a></h2>
-<p>TokenPak is running in production right now. Here's what we're saving:</p>
-<h3 id="session-snapshot-last-24-hours">Session Snapshot (Last 24 Hours)<a class="headerlink" href="#session-snapshot-last-24-hours" title="Permanent link">&para;</a></h3>
-<table>
-<thead>
-<tr>
-<th>Metric</th>
-<th>Value</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>Total requests</strong></td>
-<td>23,000+</td>
-</tr>
-<tr>
-<td><strong>Input tokens sent</strong></td>
-<td>244M+</td>
-</tr>
-<tr>
-<td><strong>Tokens saved</strong></td>
-<td>390K+</td>
-</tr>
-<tr>
-<td><strong>Dollar savings</strong></td>
-<td>$415+</td>
-</tr>
-<tr>
-<td><strong>Cache hit rate</strong></td>
-<td>97.6%</td>
-</tr>
-<tr>
-<td><strong>Compression ratio</strong></td>
-<td>3.7:1 (best compression mode)</td>
-</tr>
-</tbody>
-</table>
-<h3 id="by-model">By Model<a class="headerlink" href="#by-model" title="Permanent link">&para;</a></h3>
-<table>
-<thead>
-<tr>
-<th>Model</th>
-<th>Requests</th>
-<th>Cost</th>
-<th>Saved</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>Claude Haiku</strong></td>
-<td>22,701</td>
-<td>$155.68</td>
-<td>390K tokens</td>
-</tr>
-<tr>
-<td><strong>Claude Sonnet</strong></td>
-<td>3,618</td>
-<td>$125.44</td>
-<td>via compression</td>
-</tr>
-<tr>
-<td><strong>Claude Opus</strong></td>
-<td>595</td>
-<td>$130.90</td>
-<td>via cache hits</td>
-</tr>
-</tbody>
-</table>
-<p><strong>Translation:</strong> In one production day, with ~26K LLM calls, TokenPak saved over $415 on Anthropic's API alone.</p>
-<p>If you're using OpenAI or Google Gemini alongside, multiply that by 2–3x.</p>
+<h2 id="how-savings-behave-in-practice">How Savings Behave in Practice<a class="headerlink" href="#how-savings-behave-in-practice" title="Permanent link">&para;</a></h2>
+<p>TokenPak's savings are workload-dependent. The general shape:</p>
+<ul>
+<li><strong>Highly repetitive traffic</strong> (agent loops, batch jobs, knowledge-base lookups) benefits most, because cached and compressible context dominates.</li>
+<li><strong>Provider-cached flows</strong> show lower incremental gains, because the provider is already discounting repeated context.</li>
+<li><strong>One-off, highly unique requests</strong> benefit least, because there is little to dedup or compress.</li>
+</ul>
+<p>The only way to know your number is to run TokenPak on your traffic and read the report.</p>
 <hr />
 <h2 id="how-to-measure-your-own-savings">How to Measure Your Own Savings<a class="headerlink" href="#how-to-measure-your-own-savings" title="Permanent link">&para;</a></h2>
 <h3 id="1-start-the-proxy">1. Start the Proxy<a class="headerlink" href="#1-start-the-proxy" title="Permanent link">&para;</a></h3>
@@ -3616,62 +3418,52 @@ tokenpak<span class="w"> </span>proxy
 <div class="highlight"><pre><span></span><code><span class="c1"># Before: Uses real API directly</span>
 <span class="n">client</span> <span class="o">=</span> <span class="n">Anthropic</span><span class="p">()</span>
 
-<span class="c1"># After: Routes through TokenPak proxy (100% compatible)</span>
+<span class="c1"># After: Routes through TokenPak proxy (drop-in compatible)</span>
 <span class="n">client</span> <span class="o">=</span> <span class="n">Anthropic</span><span class="p">(</span><span class="n">base_url</span><span class="o">=</span><span class="s2">&quot;http://localhost:8766&quot;</span><span class="p">)</span>
 </code></pre></div>
 <h3 id="3-check-your-savings-real-time">3. Check Your Savings (Real-Time)<a class="headerlink" href="#3-check-your-savings-real-time" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="c1"># One-liner to see your savings today</span>
+tokenpak<span class="w"> </span>savings
+
+<span class="c1"># Or scope it to the current session/day</span>
 tokenpak<span class="w"> </span>stats<span class="w"> </span>--today
 </code></pre></div>
-<p><strong>Example output:</strong>
-<div class="highlight"><pre><span></span><code>Session savings:
-  Requests: 4,404
-  Input tokens: 58.7M
-  Tokens saved: 2.8M (4.8%)
-  Cost: $75.01
-  Cost saved (estimated): $3.61
-
-Cache performance:
-  Hit rate: 98.2%
-  Reused tokens: 188.7M (from cache)
-</code></pre></div></p>
+<p>The output reports the requests, tokens, and estimated cost saved for <em>your</em> traffic — these are the numbers that matter for your decision.</p>
 <h3 id="4-understand-the-breakdown">4. Understand the Breakdown<a class="headerlink" href="#4-understand-the-breakdown" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="c1"># Detailed report with per-model savings</span>
 tokenpak<span class="w"> </span>report<span class="w"> </span>--json
 </code></pre></div>
-<p>Returns:
-- <code>input_tokens</code> — Tokens you actually sent to the API (after compression)
-- <code>saved_tokens</code> — Tokens we didn't send (already cached or compressed)
-- <code>compression_ratio</code> — How aggressively we squeezed your context
-- <code>cost_saved</code> — Estimated dollar amount saved
-- <code>cache_hit_rate</code> — % of your requests that hit the cache</p>
+<p>Returns:</p>
+<ul>
+<li><code>input_tokens</code> — Tokens you actually sent to the API (after compression)</li>
+<li><code>saved_tokens</code> — Tokens we didn't send (already cached or compressed)</li>
+<li><code>compression_ratio</code> — How aggressively we compressed your context</li>
+<li><code>cost_saved</code> — Estimated dollar amount saved</li>
+<li><code>cache_hit_rate</code> — Share of your requests that hit the cache</li>
+</ul>
+<p>Because these are computed from your own traffic, they are the authoritative measure of what TokenPak does for you — far more reliable than any generic headline figure.</p>
 <hr />
 <h2 id="example-agent-loop">Example: Agent Loop<a class="headerlink" href="#example-agent-loop" title="Permanent link">&para;</a></h2>
-<p>Let's say you're running an agent that:
-1. Takes a user question
-2. Searches a knowledge base (100 results)
-3. Calls Claude 3–4 times to refine the answer</p>
-<p><strong>Without TokenPak:</strong>
-- Each Claude call sees the full 100 search results
-- Each call costs ~$0.10 (depends on model)
-- 4 calls = $0.40 per user question</p>
-<p><strong>With TokenPak:</strong>
-- First call: Full context sent, $0.10
-- Calls 2–4: Cache hits on the search results (90% savings)
-- 3 calls cost ~$0.02 each = $0.06 total
-- <strong>Savings: $0.34 per question (85%!)</strong></p>
-<p>Scale this across 10,000 questions/day, and you're saving <strong>$3,400/day</strong> or <strong>$1.2M+/year</strong>.</p>
+<p>Consider an agent that:</p>
+<ol>
+<li>Takes a user question</li>
+<li>Searches a knowledge base</li>
+<li>Calls Claude several times to refine the answer</li>
+</ol>
+<p><strong>Without TokenPak:</strong> Every Claude call re-sends the full search context, so you pay for the same large context on each call.</p>
+<p><strong>With TokenPak:</strong> The first call sends the full context; subsequent calls reuse it from cache instead of re-sending it. The more calls reuse the same context, the larger the cumulative saving.</p>
+<p>This is the workload shape where TokenPak helps most — but the actual saving depends on how much context repeats across your calls. Run <code>tokenpak report --json</code> against your own agent to see the real figure.</p>
 <hr />
 <h2 id="setup-options">Setup Options<a class="headerlink" href="#setup-options" title="Permanent link">&para;</a></h2>
 <h3 id="option-1-proxy-recommended">Option 1: Proxy (Recommended)<a class="headerlink" href="#option-1-proxy-recommended" title="Permanent link">&para;</a></h3>
 <p>Sit TokenPak between your code and the LLM API. No code changes.</p>
 <div class="highlight"><pre><span></span><code>tokenpak<span class="w"> </span>proxy<span class="w"> </span>--port<span class="w"> </span><span class="m">8766</span>
 </code></pre></div>
-<p>Then swap one URL in your client:
+<p>Then swap one URL in your client:</p>
 <div class="highlight"><pre><span></span><code><span class="n">client</span> <span class="o">=</span> <span class="n">Anthropic</span><span class="p">(</span><span class="n">base_url</span><span class="o">=</span><span class="s2">&quot;http://localhost:8766&quot;</span><span class="p">)</span>
-</code></pre></div></p>
+</code></pre></div>
 <p><strong>Pros:</strong> Works with any SDK, automatic for all requests, easy to scale
-<strong>Cons:</strong> One extra hop (negligible latency: ~5ms)</p>
+<strong>Cons:</strong> One extra network hop; the added latency depends on your deployment path (run the proxy on the same machine/network to minimize it)</p>
 <h3 id="option-2-sdk-mode">Option 2: SDK Mode<a class="headerlink" href="#option-2-sdk-mode" title="Permanent link">&para;</a></h3>
 <p>Call TokenPak's compression directly in your code.</p>
 <div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">tokenpak</span><span class="w"> </span><span class="kn">import</span> <span class="n">HeuristicEngine</span>
@@ -3687,13 +3479,12 @@ tokenpak<span class="w"> </span>report<span class="w"> </span>--json
 <p>Proxy for most requests + SDK mode for special cases (cost-critical paths).</p>
 <hr />
 <h2 id="profiles-tune-savings-vs-risk">Profiles: Tune Savings vs. Risk<a class="headerlink" href="#profiles-tune-savings-vs-risk" title="Permanent link">&para;</a></h2>
-<p>TokenPak ships with compression profiles tuned for different workloads:</p>
+<p>TokenPak ships with compression profiles tuned for different workloads. Heavier compression generally trades more aggressively for savings; lighter compression prioritizes fidelity.</p>
 <table>
 <thead>
 <tr>
 <th>Profile</th>
 <th>Compression</th>
-<th>Savings</th>
 <th>Risk</th>
 <th>Use Case</th>
 </tr>
@@ -3702,57 +3493,50 @@ tokenpak<span class="w"> </span>report<span class="w"> </span>--json
 <tr>
 <td><strong>safe</strong></td>
 <td>Light</td>
-<td>5–10%</td>
 <td>Very low</td>
 <td>Production, high-stakes queries</td>
 </tr>
 <tr>
 <td><strong>balanced</strong></td>
 <td>Medium</td>
-<td>15–25%</td>
 <td>Low</td>
 <td>General workloads (default)</td>
 </tr>
 <tr>
 <td><strong>aggressive</strong></td>
 <td>Strong</td>
-<td>30–40%</td>
 <td>Medium</td>
 <td>Batch processing, bulk summarization</td>
 </tr>
 <tr>
 <td><strong>agentic</strong></td>
 <td>Medium-strong</td>
-<td>20–30%</td>
 <td>Low–medium</td>
 <td>Agent loops, tool use, reasoning</td>
 </tr>
 </tbody>
 </table>
-<p>Set your profile:
+<p>Set your profile:</p>
 <div class="highlight"><pre><span></span><code><span class="nb">export</span><span class="w"> </span><span class="nv">TOKENPAK_PROFILE</span><span class="o">=</span>balanced<span class="w">  </span><span class="c1"># default</span>
 tokenpak<span class="w"> </span>proxy
-</code></pre></div></p>
-<p>Or per-request:
+</code></pre></div>
+<p>Or per-request:</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># This request uses aggressive compression</span>
 <span class="n">response</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">messages</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
     <span class="n">model</span><span class="o">=</span><span class="s2">&quot;claude-opus-4-6&quot;</span><span class="p">,</span>
     <span class="n">messages</span><span class="o">=</span><span class="p">[</span><span class="o">...</span><span class="p">],</span>
     <span class="n">extra_headers</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;X-TokenPak-Profile&quot;</span><span class="p">:</span> <span class="s2">&quot;aggressive&quot;</span><span class="p">}</span>
 <span class="p">)</span>
-</code></pre></div></p>
-<hr />
-<h2 id="roi-calculator">ROI Calculator<a class="headerlink" href="#roi-calculator" title="Permanent link">&para;</a></h2>
-<p>Estimate your monthly savings:</p>
-<div class="highlight"><pre><span></span><code>Your monthly LLM spend: $X
-TokenPak typical savings: 15–25%
-Your monthly savings: $X × 0.20 = $X/month × 12 = $Xk/year
 </code></pre></div>
-<p><strong>Example:</strong>
-- Spend: $5,000/month on LLM APIs
-- Savings @ 20%: $1,000/month
-- Annual savings: $12,000/year
-- Effort to deploy: ~30 minutes (swap one URL)</p>
+<hr />
+<h2 id="estimating-your-roi">Estimating Your ROI<a class="headerlink" href="#estimating-your-roi" title="Permanent link">&para;</a></h2>
+<p>To estimate your own return, measure first, then extrapolate:</p>
+<ol>
+<li>Run TokenPak over a representative slice of your traffic.</li>
+<li>Read your measured saving from <code>tokenpak savings</code> / <code>tokenpak report --json</code>.</li>
+<li>Apply that measured rate to your monthly LLM spend.</li>
+</ol>
+<p>Deploying the proxy is low-effort — typically a single URL swap in your client — so you can measure your real savings rate before committing to a wider rollout.</p>
 <hr />
 <h2 id="caveats-tradeoffs">Caveats &amp; Tradeoffs<a class="headerlink" href="#caveats-tradeoffs" title="Permanent link">&para;</a></h2>
 <h3 id="when-savings-are-highest">When Savings Are Highest<a class="headerlink" href="#when-savings-are-highest" title="Permanent link">&para;</a></h3>
@@ -3766,27 +3550,30 @@ Your monthly savings: $X × 0.20 = $X/month × 12 = $Xk/year
 <ul>
 <li>⚠️ One-off requests (no cache hits, no dedup)</li>
 <li>⚠️ Highly unique contexts (compression is less effective)</li>
+<li>⚠️ Provider-cached flows (the provider already discounts repeated context, so incremental gains are smaller)</li>
 <li>⚠️ Streaming responses (cache benefits hit less often)</li>
 </ul>
 <h3 id="quality-tradeoffs">Quality Tradeoffs<a class="headerlink" href="#quality-tradeoffs" title="Permanent link">&para;</a></h3>
-<p>TokenPak is <strong>semantically lossless</strong> in <code>safe</code> and <code>balanced</code> modes:
-- No information loss
-- No hallucinations introduced
-- All model capabilities preserved</p>
-<p>In <code>aggressive</code> mode, we trade ~5% accuracy (on some tasks) for 30–40% cost savings. Test it on your workload.</p>
+<p>TokenPak is <strong>semantically lossless</strong> in <code>safe</code> and <code>balanced</code> modes:</p>
+<ul>
+<li>No information loss</li>
+<li>No hallucinations introduced</li>
+<li>All model capabilities preserved</li>
+</ul>
+<p>In <code>aggressive</code> mode, TokenPak compresses more heavily to favor cost savings, which can affect accuracy on some tasks. Test it on your workload before relying on it.</p>
 <hr />
 <h2 id="next-steps">Next Steps<a class="headerlink" href="#next-steps" title="Permanent link">&para;</a></h2>
 <ol>
 <li><strong>Start simple:</strong> <code>tokenpak proxy</code> + swap one URL</li>
-<li><strong>Measure:</strong> Run <code>tokenpak stats</code> after a few requests</li>
+<li><strong>Measure:</strong> Run <code>tokenpak savings</code> / <code>tokenpak stats</code> after a few requests</li>
 <li><strong>Optimize:</strong> Test different profiles with your workload</li>
 <li><strong>Scale:</strong> Deploy to production when comfortable</li>
 </ol>
 <hr />
 <h2 id="questions">Questions?<a class="headerlink" href="#questions" title="Permanent link">&para;</a></h2>
 <ul>
-<li><strong>How do I verify the savings are real?</strong> → Check <code>tokenpak stats</code> or <code>tokenpak report --json</code> for token-by-token breakdown</li>
-<li><strong>Will this slow down my requests?</strong> → Proxy adds ~5ms latency (negligible); SDK mode adds no latency</li>
+<li><strong>How do I verify the savings are real?</strong> → Check <code>tokenpak savings</code>, <code>tokenpak stats</code>, or <code>tokenpak report --json</code> for a token-by-token breakdown of your own traffic</li>
+<li><strong>Will this slow down my requests?</strong> → The proxy adds a network hop; the added latency depends on your deployment path (run it on the same machine/network to minimize it). SDK mode adds no network hop.</li>
 <li><strong>Can I bypass TokenPak for specific requests?</strong> → Yes, set header <code>X-TokenPak-Bypass: true</code></li>
 <li><strong>What if the LLM needs the exact original tokens?</strong> → Use bypass header or switch to <code>safe</code> profile</li>
 <li><strong>Does this work with streaming?</strong> → Yes, with caveats (cache hits are less frequent in stream mode)</li>

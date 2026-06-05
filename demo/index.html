@@ -2137,62 +2137,6 @@
   
   
     <li class="md-nav__item">
-      <a href="../performance/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Performance Overview
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../PERFORMANCE/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Performance Benchmarks
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
       <a href="../COMPRESSION_TUNING/" class="md-nav__link">
         
   
@@ -2232,34 +2176,6 @@
     
   
     Latency Analysis
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../performance/memory-analysis/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Memory Analysis
   
 
     
@@ -3120,7 +3036,7 @@
 </code></pre></div>
 <p>Populates the database with:
 - <strong>500 requests</strong> over 24 hours
-- <strong>70% cache hit rate</strong> (realistic with repeated queries)
+- <strong>A realistic cache hit rate</strong> (modeling repeated queries)
 - <strong>Multiple models</strong> (Haiku, Sonnet, GPT-4)
 - <strong>Cost breakdown</strong>, latency, cache efficiency
 - <strong>Labeled as "Demo Data"</strong> for clarity</p>
@@ -3143,9 +3059,9 @@
 <h2 id="dashboard-integration">Dashboard Integration<a class="headerlink" href="#dashboard-integration" title="Permanent link">&para;</a></h2>
 <p>Once seeded, the TokenPak dashboard automatically displays:
 - <strong>Request timeline</strong> (scatter plot over 24h)
-- <strong>Cache hit rate</strong> (≈70%)
+- <strong>Cache hit rate</strong> (a high hit rate on repeated queries)
 - <strong>Cost breakdown</strong> by model
-- <strong>Latency comparison</strong> (cache hits ~10x faster)
+- <strong>Latency comparison</strong> (cache hits respond much faster)
 - <strong>Savings estimate</strong> (realistic for production scenarios)</p>
 <h2 id="data-isolation">Data Isolation<a class="headerlink" href="#data-isolation" title="Permanent link">&para;</a></h2>
 <ul>
@@ -3157,7 +3073,7 @@
 <h2 id="acceptance-criteria">Acceptance Criteria ✅<a class="headerlink" href="#acceptance-criteria" title="Permanent link">&para;</a></h2>
 <ul class="task-list">
 <li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> <code>python3 demo.py --seed</code> populates with 500 requests</li>
-<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> 70% cache hit rate (verified in unit tests)</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> Realistic cache hit rate (verified in unit tests)</li>
 <li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> Multiple models represented</li>
 <li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> Dashboard shows all key metrics</li>
 <li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> <code>python3 demo.py --clear</code> removes all demo data</li>

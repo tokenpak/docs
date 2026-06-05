@@ -16,7 +16,7 @@
         <link rel="prev" href="../COMPRESSION_TUNING/">
       
       
-        <link rel="next" href="../performance/memory-analysis/">
+        <link rel="next" href="../TESTING/">
       
       
         
@@ -80,7 +80,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#tokenpak-latency-analysis-benchmarks" class="md-skip">
+        <a href="#tokenpak-latency" class="md-skip">
           Skip to content
         </a>
       
@@ -1985,62 +1985,6 @@
   
   
     <li class="md-nav__item">
-      <a href="../performance/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Performance Overview
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../PERFORMANCE/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Performance Benchmarks
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
       <a href="../COMPRESSION_TUNING/" class="md-nav__link">
         
   
@@ -2143,210 +2087,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#full-analysis" class="md-nav__link">
+  <a href="#what-affects-the-latency-you-see" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Full Analysis
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Full Analysis">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#audit-history" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Audit History
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#detailed-benchmark-2026-03-27-2301" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Detailed Benchmark (2026-03-27 23:01)
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#breakdown-of-overhead" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Breakdown of Overhead
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#comparison-proxy-vs-direct-api" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Comparison: Proxy vs Direct API
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Comparison: Proxy vs Direct API">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#latency-cons" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Latency (cons)
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#throughput-pros" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Throughput (pros)
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#cost-massive-pro" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Cost (massive pro)
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#when-to-use-the-proxy" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        When to Use the Proxy
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="When to Use the Proxy">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#good-fits" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        ✅ Good fits
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#poor-fits" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        ❌ Poor fits
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#workarounds-for-latency-sensitive-apps" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        ⚠️ Workarounds for latency-sensitive apps
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#recommendations-for-improvement" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Recommendations for Improvement
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Recommendations for Improvement">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#short-term-quick-wins" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Short-term (quick wins)
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#medium-term-effort-24-hours" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Medium-term (effort: 2–4 hours)
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#long-term-effort-4-hours" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Long-term (effort: 4+ hours)
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#verdict" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Verdict
+        What affects the latency you see
       
     </span>
   </a>
@@ -2354,41 +2098,35 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#testing-scripts" class="md-nav__link">
+  <a href="#minimizing-avoidable-overhead" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Testing Scripts
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Testing Scripts">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#python-benchmark-future-work" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Python benchmark (future work)
+        Minimizing avoidable overhead
       
     </span>
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
-  <a href="#bash-benchmark-future-work" class="md-nav__link">
+      
+        <li class="md-nav__item">
+  <a href="#when-the-proxy-is-a-good-fit" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Bash benchmark (future work)
+        When the proxy is a good fit
       
     </span>
   </a>
   
 </li>
-        
-      </ul>
-    </nav>
+      
+        <li class="md-nav__item">
+  <a href="#benchmarks-coming-soon" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Benchmarks (coming soon)
+      
+    </span>
+  </a>
   
 </li>
       
@@ -2407,34 +2145,6 @@
   
 </nav>
       
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../performance/memory-analysis/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Memory Analysis
-  
-
-    
-  </span>
-  
-  
-
-      </a>
     </li>
   
 
@@ -3166,210 +2876,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#full-analysis" class="md-nav__link">
+  <a href="#what-affects-the-latency-you-see" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Full Analysis
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Full Analysis">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#audit-history" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Audit History
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#detailed-benchmark-2026-03-27-2301" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Detailed Benchmark (2026-03-27 23:01)
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#breakdown-of-overhead" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Breakdown of Overhead
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#comparison-proxy-vs-direct-api" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Comparison: Proxy vs Direct API
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Comparison: Proxy vs Direct API">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#latency-cons" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Latency (cons)
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#throughput-pros" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Throughput (pros)
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#cost-massive-pro" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Cost (massive pro)
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#when-to-use-the-proxy" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        When to Use the Proxy
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="When to Use the Proxy">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#good-fits" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        ✅ Good fits
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#poor-fits" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        ❌ Poor fits
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#workarounds-for-latency-sensitive-apps" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        ⚠️ Workarounds for latency-sensitive apps
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#recommendations-for-improvement" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Recommendations for Improvement
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Recommendations for Improvement">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#short-term-quick-wins" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Short-term (quick wins)
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#medium-term-effort-24-hours" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Medium-term (effort: 2–4 hours)
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#long-term-effort-4-hours" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Long-term (effort: 4+ hours)
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#verdict" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Verdict
+        What affects the latency you see
       
     </span>
   </a>
@@ -3377,41 +2887,35 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#testing-scripts" class="md-nav__link">
+  <a href="#minimizing-avoidable-overhead" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Testing Scripts
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Testing Scripts">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#python-benchmark-future-work" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Python benchmark (future work)
+        Minimizing avoidable overhead
       
     </span>
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
-  <a href="#bash-benchmark-future-work" class="md-nav__link">
+      
+        <li class="md-nav__item">
+  <a href="#when-the-proxy-is-a-good-fit" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Bash benchmark (future work)
+        When the proxy is a good fit
       
     </span>
   </a>
   
 </li>
-        
-      </ul>
-    </nav>
+      
+        <li class="md-nav__item">
+  <a href="#benchmarks-coming-soon" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Benchmarks (coming soon)
+      
+    </span>
+  </a>
   
 </li>
       
@@ -3446,222 +2950,85 @@
   
 
 
-<h1 id="tokenpak-latency-analysis-benchmarks">TokenPak — Latency Analysis &amp; Benchmarks<a class="headerlink" href="#tokenpak-latency-analysis-benchmarks" title="Permanent link">&para;</a></h1>
+<h1 id="tokenpak-latency">TokenPak — Latency<a class="headerlink" href="#tokenpak-latency" title="Permanent link">&para;</a></h1>
 <h2 id="tldr">TL;DR<a class="headerlink" href="#tldr" title="Permanent link">&para;</a></h2>
-<p><strong>Proxy overhead: ~280ms (50%)</strong></p>
+<p>TokenPak runs as a proxy in front of your model provider. Like any network
+proxy, it can add <strong>network round-trip overhead</strong> between your application and
+the upstream API — how much depends entirely on your deployment path (where the
+proxy runs relative to your app and the provider, and whether connections are
+reused).</p>
+<p>Two things are worth measuring <strong>separately</strong>, and we keep them separate here:</p>
 <ul>
-<li>Direct API: 559ms average</li>
-<li>Proxy: 840ms average</li>
-<li>Network + serialization + validation overhead</li>
+<li><strong>TokenPak's own processing</strong> — routing, token counting, cache lookup, and
+  context handling. This is distinct from the network it sits on.</li>
+<li><strong>End-to-end latency</strong> — the wall-clock difference an application sees, which
+  is dominated by network hops and connection behavior, not by TokenPak's
+  internal work.</li>
 </ul>
-<p><strong>Is this a problem?</strong> No, because:
-- Token savings (10–40%) dwarf latency cost
-- Cache hits eliminate overhead entirely
-- Batch/async workloads hide latency</p>
+<p>We do <strong>not</strong> publish specific latency numbers yet. Any figure we publish will
+be backed by a reproducible benchmark receipt (see
+<a href="#benchmarks-coming-soon">Benchmarks</a> below) rather than an ad-hoc measurement.</p>
 <hr />
-<h2 id="full-analysis">Full Analysis<a class="headerlink" href="#full-analysis" title="Permanent link">&para;</a></h2>
-<h3 id="audit-history">Audit History<a class="headerlink" href="#audit-history" title="Permanent link">&para;</a></h3>
-<p>Two audits on 2026-03-27 found contradictory results:</p>
-<table>
-<thead>
-<tr>
-<th>Audit Time</th>
-<th>Test Prompts</th>
-<th>Direct API</th>
-<th>Proxy</th>
-<th>Overhead</th>
-<th>Notes</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>21:25</strong></td>
-<td>"pong/ping", "math" (2 tests)</td>
-<td>1,222–1,281ms</td>
-<td>805–936ms</td>
-<td><strong>-27 to -34% (FASTER)</strong></td>
-<td>Likely hit connection pool, simpler prompts</td>
-</tr>
-<tr>
-<td><strong>23:01</strong></td>
-<td>"quantum entanglement", etc. (2 tests)</td>
-<td>529–588ms</td>
-<td>803–876ms</td>
-<td><strong>+274 to +288ms (50% slower)</strong></td>
-<td>Cold pool or longer prompts, realistic workload</td>
-</tr>
-</tbody>
-</table>
-<p><strong>Key Difference:</strong> The 21:25 audit may have benefited from connection pooling after the 19:29 audit 2 hours prior, or tested with shorter prompts that are faster overall.</p>
-<p>The 23:01 audit represents a more realistic, cold-start scenario.</p>
-<h3 id="detailed-benchmark-2026-03-27-2301">Detailed Benchmark (2026-03-27 23:01)<a class="headerlink" href="#detailed-benchmark-2026-03-27-2301" title="Permanent link">&para;</a></h3>
-<p><strong>Methodology:</strong>
-- 2 test cases with unique prompts (avoid cache)
-- Warm-up not performed (realistic)
-- Model: claude-opus-4-6 (default)
-- Measured via OpenAI SDK (<code>base_url</code> swap)</p>
-<p><strong>Results:</strong></p>
-<p><strong>Test 1: Quantum Entanglement</strong>
-<div class="highlight"><pre><span></span><code>Direct API:  588ms
-Proxy:       876ms
-Overhead:    +288ms (49%)
-</code></pre></div></p>
-<p><strong>Test 2: Photosynthesis</strong>
-<div class="highlight"><pre><span></span><code>Direct API:  529ms
-Proxy:       803ms
-Overhead:    +274ms (52%)
-</code></pre></div></p>
-<p><strong>Average:</strong>
-<div class="highlight"><pre><span></span><code>Direct API:  559ms
-Proxy:       840ms
-Overhead:    +281ms (50%)
-</code></pre></div></p>
-<p><strong>Statistical Notes:</strong>
-- Sample size: 2 (small; 10+ recommended for confidence)
-- Variability: ±30ms observed (likely network jitter)
-- Connection state: Assumed cold (realistic)</p>
-<h3 id="breakdown-of-overhead">Breakdown of Overhead<a class="headerlink" href="#breakdown-of-overhead" title="Permanent link">&para;</a></h3>
-<p>The ~280ms overhead comes from:</p>
-<table>
-<thead>
-<tr>
-<th>Component</th>
-<th>Estimated Latency</th>
-<th>Notes</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>Network latency</strong></td>
-<td>~50ms</td>
-<td>localhost HTTP round-trip</td>
-</tr>
-<tr>
-<td><strong>Request serialization</strong></td>
-<td>~20ms</td>
-<td>JSON encode + validation</td>
-</tr>
-<tr>
-<td><strong>Token counting</strong></td>
-<td>~10ms</td>
-<td>Building token counter</td>
-</tr>
-<tr>
-<td><strong>Cache lookup</strong></td>
-<td>~5ms</td>
-<td>Hash check</td>
-</tr>
-<tr>
-<td><strong>Response buffering</strong></td>
-<td>~50ms</td>
-<td>Streaming proxy latency</td>
-</tr>
-<tr>
-<td><strong>Upstream API latency</strong></td>
-<td>~145ms</td>
-<td>Waiting for API response (marginal increase)</td>
-</tr>
-<tr>
-<td><strong>Total</strong></td>
-<td><strong>~280ms</strong></td>
-<td>Cumulative overhead</td>
-</tr>
-</tbody>
-</table>
-<p><strong>Note:</strong> Most of this (~145–50 = 95ms) comes from the network round-trip and buffering. The proxy's own processing (&lt;40ms) is negligible.</p>
-<hr />
-<h2 id="comparison-proxy-vs-direct-api">Comparison: Proxy vs Direct API<a class="headerlink" href="#comparison-proxy-vs-direct-api" title="Permanent link">&para;</a></h2>
-<h3 id="latency-cons">Latency (cons)<a class="headerlink" href="#latency-cons" title="Permanent link">&para;</a></h3>
+<h2 id="what-affects-the-latency-you-see">What affects the latency you see<a class="headerlink" href="#what-affects-the-latency-you-see" title="Permanent link">&para;</a></h2>
 <ul>
-<li>❌ <strong>+280ms overhead</strong> when measured end-to-end</li>
-<li>❌ Not suitable for real-time systems (sub-50ms response requirements)</li>
-<li>✅ <strong>Negligible for batch, async, and chat workloads</strong> (human interaction latency &gt;&gt; 280ms)</li>
+<li><strong>Deployment path.</strong> Running the proxy on the same machine or local network as
+  your application avoids most avoidable network overhead. A proxy reached over
+  the public internet adds more round-trip time than one on <code>localhost</code>.</li>
+<li><strong>Connection reuse.</strong> Warm, pooled connections behave very differently from
+  cold ones. Throughput under sustained load benefits from connection pooling.</li>
+<li><strong>Cache hits.</strong> On a cache hit, TokenPak avoids re-sending and recomputing
+  context, which removes work from the request path.</li>
+<li><strong>Workload shape.</strong> Batch, async, and chat workloads tolerate added latency far
+  more readily than hard real-time paths.</li>
 </ul>
-<h3 id="throughput-pros">Throughput (pros)<a class="headerlink" href="#throughput-pros" title="Permanent link">&para;</a></h3>
+<h2 id="minimizing-avoidable-overhead">Minimizing avoidable overhead<a class="headerlink" href="#minimizing-avoidable-overhead" title="Permanent link">&para;</a></h2>
 <ul>
-<li>✅ <strong>Connection pooling</strong> = better throughput under load</li>
-<li>✅ <strong>Caching</strong> = zero latency on cache hits</li>
-<li>✅ <strong>Compression</strong> = fewer tokens = cheaper = faster per-token ROI</li>
+<li><strong>Run it close to your app.</strong> Same-machine or same-network deployment keeps the
+  added network round-trip small.</li>
+<li><strong>Reuse connections.</strong> Keep the proxy warm under load rather than paying
+  cold-start costs per request.</li>
+<li><strong>Lean on caching.</strong> Repeated-context workloads benefit most, since cache hits
+  take work off the request path.</li>
 </ul>
-<h3 id="cost-massive-pro">Cost (massive pro)<a class="headerlink" href="#cost-massive-pro" title="Permanent link">&para;</a></h3>
+<h2 id="when-the-proxy-is-a-good-fit">When the proxy is a good fit<a class="headerlink" href="#when-the-proxy-is-a-good-fit" title="Permanent link">&para;</a></h2>
+<p><strong>Good fits</strong></p>
 <ul>
-<li>✅ <strong>10–40% token savings</strong> = $160/day per agent on production workloads</li>
-<li>✅ <strong>Cache hit rates: 97–99%</strong> = effectively free on repeated requests</li>
-<li>✅ <strong>ROI</strong>: Break-even on latency in &lt;1 hour of typical usage</li>
+<li>Batch processing and overnight jobs</li>
+<li>Chat and agent workflows, where human/interaction latency dominates</li>
+<li>Development and testing</li>
+<li>Production workloads where token-cost savings outweigh added latency</li>
+</ul>
+<p><strong>Be deliberate for</strong></p>
+<ul>
+<li>Hard real-time paths with strict, latency-sensitive SLAs</li>
+<li>Latency-sensitive UIs — in these cases, run the proxy on the same
+  machine/network, or use a deployment path that avoids extra network hops</li>
 </ul>
 <hr />
-<h2 id="when-to-use-the-proxy">When to Use the Proxy<a class="headerlink" href="#when-to-use-the-proxy" title="Permanent link">&para;</a></h2>
-<h3 id="good-fits">✅ Good fits<a class="headerlink" href="#good-fits" title="Permanent link">&para;</a></h3>
+<h2 id="benchmarks-coming-soon">Benchmarks (coming soon)<a class="headerlink" href="#benchmarks-coming-soon" title="Permanent link">&para;</a></h2>
+<p>TokenPak is adopting a frozen-fixture benchmark suite so that any published
+latency, throughput, or cost figure is reproducible from a recorded run rather
+than a one-off measurement. Until that suite produces a validated run:</p>
 <ul>
-<li>Batch processing (overnight jobs)</li>
-<li>Chat applications (human response latency &gt;&gt; 280ms)</li>
-<li>Agent workflows (sub-second latency not required)</li>
-<li>Development/testing (speed not critical)</li>
-<li>Production workloads (token cost savings &gt;&gt; latency cost)</li>
+<li>We deliberately <strong>do not</strong> quote a specific latency overhead.</li>
+<li>The best way to understand TokenPak's impact on <strong>your</strong> workload is to measure
+  it in your own environment and deployment path.</li>
 </ul>
-<h3 id="poor-fits">❌ Poor fits<a class="headerlink" href="#poor-fits" title="Permanent link">&para;</a></h3>
-<ul>
-<li>Real-time APIs (&lt;100ms SLA)</li>
-<li>Sub-second response requirements</li>
-<li>Latency-sensitive UIs (consider running proxy on same machine)</li>
-</ul>
-<h3 id="workarounds-for-latency-sensitive-apps">⚠️ Workarounds for latency-sensitive apps<a class="headerlink" href="#workarounds-for-latency-sensitive-apps" title="Permanent link">&para;</a></h3>
-<ol>
-<li><strong>Self-host on same machine</strong> — Reduces latency to &lt;10ms</li>
-<li><strong>Use SDK mode</strong> (no proxy) — Zero overhead, pure compression</li>
-<li><strong>Accept trade-off</strong> — 280ms overhead is worth 10–40% cost savings</li>
-</ol>
-<hr />
-<h2 id="recommendations-for-improvement">Recommendations for Improvement<a class="headerlink" href="#recommendations-for-improvement" title="Permanent link">&para;</a></h2>
-<h3 id="short-term-quick-wins">Short-term (quick wins)<a class="headerlink" href="#short-term-quick-wins" title="Permanent link">&para;</a></h3>
-<ul class="task-list">
-<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Add connection pooling detection to diagnostics</li>
-<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Cache common prompts (reduces latency to &lt;5ms on cache hits)</li>
-<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Document self-hosting latency benefits</li>
-</ul>
-<h3 id="medium-term-effort-24-hours">Medium-term (effort: 2–4 hours)<a class="headerlink" href="#medium-term-effort-24-hours" title="Permanent link">&para;</a></h3>
-<ul class="task-list">
-<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Profile proxy to find slow paths</li>
-<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Optimize token counting (currently ~10ms)</li>
-<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Benchmark with different prompt lengths</li>
-</ul>
-<h3 id="long-term-effort-4-hours">Long-term (effort: 4+ hours)<a class="headerlink" href="#long-term-effort-4-hours" title="Permanent link">&para;</a></h3>
-<ul class="task-list">
-<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Migrate to async I/O (reduce buffering latency)</li>
-<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Implement predictive caching</li>
-<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Add custom routing to optimize for latency OR cost (user choice)</li>
-</ul>
-<hr />
-<h2 id="verdict">Verdict<a class="headerlink" href="#verdict" title="Permanent link">&para;</a></h2>
-<p><strong>TokenPak's latency overhead is REAL but ACCEPTABLE.</strong></p>
-<ul>
-<li>Expected for a network proxy</li>
-<li>Fully offset by token savings in production</li>
-<li>Negligible for async/batch/chat workloads</li>
-<li>Not suitable for sub-100ms real-time requirements</li>
-</ul>
-<p><strong>The prior claim that proxy is "27-34% faster" was likely a measurement artifact</strong> from the 21:25 audit (possibly connection pooling from prior warm-up, or simpler test prompts). <strong>The 23:01 audit's ~50% overhead is more representative</strong> of typical usage.</p>
-<p>For most users, <strong>token savings &gt;&gt; latency cost.</strong> Ship it.</p>
-<hr />
-<h2 id="testing-scripts">Testing Scripts<a class="headerlink" href="#testing-scripts" title="Permanent link">&para;</a></h2>
-<p>To validate these findings:</p>
-<h3 id="python-benchmark-future-work">Python benchmark (future work)<a class="headerlink" href="#python-benchmark-future-work" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code>python3<span class="w"> </span>~/tokenpak/scripts/latency_benchmark.py
-</code></pre></div>
-<h3 id="bash-benchmark-future-work">Bash benchmark (future work)<a class="headerlink" href="#bash-benchmark-future-work" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code>bash<span class="w"> </span>~/tokenpak/scripts/latency_benchmark.sh
-</code></pre></div>
-<p>Both scripts are designed to measure real-world latency with 10+ unique prompts and provide confidence intervals.</p>
+<p>When receipt-backed figures are available, they will be published here with the
+run identity needed to reproduce them.</p>
 <hr />
 <h2 id="faq">FAQ<a class="headerlink" href="#faq" title="Permanent link">&para;</a></h2>
-<p><strong>Q: Is the proxy slower than direct API?</strong>
-A: Yes, ~280ms (50%) for a single request. No, if you count cache hits (97-99%), which have ~0ms overhead.</p>
-<p><strong>Q: Should I use the proxy?</strong>
-A: If token cost matters (true for 99% of cases): YES. If sub-100ms latency is critical: maybe run it on the same machine.</p>
-<p><strong>Q: Can I speed it up?</strong>
-A: Yes: (1) self-host locally, (2) enable caching, (3) batch requests. Each gives 10-100x speedup in realistic workloads.</p>
-<p><strong>Q: Why was the 21:25 audit faster?</strong>
-A: Likely measured under warmed connection pool conditions with simpler prompts. The 23:01 audit is more representative.</p>
+<p><strong>Q: Does the proxy add latency vs. calling the API directly?</strong>
+A: It can, because it adds a network hop — how much depends on your deployment
+path. On cache hits, the work TokenPak would otherwise do is taken off the
+request path. We don't quote a specific number until it's benchmark-backed.</p>
+<p><strong>Q: Should I use the proxy if latency matters?</strong>
+A: For batch, async, agent, and chat workloads, added latency is typically not
+the deciding factor. For hard real-time paths, run the proxy on the same
+machine/network, or choose a deployment path that avoids extra network hops.</p>
+<p><strong>Q: How do I know what it costs me?</strong>
+A: Measure it in your own environment and deployment path. Receipt-backed
+figures from the benchmark suite will follow.</p>
 
 
 

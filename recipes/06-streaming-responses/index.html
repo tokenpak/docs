@@ -1980,62 +1980,6 @@
   
   
     <li class="md-nav__item">
-      <a href="../../performance/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Performance Overview
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../PERFORMANCE/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Performance Benchmarks
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
       <a href="../../COMPRESSION_TUNING/" class="md-nav__link">
         
   
@@ -2075,34 +2019,6 @@
     
   
     Latency Analysis
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../performance/memory-analysis/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Memory Analysis
   
 
     
@@ -3139,19 +3055,19 @@
 <span class="nx">streamResponse</span><span class="p">();</span>
 <span class="c1">// Expected output: tokens streaming in real-time</span>
 </code></pre></div></p>
-<p><strong>Step 6:</strong> Measure latency improvement:
+<p><strong>Step 6:</strong> Observe the latency difference:
 <div class="highlight"><pre><span></span><code><span class="c1"># Non-streaming (wait for full response)</span>
 <span class="nb">time</span><span class="w"> </span>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>http://localhost:8000/v1/messages<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;{&quot;model&quot;: &quot;gpt-4&quot;, &quot;messages&quot;: [{&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: &quot;Write 500 words&quot;}]}&#39;</span><span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>-s<span class="w"> </span>&gt;<span class="w"> </span>/dev/null
-<span class="c1"># Result: real 2.45s (full response time)</span>
+<span class="c1"># Result: the client blocks until the full response is generated</span>
 
 <span class="c1"># Streaming (first token appears sooner)</span>
 <span class="nb">time</span><span class="w"> </span>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>http://localhost:8000/v1/messages<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;{&quot;model&quot;: &quot;gpt-4-streaming&quot;, &quot;stream&quot;: true, &quot;messages&quot;: [{&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: &quot;Write 500 words&quot;}]}&#39;</span><span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--no-buffer<span class="w"> </span>-s<span class="w"> </span><span class="p">|</span><span class="w"> </span>head<span class="w"> </span>-1
-<span class="c1"># Result: real 0.28s (time to first token)</span>
-<span class="c1"># User sees response starting in 280ms instead of waiting 2.45s!</span>
+<span class="c1"># Result: the first token arrives shortly after the request is sent</span>
+<span class="c1"># Users see tokens stream in immediately instead of waiting for the full response</span>
 </code></pre></div></p>
 <h2 id="what-just-happened">What Just Happened<a class="headerlink" href="#what-just-happened" title="Permanent link">&para;</a></h2>
 <p>TokenPak streamed the response back to your client in real-time:</p>
@@ -3162,7 +3078,7 @@
 <li><strong>Client receives</strong> deltas (token fragments) and can display them as they arrive</li>
 <li><strong>Full response</strong> completes, connection closes cleanly</li>
 </ol>
-<p>Your UI can display tokens as they arrive, making the experience feel 5-10x faster than waiting for a full response.</p>
+<p>Your UI can display tokens as they arrive, making the experience feel noticeably faster than waiting for a full response.</p>
 <h2 id="common-pitfalls">Common Pitfalls<a class="headerlink" href="#common-pitfalls" title="Permanent link">&para;</a></h2>
 <p><strong>Pitfall 1: Buffering too much</strong>
 - ❌ Wrong: <code>buffer_tokens: 1000</code> (waits for 1000 tokens before sending)
