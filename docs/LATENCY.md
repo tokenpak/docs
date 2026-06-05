@@ -1,191 +1,92 @@
-# TokenPak — Latency Analysis & Benchmarks
+# TokenPak — Latency
 
 ## TL;DR
 
-**Proxy overhead: ~280ms (50%)**
+TokenPak runs as a proxy in front of your model provider. Like any network
+proxy, it can add **network round-trip overhead** between your application and
+the upstream API — how much depends entirely on your deployment path (where the
+proxy runs relative to your app and the provider, and whether connections are
+reused).
 
-- Direct API: 559ms average
-- Proxy: 840ms average
-- Network + serialization + validation overhead
+Two things are worth measuring **separately**, and we keep them separate here:
 
-**Is this a problem?** No, because:
-- Token savings (10–40%) dwarf latency cost
-- Cache hits eliminate overhead entirely
-- Batch/async workloads hide latency
+- **TokenPak's own processing** — routing, token counting, cache lookup, and
+  context handling. This is distinct from the network it sits on.
+- **End-to-end latency** — the wall-clock difference an application sees, which
+  is dominated by network hops and connection behavior, not by TokenPak's
+  internal work.
 
----
-
-## Full Analysis
-
-### Audit History
-
-Two audits on 2026-03-27 found contradictory results:
-
-| Audit Time | Test Prompts | Direct API | Proxy | Overhead | Notes |
-|-----------|-----------|-----------|-------|----------|-------|
-| **21:25** | "pong/ping", "math" (2 tests) | 1,222–1,281ms | 805–936ms | **-27 to -34% (FASTER)** | Likely hit connection pool, simpler prompts |
-| **23:01** | "quantum entanglement", etc. (2 tests) | 529–588ms | 803–876ms | **+274 to +288ms (50% slower)** | Cold pool or longer prompts, realistic workload |
-
-**Key Difference:** The 21:25 audit may have benefited from connection pooling after the 19:29 audit 2 hours prior, or tested with shorter prompts that are faster overall.
-
-The 23:01 audit represents a more realistic, cold-start scenario.
-
-### Detailed Benchmark (2026-03-27 23:01)
-
-**Methodology:**
-- 2 test cases with unique prompts (avoid cache)
-- Warm-up not performed (realistic)
-- Model: claude-opus-4-6 (default)
-- Measured via OpenAI SDK (`base_url` swap)
-
-**Results:**
-
-**Test 1: Quantum Entanglement**
-```
-Direct API:  588ms
-Proxy:       876ms
-Overhead:    +288ms (49%)
-```
-
-**Test 2: Photosynthesis**
-```
-Direct API:  529ms
-Proxy:       803ms
-Overhead:    +274ms (52%)
-```
-
-**Average:**
-```
-Direct API:  559ms
-Proxy:       840ms
-Overhead:    +281ms (50%)
-```
-
-**Statistical Notes:**
-- Sample size: 2 (small; 10+ recommended for confidence)
-- Variability: ±30ms observed (likely network jitter)
-- Connection state: Assumed cold (realistic)
-
-### Breakdown of Overhead
-
-The ~280ms overhead comes from:
-
-| Component | Estimated Latency | Notes |
-|-----------|-------------------|-------|
-| **Network latency** | ~50ms | localhost HTTP round-trip |
-| **Request serialization** | ~20ms | JSON encode + validation |
-| **Token counting** | ~10ms | Building token counter |
-| **Cache lookup** | ~5ms | Hash check |
-| **Response buffering** | ~50ms | Streaming proxy latency |
-| **Upstream API latency** | ~145ms | Waiting for API response (marginal increase) |
-| **Total** | **~280ms** | Cumulative overhead |
-
-**Note:** Most of this (~145–50 = 95ms) comes from the network round-trip and buffering. The proxy's own processing (<40ms) is negligible.
+We do **not** publish specific latency numbers yet. Any figure we publish will
+be backed by a reproducible benchmark receipt (see
+[Benchmarks](#benchmarks-coming-soon) below) rather than an ad-hoc measurement.
 
 ---
 
-## Comparison: Proxy vs Direct API
+## What affects the latency you see
 
-### Latency (cons)
-- ❌ **+280ms overhead** when measured end-to-end
-- ❌ Not suitable for real-time systems (sub-50ms response requirements)
-- ✅ **Negligible for batch, async, and chat workloads** (human interaction latency >> 280ms)
+- **Deployment path.** Running the proxy on the same machine or local network as
+  your application avoids most avoidable network overhead. A proxy reached over
+  the public internet adds more round-trip time than one on `localhost`.
+- **Connection reuse.** Warm, pooled connections behave very differently from
+  cold ones. Throughput under sustained load benefits from connection pooling.
+- **Cache hits.** On a cache hit, TokenPak avoids re-sending and recomputing
+  context, which removes work from the request path.
+- **Workload shape.** Batch, async, and chat workloads tolerate added latency far
+  more readily than hard real-time paths.
 
-### Throughput (pros)
-- ✅ **Connection pooling** = better throughput under load
-- ✅ **Caching** = zero latency on cache hits
-- ✅ **Compression** = fewer tokens = cheaper = faster per-token ROI
+## Minimizing avoidable overhead
 
-### Cost (massive pro)
-- ✅ **10–40% token savings** = $160/day per agent on production workloads
-- ✅ **Cache hit rates: 97–99%** = effectively free on repeated requests
-- ✅ **ROI**: Break-even on latency in <1 hour of typical usage
+- **Run it close to your app.** Same-machine or same-network deployment keeps the
+  added network round-trip small.
+- **Reuse connections.** Keep the proxy warm under load rather than paying
+  cold-start costs per request.
+- **Lean on caching.** Repeated-context workloads benefit most, since cache hits
+  take work off the request path.
 
----
+## When the proxy is a good fit
 
-## When to Use the Proxy
+**Good fits**
 
-### ✅ Good fits
-- Batch processing (overnight jobs)
-- Chat applications (human response latency >> 280ms)
-- Agent workflows (sub-second latency not required)
-- Development/testing (speed not critical)
-- Production workloads (token cost savings >> latency cost)
+- Batch processing and overnight jobs
+- Chat and agent workflows, where human/interaction latency dominates
+- Development and testing
+- Production workloads where token-cost savings outweigh added latency
 
-### ❌ Poor fits
-- Real-time APIs (<100ms SLA)
-- Sub-second response requirements
-- Latency-sensitive UIs (consider running proxy on same machine)
+**Be deliberate for**
 
-### ⚠️ Workarounds for latency-sensitive apps
-1. **Self-host on same machine** — Reduces latency to <10ms
-2. **Use SDK mode** (no proxy) — Zero overhead, pure compression
-3. **Accept trade-off** — 280ms overhead is worth 10–40% cost savings
+- Hard real-time paths with strict, latency-sensitive SLAs
+- Latency-sensitive UIs — in these cases, run the proxy on the same
+  machine/network, or use a deployment path that avoids extra network hops
 
 ---
 
-## Recommendations for Improvement
+## Benchmarks (coming soon)
 
-### Short-term (quick wins)
-- [ ] Add connection pooling detection to diagnostics
-- [ ] Cache common prompts (reduces latency to <5ms on cache hits)
-- [ ] Document self-hosting latency benefits
+TokenPak is adopting a frozen-fixture benchmark suite so that any published
+latency, throughput, or cost figure is reproducible from a recorded run rather
+than a one-off measurement. Until that suite produces a validated run:
 
-### Medium-term (effort: 2–4 hours)
-- [ ] Profile proxy to find slow paths
-- [ ] Optimize token counting (currently ~10ms)
-- [ ] Benchmark with different prompt lengths
+- We deliberately **do not** quote a specific latency overhead.
+- The best way to understand TokenPak's impact on **your** workload is to measure
+  it in your own environment and deployment path.
 
-### Long-term (effort: 4+ hours)
-- [ ] Migrate to async I/O (reduce buffering latency)
-- [ ] Implement predictive caching
-- [ ] Add custom routing to optimize for latency OR cost (user choice)
-
----
-
-## Verdict
-
-**TokenPak's latency overhead is REAL but ACCEPTABLE.**
-
-- Expected for a network proxy
-- Fully offset by token savings in production
-- Negligible for async/batch/chat workloads
-- Not suitable for sub-100ms real-time requirements
-
-**The prior claim that proxy is "27-34% faster" was likely a measurement artifact** from the 21:25 audit (possibly connection pooling from prior warm-up, or simpler test prompts). **The 23:01 audit's ~50% overhead is more representative** of typical usage.
-
-For most users, **token savings >> latency cost.** Ship it.
-
----
-
-## Testing Scripts
-
-To validate these findings:
-
-### Python benchmark (future work)
-```bash
-python3 ~/tokenpak/scripts/latency_benchmark.py
-```
-
-### Bash benchmark (future work)
-```bash
-bash ~/tokenpak/scripts/latency_benchmark.sh
-```
-
-Both scripts are designed to measure real-world latency with 10+ unique prompts and provide confidence intervals.
+When receipt-backed figures are available, they will be published here with the
+run identity needed to reproduce them.
 
 ---
 
 ## FAQ
 
-**Q: Is the proxy slower than direct API?**
-A: Yes, ~280ms (50%) for a single request. No, if you count cache hits (97-99%), which have ~0ms overhead.
+**Q: Does the proxy add latency vs. calling the API directly?**
+A: It can, because it adds a network hop — how much depends on your deployment
+path. On cache hits, the work TokenPak would otherwise do is taken off the
+request path. We don't quote a specific number until it's benchmark-backed.
 
-**Q: Should I use the proxy?**
-A: If token cost matters (true for 99% of cases): YES. If sub-100ms latency is critical: maybe run it on the same machine.
+**Q: Should I use the proxy if latency matters?**
+A: For batch, async, agent, and chat workloads, added latency is typically not
+the deciding factor. For hard real-time paths, run the proxy on the same
+machine/network, or choose a deployment path that avoids extra network hops.
 
-**Q: Can I speed it up?**
-A: Yes: (1) self-host locally, (2) enable caching, (3) batch requests. Each gives 10-100x speedup in realistic workloads.
-
-**Q: Why was the 21:25 audit faster?**
-A: Likely measured under warmed connection pool conditions with simpler prompts. The 23:01 audit is more representative.
+**Q: How do I know what it costs me?**
+A: Measure it in your own environment and deployment path. Receipt-backed
+figures from the benchmark suite will follow.
