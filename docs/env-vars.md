@@ -21,7 +21,7 @@ Env vars always take precedence over config file values.
 | `TOKENPAK_COMPACT` | `true` | bool | Master on/off switch for context compaction |
 | `TOKENPAK_MODE` | `hybrid` | str | Compilation mode: `strict`, `hybrid`, `aggressive` |
 | `TOKENPAK_COMPACT_MAX_CHARS` | `120` | int | Max chars per compacted text segment |
-| `TOKENPAK_COMPACT_THRESHOLD_TOKENS` | `4500` | int | Skip compaction below this token count |
+| `TOKENPAK_COMPACT_THRESHOLD_TOKENS` | `1500` | int | Skip compaction below this token count (default lowered from 4500 for out-of-the-box savings; `tokenpak serve --safe` restores 4500) |
 | `TOKENPAK_COMPACT_MAX_TOKENS` | `2000` | int | Hard cap on tokens injected from compaction |
 | `TOKENPAK_COMPACT_CACHE_SIZE` | `2000` | int | LRU cache size for compaction results |
 | `MAX_COMPRESSION_TIME_MS` | `5000` | int | Max time budget (ms) for entire compression pipeline; 0 = no cap |
@@ -133,5 +133,4 @@ Env vars always take precedence over config file values.
 
 ---
 
-*Generated from `proxy.py` and `packages/core/proxy.py` on 2026-03-28.*
-*To add a variable, use `_cfg("config.key", default, "TOKENPAK_VAR_NAME", type)` in proxy.py.*
+*This reference tracks the `_cfg(...)` definitions in the proxy config layer. To add a variable, use `_cfg("config.key", default, "TOKENPAK_VAR_NAME", type)`.*

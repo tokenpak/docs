@@ -1,7 +1,5 @@
 # TokenPak vs. Alternatives: Feature Comparison
 
-**Last verified:** March 25, 2026
-
 This comparison covers the most popular LLM proxy and observability solutions. We've researched each alternative's current capabilities directly from their documentation and GitHub repositories. Our goal is to help you understand when TokenPak is the right choice—and when alternatives might better suit your needs.
 
 ---
@@ -253,7 +251,7 @@ response = client.messages.create(
 from litellm import completion
 
 response = completion(
-    model="anthropic/claude-3-5-sonnet",
+    model="anthropic/claude-sonnet-4-5",
     messages=[{"role": "user", "content": "Hello!"}],
     base_url="http://localhost:4000"  # your proxy
 )
@@ -269,7 +267,7 @@ client = openai.OpenAI(
 )
 
 response = client.chat.completions.create(
-    model="claude-3-5-sonnet",
+    model="claude-sonnet-4-5",
     messages=[{"role": "user", "content": "Hello!"}]
 )
 ```
@@ -284,7 +282,7 @@ client = openai.OpenAI(
 )
 
 response = client.chat.completions.create(
-    model="anthropic/claude-3-5-sonnet",
+    model="anthropic/claude-sonnet-4-5",
     messages=[{"role": "user", "content": "Hello!"}]
 )
 ```

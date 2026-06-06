@@ -56,22 +56,6 @@ Once seeded, the TokenPak dashboard automatically displays:
 - Cleanup is **safe** — only removes records marked as demo
 - **Idempotent** — seed multiple times without duplicates
 
-## Acceptance Criteria ✅
+## Data Isolation Guarantees
 
-- [x] `python3 demo.py --seed` populates with 500 requests
-- [x] Realistic cache hit rate (verified in unit tests)
-- [x] Multiple models represented
-- [x] Dashboard shows all key metrics
-- [x] `python3 demo.py --clear` removes all demo data
-- [x] No cross-contamination with real data
-- [x] Idempotent (safe to run multiple times)
-- [x] ≥9 passing unit tests
-
-## Testing
-
-Run unit tests:
-```bash
-python3 -m pytest test_demo.py -v
-```
-
-All 9 tests pass ✅
+Demo data is fully isolated from real traffic and safe to seed or clear at any time — see the **Data Isolation** notes above.
