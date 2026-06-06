@@ -3137,9 +3137,9 @@ Env vars always take precedence over config file values.</p>
 </tr>
 <tr>
 <td><code>TOKENPAK_COMPACT_THRESHOLD_TOKENS</code></td>
-<td><code>4500</code></td>
+<td><code>1500</code></td>
 <td>int</td>
-<td>Skip compaction below this token count</td>
+<td>Skip compaction below this token count (default lowered from 4500 for out-of-the-box savings; <code>tokenpak serve --safe</code> restores 4500)</td>
 </tr>
 <tr>
 <td><code>TOKENPAK_COMPACT_MAX_TOKENS</code></td>
@@ -3622,8 +3622,7 @@ Env vars always take precedence over config file values.</p>
 </tbody>
 </table>
 <hr />
-<p><em>Generated from <code>proxy.py</code> and <code>packages/core/proxy.py</code> on 2026-03-28.</em>
-<em>To add a variable, use <code>_cfg("config.key", default, "TOKENPAK_VAR_NAME", type)</code> in proxy.py.</em></p>
+<p><em>This reference tracks the <code>_cfg(...)</code> definitions in the proxy config layer. To add a variable, use <code>_cfg("config.key", default, "TOKENPAK_VAR_NAME", type)</code>.</em></p>
 
 
 
