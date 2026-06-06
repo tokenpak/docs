@@ -48,10 +48,10 @@ tokenpak setup
 |---------|-----------------|
 | [Installation](installation.md)            | `pip install`, system requirements, first run |
 | [Quick Start](QUICKSTART.md)               | Setup wizard, client integration, first savings in 5 minutes |
-| [Configuration](configuration.md)          | All configuration options |
+| [Configuration](configuration.md)          | How configuration works (env vars + YAML, precedence) |
 | [Environment Variables](env-vars.md)       | Complete `TOKENPAK_*` reference |
 | [CLI Reference](cli-reference.md)          | Every verb, flag, and exit code (auto-generated) |
-| [Architecture](architecture.md)            | Three planes, 18 subsystems, proxy-centered design |
+| [Architecture](architecture.md)            | Three planes, modular subsystems, proxy-centered design |
 | [Savings](SAVINGS.md)                      | How TokenPak attributes savings causally |
 | [Security](SECURITY.md)                    | Auth tokens, TLS, audit logging, data privacy |
 | [Troubleshooting](troubleshooting.md)      | Common symptoms and fixes that work |

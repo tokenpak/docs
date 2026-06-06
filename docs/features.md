@@ -12,7 +12,7 @@ All features are **FREE and open source** under the Apache 2.0 license.
 
 | Category | Feature | Status | Notes |
 |----------|---------|--------|-------|
-| **Core Routing** | Multiple provider adapters | ✅ | 5 adapters built-in |
+| **Core Routing** | Multiple provider adapters | ✅ | Built-in adapters: Anthropic, OpenAI, Google, xAI/Grok, Ollama |
 | | Fallback chains | ✅ | Auto-failover to backup providers |
 | | Circuit breaker | ✅ | Recovers from rate limits |
 | **Token Management** | Token counting (all providers) | ✅ | Unified across Anthropic, OpenAI, Google |
