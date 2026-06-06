@@ -811,21 +811,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#acceptance-criteria" class="md-nav__link">
+  <a href="#data-isolation-guarantees" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Acceptance Criteria ✅
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#testing" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Testing
+        Data Isolation Guarantees
       
     </span>
   </a>
@@ -2959,21 +2948,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#acceptance-criteria" class="md-nav__link">
+  <a href="#data-isolation-guarantees" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Acceptance Criteria ✅
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#testing" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Testing
+        Data Isolation Guarantees
       
     </span>
   </a>
@@ -3042,22 +3020,8 @@
 <li>Cleanup is <strong>safe</strong> — only removes records marked as demo</li>
 <li><strong>Idempotent</strong> — seed multiple times without duplicates</li>
 </ul>
-<h2 id="acceptance-criteria">Acceptance Criteria ✅<a class="headerlink" href="#acceptance-criteria" title="Permanent link">&para;</a></h2>
-<ul class="task-list">
-<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> <code>python3 demo.py --seed</code> populates with 500 requests</li>
-<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> Realistic cache hit rate (verified in unit tests)</li>
-<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> Multiple models represented</li>
-<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> Dashboard shows all key metrics</li>
-<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> <code>python3 demo.py --clear</code> removes all demo data</li>
-<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> No cross-contamination with real data</li>
-<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> Idempotent (safe to run multiple times)</li>
-<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> ≥9 passing unit tests</li>
-</ul>
-<h2 id="testing">Testing<a class="headerlink" href="#testing" title="Permanent link">&para;</a></h2>
-<p>Run unit tests:
-<div class="highlight"><pre><span></span><code>python3<span class="w"> </span>-m<span class="w"> </span>pytest<span class="w"> </span>test_demo.py<span class="w"> </span>-v
-</code></pre></div></p>
-<p>All 9 tests pass ✅</p>
+<h2 id="data-isolation-guarantees">Data Isolation Guarantees<a class="headerlink" href="#data-isolation-guarantees" title="Permanent link">&para;</a></h2>
+<p>Demo data is fully isolated from real traffic and safe to seed or clear at any time — see the <strong>Data Isolation</strong> notes above.</p>
 
 
 
