@@ -103,7 +103,7 @@ The local web dashboard at **`http://127.0.0.1:8766/dashboard`** visualizes cost
 
 TokenPak's savings depend on your integration path — we don't collapse this into a single number because that would be dishonest.
 
-- **Direct API calls, CLI tools, SDK integrations, and any uncached workload:** the compression pipeline operates on the full token pool; observed savings routinely reach **90%+** on realistic agent-style prompts. The CI-pinned floor (`make benchmark-headline` in the OSS repo) asserts ≥30% on a fixture; that's the minimum promise, not the ceiling.
+- **Direct API calls, CLI tools, SDK integrations, and any uncached workload:** the compression pipeline operates on the full token pool; on favorable uncached workloads savings can reach **up to** 90%+. Reproduce the headline benchmark with `make benchmark-headline`; measure your own with `tokenpak savings`.
 - **Provider-cached flows (Claude Code and similar):** the provider's own prompt cache already absorbs most of the token pool. TokenPak only optimizes the user-controlled portion, so incremental savings can be a few percent of total spend. This isn't TokenPak failing — it's an honest division of labor with the provider.
 
 If you're evaluating TokenPak, start with a direct-API workload to see the pipeline's actual effectiveness, then layer in your cached flows to see the marginal contribution on top.

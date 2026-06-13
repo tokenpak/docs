@@ -72,7 +72,7 @@ These are the workflows where beta feedback is most valuable. Pick whichever mat
 
 ## What savings to expect
 
-TokenPak's published savings claim is **≥30% token reduction on a CI-pinned agent fixture** (the floor that runs as a blocking check on every PR). On **direct-API / CLI / uncached workloads**, observed savings routinely reach **90%+**. Provider-cached flows like Claude Code show **lower incremental gains** because the provider's own prompt cache already absorbs most of the token pool — TokenPak optimizes the user-controlled portion. `tokenpak savings` distinguishes proxy-caused saves from provider cache hits, so you can see both numbers separately.
+TokenPak's headline benchmark is a deterministic reduction pinned to a CI agent-style fixture (a blocking check on every PR; reproduce with `make benchmark-headline`). On favorable uncached workloads it can reach **up to** 90%+; provider-cached flows like Claude Code show lower incremental gains. `tokenpak savings` separates proxy saves from provider cache hits.
 
 If you're evaluating TokenPak, start with a direct-API workload to see the pipeline's actual effectiveness, then layer in your cached flows to see the marginal contribution on top.
 
