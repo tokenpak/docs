@@ -17,7 +17,7 @@ TokenPak sits between your AI tools and the upstream LLM provider, running entir
 
 ## What ships in the OSS beta
 
-- **Prompt Packing pipeline** — deterministic context reduction; ≥30% floor pinned in CI on an agent-style fixture, 90%+ routinely observed on direct-API / CLI / uncached workloads. Provider-cached flows (Claude Code) show lower incremental gains.
+- **Prompt Packing pipeline** — deterministic context reduction on real agent workloads; reduction pinned to an agent-style CI fixture (reproduce with `make benchmark-headline`); provider-cached flows show lower incremental gains. Measure your own with `tokenpak savings`.
 - **Local proxy on 127.0.0.1** — byte-preserved passthrough; your prompts and credentials never leave your machine.
 - **Spend Guard** — pre-send circuit breaker with rolling caps; blocks runaway requests before they reach the provider and returns a clear release directive.
 - **Nine client integrations** — Claude Code, Cursor, Cline, Continue, Aider, Codex CLI, Gemini CLI, OpenAI SDK, Anthropic SDK.
