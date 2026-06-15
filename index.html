@@ -2887,7 +2887,7 @@
 <hr />
 <h2 id="what-ships-in-the-oss-beta">What ships in the OSS beta<a class="headerlink" href="#what-ships-in-the-oss-beta" title="Permanent link">&para;</a></h2>
 <ul>
-<li><strong>Prompt Packing pipeline</strong> — deterministic context reduction; ≥30% floor pinned in CI on an agent-style fixture, 90%+ routinely observed on direct-API / CLI / uncached workloads. Provider-cached flows (Claude Code) show lower incremental gains.</li>
+<li><strong>Prompt Packing pipeline</strong> — deterministic context reduction on real agent workloads; reduction pinned to an agent-style CI fixture (reproduce with <code>make benchmark-headline</code>); provider-cached flows show lower incremental gains. Measure your own with <code>tokenpak savings</code>.</li>
 <li><strong>Local proxy on 127.0.0.1</strong> — byte-preserved passthrough; your prompts and credentials never leave your machine.</li>
 <li><strong>Spend Guard</strong> — pre-send circuit breaker with rolling caps; blocks runaway requests before they reach the provider and returns a clear release directive.</li>
 <li><strong>Nine client integrations</strong> — Claude Code, Cursor, Cline, Continue, Aider, Codex CLI, Gemini CLI, OpenAI SDK, Anthropic SDK.</li>
