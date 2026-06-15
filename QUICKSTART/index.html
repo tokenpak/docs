@@ -3238,7 +3238,7 @@ tokenpak<span class="w"> </span>cost<span class="w"> </span>--week
 <h3 id="how-much-to-expect">How much to expect<a class="headerlink" href="#how-much-to-expect" title="Permanent link">&para;</a></h3>
 <p>TokenPak's savings depend on your integration path — we don't collapse this into a single number because that would be dishonest.</p>
 <ul>
-<li><strong>Direct API calls, CLI tools, SDK integrations, and any uncached workload:</strong> the compression pipeline operates on the full token pool; observed savings routinely reach <strong>90%+</strong> on realistic agent-style prompts. The CI-pinned floor (<code>make benchmark-headline</code> in the OSS repo) asserts ≥30% on a fixture; that's the minimum promise, not the ceiling.</li>
+<li><strong>Direct API calls, CLI tools, SDK integrations, and any uncached workload:</strong> the compression pipeline operates on the full token pool; on favorable uncached workloads savings can reach <strong>up to</strong> 90%+. Reproduce the headline benchmark with <code>make benchmark-headline</code>; measure your own with <code>tokenpak savings</code>.</li>
 <li><strong>Provider-cached flows (Claude Code and similar):</strong> the provider's own prompt cache already absorbs most of the token pool. TokenPak only optimizes the user-controlled portion, so incremental savings can be a few percent of total spend. This isn't TokenPak failing — it's an honest division of labor with the provider.</li>
 </ul>
 <p>If you're evaluating TokenPak, start with a direct-API workload to see the pipeline's actual effectiveness, then layer in your cached flows to see the marginal contribution on top.</p>
