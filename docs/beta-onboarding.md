@@ -19,7 +19,7 @@ You don't need to use agents to benefit — any uncached LLM workload sees Promp
 
 ```bash
 pip install tokenpak
-tokenpak --version    # expect: tokenpak 1.7.1
+tokenpak --version    # expect: tokenpak 1.9.3
 tokenpak setup        # interactive wizard
 ```
 
