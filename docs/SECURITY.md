@@ -57,4 +57,4 @@ We aim to acknowledge reports within a few business days and to share a remediat
 
 ## Supported Versions
 
-Security fixes are applied to the current OSS beta release line (the `1.9.x` series, currently `1.9.3`, installed via `pip install tokenpak`). Older pre-beta versions are not maintained.
+Security fixes are applied to the current OSS beta release line (the `1.10.x` series, currently `1.10.0`, installed via `pip install tokenpak`). Older pre-beta versions are not maintained.
