@@ -111,6 +111,10 @@ nav:
 plugins:
   - search:
       lang: en
+  - redirects:
+      redirect_maps:
+        quickstart.md: QUICKSTART.md
+        install.md: installation.md
 
 markdown_extensions:
   - pymdownx.emoji:
