@@ -115,6 +115,7 @@ plugins:
       redirect_maps:
         quickstart.md: QUICKSTART.md
         install.md: installation.md
+        cli.md: cli-reference.md
 
 markdown_extensions:
   - pymdownx.emoji:
