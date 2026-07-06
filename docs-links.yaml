@@ -17,12 +17,12 @@
 # .github/workflows/notify-site.yml; the site rebuilds within minutes.
 
 - title: Getting Started
-  url: /quickstart/
+  url: /QUICKSTART/
   section: starter
   description: Install TokenPak and see savings in one command.
 
 - title: Installation
-  url: /install/
+  url: /installation/
   section: starter
   description: pip install options, OS notes, troubleshooting install failures.
 
