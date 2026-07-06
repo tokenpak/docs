@@ -34,7 +34,10 @@ jobs:
       - name: Verify site CTA targets exist in built docs
         run: |
           mkdocs build --strict --site-dir /tmp/site-check
-          for p in QUICKSTART installation quickstart install; do
+          for p in QUICKSTART installation quickstart install cli cli-reference \
+                   architecture troubleshooting \
+                   guides/aider guides/anthropic-sdk guides/claude-code guides/cline \
+                   guides/codex guides/continue guides/cursor guides/gemini-cli guides/openai-sdk; do
             test -f "/tmp/site-check/$p/index.html" || { echo "Missing /$p/ page"; exit 1; }
           done
 
