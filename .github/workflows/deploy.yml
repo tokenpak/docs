@@ -31,6 +31,13 @@ jobs:
           git config user.name TokenPak
           git config user.email hello@tokenpak.ai
 
+      - name: Verify site CTA targets exist in built docs
+        run: |
+          mkdocs build --strict --site-dir /tmp/site-check
+          for p in QUICKSTART installation quickstart install; do
+            test -f "/tmp/site-check/$p/index.html" || { echo "Missing /$p/ page"; exit 1; }
+          done
+
       - name: Build + deploy to gh-pages
         run: |
           mkdocs gh-deploy --force --message "Deployed {sha} with MkDocs version: {version}"
