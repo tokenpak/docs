@@ -1,0 +1,149 @@
+{
+  "schema_version": 1,
+  "updated": "2026-07-07",
+  "version_floor": "1.11.1",
+  "intro": "TokenPak's OSS beta is Apache 2.0. Pro-only, roadmap, and unsupported surfaces are marked per capability; an item is not part of the current OSS beta unless the OSS column says Shipped or Preview.",
+  "labels": {
+    "Shipped": "Available in the OSS beta.",
+    "Preview": "Available, but still beta-quality or intentionally narrow.",
+    "Documented pattern": "Documented guidance or recipe, not a blanket product guarantee.",
+    "Pro only": "Requires the TokenPak Pro distribution or daemon.",
+    "Roadmap": "Planned or under design; not in the current OSS beta.",
+    "Unsupported": "Not a shipped TokenPak surface."
+  },
+  "features": [
+    {
+      "area": "Core proxy",
+      "capability": "Local proxy passthrough",
+      "oss": "Shipped",
+      "pro": "Not required",
+      "notes": "Runs locally on 127.0.0.1 and forwards requests to the configured model provider."
+    },
+    {
+      "area": "Core proxy",
+      "capability": "Provider routing",
+      "oss": "Preview",
+      "pro": "Optional extensions",
+      "notes": "Use the documented provider and client guides. Broad any-provider claims are out of scope for the beta."
+    },
+    {
+      "area": "Core proxy",
+      "capability": "Provider fallback recipes",
+      "oss": "Documented pattern",
+      "pro": "Optional extensions",
+      "notes": "Recipes describe fallback patterns; the OSS beta does not guarantee automatic failover for every request."
+    },
+    {
+      "area": "Core proxy",
+      "capability": "Circuit and spend safeguards",
+      "oss": "Shipped",
+      "pro": "Optional extensions",
+      "notes": "Spend Guard blocks configured runaway requests before they reach the provider."
+    },
+    {
+      "area": "Compression and savings",
+      "capability": "Prompt Packing pipeline",
+      "oss": "Shipped",
+      "pro": "Not required",
+      "notes": "Deterministic context reduction for eligible workloads. Savings depend on workload, provider pricing, and cache eligibility."
+    },
+    {
+      "area": "Compression and savings",
+      "capability": "Compression profiles",
+      "oss": "Shipped",
+      "pro": "Not required",
+      "notes": "Built-in profiles are configurable; measure your own workload with the local savings tools."
+    },
+    {
+      "area": "Compression and savings",
+      "capability": "Savings ledger and attribution",
+      "oss": "Shipped",
+      "pro": "Optional extensions",
+      "notes": "Local usage records distinguish TokenPak effects from provider/client cache effects."
+    },
+    {
+      "area": "Compression and savings",
+      "capability": "Fixture demo",
+      "oss": "Shipped",
+      "pro": "Not required",
+      "notes": "The demo is an offline smoke test, not proof of live customer savings."
+    },
+    {
+      "area": "Observability",
+      "capability": "Local dashboard",
+      "oss": "Preview",
+      "pro": "Optional extensions",
+      "notes": "Reads local telemetry and request records; hosted/cloud dashboards are not part of the OSS beta."
+    },
+    {
+      "area": "Observability",
+      "capability": "CLI status and savings reports",
+      "oss": "Shipped",
+      "pro": "Optional extensions",
+      "notes": "Use status and savings commands for local attribution and troubleshooting."
+    },
+    {
+      "area": "Observability",
+      "capability": "Built-in Prometheus exporter",
+      "oss": "Unsupported",
+      "pro": "Not promised",
+      "notes": "Use a custom exporter over local records if you need Prometheus-style metrics."
+    },
+    {
+      "area": "Integrations",
+      "capability": "Client setup guides",
+      "oss": "Shipped",
+      "pro": "Not required",
+      "notes": "Guides cover the documented beta clients; each client still sends requests to its configured model provider."
+    },
+    {
+      "area": "Integrations",
+      "capability": "TIP-1.0 protocol contracts",
+      "oss": "Preview",
+      "pro": "Optional extensions",
+      "notes": "Headers, manifests, and conformance references are public beta surfaces."
+    },
+    {
+      "area": "Vault and recall",
+      "capability": "Vault indexing and search",
+      "oss": "Preview",
+      "pro": "Optional extensions",
+      "notes": "Local indexing and search are available; behavior is bounded by the documented beta limitations."
+    },
+    {
+      "area": "Vault and recall",
+      "capability": "Pak inspect and recall data plane",
+      "oss": "Preview",
+      "pro": "Optional extensions",
+      "notes": "OSS exposes read-only Pak inspection and recall data. Scoring and assembly are separate Pro surfaces."
+    },
+    {
+      "area": "Vault and recall",
+      "capability": "Pak scoring, capture, and Context Package assembly",
+      "oss": "Not included",
+      "pro": "Pro only",
+      "notes": "Requires the Pro daemon or private Pro distribution."
+    },
+    {
+      "area": "Commercial and roadmap",
+      "capability": "TokenPak Pro license and daemon workflows",
+      "oss": "Not included",
+      "pro": "Pro only",
+      "notes": "Private Pro workflows are not part of the Apache 2.0 OSS beta."
+    },
+    {
+      "area": "Commercial and roadmap",
+      "capability": "Dispatch Center",
+      "oss": "Roadmap",
+      "pro": "Roadmap",
+      "notes": "Dispatch documentation is being scoped separately; it should not be described as per-request routing."
+    },
+    {
+      "area": "Commercial and roadmap",
+      "capability": "Vision and multimodal workflows",
+      "oss": "Roadmap",
+      "pro": "Roadmap",
+      "notes": "Not part of the current OSS beta."
+    }
+  ]
+}
