@@ -251,4 +251,4 @@ Common type patterns used across the SDK:
 
 ---
 
-**TokenPak v1.11.1** — Licensed under Apache 2.0.
+**TokenPak v1.11.3** — Licensed under Apache 2.0.
