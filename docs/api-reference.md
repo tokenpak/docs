@@ -59,7 +59,7 @@ Welcome / status endpoint. Returns proxy identity and available endpoints.
 ```json
 {
   "name": "TokenPak",
-  "version": "1.11.1",
+  "version": "1.11.3",
   "status": "running",
   "endpoints": {
     "health": "/health",
@@ -1402,4 +1402,4 @@ advanced:
 
 ---
 
-*This reference covers TokenPak v1.11.1.*
+*This reference covers TokenPak v1.11.3.*
