@@ -57,7 +57,7 @@ Expected response:
 {
   "status": "ok",
   "uptime_seconds": 3,
-  "version": "1.11.3",
+  "version": "1.13.0",
   "requests_total": 0,
   "requests_errors": 0,
   "compression_ratio_avg": 0.0
