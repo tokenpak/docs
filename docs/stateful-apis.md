@@ -45,14 +45,18 @@ provider to own that state lifecycle.
 
 ## Unsupported Stateful APIs
 
-When a stateful provider surface is explicitly unsupported, TokenPak returns a
-typed error instead of silently forwarding or pretending to manage the lifecycle.
-The error uses `tokenpak_error_type: stateful_api_unsupported` and includes:
+TokenPak's declared policy for an explicitly unsupported stateful surface is a
+typed refusal instead of silent forwarding or pretend lifecycle management.
+The error contract uses `tokenpak_error_type: stateful_api_unsupported` and
+includes:
 
 - `surface`: the provider stateful surface that was rejected
 - `support_state`: `explicitly_unsupported`
 - `remediation`: a short next step or safer alternative
-- `registry_link`: the registry entry for the surface policy
+- `registry_link`: the matching entry under
+  `tokenpak/registry/schemas/stateful_surfaces.yaml`
 
-Unsupported stateful API requests return HTTP 422 when TokenPak can parse the
-request body, or HTTP 400 when it cannot.
+The policy assigns HTTP 422 when TokenPak can parse the request body, or HTTP
+400 when it cannot. The current proxy release provides the classification and
+typed error contract as a foundation; route-level refusal enforcement is not
+yet complete across all provider surfaces.
