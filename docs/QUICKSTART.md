@@ -19,7 +19,7 @@ tokenpak status
 
 ## 2. One-command setup
 
-The interactive wizard detects your API keys, picks a compression profile, writes `~/.tokenpak/config.yaml`, and starts the proxy:
+The interactive wizard detects optional provider API keys, picks a compression profile, writes `~/.tokenpak/config.yaml`, and starts the proxy:
 
 ```bash
 tokenpak setup
@@ -27,8 +27,8 @@ tokenpak setup
 
 The wizard:
 
-1. Scans your environment for `ANTHROPIC_API_KEY`, `OPENAI_API_KEY`, `GOOGLE_API_KEY`.
-2. Asks which provider to proxy + which compression profile (minimal / balanced / aggressive).
+1. Scans your environment for optional `ANTHROPIC_API_KEY`, `OPENAI_API_KEY`, and `GOOGLE_API_KEY` values. If none are present, setup continues normally for clients that already have their own credentials.
+2. Asks for the port and compression profile (minimal / balanced / aggressive). A default provider is requested only when direct provider keys were detected.
 3. Writes config, launches the proxy on `127.0.0.1:8766`, and prints next steps.
 
 If you prefer manual configuration, `tokenpak start` brings the proxy up with defaults.
@@ -56,6 +56,19 @@ export OPENAI_BASE_URL=http://127.0.0.1:8766
 Claude Code reads `ANTHROPIC_BASE_URL` from the environment the same as the SDK. Start Claude Code after setting the env var and it will route through TokenPak automatically.
 
 On provider-cached flows like Claude Code, observed incremental savings can be lower than on direct-API workloads — the provider's own prompt cache already absorbs most of the token pool. TokenPak optimizes the user-controlled portion. See the [Savings reporting](SAVINGS.md) page for the full framing.
+
+### Codex CLI with OAuth
+
+If Codex is already signed in, no OpenAI or Anthropic API key and no explicit
+model override are required:
+
+```bash
+tokenpak codex
+```
+
+TokenPak reuses Codex's existing OAuth request path and preserves the model
+selected by Codex. See [Use TokenPak with Codex CLI](guides/codex.md) for the
+temporary-session behavior when another Codex session is already running.
 
 ### Aider, Cursor, Continue.dev, Cline
 
@@ -86,7 +99,7 @@ Check health:
 curl http://127.0.0.1:8766/health
 ```
 
-Expected response: `{"status": "healthy"}`.
+Expected response includes `{"status": "ok", "version": "1.14.0"}`.
 
 ## 5. See your savings
 

@@ -39,7 +39,7 @@ pip install tokenpak
 tokenpak setup
 ```
 
-`tokenpak setup` detects your API keys, creates `~/.tokenpak/config.yaml`, and starts the proxy on port 8766. You should see:
+`tokenpak setup` detects optional provider API keys, creates `~/.tokenpak/config.yaml`, and starts the proxy on port 8766. You should see:
 
 ```
 TokenPak proxy listening on http://localhost:8766
@@ -57,7 +57,7 @@ Expected response:
 {
   "status": "ok",
   "uptime_seconds": 3,
-  "version": "1.13.0",
+  "version": "1.14.0",
   "requests_total": 0,
   "requests_errors": 0,
   "compression_ratio_avg": 0.0

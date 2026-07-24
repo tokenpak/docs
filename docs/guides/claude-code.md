@@ -16,6 +16,9 @@ This guide is for developers who have Claude Code installed and want to route it
 - Python 3.10+
 - No existing `ANTHROPIC_BASE_URL` set in your environment
 
+Claude Code's existing authenticated session is sufficient for this path; a
+separate Anthropic API key is not required by TokenPak.
+
 ---
 
 ## Copy-paste setup
@@ -37,7 +40,7 @@ pip install tokenpak
 tokenpak setup
 ```
 
-`tokenpak setup` detects your API keys, creates `~/.tokenpak/config.yaml`, and starts the proxy on port 8766. You should see:
+`tokenpak setup` detects optional provider API keys, creates `~/.tokenpak/config.yaml`, and starts the proxy on port 8766. You should see:
 
 ```
 TokenPak proxy listening on http://localhost:8766
@@ -55,7 +58,7 @@ Expected response:
 {
   "status": "ok",
   "uptime_seconds": 3,
-  "version": "1.13.0",
+  "version": "1.14.0",
   "requests_total": 0,
   "requests_errors": 0,
   "compression_ratio_avg": 0.0

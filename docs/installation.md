@@ -30,7 +30,7 @@ pip install tokenpak
 
 ```bash
 tokenpak --version
-# Output: tokenpak 1.13.0
+# Output: tokenpak 1.14.0
 ```
 
 ### (Optional) Install with Extras
@@ -55,9 +55,15 @@ If you skip extras, you can always add them later by upgrading.
 
 ---
 
-## Step 2: Set Your API Keys
+## Step 2: Set Provider API Keys (Optional)
 
-TokenPak needs API credentials for the providers you plan to use. Set these as environment variables:
+TokenPak does not require an API key or an explicit model selection. Set a
+provider key only when your client sends direct API-key traffic to that
+provider. Already-authenticated clients can keep their existing credentials;
+for example, `tokenpak codex` reuses Codex OAuth and preserves Codex's selected
+or default model.
+
+For direct provider API traffic, set the relevant environment variable:
 
 ### Anthropic (Claude)
 
@@ -129,7 +135,7 @@ tokenpak start
 
 **Output:**
 ```
-[2026-05-17 09:00:00] TokenPak Proxy v1.13.0 starting...
+[2026-05-17 09:00:00] TokenPak Proxy v1.14.0 starting...
 [2026-05-15 09:00:00] Listening on http://127.0.0.1:8766
 [2026-05-15 09:00:00] Ready to proxy requests
 ```

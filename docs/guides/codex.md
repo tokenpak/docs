@@ -2,7 +2,7 @@
 title: "Use TokenPak with Codex CLI"
 rung: 2
 audience: Developers who have Codex CLI installed and want to route its ChatGPT-subscription traffic through TokenPak for cost tracking and compression.
-updated: 2026-05-04
+updated: 2026-07-23
 status: current
 ---
 
@@ -18,18 +18,23 @@ Codex CLI signs in to your ChatGPT account and stores an OAuth token at `~/.code
 - Python 3.10+
 - No existing `OPENAI_BASE_URL` override that conflicts
 
+An OpenAI or Anthropic API key is **not** required for this path. You also do
+not need to choose a model in TokenPak: the launcher preserves the model Codex
+selected, or Codex's own default.
+
 ---
 
 ## Copy-paste setup
 
 ```bash
-pip install tokenpak
+pip install --upgrade tokenpak==1.14.0
 tokenpak setup
-export OPENAI_BASE_URL=http://localhost:8766/v1
-codex exec "your prompt"
+tokenpak codex
 ```
 
-The third line points Codex CLI at TokenPak only for the current shell. Export it from `~/.bashrc` or `~/.zshrc` if you want every future Codex session routed through TokenPak.
+`tokenpak codex` launches Codex with the TokenPak route for that process. It
+does not edit `~/.codex/auth.json`, require a provider key, or override the
+model selected by Codex.
 
 ---
 
@@ -40,7 +45,7 @@ pip install tokenpak
 tokenpak setup
 ```
 
-`tokenpak setup` detects your API keys, creates `~/.tokenpak/config.yaml`, and starts the proxy on port 8766. You should see:
+`tokenpak setup` detects optional provider API keys, creates `~/.tokenpak/config.yaml`, and starts the proxy on port 8766. If no keys are present, setup continues for clients such as Codex that already have their own credentials. You should see:
 
 ```text
 TokenPak proxy listening on http://localhost:8766
@@ -58,7 +63,7 @@ Expected response shape:
 {
   "status": "ok",
   "uptime_seconds": 3,
-  "version": "1.13.0",
+  "version": "1.14.0",
   "requests_total": 0,
   "requests_errors": 0,
   "compression_ratio_avg": 0.0
@@ -69,7 +74,18 @@ If `status` is not `"ok"`, run `tokenpak status` for details before continuing.
 
 ---
 
-## 2. Point Codex CLI at the proxy
+## 2. Launch Codex through TokenPak
+
+The recommended path is:
+
+```bash
+tokenpak codex
+```
+
+TokenPak supplies the route only to the launched process and reuses Codex's
+existing OAuth state. Normal model selection remains owned by Codex.
+
+### Manual shell-scoped route
 
 Codex CLI uses the same `OPENAI_BASE_URL` environment variable as the OpenAI SDK to redirect API traffic.
 
@@ -92,6 +108,27 @@ source ~/.bashrc   # or source ~/.zshrc
 ```
 
 You do not edit `~/.codex/auth.json` — Codex CLI owns that file and rotates the OAuth token itself. TokenPak reads the token from the request's `Authorization` header at proxy time, recognizes the JWT shape, and forwards byte-preserved to the ChatGPT backend.
+
+### When another Codex session is already running
+
+TokenPak first inspects the shared local history for a verified live or stopped
+holder. In an interactive terminal, verified contention may produce this
+choice:
+
+```text
+Another Codex session is using your shared local history.
+Start a temporary session without that prior history? [y/N]
+```
+
+The safe default is **No**. If you accept, the temporary session receives a new
+history lineage for that launch; it does not attach or replace the prior shared
+history, and later normal launches return to the shared lineage. TokenPak does
+not ask you to select or manage `CODEX_HOME`.
+
+If inspection is incomplete, permissions or storage fail, state appears
+corrupt, or the cause is unknown, TokenPak refuses the fallback rather than
+guessing. Close the active session normally or resolve the reported diagnostic
+before retrying.
 
 ---
 

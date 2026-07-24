@@ -10,11 +10,15 @@ TokenPak is configured via environment variables (or a `~/.tokenpak/config.yaml`
 
 | Variable | Required | Description |
 |---|---|---|
-| `ANTHROPIC_API_KEY` | ✅ Yes (if using Anthropic) | Anthropic API key |
-| `OPENAI_API_KEY` | ✅ Yes (if using OpenAI) | OpenAI API key |
-| `GOOGLE_API_KEY` or `GEMINI_API_KEY` | ✅ Yes (if using Google) | Google / Gemini API key |
+| `ANTHROPIC_API_KEY` | Optional | Needed only for direct Anthropic API-key traffic |
+| `OPENAI_API_KEY` | Optional | Needed only for direct OpenAI API-key traffic |
+| `GOOGLE_API_KEY` or `GEMINI_API_KEY` | Optional | Needed only for direct Google API-key traffic |
 
-At least one API key is required. The proxy auto-detects which provider to use based on the model name.
+TokenPak itself does not require an API key or an explicit model selection.
+Direct API clients still need the credential required by their upstream
+provider. Already-authenticated clients can keep using their existing session
+credentials; for example, `tokenpak codex` reuses Codex OAuth and preserves the
+client's selected or default model.
 
 ---
 
