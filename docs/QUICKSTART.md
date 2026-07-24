@@ -183,4 +183,7 @@ Non-localhost clients must then include `X-TokenPak-Auth: <your-token>` on every
 
 **Wizard prints "No API keys detected"**
 
-- Set at least one of `ANTHROPIC_API_KEY`, `OPENAI_API_KEY`, or `GOOGLE_API_KEY` before running `tokenpak setup`.
+- This is informational. Continue without a key when your client already has
+  its own authenticated session, such as Codex OAuth. For direct provider API
+  traffic, set only the relevant `ANTHROPIC_API_KEY`, `OPENAI_API_KEY`, or
+  `GOOGLE_API_KEY` and rerun setup.

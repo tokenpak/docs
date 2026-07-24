@@ -44,7 +44,7 @@ TokenPak runs locally. Your prompts and credentials stay in your environment and
 ```bash
 # 1. Proxy is up
 tokenpak status
-curl http://127.0.0.1:8766/health        # expect: {"status": "healthy"}
+curl http://127.0.0.1:8766/health        # expect: {"status": "ok", ...}
 
 # 2. Make a real request through your usual client (any LLM call counts)
 #    e.g. run one Claude Code prompt, one Cursor question, one curl to /v1/messages

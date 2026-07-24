@@ -19,9 +19,12 @@ info:
 
     ## Authentication
 
-    The proxy forwards your API key to the upstream provider. Set the standard
-    provider environment variables (`ANTHROPIC_API_KEY`, `OPENAI_API_KEY`, etc.)
-    or pass them in the `Authorization` / `x-api-key` header as usual.
+    The proxy forwards the credentials supplied by the client. Direct API
+    clients can set the standard provider environment variables
+    (`ANTHROPIC_API_KEY`, `OPENAI_API_KEY`, etc.) or pass them in the
+    `Authorization` / `x-api-key` header as usual. TokenPak itself does not
+    require a provider key; already-authenticated clients can keep using their
+    existing session credentials.
 
   contact:
     name: TokenPak
@@ -129,10 +132,17 @@ paths:
       operationId: getHealth
       summary: Proxy health check
       description: |
-        Returns the current health of the proxy, including vault index state,
-        router status, circuit breaker state, and session stats.
-        Response is cached for 1 second to reduce overhead.
+        Returns the current uncached basic health envelope. Set `deep=true` to
+        add bounded provider, process-memory, and disk diagnostics.
       tags: [health]
+      parameters:
+        - in: query
+          name: deep
+          required: false
+          schema:
+            type: boolean
+            default: false
+          description: Add bounded diagnostic fields to the basic envelope.
       responses:
         "200":
           description: Proxy is running
@@ -142,20 +152,20 @@ paths:
                 $ref: "#/components/schemas/HealthResponse"
               example:
                 status: ok
-                compilation_mode: hybrid
-                vault_index:
-                  available: true
-                  blocks: 2943
-                  path: /home/user/.tokenpak
-                router:
-                  enabled: true
-                budget:
-                  enabled: true
-                  total_tokens: 0
-                stats:
-                  requests: 42
-                  saved_tokens: 18500
-                  errors: 0
+                uptime_seconds: 3600
+                version: 1.14.0
+                requests_total: 42
+                requests_errors: 0
+                compression_ratio_avg: 0.44
+                is_degraded: false
+                is_shutting_down: false
+                in_flight_requests: 0
+                memory_guard: {}
+                admission: {}
+                agent_concurrency: {}
+                timestamp: "2026-07-24T05:30:00Z"
+                connection_pool: {}
+                circuit_breakers: {}
 
   # ─── Stats ────────────────────────────────────────────────────────────────
 
@@ -567,40 +577,66 @@ components:
 
     HealthResponse:
       type: object
+      additionalProperties: false
+      required:
+        - status
+        - uptime_seconds
+        - version
+        - requests_total
+        - requests_errors
+        - compression_ratio_avg
+        - is_degraded
+        - is_shutting_down
+        - in_flight_requests
+        - memory_guard
+        - admission
+        - agent_concurrency
+        - timestamp
+        - connection_pool
+        - circuit_breakers
       properties:
         status:
           type: string
+          enum: [ok, degraded, shutting_down]
           example: ok
-        compilation_mode:
+        uptime_seconds:
+          type: number
+          minimum: 0
+        version:
           type: string
-          enum: [hybrid, compression-only, passthrough]
-        vault_index:
-          $ref: "#/components/schemas/VaultIndexSummary"
-        router:
-          type: object
-          properties:
-            enabled:
-              type: boolean
-        capsule_available:
+        requests_total:
+          type: integer
+          minimum: 0
+        requests_errors:
+          type: integer
+          minimum: 0
+        compression_ratio_avg:
+          type: number
+        is_degraded:
           type: boolean
-        budget:
+        is_shutting_down:
+          type: boolean
+        in_flight_requests:
+          type: integer
+          minimum: 0
+        memory_guard:
           type: object
-          properties:
-            enabled:
-              type: boolean
-            total_tokens:
-              type: integer
+          additionalProperties: true
+        admission:
+          type: object
+          additionalProperties: true
+        agent_concurrency:
+          type: object
+          additionalProperties: true
+        timestamp:
+          type: string
+          format: date-time
+        connection_pool:
+          type: object
+          additionalProperties: true
         circuit_breakers:
           type: object
-          additionalProperties:
-            type: object
-            properties:
-              open:
-                type: boolean
-              failures:
-                type: integer
-        stats:
-          $ref: "#/components/schemas/SessionStatsSummary"
+          additionalProperties: true
 
     # ── Stats ─────────────────────────────────────────────────────────────────
 
