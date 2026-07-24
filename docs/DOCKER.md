@@ -206,11 +206,21 @@ curl http://localhost:8766/health
 
 ```json
 {
-  "status": "healthy",
-  "version": "1.14.0",
+  "status": "ok",
   "uptime_seconds": 3600,
-  "request_count": 15000,
-  "last_request": "2026-03-10T06:30:00Z"
+  "version": "1.14.0",
+  "requests_total": 15000,
+  "requests_errors": 0,
+  "compression_ratio_avg": 0.23,
+  "is_degraded": false,
+  "is_shutting_down": false,
+  "in_flight_requests": 0,
+  "memory_guard": {},
+  "admission": {},
+  "agent_concurrency": {},
+  "timestamp": "2026-07-24T05:30:00Z",
+  "connection_pool": {},
+  "circuit_breakers": {}
 }
 ```
 

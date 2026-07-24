@@ -75,44 +75,28 @@ Welcome / status endpoint. Returns proxy identity and available endpoints.
 
 #### `GET /health`
 
-Lightweight health check. Cached for 1 second to reduce overhead.
+Lightweight, uncached health check. The basic response has one stable top-level
+schema and is computed for every request. Add `?deep=true` for bounded provider,
+process-memory, and disk diagnostics.
 
 **Response:**
 ```json
 {
   "status": "ok",
-  "compilation_mode": "hybrid",
-  "vault_index": {
-    "available": true,
-    "blocks": 42,
-    "path": "/home/user/vault/.tokenpak"
-  },
-  "router": {
-    "enabled": true,
-    "rules_loaded": 5
-  },
-  "capsule_available": false,
-  "budget": {
-    "enabled": true,
-    "total_tokens": 4000
-  },
-  "circuit_breakers": {
-    "anthropic": { "open": false, "failures": 0 }
-  },
-  "stats": {
-    "requests": 142,
-    "input_tokens": 380000,
-    "sent_input_tokens": 210000,
-    "saved_tokens": 170000,
-    "errors": 2,
-    "cache_hits": 37,
-    "cost": 0.85
-  },
-  "latency": {
-    "p50_latency_ms": 320,
-    "p99_latency_ms": 1840,
-    "samples": 100
-  }
+  "uptime_seconds": 3600,
+  "version": "1.14.0",
+  "requests_total": 142,
+  "requests_errors": 2,
+  "compression_ratio_avg": 0.4474,
+  "is_degraded": false,
+  "is_shutting_down": false,
+  "in_flight_requests": 0,
+  "memory_guard": {},
+  "admission": {},
+  "agent_concurrency": {},
+  "timestamp": "2026-07-24T05:30:00Z",
+  "connection_pool": {},
+  "circuit_breakers": {}
 }
 ```
 
