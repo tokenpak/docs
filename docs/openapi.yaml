@@ -576,6 +576,11 @@ components:
     # ── Health ────────────────────────────────────────────────────────────────
 
     HealthResponse:
+      oneOf:
+        - $ref: "#/components/schemas/HealthResponseBasic"
+        - $ref: "#/components/schemas/HealthResponseDeep"
+
+    HealthResponseBasic:
       type: object
       additionalProperties: false
       required:
@@ -637,6 +642,107 @@ components:
         circuit_breakers:
           type: object
           additionalProperties: true
+
+    HealthResponseDeep:
+      type: object
+      additionalProperties: false
+      required:
+        - status
+        - uptime_seconds
+        - version
+        - requests_total
+        - requests_errors
+        - compression_ratio_avg
+        - is_degraded
+        - is_shutting_down
+        - in_flight_requests
+        - memory_guard
+        - admission
+        - agent_concurrency
+        - timestamp
+        - connection_pool
+        - circuit_breakers
+        - providers
+        - memory
+        - disk
+      properties:
+        status:
+          type: string
+          enum: [ok, degraded, shutting_down]
+          example: ok
+        uptime_seconds:
+          type: number
+          minimum: 0
+        version:
+          type: string
+        requests_total:
+          type: integer
+          minimum: 0
+        requests_errors:
+          type: integer
+          minimum: 0
+        compression_ratio_avg:
+          type: number
+        is_degraded:
+          type: boolean
+        is_shutting_down:
+          type: boolean
+        in_flight_requests:
+          type: integer
+          minimum: 0
+        memory_guard:
+          type: object
+          additionalProperties: true
+        admission:
+          type: object
+          additionalProperties: true
+        agent_concurrency:
+          type: object
+          additionalProperties: true
+        timestamp:
+          type: string
+          format: date-time
+        connection_pool:
+          type: object
+          additionalProperties: true
+        circuit_breakers:
+          type: object
+          additionalProperties: true
+        providers:
+          type: array
+          items:
+            type: object
+            additionalProperties: false
+            required: [name, status]
+            properties:
+              name:
+                type: string
+              status:
+                type: string
+        memory:
+          type: object
+          additionalProperties: false
+          required: [rss_mb, available]
+          properties:
+            rss_mb:
+              type: [number, "null"]
+              minimum: 0
+            available:
+              type: boolean
+            reason:
+              type: string
+        disk:
+          type: object
+          additionalProperties: false
+          required: [available_gb, available]
+          properties:
+            available_gb:
+              type: [number, "null"]
+              minimum: 0
+            available:
+              type: boolean
+            reason:
+              type: string
 
     # ── Stats ─────────────────────────────────────────────────────────────────
 
