@@ -677,15 +677,15 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#step-2-set-your-api-keys" class="md-nav__link">
+  <a href="#step-2-set-provider-api-keys-optional" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Step 2: Set Your API Keys
+        Step 2: Set Provider API Keys (Optional)
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Step 2: Set Your API Keys">
+    <nav class="md-nav" aria-label="Step 2: Set Provider API Keys (Optional)">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -3176,15 +3176,15 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#step-2-set-your-api-keys" class="md-nav__link">
+  <a href="#step-2-set-provider-api-keys-optional" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Step 2: Set Your API Keys
+        Step 2: Set Provider API Keys (Optional)
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Step 2: Set Your API Keys">
+    <nav class="md-nav" aria-label="Step 2: Set Provider API Keys (Optional)">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -3496,7 +3496,7 @@
 </code></pre></div>
 <h3 id="verify-installation">Verify Installation<a class="headerlink" href="#verify-installation" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code>tokenpak<span class="w"> </span>--version
-<span class="c1"># Output: tokenpak 1.13.0</span>
+<span class="c1"># Output: tokenpak 1.14.0</span>
 </code></pre></div>
 <h3 id="optional-install-with-extras">(Optional) Install with Extras<a class="headerlink" href="#optional-install-with-extras" title="Permanent link">&para;</a></h3>
 <p>TokenPak can optionally integrate with popular frameworks. These are NOT required but make integration easier:</p>
@@ -3514,8 +3514,13 @@ pip<span class="w"> </span>install<span class="w"> </span>tokenpak<span class="o
 </code></pre></div>
 <p>If you skip extras, you can always add them later by upgrading.</p>
 <hr />
-<h2 id="step-2-set-your-api-keys">Step 2: Set Your API Keys<a class="headerlink" href="#step-2-set-your-api-keys" title="Permanent link">&para;</a></h2>
-<p>TokenPak needs API credentials for the providers you plan to use. Set these as environment variables:</p>
+<h2 id="step-2-set-provider-api-keys-optional">Step 2: Set Provider API Keys (Optional)<a class="headerlink" href="#step-2-set-provider-api-keys-optional" title="Permanent link">&para;</a></h2>
+<p>TokenPak does not require an API key or an explicit model selection. Set a
+provider key only when your client sends direct API-key traffic to that
+provider. Already-authenticated clients can keep their existing credentials;
+for example, <code>tokenpak codex</code> reuses Codex OAuth and preserves Codex's selected
+or default model.</p>
+<p>For direct provider API traffic, set the relevant environment variable:</p>
 <h3 id="anthropic-claude">Anthropic (Claude)<a class="headerlink" href="#anthropic-claude" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="nb">export</span><span class="w"> </span><span class="nv">ANTHROPIC_API_KEY</span><span class="o">=</span><span class="s2">&quot;sk-ant-...&quot;</span>
 </code></pre></div>
@@ -3554,7 +3559,7 @@ pip<span class="w"> </span>install<span class="w"> </span>tokenpak<span class="o
 </code></pre></div>
 <p>(<code>tokenpak serve</code> is also accepted as an alias.)</p>
 <p><strong>Output:</strong>
-<div class="highlight"><pre><span></span><code>[2026-05-17 09:00:00] TokenPak Proxy v1.13.0 starting...
+<div class="highlight"><pre><span></span><code>[2026-05-17 09:00:00] TokenPak Proxy v1.14.0 starting...
 [2026-05-15 09:00:00] Listening on http://127.0.0.1:8766
 [2026-05-15 09:00:00] Ready to proxy requests
 </code></pre></div></p>

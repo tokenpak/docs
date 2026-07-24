@@ -5015,7 +5015,7 @@
 <p><strong>Response:</strong>
 <div class="highlight"><pre><span></span><code><span class="p">{</span>
 <span class="w">  </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;TokenPak&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;version&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;1.13.0&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;version&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;1.14.0&quot;</span><span class="p">,</span>
 <span class="w">  </span><span class="nt">&quot;status&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;running&quot;</span><span class="p">,</span>
 <span class="w">  </span><span class="nt">&quot;endpoints&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="nt">&quot;health&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;/health&quot;</span><span class="p">,</span>
@@ -5028,42 +5028,26 @@
 </code></pre></div></p>
 <hr />
 <h4 id="get-health"><code>GET /health</code><a class="headerlink" href="#get-health" title="Permanent link">&para;</a></h4>
-<p>Lightweight health check. Cached for 1 second to reduce overhead.</p>
+<p>Lightweight, uncached health check. The basic response has one stable top-level
+schema and is computed for every request. Add <code>?deep=true</code> for bounded provider,
+process-memory, and disk diagnostics.</p>
 <p><strong>Response:</strong>
 <div class="highlight"><pre><span></span><code><span class="p">{</span>
 <span class="w">  </span><span class="nt">&quot;status&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ok&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;compilation_mode&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;hybrid&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;vault_index&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nt">&quot;available&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;blocks&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">42</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;path&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;/home/user/vault/.tokenpak&quot;</span>
-<span class="w">  </span><span class="p">},</span>
-<span class="w">  </span><span class="nt">&quot;router&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nt">&quot;enabled&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;rules_loaded&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span>
-<span class="w">  </span><span class="p">},</span>
-<span class="w">  </span><span class="nt">&quot;capsule_available&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;budget&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nt">&quot;enabled&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;total_tokens&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">4000</span>
-<span class="w">  </span><span class="p">},</span>
-<span class="w">  </span><span class="nt">&quot;circuit_breakers&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nt">&quot;anthropic&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;open&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;failures&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="p">}</span>
-<span class="w">  </span><span class="p">},</span>
-<span class="w">  </span><span class="nt">&quot;stats&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nt">&quot;requests&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">142</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;input_tokens&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">380000</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;sent_input_tokens&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">210000</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;saved_tokens&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">170000</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;errors&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;cache_hits&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">37</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;cost&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.85</span>
-<span class="w">  </span><span class="p">},</span>
-<span class="w">  </span><span class="nt">&quot;latency&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nt">&quot;p50_latency_ms&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">320</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;p99_latency_ms&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1840</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;samples&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span>
-<span class="w">  </span><span class="p">}</span>
+<span class="w">  </span><span class="nt">&quot;uptime_seconds&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">3600</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;version&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;1.14.0&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;requests_total&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">142</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;requests_errors&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;compression_ratio_avg&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.4474</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;is_degraded&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;is_shutting_down&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;in_flight_requests&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;memory_guard&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{},</span>
+<span class="w">  </span><span class="nt">&quot;admission&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{},</span>
+<span class="w">  </span><span class="nt">&quot;agent_concurrency&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{},</span>
+<span class="w">  </span><span class="nt">&quot;timestamp&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2026-07-24T05:30:00Z&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;connection_pool&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{},</span>
+<span class="w">  </span><span class="nt">&quot;circuit_breakers&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span>
 <span class="p">}</span>
 </code></pre></div></p>
 <p>Also supports <code>HEAD /health</code> (returns 200 with no body — useful for Kubernetes liveness probes).</p>
@@ -6537,7 +6521,7 @@ tokenpak<span class="w"> </span>audit<span class="w"> </span>summary<span class=
 <span class="w">  </span><span class="nt">max_request_size_bytes</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10485760</span><span class="w">    </span><span class="c1"># 10 MB</span>
 </code></pre></div>
 <hr />
-<p><em>This reference covers TokenPak v1.13.0.</em></p>
+<p><em>This reference covers TokenPak v1.14.0.</em></p>
 
 
 
