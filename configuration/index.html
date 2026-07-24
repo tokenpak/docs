@@ -2896,22 +2896,26 @@
 <tbody>
 <tr>
 <td><code>ANTHROPIC_API_KEY</code></td>
-<td>✅ Yes (if using Anthropic)</td>
-<td>Anthropic API key</td>
+<td>Optional</td>
+<td>Needed only for direct Anthropic API-key traffic</td>
 </tr>
 <tr>
 <td><code>OPENAI_API_KEY</code></td>
-<td>✅ Yes (if using OpenAI)</td>
-<td>OpenAI API key</td>
+<td>Optional</td>
+<td>Needed only for direct OpenAI API-key traffic</td>
 </tr>
 <tr>
 <td><code>GOOGLE_API_KEY</code> or <code>GEMINI_API_KEY</code></td>
-<td>✅ Yes (if using Google)</td>
-<td>Google / Gemini API key</td>
+<td>Optional</td>
+<td>Needed only for direct Google API-key traffic</td>
 </tr>
 </tbody>
 </table>
-<p>At least one API key is required. The proxy auto-detects which provider to use based on the model name.</p>
+<p>TokenPak itself does not require an API key or an explicit model selection.
+Direct API clients still need the credential required by their upstream
+provider. Already-authenticated clients can keep using their existing session
+credentials; for example, <code>tokenpak codex</code> reuses Codex OAuth and preserves the
+client's selected or default model.</p>
 <hr />
 <h2 id="bind-address-network-exposure-security-relevant">Bind address &amp; network exposure (security-relevant)<a class="headerlink" href="#bind-address-network-exposure-security-relevant" title="Permanent link">&para;</a></h2>
 <p>By default TokenPak binds the proxy to <strong><code>127.0.0.1</code> (localhost only)</strong> — it is <strong>not</strong> reachable from other machines out of the box.</p>

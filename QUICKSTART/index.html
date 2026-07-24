@@ -711,6 +711,17 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#codex-cli-with-oauth" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Codex CLI with OAuth
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#aider-cursor-continuedev-cline" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -3032,6 +3043,17 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#codex-cli-with-oauth" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Codex CLI with OAuth
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#aider-cursor-continuedev-cline" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -3189,13 +3211,13 @@
 tokenpak<span class="w"> </span>status
 </code></pre></div>
 <h2 id="2-one-command-setup">2. One-command setup<a class="headerlink" href="#2-one-command-setup" title="Permanent link">&para;</a></h2>
-<p>The interactive wizard detects your API keys, picks a compression profile, writes <code>~/.tokenpak/config.yaml</code>, and starts the proxy:</p>
+<p>The interactive wizard detects optional provider API keys, picks a compression profile, writes <code>~/.tokenpak/config.yaml</code>, and starts the proxy:</p>
 <div class="highlight"><pre><span></span><code>tokenpak<span class="w"> </span>setup
 </code></pre></div>
 <p>The wizard:</p>
 <ol>
-<li>Scans your environment for <code>ANTHROPIC_API_KEY</code>, <code>OPENAI_API_KEY</code>, <code>GOOGLE_API_KEY</code>.</li>
-<li>Asks which provider to proxy + which compression profile (minimal / balanced / aggressive).</li>
+<li>Scans your environment for optional <code>ANTHROPIC_API_KEY</code>, <code>OPENAI_API_KEY</code>, and <code>GOOGLE_API_KEY</code> values. If none are present, setup continues normally for clients that already have their own credentials.</li>
+<li>Asks for the port and compression profile (minimal / balanced / aggressive). A default provider is requested only when direct provider keys were detected.</li>
 <li>Writes config, launches the proxy on <code>127.0.0.1:8766</code>, and prints next steps.</li>
 </ol>
 <p>If you prefer manual configuration, <code>tokenpak start</code> brings the proxy up with defaults.</p>
@@ -3211,6 +3233,14 @@ tokenpak<span class="w"> </span>status
 <h3 id="claude-code-tui-cli">Claude Code (TUI / CLI)<a class="headerlink" href="#claude-code-tui-cli" title="Permanent link">&para;</a></h3>
 <p>Claude Code reads <code>ANTHROPIC_BASE_URL</code> from the environment the same as the SDK. Start Claude Code after setting the env var and it will route through TokenPak automatically.</p>
 <p>On provider-cached flows like Claude Code, observed incremental savings can be lower than on direct-API workloads — the provider's own prompt cache already absorbs most of the token pool. TokenPak optimizes the user-controlled portion. See the <a href="../SAVINGS/">Savings reporting</a> page for the full framing.</p>
+<h3 id="codex-cli-with-oauth">Codex CLI with OAuth<a class="headerlink" href="#codex-cli-with-oauth" title="Permanent link">&para;</a></h3>
+<p>If Codex is already signed in, no OpenAI or Anthropic API key and no explicit
+model override are required:</p>
+<div class="highlight"><pre><span></span><code>tokenpak<span class="w"> </span>codex
+</code></pre></div>
+<p>TokenPak reuses Codex's existing OAuth request path and preserves the model
+selected by Codex. See <a href="../guides/codex/">Use TokenPak with Codex CLI</a> for the
+temporary-session behavior when another Codex session is already running.</p>
 <h3 id="aider-cursor-continuedev-cline">Aider, Cursor, Continue.dev, Cline<a class="headerlink" href="#aider-cursor-continuedev-cline" title="Permanent link">&para;</a></h3>
 <p>These accept an <code>ANTHROPIC_BASE_URL</code> or <code>OPENAI_BASE_URL</code> override via their config file or environment — consult the tool's own docs for the exact setting. The common pattern is "override the base URL; TokenPak is drop-in compatible."</p>
 <h3 id="direct-python-with-the-sdk">Direct Python with the SDK<a class="headerlink" href="#direct-python-with-the-sdk" title="Permanent link">&para;</a></h3>
@@ -3228,7 +3258,7 @@ tokenpak<span class="w"> </span>status
 <p>Check health:</p>
 <div class="highlight"><pre><span></span><code>curl<span class="w"> </span>http://127.0.0.1:8766/health
 </code></pre></div>
-<p>Expected response: <code>{"status": "healthy"}</code>.</p>
+<p>Expected response includes <code>{"status": "ok", "version": "1.14.0"}</code>.</p>
 <h2 id="5-see-your-savings">5. See your savings<a class="headerlink" href="#5-see-your-savings" title="Permanent link">&para;</a></h2>
 <p>After a handful of real requests through the proxy:</p>
 <div class="highlight"><pre><span></span><code>tokenpak<span class="w"> </span>savings
@@ -3289,7 +3319,10 @@ tokenpak<span class="w"> </span>start
 </ul>
 <p><strong>Wizard prints "No API keys detected"</strong></p>
 <ul>
-<li>Set at least one of <code>ANTHROPIC_API_KEY</code>, <code>OPENAI_API_KEY</code>, or <code>GOOGLE_API_KEY</code> before running <code>tokenpak setup</code>.</li>
+<li>This is informational. Continue without a key when your client already has
+  its own authenticated session, such as Codex OAuth. For direct provider API
+  traffic, set only the relevant <code>ANTHROPIC_API_KEY</code>, <code>OPENAI_API_KEY</code>, or
+  <code>GOOGLE_API_KEY</code> and rerun setup.</li>
 </ul>
 
 

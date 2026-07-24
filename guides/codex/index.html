@@ -1819,13 +1819,41 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#2-point-codex-cli-at-the-proxy" class="md-nav__link">
+  <a href="#2-launch-codex-through-tokenpak" class="md-nav__link">
     <span class="md-ellipsis">
       
-        2. Point Codex CLI at the proxy
+        2. Launch Codex through TokenPak
       
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="2. Launch Codex through TokenPak">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#manual-shell-scoped-route" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Manual shell-scoped route
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#when-another-codex-session-is-already-running" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        When another Codex session is already running
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -2938,13 +2966,41 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#2-point-codex-cli-at-the-proxy" class="md-nav__link">
+  <a href="#2-launch-codex-through-tokenpak" class="md-nav__link">
     <span class="md-ellipsis">
       
-        2. Point Codex CLI at the proxy
+        2. Launch Codex through TokenPak
       
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="2. Launch Codex through TokenPak">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#manual-shell-scoped-route" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Manual shell-scoped route
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#when-another-codex-session-is-already-running" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        When another Codex session is already running
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -3082,20 +3138,24 @@
 <li>Python 3.10+</li>
 <li>No existing <code>OPENAI_BASE_URL</code> override that conflicts</li>
 </ul>
+<p>An OpenAI or Anthropic API key is <strong>not</strong> required for this path. You also do
+not need to choose a model in TokenPak: the launcher preserves the model Codex
+selected, or Codex's own default.</p>
 <hr />
 <h2 id="copy-paste-setup">Copy-paste setup<a class="headerlink" href="#copy-paste-setup" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code>pip<span class="w"> </span>install<span class="w"> </span>tokenpak
+<div class="highlight"><pre><span></span><code>pip<span class="w"> </span>install<span class="w"> </span>--upgrade<span class="w"> </span><span class="nv">tokenpak</span><span class="o">==</span><span class="m">1</span>.14.0
 tokenpak<span class="w"> </span>setup
-<span class="nb">export</span><span class="w"> </span><span class="nv">OPENAI_BASE_URL</span><span class="o">=</span>http://localhost:8766/v1
-codex<span class="w"> </span><span class="nb">exec</span><span class="w"> </span><span class="s2">&quot;your prompt&quot;</span>
+tokenpak<span class="w"> </span>codex
 </code></pre></div>
-<p>The third line points Codex CLI at TokenPak only for the current shell. Export it from <code>~/.bashrc</code> or <code>~/.zshrc</code> if you want every future Codex session routed through TokenPak.</p>
+<p><code>tokenpak codex</code> launches Codex with the TokenPak route for that process. It
+does not edit <code>~/.codex/auth.json</code>, require a provider key, or override the
+model selected by Codex.</p>
 <hr />
 <h2 id="1-install-and-start-tokenpak">1. Install and start TokenPak<a class="headerlink" href="#1-install-and-start-tokenpak" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code>pip<span class="w"> </span>install<span class="w"> </span>tokenpak
 tokenpak<span class="w"> </span>setup
 </code></pre></div>
-<p><code>tokenpak setup</code> detects your API keys, creates <code>~/.tokenpak/config.yaml</code>, and starts the proxy on port 8766. You should see:</p>
+<p><code>tokenpak setup</code> detects optional provider API keys, creates <code>~/.tokenpak/config.yaml</code>, and starts the proxy on port 8766. If no keys are present, setup continues for clients such as Codex that already have their own credentials. You should see:</p>
 <div class="highlight"><pre><span></span><code>TokenPak proxy listening on http://localhost:8766
 </code></pre></div>
 <p>Confirm the proxy is healthy:</p>
@@ -3105,7 +3165,7 @@ tokenpak<span class="w"> </span>setup
 <div class="highlight"><pre><span></span><code><span class="p">{</span>
 <span class="w">  </span><span class="nt">&quot;status&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ok&quot;</span><span class="p">,</span>
 <span class="w">  </span><span class="nt">&quot;uptime_seconds&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;version&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;1.13.0&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;version&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;1.14.0&quot;</span><span class="p">,</span>
 <span class="w">  </span><span class="nt">&quot;requests_total&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
 <span class="w">  </span><span class="nt">&quot;requests_errors&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
 <span class="w">  </span><span class="nt">&quot;compression_ratio_avg&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.0</span>
@@ -3113,7 +3173,13 @@ tokenpak<span class="w"> </span>setup
 </code></pre></div>
 <p>If <code>status</code> is not <code>"ok"</code>, run <code>tokenpak status</code> for details before continuing.</p>
 <hr />
-<h2 id="2-point-codex-cli-at-the-proxy">2. Point Codex CLI at the proxy<a class="headerlink" href="#2-point-codex-cli-at-the-proxy" title="Permanent link">&para;</a></h2>
+<h2 id="2-launch-codex-through-tokenpak">2. Launch Codex through TokenPak<a class="headerlink" href="#2-launch-codex-through-tokenpak" title="Permanent link">&para;</a></h2>
+<p>The recommended path is:</p>
+<div class="highlight"><pre><span></span><code>tokenpak<span class="w"> </span>codex
+</code></pre></div>
+<p>TokenPak supplies the route only to the launched process and reuses Codex's
+existing OAuth state. Normal model selection remains owned by Codex.</p>
+<h3 id="manual-shell-scoped-route">Manual shell-scoped route<a class="headerlink" href="#manual-shell-scoped-route" title="Permanent link">&para;</a></h3>
 <p>Codex CLI uses the same <code>OPENAI_BASE_URL</code> environment variable as the OpenAI SDK to redirect API traffic.</p>
 <div class="highlight"><pre><span></span><code><span class="nb">export</span><span class="w"> </span><span class="nv">OPENAI_BASE_URL</span><span class="o">=</span>http://localhost:8766/v1
 codex<span class="w"> </span><span class="nb">exec</span><span class="w"> </span><span class="s2">&quot;summarize the last commit&quot;</span>
@@ -3126,6 +3192,21 @@ codex<span class="w"> </span><span class="nb">exec</span><span class="w"> </span
 <div class="highlight"><pre><span></span><code><span class="nb">source</span><span class="w"> </span>~/.bashrc<span class="w">   </span><span class="c1"># or source ~/.zshrc</span>
 </code></pre></div>
 <p>You do not edit <code>~/.codex/auth.json</code> — Codex CLI owns that file and rotates the OAuth token itself. TokenPak reads the token from the request's <code>Authorization</code> header at proxy time, recognizes the JWT shape, and forwards byte-preserved to the ChatGPT backend.</p>
+<h3 id="when-another-codex-session-is-already-running">When another Codex session is already running<a class="headerlink" href="#when-another-codex-session-is-already-running" title="Permanent link">&para;</a></h3>
+<p>TokenPak first inspects the shared local history for a verified live or stopped
+holder. In an interactive terminal, verified contention may produce this
+choice:</p>
+<div class="highlight"><pre><span></span><code>Another Codex session is using your shared local history.
+Start a temporary session without that prior history? [y/N]
+</code></pre></div>
+<p>The safe default is <strong>No</strong>. If you accept, the temporary session receives a new
+history lineage for that launch; it does not attach or replace the prior shared
+history, and later normal launches return to the shared lineage. TokenPak does
+not ask you to select or manage <code>CODEX_HOME</code>.</p>
+<p>If inspection is incomplete, permissions or storage fail, state appears
+corrupt, or the cause is unknown, TokenPak refuses the fallback rather than
+guessing. Close the active session normally or resolve the reported diagnostic
+before retrying.</p>
 <hr />
 <h2 id="3-verify-the-proxy-is-intercepting-traffic">3. Verify the proxy is intercepting traffic<a class="headerlink" href="#3-verify-the-proxy-is-intercepting-traffic" title="Permanent link">&para;</a></h2>
 <p>Run any Codex command. Then in a second terminal:</p>
