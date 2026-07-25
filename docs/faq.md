@@ -142,7 +142,7 @@ A full example with a local Ollama instance is in the docs.
 
 ### Can I use TokenPak with my favorite SDK (LangChain, LiteLLM, etc.)?
 
-TokenPak speaks the OpenAI and Anthropic request shapes, so most SDKs work by changing the base URL to `http://localhost:8766`; your real API key stays where the SDK already reads it from. Tested adapters are OpenAI SDK, Anthropic SDK, and LiteLLM. Other OpenAI-compatible SDKs — LangChain, LlamaIndex, AutoGen, CrewAI — are expected to work but are not yet verified; see the adapter compatibility matrix for current status.
+TokenPak speaks the OpenAI and Anthropic request shapes, so most SDKs work by changing the base URL to `http://127.0.0.1:8766`; your real API key stays where the SDK already reads it from. Tested adapters are OpenAI SDK, Anthropic SDK, and LiteLLM. Other OpenAI-compatible SDKs — LangChain, LlamaIndex, AutoGen, CrewAI — are expected to work but are not yet verified; see the [adapter compatibility matrix](https://github.com/tokenpak/tokenpak/blob/main/docs/adapter-compatibility-matrix.md) for current status.
 
 ### Can I modify requests/responses in-flight?
 

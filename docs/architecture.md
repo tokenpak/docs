@@ -65,9 +65,9 @@ Enforces per-IP rate limiting, per-model rate limits, and cost-per-minute budget
 **Responsibility:** Rate limit enforcement, cost-based throttling, backpressure handling.
 
 ### 6. **Provider Router**
-Holds provider-selection policy — request metadata, fallback rules, provider health, weighted routing, circuit breakers, and failover logic. This is configurable scaffolding; in-flight enforcement on the request path is not active by default.
+Holds provider-selection policy — request metadata, fallback rules, provider health, weighted routing, circuit breakers, and failover logic. The proxy does not enforce this policy on the request path.
 
-**Responsibility:** Provider selection, failover logic, circuit breaker management, health checking.
+**Responsibility:** Holds provider-selection and failover policy; does not enforce it on the request path.
 
 ### 7. **Monitoring & Observability**
 Real-time stats collection: token usage, cost, cache hit rates, latency, provider health. Exports metrics to dashboards and analytics tools.
