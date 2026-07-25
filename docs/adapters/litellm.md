@@ -4,13 +4,13 @@
 
 ## Why Use LiteLLM + TokenPak?
 
-| Feature | LiteLLM | TokenPak | Together |
-|---------|---------|----------|----------|
-| **Multi-provider routing** | ✅ Fallback, cost optimization | — | ✅ Add compression + caching |
-| **OpenAI compatibility** | ✅ Unified API | ✅ `/v1/chat/completions` | ✅ Same request shape end to end |
-| **Token compression** | — | ✅ Reduce input/output tokens | ✅ Lower costs further |
-| **Request caching** | — | ✅ Cache identical prompts | ✅ Deduplicate across clients |
-| **Token accounting** | Provider-level | ✅ Per-request stats/usage | ✅ Unified usage tracking |
+Routing LiteLLM through TokenPak adds a pre-inference layer to a stack you already run:
+
+- **Context retrieval before inference** — matches from your indexed vault are spliced into eligible requests before they leave your machine.
+- **Deterministic packing** — repeated boilerplate, file contents and system prompts stop being re-sent in full.
+- **Per-request records** — what was injected, from which sources, at what token cost.
+
+LiteLLM keeps doing what it does; TokenPak sits in front of it.
 
 ### Use Cases
 - **Multi-provider fallback** with TokenPak compression: Use LiteLLM's fallback to Claude → Gemini → GPT, with TokenPak deduplicating requests across all routes
