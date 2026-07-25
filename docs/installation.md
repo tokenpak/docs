@@ -41,8 +41,6 @@ TokenPak can optionally integrate with popular frameworks. These are NOT require
 # For LangChain integration
 pip install tokenpak[langchain]
 
-# For CrewAI integration
-pip install tokenpak[crewai]
 
 # For agentic frameworks
 pip install tokenpak[agentic]
