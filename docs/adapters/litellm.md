@@ -7,10 +7,10 @@
 | Feature | LiteLLM | TokenPak | Together |
 |---------|---------|----------|----------|
 | **Multi-provider routing** | ✅ Fallback, cost optimization | — | ✅ Add compression + caching |
-| **OpenAI compatibility** | ✅ Unified API | ✅ `/v1/chat/completions` | ✅ Seamless integration |
+| **OpenAI compatibility** | ✅ Unified API | ✅ `/v1/chat/completions` | ✅ Same request shape end to end |
 | **Token compression** | — | ✅ Reduce input/output tokens | ✅ Lower costs further |
 | **Request caching** | — | ✅ Cache identical prompts | ✅ Deduplicate across clients |
-| **Token accounting** | Limited | ✅ Detailed stats/usage | ✅ Unified usage tracking |
+| **Token accounting** | Provider-level | ✅ Per-request stats/usage | ✅ Unified usage tracking |
 
 ### Use Cases
 - **Multi-provider fallback** with TokenPak compression: Use LiteLLM's fallback to Claude → Gemini → GPT, with TokenPak deduplicating requests across all routes

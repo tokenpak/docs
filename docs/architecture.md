@@ -65,7 +65,7 @@ Enforces per-IP rate limiting, per-model rate limits, and cost-per-minute budget
 **Responsibility:** Rate limit enforcement, cost-based throttling, backpressure handling.
 
 ### 6. **Provider Router**
-Decides which LLM provider to use based on request metadata, fallback rules, and provider health. Supports weighted routing, circuit breakers (detects down providers), and failover logic.
+Holds provider-selection policy — request metadata, fallback rules, provider health, weighted routing, circuit breakers, and failover logic. This is configurable scaffolding; in-flight enforcement on the request path is not active by default.
 
 **Responsibility:** Provider selection, failover logic, circuit breaker management, health checking.
 

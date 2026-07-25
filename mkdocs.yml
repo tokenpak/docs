@@ -44,7 +44,6 @@ nav:
   - Getting Started:
     - Installation: installation.md
     - Quick Start: QUICKSTART.md
-    - Comparison: comparison.md
     - Compatibility: COMPATIBILITY.md
     - Demo Data: demo.md
   - User Guide:
