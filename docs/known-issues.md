@@ -14,13 +14,19 @@ If you hit something not listed here, file it at [github.com/tokenpak/tokenpak/i
 
 **Status:** affects fresh installs only.
 
-The canonical local-storage path is `~/.tpk/`. Existing installs continue to read from `~/.tokenpak/` (the legacy fallback) and are not migrated automatically. The CLI resolves paths in this order:
+The canonical local-storage path is `~/.tpk/`. Existing installs continue to read and write where they already live and are not migrated automatically. Resolution order:
 
 1. `$TOKENPAK_HOME` (operator override)
-2. `~/.tpk/` (canonical default)
-3. `~/.tokenpak/` (legacy fallback — only when `~/.tpk/` is absent and legacy exists)
+2. whichever home already **holds state**, canonical preferred
+3. `~/.tpk/` if it exists (canonical default)
+4. `~/.tokenpak/` if it exists (legacy fallback — zero-touch upgrade)
+5. `~/.tpk/`
 
-If you started with TokenPak before May 2026, you can keep using `~/.tokenpak/`. Fresh installs will create `~/.tpk/`. Some docs and examples still reference `~/.tokenpak/`; both paths work today.
+Step 2 is what keeps an upgrade safe. Resolving on mere directory *existence* meant a `~/.tpk/` created as a side effect could take over an install whose state lived in `~/.tokenpak/`, and every subsequent read would come back empty — on a Pro install, that read back as Free. Resolution now follows the state, so an existing install is never moved out from under its own readers.
+
+A *new* install always starts canonical: TokenPak will not begin one in the legacy directory. An *existing* legacy install stays put until `tokenpak config migrate` moves it explicitly.
+
+The resolver never creates directories — reading where your state lives cannot bring a home into being. Some docs and examples still reference `~/.tokenpak/`; both paths work today.
 
 ---
 
@@ -41,23 +47,21 @@ See the [Recall overview](recall/index.md) for the full OSS-vs-planned split.
 
 ---
 
-## Some documented CLI commands are experimental
+## Not every command the CLI accepts is part of the supported surface
 
-**Status:** stability flag missing.
+**Status:** classified, and the classification is enforced.
 
-The CLI exposes ~47 top-level commands. The following families are functional but their surface, output format, and flag set may change without notice during the beta:
+The parser registers 90 commands. Forty are the supported beta surface; the other fifty are reachable but not verified for this release, and each one carries a written reason for its exclusion.
 
-- `tokenpak fleet ...` — multi-machine orchestration
-- `tokenpak macro ...` — user-defined YAML macros
-- `tokenpak template ...` — template expansion
-- `tokenpak recipe ...` — recipe management
-- `tokenpak audit ...` — audit log management
-- `tokenpak agent ...` — agent coordination locks
-- `tokenpak trigger ...` — event triggers
-- `tokenpak retrieval ...` — hybrid retrieval debug
-- `tokenpak goals ...` — savings goals
+The distinction is not advisory. An allowlist names the supported set, a test pairs it against the live parser, and both default help surfaces list only supported commands — so a verb cannot quietly enter or leave the product.
 
-Treat anything outside the stable verbs (`start`/`stop`/`status`/`savings`/`cost`/`setup`/`doctor`/`config`/`index`/`search`/`stats`/`models`/`budget`/`dashboard`/`update`/`version`) as subject to change.
+**Excluded is not removed.** Every excluded command still parses and still runs; what it loses is a place in default discovery. To see them with their reasons:
+
+```bash
+tokenpak help --all
+```
+
+Some are excluded because they are aimed at operators rather than a single machine (`fleet`, `audit`, `agent`, `compliance`). Some spend real money or need live provider traffic (`benchmark`, `calibrate`). Some are genuinely not finished, and say so — `watch` describes itself as unimplemented and points at `dashboard`; `last` is a stub with no implementation behind it. The reason is attached to each, so "this is ready" is distinguishable from "this is reachable" without guessing.
 
 ---
 
