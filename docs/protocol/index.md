@@ -1,4 +1,4 @@
-# TIP-1.0 — TokenPak Integration Protocol
+# TIP-1.0 — TokenPak Integrity Protocol
 
 **TIP-1.0** is the contract a component implements to interoperate with TokenPak.
 If you are building an adapter, a plugin, an alternate proxy, a dashboard, or any
