@@ -27,7 +27,7 @@ selected, or Codex's own default.
 ## Copy-paste setup
 
 ```bash
-pip install --upgrade tokenpak==1.14.0
+pip install --upgrade tokenpak==1.16.0
 tokenpak setup
 tokenpak codex
 ```
@@ -63,7 +63,7 @@ Expected response shape:
 {
   "status": "ok",
   "uptime_seconds": 3,
-  "version": "1.14.0",
+  "version": "1.16.0",
   "requests_total": 0,
   "requests_errors": 0,
   "compression_ratio_avg": 0.0
