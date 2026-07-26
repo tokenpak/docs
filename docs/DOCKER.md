@@ -57,7 +57,7 @@ docker-compose down
 
 ```bash
 docker build -t tokenpak:latest .
-docker build -t tokenpak:v1.14.0 .  # With version tag
+docker build -t tokenpak:v1.16.0 .  # With version tag
 ```
 
 ### Build with Custom Base Image
@@ -208,7 +208,7 @@ curl http://localhost:8766/health
 {
   "status": "ok",
   "uptime_seconds": 3600,
-  "version": "1.14.0",
+  "version": "1.16.0",
   "requests_total": 15000,
   "requests_errors": 0,
   "compression_ratio_avg": 0.23,
