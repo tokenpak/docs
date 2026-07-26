@@ -3934,7 +3934,7 @@ docker-compose<span class="w"> </span>down
 <h2 id="build-instructions">Build Instructions<a class="headerlink" href="#build-instructions" title="Permanent link">&para;</a></h2>
 <h3 id="standard-build">Standard Build<a class="headerlink" href="#standard-build" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code>docker<span class="w"> </span>build<span class="w"> </span>-t<span class="w"> </span>tokenpak:latest<span class="w"> </span>.
-docker<span class="w"> </span>build<span class="w"> </span>-t<span class="w"> </span>tokenpak:v1.14.0<span class="w"> </span>.<span class="w">  </span><span class="c1"># With version tag</span>
+docker<span class="w"> </span>build<span class="w"> </span>-t<span class="w"> </span>tokenpak:v1.16.0<span class="w"> </span>.<span class="w">  </span><span class="c1"># With version tag</span>
 </code></pre></div>
 <h3 id="build-with-custom-base-image">Build with Custom Base Image<a class="headerlink" href="#build-with-custom-base-image" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code>docker<span class="w"> </span>build<span class="w"> </span>--build-arg<span class="w"> </span><span class="nv">BASE_IMAGE</span><span class="o">=</span>python:3.12-slim<span class="w"> </span>-t<span class="w"> </span>tokenpak<span class="w"> </span>.
@@ -4062,7 +4062,7 @@ curl<span class="w"> </span>http://localhost:8766/health
 <div class="highlight"><pre><span></span><code><span class="p">{</span>
 <span class="w">  </span><span class="nt">&quot;status&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ok&quot;</span><span class="p">,</span>
 <span class="w">  </span><span class="nt">&quot;uptime_seconds&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">3600</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;version&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;1.14.0&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;version&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;1.16.0&quot;</span><span class="p">,</span>
 <span class="w">  </span><span class="nt">&quot;requests_total&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">15000</span><span class="p">,</span>
 <span class="w">  </span><span class="nt">&quot;requests_errors&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
 <span class="w">  </span><span class="nt">&quot;compression_ratio_avg&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.23</span><span class="p">,</span>
