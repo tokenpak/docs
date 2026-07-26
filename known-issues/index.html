@@ -1033,10 +1033,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#some-documented-cli-commands-are-experimental" class="md-nav__link">
+  <a href="#not-every-command-the-cli-accepts-is-part-of-the-supported-surface" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Some documented CLI commands are experimental
+        Not every command the CLI accepts is part of the supported surface
       
     </span>
   </a>
@@ -2870,10 +2870,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#some-documented-cli-commands-are-experimental" class="md-nav__link">
+  <a href="#not-every-command-the-cli-accepts-is-part-of-the-supported-surface" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Some documented CLI commands are experimental
+        Not every command the CLI accepts is part of the supported surface
       
     </span>
   </a>
@@ -2945,18 +2945,22 @@
 
 
 <h1 id="known-issues-oss-beta">Known Issues — OSS beta<a class="headerlink" href="#known-issues-oss-beta" title="Permanent link">&para;</a></h1>
-<p>This page tracks current limitations of the <strong>OSS beta</strong> (<code>pip install tokenpak</code>, v1.14.0). The intent is <strong>beta honesty</strong>: if a documented capability isn't shipping the way the rest of the docs imply, it shows up here.</p>
+<p>This page tracks current limitations of the <strong>OSS beta</strong> (<code>pip install tokenpak</code>, v1.16.0). The intent is <strong>beta honesty</strong>: if a documented capability isn't shipping the way the rest of the docs imply, it shows up here.</p>
 <p>If you hit something not listed here, file it at <a href="https://github.com/tokenpak/tokenpak/issues">github.com/tokenpak/tokenpak/issues</a>.</p>
 <hr />
 <h2 id="storage-path-migration-in-progress">Storage path migration in progress<a class="headerlink" href="#storage-path-migration-in-progress" title="Permanent link">&para;</a></h2>
 <p><strong>Status:</strong> affects fresh installs only.</p>
-<p>The canonical local-storage path is <code>~/.tpk/</code>. Existing installs continue to read from <code>~/.tokenpak/</code> (the legacy fallback) and are not migrated automatically. The CLI resolves paths in this order:</p>
+<p>The canonical local-storage path is <code>~/.tpk/</code>. Existing installs continue to read and write where they already live and are not migrated automatically. Resolution order:</p>
 <ol>
 <li><code>$TOKENPAK_HOME</code> (operator override)</li>
-<li><code>~/.tpk/</code> (canonical default)</li>
-<li><code>~/.tokenpak/</code> (legacy fallback — only when <code>~/.tpk/</code> is absent and legacy exists)</li>
+<li>whichever home already <strong>holds state</strong>, canonical preferred</li>
+<li><code>~/.tpk/</code> if it exists (canonical default)</li>
+<li><code>~/.tokenpak/</code> if it exists (legacy fallback — zero-touch upgrade)</li>
+<li><code>~/.tpk/</code></li>
 </ol>
-<p>If you started with TokenPak before May 2026, you can keep using <code>~/.tokenpak/</code>. Fresh installs will create <code>~/.tpk/</code>. Some docs and examples still reference <code>~/.tokenpak/</code>; both paths work today.</p>
+<p>Step 2 is what keeps an upgrade safe. Resolving on mere directory <em>existence</em> meant a <code>~/.tpk/</code> created as a side effect could take over an install whose state lived in <code>~/.tokenpak/</code>, and every subsequent read would come back empty — on a Pro install, that read back as Free. Resolution now follows the state, so an existing install is never moved out from under its own readers.</p>
+<p>A <em>new</em> install always starts canonical: TokenPak will not begin one in the legacy directory. An <em>existing</em> legacy install stays put until <code>tokenpak config migrate</code> moves it explicitly.</p>
+<p>The resolver never creates directories — reading where your state lives cannot bring a home into being. Some docs and examples still reference <code>~/.tokenpak/</code>; both paths work today.</p>
 <hr />
 <h2 id="pak-scoring-ranking-and-assembly-are-not-in-the-oss-beta">Pak scoring, ranking, and assembly are not in the OSS beta<a class="headerlink" href="#pak-scoring-ranking-and-assembly-are-not-in-the-oss-beta" title="Permanent link">&para;</a></h2>
 <p><strong>Status:</strong> by design.</p>
@@ -2970,21 +2974,14 @@
 <p><code>tokenpak pakplan</code> ships <code>preview</code>, <code>explain</code>, and <code>report</code> (read-only). The scoring engine and autonomous injection pipeline are planned for a later release and are not part of the OSS beta surface.</p>
 <p>See the <a href="../recall/">Recall overview</a> for the full OSS-vs-planned split.</p>
 <hr />
-<h2 id="some-documented-cli-commands-are-experimental">Some documented CLI commands are experimental<a class="headerlink" href="#some-documented-cli-commands-are-experimental" title="Permanent link">&para;</a></h2>
-<p><strong>Status:</strong> stability flag missing.</p>
-<p>The CLI exposes ~47 top-level commands. The following families are functional but their surface, output format, and flag set may change without notice during the beta:</p>
-<ul>
-<li><code>tokenpak fleet ...</code> — multi-machine orchestration</li>
-<li><code>tokenpak macro ...</code> — user-defined YAML macros</li>
-<li><code>tokenpak template ...</code> — template expansion</li>
-<li><code>tokenpak recipe ...</code> — recipe management</li>
-<li><code>tokenpak audit ...</code> — audit log management</li>
-<li><code>tokenpak agent ...</code> — agent coordination locks</li>
-<li><code>tokenpak trigger ...</code> — event triggers</li>
-<li><code>tokenpak retrieval ...</code> — hybrid retrieval debug</li>
-<li><code>tokenpak goals ...</code> — savings goals</li>
-</ul>
-<p>Treat anything outside the stable verbs (<code>start</code>/<code>stop</code>/<code>status</code>/<code>savings</code>/<code>cost</code>/<code>setup</code>/<code>doctor</code>/<code>config</code>/<code>index</code>/<code>search</code>/<code>stats</code>/<code>models</code>/<code>budget</code>/<code>dashboard</code>/<code>update</code>/<code>version</code>) as subject to change.</p>
+<h2 id="not-every-command-the-cli-accepts-is-part-of-the-supported-surface">Not every command the CLI accepts is part of the supported surface<a class="headerlink" href="#not-every-command-the-cli-accepts-is-part-of-the-supported-surface" title="Permanent link">&para;</a></h2>
+<p><strong>Status:</strong> classified, and the classification is enforced.</p>
+<p>The parser registers 90 commands. Forty are the supported beta surface; the other fifty are reachable but not verified for this release, and each one carries a written reason for its exclusion.</p>
+<p>The distinction is not advisory. An allowlist names the supported set, a test pairs it against the live parser, and both default help surfaces list only supported commands — so a verb cannot quietly enter or leave the product.</p>
+<p><strong>Excluded is not removed.</strong> Every excluded command still parses and still runs; what it loses is a place in default discovery. To see them with their reasons:</p>
+<div class="highlight"><pre><span></span><code>tokenpak<span class="w"> </span><span class="nb">help</span><span class="w"> </span>--all
+</code></pre></div>
+<p>Some are excluded because they are aimed at operators rather than a single machine (<code>fleet</code>, <code>audit</code>, <code>agent</code>, <code>compliance</code>). Some spend real money or need live provider traffic (<code>benchmark</code>, <code>calibrate</code>). Some are genuinely not finished, and say so — <code>watch</code> describes itself as unimplemented and points at <code>dashboard</code>; <code>last</code> is a stub with no implementation behind it. The reason is attached to each, so "this is ready" is distinguishable from "this is reachable" without guessing.</p>
 <hr />
 <h2 id="default-port-standardization">Default port standardization<a class="headerlink" href="#default-port-standardization" title="Permanent link">&para;</a></h2>
 <p><strong>Status:</strong> docs cleanup landing in beta.</p>
