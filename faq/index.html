@@ -23,7 +23,7 @@
       
       
       <link rel="icon" href="../assets/favicon.ico">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
     
     
       
@@ -31,7 +31,7 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.ec1eaa64.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
       
         
         <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
@@ -3598,7 +3598,13 @@
 <hr />
 <h2 id="security-privacy">Security &amp; Privacy<a class="headerlink" href="#security-privacy" title="Permanent link">&para;</a></h2>
 <h3 id="is-my-data-stored-is-it-encrypted">Is my data stored? Is it encrypted?<a class="headerlink" href="#is-my-data-stored-is-it-encrypted" title="Permanent link">&para;</a></h3>
-<p>Your data never leaves your machine. TokenPak runs locally and only talks to the upstream provider's API. No external logging, no analytics, no cloud component. Cached responses live in a local SQLite ledger (<code>~/.tokenpak/monitor.db</code> or <code>~/.tpk/monitor.db</code> on fresh installs) with a configurable TTL. Full details on the <a href="https://tokenpak.ai/compliance/privacy">tokenpak.ai privacy page</a>.</p>
+<p>The TokenPak proxy and its local ledger run on your machine. Provider-bound
+prompts, responses, and credentials still travel between your client and the
+upstream provider you configure; they do not pass through a TokenPak cloud
+service. TokenPak sends no telemetry home by default. Cached responses live in
+a local SQLite ledger (<code>~/.tokenpak/monitor.db</code> or <code>~/.tpk/monitor.db</code> on fresh
+installs) with a configurable TTL. Full details are on the
+<a href="https://tokenpak.ai/compliance/privacy">tokenpak.ai privacy page</a>.</p>
 <h3 id="how-does-rate-limiting-work">How does rate limiting work?<a class="headerlink" href="#how-does-rate-limiting-work" title="Permanent link">&para;</a></h3>
 <p>TokenPak supports multiple rate-limiting strategies:</p>
 <ul>
@@ -3760,7 +3766,7 @@
       <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.instant", "navigation.tracking", "navigation.tabs", "navigation.sections", "navigation.top", "search.suggest", "search.highlight", "content.code.copy", "content.code.annotate"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="../assets/javascripts/bundle.d7400e89.min.js"></script>
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
       
     
   </body>
