@@ -21,7 +21,7 @@
       
       
       <link rel="icon" href="assets/favicon.ico">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
     
     
       
@@ -29,7 +29,7 @@
       
     
     
-      <link rel="stylesheet" href="assets/stylesheets/main.ec1eaa64.min.css">
+      <link rel="stylesheet" href="assets/stylesheets/main.484c7ddc.min.css">
       
         
         <link rel="stylesheet" href="assets/stylesheets/palette.ab4e12ef.min.css">
@@ -2878,17 +2878,24 @@
 
 
 <h1 id="tokenpak">TokenPak<a class="headerlink" href="#tokenpak" title="Permanent link">&para;</a></h1>
-<p><strong>A local proxy that compresses your LLM context before it hits the API — fewer tokens, lower cost, same results.</strong></p>
-<p>TokenPak sits between your AI tools and the upstream LLM provider, running entirely on <code>127.0.0.1</code>. It deterministically packages context (Prompt Packing), routes requests, blocks runaway spend before it hits the wire (Spend Guard), and logs every saving locally. No cloud, no credentials stored, no code changes.</p>
+<p><strong>A local proxy that packs LLM context before it reaches the API, with per-request records of what changed.</strong></p>
+<p>TokenPak sits between your AI tools and the upstream LLM provider, with its
+proxy listening on <code>127.0.0.1</code>. It deterministically packages context (Prompt
+Packing), routes requests, evaluates configured Spend Guard limits before
+provider send, and records request results locally. Provider-bound requests
+still travel to the selected upstream provider; TokenPak operates no cloud
+relay and requires no application code changes.</p>
 <div class="admonition note">
-<p class="admonition-title">OSS beta</p>
-<p>These docs describe the <strong>OSS beta</strong> of TokenPak (<code>pip install tokenpak</code>, <strong>v1.16.x</strong> (currently <strong>v1.16.0</strong>), Apache 2.0). Anything not listed here is not part of the beta surface. See <a href="known-issues/">Known Issues</a> for current limitations.</p>
+<p class="admonition-title">v1.17.0 release preparation</p>
+<p>These docs are prepared for the TokenPak <strong>v1.17.0</strong> release candidate. It is not published yet; install the currently published package from PyPI until the release record says otherwise. See <a href="known-issues/">Known Issues</a> for current limitations.</p>
 </div>
 <hr />
 <h2 id="what-ships-in-the-oss-beta">What ships in the OSS beta<a class="headerlink" href="#what-ships-in-the-oss-beta" title="Permanent link">&para;</a></h2>
 <ul>
 <li><strong>Prompt Packing pipeline</strong> — deterministic context reduction on real agent workloads; reduction pinned to an agent-style CI fixture (reproduce with <code>make benchmark-headline</code>); provider-cached flows show lower incremental gains. Measure your own with <code>tokenpak savings</code>.</li>
-<li><strong>Local proxy on 127.0.0.1</strong> — byte-preserved passthrough; your prompts and credentials never leave your machine.</li>
+<li><strong>Local proxy on 127.0.0.1</strong> — processing and records stay local; provider-bound
+  prompts and credentials are sent to the upstream provider you configure, not
+  to a TokenPak cloud service.</li>
 <li><strong>Spend Guard</strong> — pre-send circuit breaker with rolling caps; blocks runaway requests before they reach the provider and returns a clear release directive.</li>
 <li><strong>Nine client integrations</strong> — Claude Code, Cursor, Cline, Continue, Aider, Codex CLI, Gemini CLI, OpenAI SDK, Anthropic SDK.</li>
 <li><strong>Savings Ledger + local dashboard</strong> — every request logged to a local SQLite store with causal attribution; TUI + web dashboard.</li>
@@ -3059,7 +3066,7 @@ tokenpak<span class="w"> </span>setup
       <script id="__config" type="application/json">{"annotate": null, "base": ".", "features": ["navigation.instant", "navigation.tracking", "navigation.tabs", "navigation.sections", "navigation.top", "search.suggest", "search.highlight", "content.code.copy", "content.code.annotate"], "search": "assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="assets/javascripts/bundle.d7400e89.min.js"></script>
+      <script src="assets/javascripts/bundle.79ae519e.min.js"></script>
       
     
   </body>
