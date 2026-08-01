@@ -60,18 +60,18 @@ be backed by a reproducible benchmark receipt (see
 
 ---
 
-## Benchmarks (coming soon)
+## Benchmark evidence
 
-TokenPak is adopting a frozen-fixture benchmark suite so that any published
-latency, throughput, or cost figure is reproducible from a recorded run rather
-than a one-off measurement. Until that suite produces a validated run:
+TokenPak requires a frozen-fixture benchmark run before publishing a latency,
+throughput, or cost figure so the result is reproducible rather than a one-off
+measurement. This page does not yet carry a validated run, so:
 
 - We deliberately **do not** quote a specific latency overhead.
 - The best way to understand TokenPak's impact on **your** workload is to measure
   it in your own environment and deployment path.
 
-When receipt-backed figures are available, they will be published here with the
-run identity needed to reproduce them.
+Any figure added here must include the receipt and run identity needed to
+reproduce it.
 
 ---
 

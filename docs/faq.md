@@ -67,7 +67,13 @@ TokenPak uses native token counters for each provider (Anthropic's `token-counte
 
 ### Is my data stored? Is it encrypted?
 
-Your data never leaves your machine. TokenPak runs locally and only talks to the upstream provider's API. No external logging, no analytics, no cloud component. Cached responses live in a local SQLite ledger (`~/.tokenpak/monitor.db` or `~/.tpk/monitor.db` on fresh installs) with a configurable TTL. Full details on the [tokenpak.ai privacy page](https://tokenpak.ai/compliance/privacy).
+The TokenPak proxy and its local ledger run on your machine. Provider-bound
+prompts, responses, and credentials still travel between your client and the
+upstream provider you configure; they do not pass through a TokenPak cloud
+service. TokenPak sends no telemetry home by default. Cached responses live in
+a local SQLite ledger (`~/.tokenpak/monitor.db` or `~/.tpk/monitor.db` on fresh
+installs) with a configurable TTL. Full details are on the
+[tokenpak.ai privacy page](https://tokenpak.ai/compliance/privacy).
 
 ### How does rate limiting work?
 

@@ -35,7 +35,10 @@ If you prefer manual configuration, `tokenpak start` brings the proxy up with de
 
 ## 3. Point your client at the proxy
 
-Per-client integration is a **one env-var change**. `tokenpak integrate <client>` auto-wire is on the roadmap; until then, set one of these:
+Run `tokenpak integrate <client>` to print the current setup steps. For clients
+that support managed configuration, `tokenpak integrate <client> --apply` can
+write the configuration; instruction-only targets continue with printed
+guidance. The manual environment-variable paths below remain valid:
 
 ### Anthropic SDK / `anthropic` Python client
 
