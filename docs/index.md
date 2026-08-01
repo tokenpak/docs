@@ -6,12 +6,12 @@ hide:
 
 # TokenPak
 
-**A local proxy that compresses your LLM context before it hits the API — fewer tokens, lower cost, same results.**
+**A local proxy that packs LLM context before it reaches the API, with per-request records of what changed.**
 
 TokenPak sits between your AI tools and the upstream LLM provider, running entirely on `127.0.0.1`. It deterministically packages context (Prompt Packing), routes requests, blocks runaway spend before it hits the wire (Spend Guard), and logs every saving locally. No cloud, no credentials stored, no code changes.
 
-!!! note "OSS beta"
-    These docs describe the **OSS beta** of TokenPak (`pip install tokenpak`, **v1.16.x** (currently **v1.16.0**), Apache 2.0). Anything not listed here is not part of the beta surface. See [Known Issues](known-issues.md) for current limitations.
+!!! note "v1.17.0 release preparation"
+    These docs are prepared for the TokenPak **v1.17.0** release candidate. It is not published yet; install the currently published package from PyPI until the release record says otherwise. See [Known Issues](known-issues.md) for current limitations.
 
 ---
 
