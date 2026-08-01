@@ -2,7 +2,7 @@ openapi: "3.1.0"
 
 info:
   title: TokenPak Proxy API
-  version: "1.14.0"
+  version: "1.17.0"
   description: |
     TokenPak is a drop-in HTTP proxy that sits between your app and LLM APIs.
     It compresses requests, deduplicates cache hits, and tracks token spend —
@@ -153,7 +153,7 @@ paths:
               example:
                 status: ok
                 uptime_seconds: 3600
-                version: 1.14.0
+                version: 1.17.0
                 requests_total: 42
                 requests_errors: 0
                 compression_ratio_avg: 0.44
