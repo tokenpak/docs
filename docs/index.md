@@ -8,7 +8,12 @@ hide:
 
 **A local proxy that packs LLM context before it reaches the API, with per-request records of what changed.**
 
-TokenPak sits between your AI tools and the upstream LLM provider, running entirely on `127.0.0.1`. It deterministically packages context (Prompt Packing), routes requests, blocks runaway spend before it hits the wire (Spend Guard), and logs every saving locally. No cloud, no credentials stored, no code changes.
+TokenPak sits between your AI tools and the upstream LLM provider, with its
+proxy listening on `127.0.0.1`. It deterministically packages context (Prompt
+Packing), routes requests, evaluates configured Spend Guard limits before
+provider send, and records request results locally. Provider-bound requests
+still travel to the selected upstream provider; TokenPak operates no cloud
+relay and requires no application code changes.
 
 !!! note "v1.17.0 release preparation"
     These docs are prepared for the TokenPak **v1.17.0** release candidate. It is not published yet; install the currently published package from PyPI until the release record says otherwise. See [Known Issues](known-issues.md) for current limitations.
@@ -18,7 +23,9 @@ TokenPak sits between your AI tools and the upstream LLM provider, running entir
 ## What ships in the OSS beta
 
 - **Prompt Packing pipeline** — deterministic context reduction on real agent workloads; reduction pinned to an agent-style CI fixture (reproduce with `make benchmark-headline`); provider-cached flows show lower incremental gains. Measure your own with `tokenpak savings`.
-- **Local proxy on 127.0.0.1** — byte-preserved passthrough; your prompts and credentials never leave your machine.
+- **Local proxy on 127.0.0.1** — processing and records stay local; provider-bound
+  prompts and credentials are sent to the upstream provider you configure, not
+  to a TokenPak cloud service.
 - **Spend Guard** — pre-send circuit breaker with rolling caps; blocks runaway requests before they reach the provider and returns a clear release directive.
 - **Nine client integrations** — Claude Code, Cursor, Cline, Continue, Aider, Codex CLI, Gemini CLI, OpenAI SDK, Anthropic SDK.
 - **Savings Ledger + local dashboard** — every request logged to a local SQLite store with causal attribution; TUI + web dashboard.
