@@ -15,8 +15,10 @@ provider send, and records request results locally. Provider-bound requests
 still travel to the selected upstream provider; TokenPak operates no cloud
 relay and requires no application code changes.
 
-!!! note "v1.17.0 release preparation"
-    These docs are prepared for the TokenPak **v1.17.0** release candidate. It is not published yet; install the currently published package from PyPI until the release record says otherwise. See [Known Issues](known-issues.md) for current limitations.
+!!! note "v1.17.0"
+    These docs describe TokenPak **v1.17.0**, the currently published release
+    on PyPI (`pip install tokenpak`). See [Known Issues](known-issues.md) for
+    current limitations.
 
 ---
 
