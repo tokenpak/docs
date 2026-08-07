@@ -102,7 +102,7 @@ Check health:
 curl http://127.0.0.1:8766/health
 ```
 
-For v1.18.1, the expected response includes `{"status": "ok", "version": "1.18.1"}`.
+For v1.18.2, the expected response includes `{"status": "ok", "version": "1.18.2"}`.
 
 ## 5. See your savings
 
