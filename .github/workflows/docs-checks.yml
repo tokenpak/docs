@@ -1,0 +1,65 @@
+name: Docs checks
+
+on:
+  pull_request:
+    branches: [main]
+    types: [opened, synchronize, reopened, ready_for_review, edited]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    name: Docs validation
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: ${{ github.event.pull_request.head.sha }}
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Resolve exact pull-request commits
+        env:
+          PR_BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          PR_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: |
+          test "$(git rev-parse HEAD)" = "$PR_HEAD_SHA"
+          git cat-file -e "$PR_BASE_SHA^{commit}"
+          git cat-file -e "$PR_HEAD_SHA^{commit}"
+
+      - name: Install locked documentation toolchain
+        run: |
+          python -m pip install --disable-pip-version-check --no-deps --require-hashes --only-binary=:all: -r requirements-docs.lock
+          python -m pip check
+
+      - name: Self-test pull-request checker
+        run: python -B .github/scripts/test-check-docs-pr.py
+
+      - name: Validate repository and pull request
+        run: |
+          python -B .github/scripts/check-docs-pr.py \
+            --base "${{ github.event.pull_request.base.sha }}" \
+            --head "${{ github.event.pull_request.head.sha }}" \
+            --event "$GITHUB_EVENT_PATH"
+
+      - name: Build documentation
+        run: mkdocs build --strict --site-dir "$RUNNER_TEMP/site"
+
+      - name: Verify public routes
+        run: |
+          for p in QUICKSTART installation quickstart install cli cli-reference \
+                   architecture troubleshooting \
+                   guides/aider guides/anthropic-sdk guides/claude-code guides/cline \
+                   guides/codex guides/continue guides/cursor guides/gemini-cli \
+                   guides/openai-sdk; do
+            test -f "$RUNNER_TEMP/site/$p/index.html"
+          done

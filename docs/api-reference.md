@@ -1,33 +1,42 @@
-# TokenPak API Reference
+---
+title: TokenPak API reference
+rung: 3
+audience: Developers integrating with the TokenPak HTTP API, adapters, or CLI.
+updated: 2026-08-13
+status: current
+---
 
-**Complete reference for the TokenPak proxy HTTP API, SDK adapters, and CLI.**
+# TokenPak API reference
+
+This reference is for developers integrating with the TokenPak proxy HTTP API,
+SDK adapters, or CLI. It covers the v1.19.0 surface described below.
 
 ---
 
-## Table of Contents
+## Table of contents
 
 1. [Proxy HTTP API](#proxy-http-api)
    - [Authentication](#authentication)
-   - [GET Endpoints](#get-endpoints)
-   - [POST Endpoints](#post-endpoints)
-   - [Error Format](#error-format)
-2. [SDK Adapters](#sdk-adapters)
-   - [Base Adapter (TokenPakAdapter)](#base-adapter-tokenpakadapter)
+   - [GET endpoints](#get-endpoints)
+   - [POST endpoints](#post-endpoints)
+   - [Error responses](#error-responses)
+2. [SDK adapters](#sdk-adapters)
+   - [Base adapter (TokenPakAdapter)](#base-adapter-tokenpakadapter)
    - [AnthropicAdapter](#anthropicadapter)
    - [OpenAIAdapter](#openaiadapter)
    - [LangChainAdapter](#langchainadapter)
    - [LiteLLMAdapter](#litellmadapter)
-   - [Exception Hierarchy](#exception-hierarchy)
-3. [CLI Commands](#cli-commands)
-   - [Proxy Lifecycle](#proxy-lifecycle)
-   - [Indexing & Search](#indexing--search)
-   - [Monitoring & Stats](#monitoring--stats)
+   - [Exception hierarchy](#exception-hierarchy)
+3. [CLI commands](#cli-commands)
+   - [Proxy lifecycle](#proxy-lifecycle)
+   - [Indexing and search](#indexing-and-search)
+   - [Monitoring and stats](#monitoring-and-stats)
    - [Diagnostics](#diagnostics)
-   - [Config Management](#config-management)
-   - [Advanced Commands](#advanced-commands)
-4. [Configuration Reference](#configuration-reference)
-   - [Environment Variables](#environment-variables)
-   - [config.yaml](#configyaml)
+   - [Config management](#config-management)
+   - [Advanced commands](#advanced-commands)
+4. [Configuration reference](#configuration-reference)
+   - [Environment variables](#environment-variables)
+   - [config.yaml](#configuration-file)
 
 ---
 
@@ -37,41 +46,23 @@ The TokenPak proxy runs on `localhost:8766` by default. It accepts standard HTTP
 
 ### Authentication
 
-By default, TokenPak allows unauthenticated requests from localhost. For remote clients, authentication is required via header:
+TokenPak allows unauthenticated requests from localhost. A non-localhost bind
+is explicit: set `TOKENPAK_BIND_ADDRESS` and configure
+`TOKENPAK_PROXY_AUTH_TOKEN` on the server. Remote clients authenticate to the
+proxy with the matching Bearer credential:
 
 | Header | Value | Notes |
 |--------|-------|-------|
-| `X-TokenPak-Key` | `<your-proxy-key>` | Required for non-localhost clients |
-| `x-api-key` | `<provider-api-key>` | Provider key, forwarded to upstream |
-| `Authorization` | `Bearer <token>` | Alternative to `x-api-key` |
+| `Authorization` | `Bearer <proxy-auth-token>` | Required for non-localhost clients; stripped before upstream forwarding |
+| `x-api-key` | `<provider-api-key>` | Optional direct provider credential, forwarded upstream |
 
-Requests from non-localhost without `X-TokenPak-Key` receive `401 Unauthorized`.
-
----
-
-### GET Endpoints
-
-#### `GET /`
-
-Welcome / status endpoint. Returns proxy identity and available endpoints.
-
-**Response:**
-```json
-{
-  "name": "TokenPak",
-  "version": "1.16.0",
-  "status": "running",
-  "endpoints": {
-    "health": "/health",
-    "stats": "/stats",
-    "docs": "/docs",
-    "proxy": "/v1/messages (POST), /v1/chat/completions (POST)"
-  },
-  "docs": "https://github.com/tokenpak/tokenpak"
-}
-```
+Non-localhost requests receive `403 Forbidden` when the server has no
+`TOKENPAK_PROXY_AUTH_TOKEN`; a missing, malformed, or incorrect Bearer
+credential receives `401 Unauthorized`.
 
 ---
+
+### GET endpoints
 
 #### `GET /health`
 
@@ -84,29 +75,104 @@ process-memory, and disk diagnostics.
 {
   "status": "ok",
   "uptime_seconds": 3600,
-  "version": "1.16.0",
+  "version": "1.19.0",
+  "pid": 4242,
   "requests_total": 142,
   "requests_errors": 2,
   "compression_ratio_avg": 0.4474,
   "is_degraded": false,
   "is_shutting_down": false,
   "in_flight_requests": 0,
-  "memory_guard": {},
-  "admission": {},
-  "agent_concurrency": {},
+  "memory_guard": {
+    "enabled": false,
+    "state": "disabled",
+    "thread_alive": false,
+    "callback_policy": "disabled",
+    "configuration": {
+      "source": "default",
+      "mode": "off",
+      "plan_sha256": null,
+      "managed_config_path": "/home/alex/.tpk/memory-optimization.json",
+      "managed_file_present": false,
+      "managed_file_ignored": false,
+      "triggering_env": [],
+      "warning": null
+    },
+    "callbacks": {
+      "compact": false,
+      "token": false,
+      "semantic": false
+    }
+  },
+  "admission": {
+    "limit": 16,
+    "available": 16,
+    "rejected": 0
+  },
+  "agent_concurrency": {
+    "enabled": true,
+    "max_parallel_subagents": 2,
+    "effective_cap": 2,
+    "degraded_serial": false,
+    "in_flight": 0,
+    "queued": 0,
+    "queue_depth_max": 14,
+    "admitted_total": 0,
+    "queued_total": 0,
+    "rejected_queue_full": 0,
+    "rejected_wait_timeout": 0,
+    "source": "config"
+  },
   "timestamp": "2026-07-24T05:30:00Z",
-  "connection_pool": {},
-  "circuit_breakers": {}
+  "connection_pool": {
+    "http2_enabled": true,
+    "active_providers": ["api.anthropic.com"],
+    "total_requests": 142,
+    "reused_connections": 140,
+    "new_connections": 2,
+    "errors": 2,
+    "evicted_clients": 0,
+    "reuse_rate": 0.9859,
+    "cleanup_pending_close": 0,
+    "cleanup_queued": 0,
+    "cleanup_in_progress": 0,
+    "cleanup_retrying": 0,
+    "cleanup_failures_total": 0,
+    "cleanup_worker_start_failures_total": 0,
+    "cleanup_completed_total": 0,
+    "cleanup_oldest_pending_seconds": 0.0,
+    "cleanup_workers_alive": 0,
+    "client_slots_used": 1,
+    "client_slots_max": 64,
+    "client_capacity_rejections_total": 0,
+    "cleanup_saturated": false,
+    "retired_pending_close": 0
+  },
+  "circuit_breakers": {
+    "enabled": true,
+    "any_open": false,
+    "providers": {
+      "anthropic": {
+        "state": "closed",
+        "failures_in_window": 0,
+        "successes_in_window": 0,
+        "failure_ratio": 0.0,
+        "failure_threshold": 5,
+        "min_failure_ratio": 0.5,
+        "time_until_probe_seconds": null,
+        "total_trips": 0,
+        "total_successes": 140,
+        "total_failures": 2
+      }
+    }
+  }
 }
 ```
 
-Also supports `HEAD /health` (returns 200 with no body — useful for Kubernetes liveness probes).
-
----
-
 #### `GET /stats`
 
-Full session statistics. Heavier than `/health` — includes per-model breakdown and recent requests.
+Current session counters, compilation mode, memory-guard status, and provider-cache
+read attribution.
 
 **Response:**
 ```json
@@ -116,28 +182,46 @@ Full session statistics. Heavier than `/health` — includes per-model breakdown
     "input_tokens": 380000,
     "sent_input_tokens": 210000,
     "saved_tokens": 170000,
+    "protected_tokens": 0,
     "output_tokens": 95000,
     "cost": 0.85,
     "cost_saved": 0.42,
-    "start_time": 1711584000.0,
     "errors": 2,
-    "cache_hits": 37
+    "start_time": 1711584000.0,
+    "cache_read_tokens": 80000,
+    "cache_creation_tokens": 15000,
+    "cache_read_client": 80000,
+    "cache_read_proxy": 0,
+    "cache_read_unknown": 0,
+    "ingest_entries": 0
   },
   "compilation_mode": "hybrid",
-  "vault_index": {
-    "available": true,
-    "blocks": 42
-  },
-  "router": { "enabled": true },
-  "today": { ... },
-  "by_model": {
-    "claude-sonnet-4-6": {
-      "requests": 100,
-      "input_tokens": 250000,
-      "cost": 0.60
+  "memory_guard": {
+    "enabled": false,
+    "state": "disabled",
+    "thread_alive": false,
+    "callback_policy": "disabled",
+    "configuration": {
+      "source": "default",
+      "mode": "off",
+      "plan_sha256": null,
+      "managed_config_path": null,
+      "managed_file_present": false,
+      "managed_file_ignored": false,
+      "triggering_env": [],
+      "warning": null
+    },
+    "callbacks": {
+      "compact": false,
+      "token": false,
+      "semantic": false
     }
   },
-  "recent": [ ... ]
+  "cache_read_by_origin": {
+    "client": 80000,
+    "proxy": 0,
+    "unknown": 0
+  }
 }
 ```
 
@@ -150,17 +234,15 @@ Per-request stats for the most recent proxied request.
 **Response:**
 ```json
 {
-  "request_id": "req_abc123",
-  "timestamp": "2026-03-28T16:00:00Z",
+  "request_id": "a1b2c3d4",
+  "timestamp": "2026-03-28T16:00:00",
   "model": "claude-sonnet-4-6",
-  "tokens_saved": 1240,
-  "percent_saved": 28.3,
-  "cost_saved": 0.0037,
-  "session_total_saved": 0.42,
-  "session_requests": 142,
   "input_tokens_raw": 4380,
   "input_tokens_sent": 3140,
-  "output_tokens": 512
+  "output_tokens": 512,
+  "tokens_saved": 1240,
+  "cost_saved": 0.0037,
+  "percent_saved": 28.3
 }
 ```
 
@@ -168,7 +250,7 @@ Per-request stats for the most recent proxied request.
 ```json
 {
   "error": "no_requests",
-  "message": "No requests captured yet. Send a message to see stats."
+  "message": "No requests captured yet."
 }
 ```
 
@@ -196,20 +278,6 @@ Session aggregate summary with uptime and average savings.
 
 ---
 
-#### `GET /savings[?since=<ISO-date>]`
-
-Savings report, optionally filtered by start date.
-
-**Query Parameters:**
-
-| Parameter | Type | Description |
-|-----------|------|-------------|
-| `since` | ISO-8601 date string | Filter to requests on/after this date |
-
-**Example:** `GET /savings?since=2026-03-01`
-
----
-
 #### `GET /cache-stats`
 
 Detailed cache hit/miss breakdown.
@@ -223,13 +291,38 @@ Full pipeline trace for the most recent request (debugging).
 **Response:**
 ```json
 {
-  "request_id": "req_abc123",
-  "timestamp": "2026-03-28T16:00:00Z",
+  "request_id": "a1b2c3d4",
+  "timestamp": "16:00:00",
+  "model": "claude-sonnet-4-6",
+  "input_tokens": 4380,
+  "output_tokens": 512,
+  "tokens_saved": 1240,
+  "cost_saved": 0.0037,
+  "total_cost": 0.012,
+  "duration_ms": 317.0,
   "stages": [
-    { "name": "compaction", "duration_ms": 45, "tokens_before": 4380, "tokens_after": 3140 },
-    { "name": "vault_inject", "duration_ms": 12, "blocks_injected": 2 },
-    { "name": "upstream_forward", "duration_ms": 260, "provider": "anthropic" }
-  ]
+    {
+      "name": "capsule_builder",
+      "enabled": true,
+      "input_tokens": 4380,
+      "output_tokens": 3140,
+      "tokens_delta": 1240,
+      "duration_ms": 45.0,
+      "details": {
+        "blocks_capsulized": 2,
+        "ratio": 0.7169,
+        "skip_reason": null
+      }
+    }
+  ],
+  "status": "complete"
+}
+```
+
+**Error (no traces yet):**
+```json
+{
+  "error": "no_traces"
 }
 ```
 
@@ -248,32 +341,32 @@ All stored pipeline traces (up to last N requests).
 **Response:**
 ```json
 {
-  "traces": [ ... ],
-  "count": 10
-}
-```
-
----
-
-#### `GET /vault`
-
-Vault index debug info — lists all indexed blocks.
-
-**Response:**
-```json
-{
-  "available": true,
-  "blocks": 42,
-  "total_tokens": 185000,
-  "path": "/home/user/vault/.tokenpak",
-  "block_list": [
+  "traces": [
     {
-      "block_id": "vault_001",
-      "source_path": "04_KNOWLEDGE/concepts/tokenpak.md",
-      "risk_class": "safe",
-      "raw_tokens": 1240
+      "request_id": "a1b2c3d4",
+      "timestamp": "16:00:00",
+      "model": "claude-sonnet-4-6",
+      "input_tokens": 4380,
+      "output_tokens": 512,
+      "tokens_saved": 1240,
+      "cost_saved": 0.0037,
+      "total_cost": 0.012,
+      "duration_ms": 317,
+      "stages": [
+        {
+          "name": "compaction",
+          "enabled": true,
+          "input_tokens": 4380,
+          "output_tokens": 3140,
+          "tokens_delta": 1240,
+          "duration_ms": 45,
+          "details": {}
+        }
+      ],
+      "status": "complete"
     }
-  ]
+  ],
+  "count": 1
 }
 ```
 
@@ -286,7 +379,7 @@ Prometheus-compatible metrics in text format.
 **Content-Type:** `text/plain; version=0.0.4; charset=utf-8`
 
 **Example output:**
-```
+```text
 # HELP tokenpak_requests_total Total proxied requests
 # TYPE tokenpak_requests_total counter
 tokenpak_requests_total 142
@@ -350,19 +443,7 @@ Serves the built-in HTML monitoring dashboard.
 
 ---
 
-#### `GET /docs` / `GET /docs/`
-
-Serves the built-in API documentation page (HTML).
-
----
-
-#### `GET /openapi.yaml`
-
-OpenAPI 3.0 spec for the proxy HTTP API.
-
----
-
-### POST Endpoints
+### POST endpoints
 
 #### `POST /v1/messages`
 
@@ -431,6 +512,54 @@ TokenPak intercepts this request, applies compression, and forwards to the upstr
 
 ---
 
+#### `POST /v1/messages/session-economics`
+
+Build a versioned session-economics snapshot from completed local request
+ledger rows. This endpoint never forwards a provider request.
+
+Supply the stable session identity in `X-Claude-Code-Session-Id` or as
+`session_id` in the JSON body. If both are present, they must match. `model` is
+an optional hint when the ledger does not identify a model unambiguously.
+
+**Request body:**
+
+```json
+{
+  "session_id": "session-abc",
+  "model": "claude-sonnet-4-5"
+}
+```
+
+**Selected response fields:**
+
+```json
+{
+  "schema_version": "session-economics/1",
+  "as_of": "2026-08-12T00:00:00Z",
+  "session": {
+    "id": "session-abc",
+    "identity_state": "observed",
+    "turns_observed": 12,
+    "model": {"id": "claude-sonnet-4-5", "effort": "unknown"}
+  },
+  "runway": {
+    "status": "available",
+    "turns": 8,
+    "binding_constraint": "context_soft",
+    "guard_state": "amber"
+  },
+  "advisory": null
+}
+```
+
+The full immutable response also includes truth-preserving `facts`, `state`,
+and `forecast` objects. Missing measurements use explicit `no_data`,
+`unavailable`, or `error` states and `null` values; they are never represented
+as measured zero. Runway can be `learning`, `unavailable`, or `error` when the
+local facts are insufficient or invalid.
+
+---
+
 #### `POST /v1/chat/completions`
 
 OpenAI Chat Completions API — compatible path for OpenAI SDK clients, LangChain, and LiteLLM.
@@ -440,7 +569,7 @@ OpenAI Chat Completions API — compatible path for OpenAI SDK clients, LangChai
 | Header | Value | Required |
 |--------|-------|----------|
 | `Content-Type` | `application/json` | Yes |
-| `Authorization` | `Bearer <api-key>` | Yes |
+| `Authorization` | `Bearer <provider-api-key>` | Yes for localhost direct-key traffic; remote clients use this header for proxy auth and need separate upstream credentials |
 
 **Request Body:**
 ```json
@@ -469,76 +598,44 @@ OpenAI Chat Completions API — compatible path for OpenAI SDK clients, LangChai
 
 ---
 
-#### `POST /ingest` / `POST /ingest/batch`
+#### `POST /ingest`
 
-Ingest context blocks directly into the vault index at runtime.
+Accept one JSON payload and return one generated record ID. In v1.19.0, this
+compatibility endpoint acknowledges the payload but does not persist or index
+its contents.
 
-**Request Body:**
+**Request body:**
 ```json
 {
-  "block_id": "my-context-001",
-  "content": "This is important context to inject...",
-  "source_path": "custom/context.md",
-  "risk_class": "safe"
+  "content": "Compatibility payload"
 }
 ```
-
-**Batch variant** (`/ingest/batch`) accepts an array of blocks.
-
----
-
-#### `POST /config/reload`
-
-Hot-reload configuration from environment variables (localhost only).
-
-Equivalent to sending `SIGHUP` to the proxy process.
 
 **Response:**
 ```json
 {
   "status": "ok",
-  "message": "Config reloaded: TOKENPAK_MODE=hybrid, TOKENPAK_COMPACT=1"
+  "ids": ["2bd628a3-8b9b-4ed8-9248-b21c90dcdd4b"]
 }
 ```
 
-**Note:** Only accepts requests from `127.0.0.1` or `::1`. Remote calls receive `403 Forbidden`.
+---
+
+### Error responses
+
+Error bodies are endpoint-specific. TokenPak-generated application errors are
+usually JSON, unsupported paths use the standard HTTP server error response,
+and provider passthrough routes can return the upstream provider's status and
+body. Clients should branch on the HTTP status and parse the documented
+endpoint response instead of assuming one universal error envelope.
 
 ---
 
-### Error Format
-
-All error responses use a consistent JSON structure:
-
-```json
-{
-  "error": {
-    "type": "error_type",
-    "message": "Human-readable description"
-  }
-}
-```
-
-**Common error types:**
-
-| HTTP Status | `error.type` | Description |
-|-------------|-------------|-------------|
-| 400 | `bad_request` | Malformed request body |
-| 401 | `unauthorized` | Missing or invalid `X-TokenPak-Key` |
-| 403 | `forbidden` | Operation not allowed from this IP |
-| 404 | `not_found` | Unknown endpoint path |
-| 405 | `method_not_allowed` | Wrong HTTP method (e.g. GET on POST-only path) |
-| 429 | `rate_limit_exceeded` | Too many requests from this IP |
-| 500 | `internal_error` | Proxy-side error |
-| 503 | `circuit_open` | Upstream provider circuit breaker open |
-| 503 | `upstream_unreachable` | Cannot reach upstream provider |
-
----
-
-## SDK Adapters
+## SDK adapters
 
 TokenPak provides adapters that route requests through the proxy while preserving the native API shape of each SDK.
 
-### Base Adapter (`TokenPakAdapter`)
+### Base adapter: `TokenPakAdapter`
 
 All adapters inherit from `TokenPakAdapter` and implement four lifecycle hooks.
 
@@ -561,7 +658,7 @@ from tokenpak.sdk.base import TokenPakAdapter
 | `prepare_request` | `(request: dict) -> dict` | Validate and normalise request |
 | `send` | `(prepared: dict) -> dict` | POST to proxy, return raw response |
 | `parse_response` | `(response: dict) -> dict` | Convert to SDK-native format |
-| `extract_tokens` | `(response: dict) -> dict` | Extract `{input, output, cache_read, cache_creation}` token counts |
+| `extract_tokens` | `(response: dict) -> dict` | Extract `{input_tokens, output_tokens, cache_read, cache_write, total}` token counts |
 
 **High-level call method:**
 
@@ -622,8 +719,9 @@ print(f"Input tokens: {tokens['input_tokens']}")
 {
   "input_tokens": 3140,
   "output_tokens": 512,
-  "cache_read_input_tokens": 1200,
-  "cache_creation_input_tokens": 800
+  "cache_read": 1200,
+  "cache_write": 800,
+  "total": 3652
 }
 ```
 
@@ -706,11 +804,11 @@ adapter = LiteLLMAdapter(
 
 ---
 
-### Exception Hierarchy
+### Exception hierarchy
 
 All adapters raise canonical exceptions — never raw `requests` exceptions.
 
-```
+```text
 TokenPakAdapterError (base)
 ├── TokenPakTimeoutError      — proxy did not respond within timeout_s
 ├── TokenPakConfigError       — missing required fields / bad config
@@ -740,21 +838,19 @@ except TokenPakAdapterError as e:
 
 ---
 
-## CLI Commands
+## CLI commands
 
 All commands are invoked as `tokenpak <command> [options]`.
 
-### Proxy Lifecycle
+### Proxy lifecycle
 
 #### `tokenpak start`
 
-Start the proxy (default: `localhost:8766`).
+Start the managed background proxy (default: `localhost:8766`).
 
 ```bash
 tokenpak start                    # Start on default port 8766
 tokenpak start --port 9000        # Custom port
-tokenpak start --debug            # Verbose logging
-tokenpak start --background       # Run as background daemon
 ```
 
 **Options:**
@@ -762,8 +858,6 @@ tokenpak start --background       # Run as background daemon
 | Option | Type | Default | Description |
 |--------|------|---------|-------------|
 | `--port` | int | `8766` | Port to listen on |
-| `--debug` | flag | off | Enable debug logging |
-| `--background` | flag | off | Daemonize the process |
 
 ---
 
@@ -794,7 +888,6 @@ Show recent proxy log output.
 ```bash
 tokenpak logs                # Last 50 lines
 tokenpak logs -n 100         # Last 100 lines
-tokenpak logs --follow       # Stream new log lines (tail -f)
 ```
 
 **Options:**
@@ -835,7 +928,7 @@ tokenpak update
 
 ---
 
-### Indexing & Search
+### Indexing and search
 
 #### `tokenpak index [directory]`
 
@@ -878,17 +971,17 @@ tokenpak search "rate limits" --top 10
 
 ---
 
-#### `tokenpak calibrate`
+#### `tokenpak calibrate <directory>`
 
 Calibrate the optimal worker count for parallel indexing on this host.
 
 ```bash
-tokenpak calibrate
+tokenpak calibrate ~/your-vault
 ```
 
 ---
 
-### Monitoring & Stats
+### Monitoring and stats
 
 #### `tokenpak stats`
 
@@ -896,7 +989,6 @@ Show registry statistics (request counts, token usage, cost breakdown).
 
 ```bash
 tokenpak stats
-tokenpak stats --raw             # JSON output
 ```
 
 ---
@@ -907,7 +999,7 @@ Show per-model usage and efficiency breakdown.
 
 ```bash
 tokenpak models                      # Summary table
-tokenpak models --detail sonnet      # Detailed view for models matching "sonnet"
+tokenpak models sonnet               # Details for models matching "sonnet"
 tokenpak models --raw                # JSON output
 ```
 
@@ -915,18 +1007,19 @@ tokenpak models --raw                # JSON output
 
 | Option | Type | Description |
 |--------|------|-------------|
-| `--detail` | string | Show details for a specific model (partial match) |
+| `model` | string | Optional positional model name (partial match) |
 | `--raw` | flag | Output as JSON |
 
 ---
 
-#### `tokenpak savings[?since=<date>]`
+#### `tokenpak savings`
 
 Show savings summary — tokens and cost saved by compression.
 
 ```bash
 tokenpak savings
-tokenpak savings --since 2026-03-01
+tokenpak savings --days 30
+tokenpak savings --json
 ```
 
 ---
@@ -1062,13 +1155,13 @@ Checks:
 
 ---
 
-#### `tokenpak preview <file>`
+#### `tokenpak preview [<text>]`
 
 Preview compression dry-run on a file — shows token savings before sending to API.
 
 ```bash
-tokenpak preview prompt.txt
-tokenpak preview --mode aggressive prompt.txt
+tokenpak preview "Long prompt text"
+tokenpak preview --file prompt.txt
 ```
 
 ---
@@ -1147,7 +1240,7 @@ tokenpak vault-health repair     # Rebuild stale vault index
 
 ---
 
-### Config Management
+### Config management
 
 #### `tokenpak setup`
 
@@ -1180,13 +1273,13 @@ Manage manual model routing rules.
 
 ```bash
 tokenpak route list              # List routing rules
-tokenpak route add               # Add a rule
+tokenpak route add --model "gpt-4*" --target openai/gpt-4o
 tokenpak route remove <id>       # Remove a rule
 ```
 
 ---
 
-### Advanced Commands
+### Advanced commands
 
 #### `tokenpak serve`
 
@@ -1216,12 +1309,12 @@ tokenpak benchmark --json        # JSON output
 
 #### `tokenpak macro`
 
-Manage and run compression macros.
+Manage and run premade and user-defined macros.
 
 ```bash
 tokenpak macro list              # List all macros
 tokenpak macro run <name>        # Run a macro
-tokenpak macro create            # Create a user-defined YAML macro
+tokenpak macro create --name daily-check --step 'Check status:tokenpak status'
 tokenpak macro show <name>       # Show macro definition
 tokenpak macro delete <name>     # Delete a user-defined macro
 ```
@@ -1233,7 +1326,7 @@ tokenpak macro delete <name>     # Delete a user-defined macro
 Manage compression recipes (YAML workflow definitions).
 
 ```bash
-tokenpak recipe create           # Scaffold a new recipe YAML
+tokenpak recipe create my-recipe # Scaffold a new recipe YAML
 tokenpak recipe validate <file>  # Validate recipe against schema
 tokenpak recipe test <file>      # Test recipe against sample input
 tokenpak recipe benchmark <file> # Benchmark recipe performance
@@ -1247,8 +1340,8 @@ Manage and query a multi-machine proxy fleet.
 
 ```bash
 tokenpak fleet init              # Configure fleet interactively
-tokenpak fleet status            # Show fleet health
-tokenpak fleet list              # List fleet members
+tokenpak fleet                   # Show fleet health
+tokenpak fleet --json            # Show fleet health as JSON
 ```
 
 ---
@@ -1267,55 +1360,52 @@ tokenpak template use <name>     # Expand a template with variables
 
 ---
 
-#### `tokenpak audit`
+#### `tokenpak audit` (Planned)
 
-Enterprise audit log management.
-
-```bash
-tokenpak audit list              # List audit log entries
-tokenpak audit export            # Export to file
-tokenpak audit verify            # Verify hash chain integrity
-tokenpak audit prune             # Remove old entries
-tokenpak audit summary           # Show audit stats
-```
+The `audit` command is a reserved, planned stub in v1.19.0. It does not expose
+audit-log subcommands in this release.
 
 ---
 
-## Configuration Reference
+## Configuration reference
 
-### Environment Variables
+### Environment variables
 
-The proxy reads configuration from `~/.tokenpak/config.yaml` with environment variable overrides. Environment variables always take precedence.
+The proxy resolves configuration through `TOKENPAK_HOME` and the state-bearing
+TokenPak home. New installs use `~/.tpk/config.yaml`; existing legacy installs
+may continue using `~/.tokenpak/config.yaml`. Environment variables take
+precedence.
 
-#### Core Settings
+#### Core settings
 
 | Variable | Default | Description |
 |----------|---------|-------------|
 | `TOKENPAK_PORT` | `8766` | Proxy listen port |
+| `TOKENPAK_BIND_ADDRESS` | `127.0.0.1` | Proxy bind address; set explicitly for non-localhost access |
+| `TOKENPAK_PROXY_AUTH_TOKEN` | — | Required server-side token for non-localhost access |
 | `TOKENPAK_MODE` | `hybrid` | Compression mode: `strict`, `hybrid`, `aggressive` |
-| `TOKENPAK_COMPACT` | `1` | Master on/off switch (0 = disable all compression) |
-| `TOKENPAK_DB` | `.tokenpak/monitor.db` | SQLite database path |
+| `TOKENPAK_COMPACT` | `1` | Legacy compatibility value; it does not toggle body compaction on the default HTTP proxy path |
+| `TOKENPAK_DB` | `~/.tpk/monitor.db` | SQLite database path for a fresh install; existing legacy stores are still discovered |
 
-#### Compression Settings
+#### Compression settings
 
 | Variable | Default | Description |
 |----------|---------|-------------|
 | `TOKENPAK_COMPACT_MAX_CHARS` | `120` | Maximum chars for compressed text chunks |
-| `TOKENPAK_COMPACT_THRESHOLD_TOKENS` | `4500` | Skip compression below this token count |
+| `TOKENPAK_COMPACT_THRESHOLD_TOKENS` | `1500` | Skip compression below this token count |
 | `TOKENPAK_COMPACT_CACHE_SIZE` | `2000` | Compression result cache entries |
-| `TOKENPAK_MAX_COMPRESSION_TIME_MS` | `5000` | Max compression time before skipping (0 = no cap) |
 
-#### Vault Context Injection
+#### Vault context injection
 
 | Variable | Default | Description |
 |----------|---------|-------------|
-| `TOKENPAK_VAULT_INDEX` | `~/.tokenpak` | Path to vault index directory |
+| `TOKENPAK_VAULT_INDEX` | `~/vault/.tokenpak` | Path to vault index directory |
 | `TOKENPAK_INJECT_BUDGET` | `4000` | Max tokens to inject from vault per request |
 | `TOKENPAK_INJECT_TOP_K` | `5` | Max vault blocks to inject per request |
 | `TOKENPAK_INJECT_MIN_SCORE` | `2.0` | Minimum BM25 score to include a block |
 | `TOKENPAK_RETRIEVAL_BACKEND` | `json_blocks` | Vault backend: `json_blocks` or `sqlite` |
 
-#### Key Management
+#### Key management
 
 | Variable | Default | Description |
 |----------|---------|-------------|
@@ -1326,7 +1416,7 @@ The proxy reads configuration from `~/.tokenpak/config.yaml` with environment va
 | `TOKENPAK_KEY_COOLDOWN_429` | `60` | Rate-limit cooldown seconds |
 | `TOKENPAK_KEY_COOLDOWN_401` | `300` | Invalid-key cooldown seconds |
 
-#### Advanced Features
+#### Advanced features
 
 | Variable | Default | Description |
 |----------|---------|-------------|
@@ -1337,53 +1427,34 @@ The proxy reads configuration from `~/.tokenpak/config.yaml` with environment va
 
 ---
 
-### config.yaml
+### Configuration file
 
-Default location: `~/.tokenpak/config.yaml`
+New-install location: `~/.tpk/config.yaml`. Existing state in
+`~/.tokenpak/config.yaml` remains in place until explicitly migrated.
+
+This excerpt uses released configuration keys. Run `tokenpak config init` to
+generate the complete file for the installed version.
 
 ```yaml
-# TokenPak configuration
-# All settings can also be overridden via environment variables
+port: 8766
+mode: hybrid
 
 compression:
   enabled: true
-  mode: hybrid               # strict | hybrid | aggressive
-  max_chars: 120             # Max chars per compressed chunk
-  threshold_tokens: 4500     # Skip compression below this token count
+  max_chars: 120
+  threshold_tokens: 1500
+  cache_size: 2000
 
-cache:
-  enabled: true
-  type: memory               # memory | disk
-  ttl_seconds: 3600
-  max_size_mb: 256
+vault:
+  index_path: ~/vault/.tokenpak
+  inject_budget: 4000
+  inject_top_k: 5
+  inject_min_score: 2.0
+  retrieval_backend: json_blocks
 
-logging:
-  enabled: true
-  level: info                # debug | info | warning | error
-  destination: file          # file | stdout
-  retention_days: 30
-  include_request_body: false
-  include_response_body: false
-
-metrics:
-  enabled: true
-  collection_window_seconds: 60
-  retention_days: 7
-
-security:
-  require_api_key: false
-  api_key: null              # X-TokenPak-Key for non-localhost clients
-  allowed_origins:
-    - "*"
-  rate_limit_per_minute: 1000
-
-advanced:
-  vault_index_path: "~/.tokenpak/.index"
-  enable_trace_logs: false
-  proxy_timeout_seconds: 30
-  max_request_size_bytes: 10485760    # 10 MB
+rate_limit_rpm: 60
 ```
 
 ---
 
-*This reference covers TokenPak v1.16.0.*
+*This reference covers TokenPak v1.19.0.*

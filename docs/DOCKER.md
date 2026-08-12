@@ -1,469 +1,205 @@
-# TokenPak Docker Deployment Guide
+---
+title: Deploy TokenPak with Docker
+rung: 2
+audience: Developers deploying the source-built TokenPak container image.
+updated: 2026-08-13
+status: current
+---
 
-Complete guide for deploying TokenPak proxy using Docker and Docker Compose.
+# Deploy TokenPak with Docker
 
-## Quick Start
+This guide is for developers who want to build the TokenPak v1.19.0 image and
+run its proxy from Docker on the host's loopback interface. The image's default
+`tokenpak serve` command binds to loopback inside the container, so publishing
+port 8766 alone does not make that listener reachable from the host.
 
-### Build the Image
+## Prerequisites
 
-```bash
-docker build -t tokenpak .
-```
+- A checkout of the public TokenPak v1.19.0 tag.
+- The `git`, `docker`, `curl`, and `openssl` commands.
+- Docker Compose v2 if you want to use the optional Compose procedure.
+- An unused host port 8766 and permission to run local containers.
 
-### Run a Single Container
+## 1. Check out v1.19.0
 
-```bash
-# Basic (uses defaults) — the container starts the proxy with `tokenpak serve`
-docker run -p 8766:8766 tokenpak tokenpak serve
-
-# With config volume
-docker run -p 8766:8766 \
-  -v $(pwd)/config/tokenpack.config.json:/app/tokenpack.config.json:ro \
-  -v tokenpak-logs:/logs \
-  tokenpak tokenpak serve
-
-# With environment variables
-docker run -p 8766:8766 \
-  -e TOKENPAK_LOG_LEVEL=debug \
-  -e TOKENPAK_ENABLE_METRICS=true \
-  tokenpak tokenpak serve
-```
-
-### Docker Compose (Recommended)
+Check out the released source:
 
 ```bash
-# Copy environment file
-cp .env.example .env
-
-# Copy config file
-cp config/tokenpack.config.json.example config/tokenpack.config.json
-
-# Start services
-docker-compose up -d
-
-# Check status
-docker-compose ps
-
-# View logs
-docker-compose logs -f tokenpak
-
-# Stop services
-docker-compose down
+git checkout v1.19.0
 ```
 
-## Build Instructions
+## 2. Build the image
 
-### Standard Build
+Build the source checkout as `tokenpak:v1.19.0`:
 
 ```bash
-docker build -t tokenpak:latest .
-docker build -t tokenpak:v1.16.0 .  # With version tag
+docker build -t tokenpak:v1.19.0 .
 ```
 
-### Build with Custom Base Image
+The shipped Dockerfile uses Python 3.11. It does not declare a configurable
+base-image build argument.
+
+## 3. Create the proxy credential
+
+Generate the Bearer credential that every non-localhost client must present:
 
 ```bash
-docker build --build-arg BASE_IMAGE=python:3.12-slim -t tokenpak .
+export TOKENPAK_PROXY_AUTH_TOKEN="$(openssl rand -hex 32)"
 ```
 
-### Check Image Size
+Keep this shell open for the remaining steps.
+
+## 4. Run a proxy reachable from the host
+
+Bind the proxy to all interfaces *inside* the container, publish it only on the
+host's loopback interface, and require a proxy credential:
 
 ```bash
-docker images tokenpak
-# Expected: <500MB
+docker run --rm -d --name tokenpak-proxy \
+  -p 127.0.0.1:8766:8766 \
+  -e TOKENPAK_BIND_ADDRESS=0.0.0.0 \
+  -e TOKENPAK_PROXY_AUTH_TOKEN="$TOKENPAK_PROXY_AUTH_TOKEN" \
+  tokenpak:v1.19.0 python -m tokenpak.proxy.server
 ```
 
-## Configuration
+The host-side loopback publish keeps the service off the LAN. Docker bridge
+traffic is non-localhost traffic from the proxy's perspective, so the Bearer
+credential is still required.
 
-### Environment Variables
+## 5. Verify the deployment
 
-| Variable | Default | Description |
-|----------|---------|-------------|
-| `TOKENPAK_PORT` | 8766 | Port to listen on |
-| `TOKENPAK_LOG_LEVEL` | info | Log level: debug, info, warn, error |
-| `TOKENPAK_ENABLE_METRICS` | true | Enable metrics collection |
-
-### Config Volume
-
-Mount configuration at container startup:
+Call the host-published health endpoint with the credential from step 3:
 
 ```bash
-# Using docker run
-docker run -v $(pwd)/config/tokenpack.config.json:/app/tokenpack.config.json:ro tokenpak
-
-# Using docker-compose (automatic)
-docker-compose up
+curl -H "Authorization: Bearer $TOKENPAK_PROXY_AUTH_TOKEN" \
+  http://127.0.0.1:8766/health
 ```
 
-### .env File
+The deployment is ready when the response includes `"status": "ok"` and
+`"version": "1.19.0"`.
+
+## Optional custom configuration
+
+Built-in defaults are used when `TOKENPAK_CONFIG` is omitted. To replace the
+running container with one that mounts a specific configuration, first create
+the host file, then stop the current container and pass the file's container
+path explicitly:
 
 ```bash
-# .env
-TOKENPAK_PORT=8766
-TOKENPAK_LOG_LEVEL=info
-TOKENPAK_ENABLE_METRICS=true
+test -f "$PWD/config/config.yaml"
+docker stop tokenpak-proxy
+
+docker run --rm -d --name tokenpak-proxy \
+  -p 127.0.0.1:8766:8766 \
+  -e TOKENPAK_BIND_ADDRESS=0.0.0.0 \
+  -e TOKENPAK_PROXY_AUTH_TOKEN="$TOKENPAK_PROXY_AUTH_TOKEN" \
+  -e TOKENPAK_CONFIG=/app/config/config.yaml \
+  -v "$PWD/config/config.yaml:/app/config/config.yaml:ro" \
+  tokenpak:v1.19.0 python -m tokenpak.proxy.server
 ```
 
-## Volume Management
+Proxy authentication and provider authentication are separate. The
+`Authorization: Bearer` value above authenticates a non-localhost client to
+TokenPak and is stripped before forwarding. Configure provider credentials
+separately through the client or the proxy's provider credential settings.
 
-### Logs Volume
+## Optional Docker Compose deployment
 
-Persistent log storage (created by docker-compose):
+The repository's v1.19.0 `docker-compose.yml` is not an out-of-the-box
+host-facing deployment recipe: it retains the container-loopback entrypoint
+and requires `./config/config.yaml`. Do not use that file unchanged for host
+access.
 
-```bash
-# View logs from host
-docker-compose exec tokenpak tail -f /logs/proxy-2026-03-10.log
-
-# Mount custom path
-volumes:
-  - /var/log/tokenpak:/logs
-```
-
-### Cache Volume
-
-Optional cache persistence:
-
-```yaml
-volumes:
-  tokenpak-cache:
-    driver: local
-```
-
-### Config Volume (Development)
-
-For live config updates during development:
-
-```bash
-docker run -v $(pwd)/config:/app/config:ro tokenpak
-```
-
-## Running Behind Nginx
-
-### Nginx Reverse Proxy Setup
-
-```nginx
-upstream tokenpak {
-    server localhost:8766;
-}
-
-server {
-    listen 80;
-    server_name api.example.com;
-
-    location / {
-        proxy_pass http://tokenpak;
-        proxy_set_header Host $host;
-        proxy_set_header X-Real-IP $remote_addr;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header X-Forwarded-Proto $scheme;
-
-        # Timeout settings
-        proxy_connect_timeout 30s;
-        proxy_send_timeout 30s;
-        proxy_read_timeout 30s;
-    }
-}
-```
-
-### Docker Compose with Nginx
+For a minimal host-loopback deployment, save this as `compose.host.yml`:
 
 ```yaml
 services:
-  nginx:
-    image: nginx:alpine
-    ports:
-      - "80:80"
-      - "443:443"
-    volumes:
-      - ./nginx.conf:/etc/nginx/nginx.conf:ro
-      - ./ssl:/etc/nginx/ssl:ro
-    depends_on:
-      - tokenpak
-    networks:
-      - tokenpak-network
-
   tokenpak:
-    # ... existing config
-    networks:
-      - tokenpak-network
+    image: tokenpak:v1.19.0
+    container_name: tokenpak-proxy
+    command: ["python", "-m", "tokenpak.proxy.server"]
+    ports:
+      - "127.0.0.1:8766:8766"
+    environment:
+      TOKENPAK_BIND_ADDRESS: "0.0.0.0"
+      TOKENPAK_PROXY_AUTH_TOKEN: "${TOKENPAK_PROXY_AUTH_TOKEN:?set TOKENPAK_PROXY_AUTH_TOKEN}"
+    restart: unless-stopped
 ```
 
-## Health Checks
-
-### Docker Health Check
-
-Built-in health check via `/health` endpoint:
+Then stop any single-container deployment and start Compose with the credential
+created in step 3:
 
 ```bash
-# Check health status
-docker inspect tokenpak | grep -A 10 "Health"
-
-# Manual health check
-curl http://localhost:8766/health
+docker stop tokenpak-proxy 2>/dev/null || true
+docker compose -f compose.host.yml up -d
+docker compose -f compose.host.yml ps
 ```
 
-### Health Check Response
+Add a read-only config mount and `TOKENPAK_CONFIG` only when the host file
+actually exists, as shown in the single-container recipe.
 
-```json
-{
-  "status": "ok",
-  "uptime_seconds": 3600,
-  "version": "1.16.0",
-  "requests_total": 15000,
-  "requests_errors": 0,
-  "compression_ratio_avg": 0.23,
-  "is_degraded": false,
-  "is_shutting_down": false,
-  "in_flight_requests": 0,
-  "memory_guard": {},
-  "admission": {},
-  "agent_concurrency": {},
-  "timestamp": "2026-07-24T05:30:00Z",
-  "connection_pool": {},
-  "circuit_breakers": {}
-}
-```
+## Health and diagnostics
 
-### Kubernetes Liveness Probe
-
-```yaml
-livenessProbe:
-  httpGet:
-    path: /health
-    port: 8766
-  initialDelaySeconds: 40
-  periodSeconds: 30
-  timeoutSeconds: 10
-  failureThreshold: 3
-```
-
-## Multi-Container Setup (With Redis)
-
-### Enable Redis Cache
+Inspect the Dockerfile health check:
 
 ```bash
-# Option 1: .env file
-COMPOSE_PROFILES=with-cache
-
-# Option 2: Command line
-docker-compose --profile with-cache up
+docker inspect --format '{{json .State.Health}}' tokenpak-proxy
 ```
 
-### Docker Compose (with Redis)
-
-Redis service is optional but recommended for production:
+Run a container-local check with Python. The slim image does not include
+`curl`, and a request from container loopback does not require proxy auth:
 
 ```bash
-# Start TokenPak + Redis
-docker-compose --profile with-cache up -d
-
-# View both services
-docker-compose ps
-# tokenpak    Up (healthy)
-# redis       Up
-
-# Connect TokenPak to Redis
-# Requires: TOKENPAK_CACHE_TYPE=redis
-#          TOKENPAK_REDIS_HOST=redis
-#          TOKENPAK_REDIS_PORT=6379
+docker exec tokenpak-proxy python -c \
+  "import urllib.request; print(urllib.request.urlopen('http://127.0.0.1:8766/health', timeout=5).read().decode())"
 ```
 
-## Troubleshooting
-
-### Container Won't Start
+View process output through Docker rather than assuming an application log
+path inside the image:
 
 ```bash
-# Check logs
-docker-compose logs tokenpak
-
-# Common issues:
-# - Port already in use: change TOKENPAK_PORT in .env
-# - Config file missing: cp config/tokenpack.config.json.example config/tokenpack.config.json
-# - Permission denied: check volume mount permissions
+docker logs --tail 100 tokenpak-proxy
+docker logs -f tokenpak-proxy
 ```
 
-### Health Check Failing
+## Resource limits
+
+Docker can apply CPU and memory limits without changing TokenPak. Replace the
+running single-container deployment with the limited alternative:
 
 ```bash
-# Debug health endpoint
-docker exec tokenpak curl -v http://localhost:8766/health
-
-# Check logs for errors
-docker-compose logs tokenpak | grep -i error
-
-# Increase health check start period if startup is slow
-healthcheck:
-  start_period: 60s  # Increase from 40s
+docker stop tokenpak-proxy
+docker run --rm -d --name tokenpak-proxy \
+  --cpus 1 --memory 512m \
+  -p 127.0.0.1:8766:8766 \
+  -e TOKENPAK_BIND_ADDRESS=0.0.0.0 \
+  -e TOKENPAK_PROXY_AUTH_TOKEN="$TOKENPAK_PROXY_AUTH_TOKEN" \
+  tokenpak:v1.19.0 python -m tokenpak.proxy.server
 ```
 
-### High Memory Usage
+## Stop or remove the container
+
+The `--rm` single-container recipe removes the stopped container while keeping
+the locally built image:
 
 ```bash
-# Check resource usage
-docker stats tokenpak
-
-# Limit memory
-docker run -m 512m tokenpak
-
-# Or in docker-compose
-deploy:
-  resources:
-    limits:
-      memory: 512M
+docker stop tokenpak-proxy
 ```
 
-### Logs Not Persisting
+For the Compose recipe:
 
 ```bash
-# Check volume mount
-docker inspect tokenpak | grep -A 20 Mounts
-
-# Verify logs directory exists
-docker exec tokenpak ls -la /logs
-
-# Create directory if missing
-docker exec tokenpak mkdir -p /logs
+docker compose -f compose.host.yml down
 ```
 
-## Cloud Deployment
+## Deployment boundary
 
-### GCP Cloud Run
+Kubernetes, public reverse proxies, and cloud container services require the
+same two controls: a non-loopback bind inside the container and a configured
+`TOKENPAK_PROXY_AUTH_TOKEN` presented by every non-localhost client. TokenPak
+v1.19.0 does not ship a separately verified Kubernetes or cloud-service
+manifest, so this guide does not present those platform-specific snippets as
+copy-paste deployment recipes.
 
-```bash
-# Build and push to GCP Registry
-docker build -t gcr.io/PROJECT_ID/tokenpak .
-docker push gcr.io/PROJECT_ID/tokenpak
-
-# Deploy to Cloud Run
-gcloud run deploy tokenpak \
-  --image gcr.io/PROJECT_ID/tokenpak \
-  --port 8766 \
-  --memory 512Mi \
-  --timeout 30 \
-  --allow-unauthenticated
-```
-
-### AWS ECS
-
-```bash
-# Push to ECR
-aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 123456789.dkr.ecr.us-east-1.amazonaws.com
-
-docker build -t tokenpak .
-docker tag tokenpak:latest 123456789.dkr.ecr.us-east-1.amazonaws.com/tokenpak:latest
-docker push 123456789.dkr.ecr.us-east-1.amazonaws.com/tokenpak:latest
-
-# Create ECS task definition + service
-# (See AWS documentation for details)
-```
-
-### Azure Container Instances
-
-```bash
-# Push to Azure Container Registry
-az acr build --registry myregistry --image tokenpak:latest .
-
-# Deploy
-az container create \
-  --resource-group mygroup \
-  --name tokenpak \
-  --image myregistry.azurecr.io/tokenpak:latest \
-  --ports 8766 \
-  --memory 0.5
-```
-
-## Production Checklist
-
-- [ ] Dockerfile built successfully (<500MB)
-- [ ] Health check responding (curl /health)
-- [ ] Logging enabled (`TOKENPAK_LOG_LEVEL=info`)
-- [ ] Metrics enabled (`TOKENPAK_ENABLE_METRICS=true`)
-- [ ] Config volume mounted (read-only)
-- [ ] Logs volume mounted (persistent)
-- [ ] Non-root user running (tokenpak:tokenpak)
-- [ ] Resource limits set (CPU, memory)
-- [ ] Reverse proxy configured (Nginx/HAProxy)
-- [ ] TLS/SSL enabled (for production)
-- [ ] Log aggregation configured (e.g., ELK, Datadog)
-- [ ] Monitoring alerts set up
-- [ ] Backup strategy for logs + cache
-
-## Performance Tuning
-
-### Resource Allocation
-
-```yaml
-deploy:
-  resources:
-    limits:
-      cpus: '2'
-      memory: 1G
-    reservations:
-      cpus: '1'
-      memory: 512M
-```
-
-### Log Rotation
-
-```yaml
-logging:
-  driver: "json-file"
-  options:
-    max-size: "10m"    # Rotate at 10MB
-    max-file: "3"      # Keep 3 files
-```
-
-### Connection Pool
-
-```bash
-docker run \
-  -e TOKENPAK_CACHE_POOL_SIZE=10 \
-  -e TOKENPAK_DB_POOL_SIZE=5 \
-  tokenpak
-```
-
-## Security Best Practices
-
-- ✅ Non-root user (UID 1000)
-- ✅ No secrets in Dockerfile
-- ✅ Environment variables for configuration
-- ✅ Read-only filesystem for code
-- ✅ Resource limits enforced
-- ✅ Health checks enabled
-- ✅ Logging enabled for audit trail
-- ✅ TLS in front (Nginx proxy)
-
-## Monitoring
-
-### Prometheus Metrics
-
-```yaml
-volumes:
-  - /etc/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
-
-# In prometheus.yml
-scrape_configs:
-  - job_name: 'tokenpak'
-    static_configs:
-      - targets: ['localhost:8766']
-```
-
-### Container Logs
-
-```bash
-# View logs
-docker-compose logs -f tokenpak
-
-# Export logs
-docker-compose logs tokenpak > logs.txt
-
-# Filter by timestamp
-docker-compose logs --since 2026-03-10 tokenpak
-```
-
----
-
-For more information, see:
-- DEPLOYMENT.md — System setup guide
-- LOGGING.md — Logging configuration
-- [Docker documentation](https://docs.docker.com/)
+Never expose port 8766 publicly without proxy authentication and an external
+TLS boundary.
