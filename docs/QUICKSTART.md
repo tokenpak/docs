@@ -1,8 +1,17 @@
-# TokenPak Quickstart — First Savings in 5 Minutes
+---
+title: "TokenPak quickstart: first savings in 5 minutes"
+rung: 1
+audience: Developers installing TokenPak for the first time.
+updated: 2026-08-13
+status: current
+---
 
-Get TokenPak running and see your first cost savings in under 5 minutes.
+# TokenPak quickstart: first savings in 5 minutes
 
-## 1. Install
+This quickstart is for developers installing TokenPak for the first time. Get
+the proxy running and see your first cost savings in under 5 minutes.
+
+## Install
 
 ```bash
 pip install tokenpak
@@ -17,30 +26,35 @@ tokenpak --help
 tokenpak status
 ```
 
-## 2. One-command setup
+## Configure and start
 
-The interactive wizard detects optional provider API keys, picks a compression profile, writes `~/.tokenpak/config.yaml`, and starts the proxy:
+The interactive wizard detects optional provider API keys, picks a compression
+profile, and writes the configuration. New installs use `~/.tpk/config.yaml`;
+an existing install keeps using its state-bearing `~/.tpk/` or legacy
+`~/.tokenpak/` home. Add `--start` to launch the proxy after configuration:
 
 ```bash
-tokenpak setup
+tokenpak setup --start
 ```
 
 The wizard:
 
 1. Scans your environment for optional `ANTHROPIC_API_KEY`, `OPENAI_API_KEY`, and `GOOGLE_API_KEY` values. If none are present, setup continues normally for clients that already have their own credentials.
 2. Asks for the port and compression profile (minimal / balanced / aggressive). A default provider is requested only when direct provider keys were detected.
-3. Writes config, launches the proxy on `127.0.0.1:8766`, and prints next steps.
+3. Writes config, launches the proxy on `127.0.0.1:8766` because `--start` was
+   supplied, and prints next steps.
 
-If you prefer manual configuration, `tokenpak start` brings the proxy up with defaults.
+To configure without starting anything, run `tokenpak setup`; start the proxy
+later with `tokenpak start`.
 
-## 3. Point your client at the proxy
+## Point your client at the proxy
 
 Run `tokenpak integrate <client>` to print the current setup steps. For clients
 that support managed configuration, `tokenpak integrate <client> --apply` can
 write the configuration; instruction-only targets continue with printed
 guidance. The manual environment-variable paths below remain valid:
 
-### Anthropic SDK / `anthropic` Python client
+### Anthropic SDK and the `anthropic` Python client
 
 ```bash
 export ANTHROPIC_BASE_URL=http://127.0.0.1:8766
@@ -48,13 +62,13 @@ export ANTHROPIC_BASE_URL=http://127.0.0.1:8766
 
 Then use the SDK normally. TokenPak's proxy forwards your real `ANTHROPIC_API_KEY` upstream without storing it.
 
-### OpenAI SDK / any OpenAI-compatible client
+### OpenAI SDK and compatible clients
 
 ```bash
-export OPENAI_BASE_URL=http://127.0.0.1:8766
+export OPENAI_BASE_URL=http://127.0.0.1:8766/v1
 ```
 
-### Claude Code (TUI / CLI)
+### Claude Code with TUI or CLI
 
 Claude Code reads `ANTHROPIC_BASE_URL` from the environment the same as the SDK. Start Claude Code after setting the env var and it will route through TokenPak automatically.
 
@@ -73,7 +87,7 @@ TokenPak reuses Codex's existing OAuth request path and preserves the model
 selected by Codex. See [Use TokenPak with Codex CLI](guides/codex.md) for the
 temporary-session behavior when another Codex session is already running.
 
-### Aider, Cursor, Continue.dev, Cline
+### Other client tools
 
 These accept an `ANTHROPIC_BASE_URL` or `OPENAI_BASE_URL` override via their config file or environment — consult the tool's own docs for the exact setting. The common pattern is "override the base URL; TokenPak is drop-in compatible."
 
@@ -88,7 +102,7 @@ client = anthropic.Anthropic(
 )
 ```
 
-## 4. Verify it's working
+## Verify it works
 
 ```bash
 tokenpak status
@@ -102,9 +116,9 @@ Check health:
 curl http://127.0.0.1:8766/health
 ```
 
-For v1.18.5, the expected response includes `{"status": "ok", "version": "1.18.5"}`.
+For v1.19.0, the expected response includes `{"status": "ok", "version": "1.19.0"}`.
 
-## 5. See your savings
+## See your savings
 
 After a handful of real requests through the proxy:
 
@@ -124,45 +138,43 @@ TokenPak's savings depend on your integration path — we don't collapse this in
 
 If you're evaluating TokenPak, start with a direct-API workload to see the pipeline's actual effectiveness, then layer in your cached flows to see the marginal contribution on top.
 
-## 6. Keep it running
+## Keep it running
 
-For continuous savings, keep the proxy running in the background. The `tokenpak setup` wizard already launches it detached. If you stopped it:
-
-```bash
-tokenpak start                    # foreground
-# or, detached:
-nohup tokenpak start > ~/.tokenpak/proxy.log 2>&1 &
-echo $! > ~/.tokenpak/proxy.pid
-```
-
-To stop:
+For continuous savings, use TokenPak's managed background process. Both
+`tokenpak setup --start` and `tokenpak start` launch it detached:
 
 ```bash
-tokenpak stop
-# or, if detached via nohup:
-kill $(cat ~/.tokenpak/proxy.pid)
-```
-
-### Run as a systemd user service (optional)
-
-For persistent daemonization on Linux, example unit file in the OSS repo under `examples/systemd/tokenpak.service`.
-
-## Non-localhost access (LAN exposure)
-
-If you want to expose the proxy to other machines on your LAN, set an auth token:
-
-```bash
-export TOKENPAK_PROXY_AUTH_TOKEN=$(openssl rand -hex 32)
 tokenpak start
 ```
 
-Non-localhost clients must then include `X-TokenPak-Auth: <your-token>` on every request. Localhost is always allowed; the proxy auth token is stripped before anything is forwarded upstream (the SC+1 I5 conformance gate enforces this).
+Stop the process through the same lifecycle manager:
+
+```bash
+tokenpak stop
+```
+
+## Network access: LAN exposure
+
+If you intentionally expose the proxy to other machines on your LAN, opt in to
+a non-loopback bind and set a proxy auth token:
+
+```bash
+export TOKENPAK_BIND_ADDRESS=0.0.0.0
+export TOKENPAK_PROXY_AUTH_TOKEN="$(openssl rand -hex 32)"
+tokenpak start
+```
+
+Non-localhost clients must then include
+`Authorization: Bearer <TOKENPAK_PROXY_AUTH_TOKEN>` on every request. A remote
+request is rejected with `403` if the server has no proxy auth token configured,
+or `401` if the Bearer credential is missing or wrong. Localhost is always
+allowed. The proxy credential is stripped before forwarding; supply any direct
+provider credential separately, such as with `x-api-key`.
 
 ## Next steps
 
 - **Tune compression** — `tokenpak recipe --help` for custom compression recipes.
 - **Monitor savings** — dashboard at `http://127.0.0.1:8766/dashboard`.
-- **Route-class policies** — `tokenpak/services/policy_service/presets/*.yaml` in the OSS repo ship per-client policies (Claude Code variants, Anthropic SDK, OpenAI SDK, generic).
 - **Spend Guard** — `tokenpak budget --help` to configure rolling per-agent and per-fleet caps. The pre-send circuit breaker blocks runaway requests before they hit the provider.
 
 ## Troubleshooting
@@ -171,7 +183,7 @@ Non-localhost clients must then include `X-TokenPak-Auth: <your-token>` on every
 
 - Verify the proxy is running: `tokenpak status`.
 - Check port 8766 isn't in use: `lsof -i :8766`.
-- Re-run `tokenpak start` (or the wizard via `tokenpak setup`).
+- Re-run `tokenpak start` (or the wizard via `tokenpak setup --start`).
 
 **"API key invalid" errors**
 

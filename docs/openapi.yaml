@@ -1,8 +1,16 @@
 openapi: "3.1.0"
 
+# Released session-economics strings require at least one rendering base
+# character. This reusable pattern mirrors Python Unicode 15.1 categories
+# L/N/P/S while excluding the five filler symbols rejected by
+# `_has_visible_text()`.
+x-tokenpak-session-economics-visible-text:
+  unicode_data_version: "15.1.0"
+  pattern: &tokenpak-rendering-base '[\u0021-\u007E\u00A1-\u00AC\u00AE-\u02FF\u0370-\u0377\u037A-\u037F\u0384-\u038A\u038C\u038E-\u03A1\u03A3-\u0482\u048A-\u052F\u0531-\u0556\u0559-\u058A\u058D-\u058F\u05BE\u05C0\u05C3\u05C6\u05D0-\u05EA\u05EF-\u05F4\u0606-\u060F\u061B\u061D-\u064A\u0660-\u066F\u0671-\u06D5\u06DE\u06E5-\u06E6\u06E9\u06EE-\u070D\u0710\u0712-\u072F\u074D-\u07A5\u07B1\u07C0-\u07EA\u07F4-\u07FA\u07FE-\u0815\u081A\u0824\u0828\u0830-\u083E\u0840-\u0858\u085E\u0860-\u086A\u0870-\u088E\u08A0-\u08C9\u0904-\u0939\u093D\u0950\u0958-\u0961\u0964-\u0980\u0985-\u098C\u098F-\u0990\u0993-\u09A8\u09AA-\u09B0\u09B2\u09B6-\u09B9\u09BD\u09CE\u09DC-\u09DD\u09DF-\u09E1\u09E6-\u09FD\u0A05-\u0A0A\u0A0F-\u0A10\u0A13-\u0A28\u0A2A-\u0A30\u0A32-\u0A33\u0A35-\u0A36\u0A38-\u0A39\u0A59-\u0A5C\u0A5E\u0A66-\u0A6F\u0A72-\u0A74\u0A76\u0A85-\u0A8D\u0A8F-\u0A91\u0A93-\u0AA8\u0AAA-\u0AB0\u0AB2-\u0AB3\u0AB5-\u0AB9\u0ABD\u0AD0\u0AE0-\u0AE1\u0AE6-\u0AF1\u0AF9\u0B05-\u0B0C\u0B0F-\u0B10\u0B13-\u0B28\u0B2A-\u0B30\u0B32-\u0B33\u0B35-\u0B39\u0B3D\u0B5C-\u0B5D\u0B5F-\u0B61\u0B66-\u0B77\u0B83\u0B85-\u0B8A\u0B8E-\u0B90\u0B92-\u0B95\u0B99-\u0B9A\u0B9C\u0B9E-\u0B9F\u0BA3-\u0BA4\u0BA8-\u0BAA\u0BAE-\u0BB9\u0BD0\u0BE6-\u0BFA\u0C05-\u0C0C\u0C0E-\u0C10\u0C12-\u0C28\u0C2A-\u0C39\u0C3D\u0C58-\u0C5A\u0C5D\u0C60-\u0C61\u0C66-\u0C6F\u0C77-\u0C80\u0C84-\u0C8C\u0C8E-\u0C90\u0C92-\u0CA8\u0CAA-\u0CB3\u0CB5-\u0CB9\u0CBD\u0CDD-\u0CDE\u0CE0-\u0CE1\u0CE6-\u0CEF\u0CF1-\u0CF2\u0D04-\u0D0C\u0D0E-\u0D10\u0D12-\u0D3A\u0D3D\u0D4E-\u0D4F\u0D54-\u0D56\u0D58-\u0D61\u0D66-\u0D7F\u0D85-\u0D96\u0D9A-\u0DB1\u0DB3-\u0DBB\u0DBD\u0DC0-\u0DC6\u0DE6-\u0DEF\u0DF4\u0E01-\u0E30\u0E32-\u0E33\u0E3F-\u0E46\u0E4F-\u0E5B\u0E81-\u0E82\u0E84\u0E86-\u0E8A\u0E8C-\u0EA3\u0EA5\u0EA7-\u0EB0\u0EB2-\u0EB3\u0EBD\u0EC0-\u0EC4\u0EC6\u0ED0-\u0ED9\u0EDC-\u0EDF\u0F00-\u0F17\u0F1A-\u0F34\u0F36\u0F38\u0F3A-\u0F3D\u0F40-\u0F47\u0F49-\u0F6C\u0F85\u0F88-\u0F8C\u0FBE-\u0FC5\u0FC7-\u0FCC\u0FCE-\u0FDA\u1000-\u102A\u103F-\u1055\u105A-\u105D\u1061\u1065-\u1066\u106E-\u1070\u1075-\u1081\u108E\u1090-\u1099\u109E-\u10C5\u10C7\u10CD\u10D0-\u115E\u1161-\u1248\u124A-\u124D\u1250-\u1256\u1258\u125A-\u125D\u1260-\u1288\u128A-\u128D\u1290-\u12B0\u12B2-\u12B5\u12B8-\u12BE\u12C0\u12C2-\u12C5\u12C8-\u12D6\u12D8-\u1310\u1312-\u1315\u1318-\u135A\u1360-\u137C\u1380-\u1399\u13A0-\u13F5\u13F8-\u13FD\u1400-\u167F\u1681-\u169C\u16A0-\u16F8\u1700-\u1711\u171F-\u1731\u1735-\u1736\u1740-\u1751\u1760-\u176C\u176E-\u1770\u1780-\u17B3\u17D4-\u17DC\u17E0-\u17E9\u17F0-\u17F9\u1800-\u180A\u1810-\u1819\u1820-\u1878\u1880-\u1884\u1887-\u18A8\u18AA\u18B0-\u18F5\u1900-\u191E\u1940\u1944-\u196D\u1970-\u1974\u1980-\u19AB\u19B0-\u19C9\u19D0-\u19DA\u19DE-\u1A16\u1A1E-\u1A54\u1A80-\u1A89\u1A90-\u1A99\u1AA0-\u1AAD\u1B05-\u1B33\u1B45-\u1B4C\u1B50-\u1B6A\u1B74-\u1B7E\u1B83-\u1BA0\u1BAE-\u1BE5\u1BFC-\u1C23\u1C3B-\u1C49\u1C4D-\u1C88\u1C90-\u1CBA\u1CBD-\u1CC7\u1CD3\u1CE9-\u1CEC\u1CEE-\u1CF3\u1CF5-\u1CF6\u1CFA\u1D00-\u1DBF\u1E00-\u1F15\u1F18-\u1F1D\u1F20-\u1F45\u1F48-\u1F4D\u1F50-\u1F57\u1F59\u1F5B\u1F5D\u1F5F-\u1F7D\u1F80-\u1FB4\u1FB6-\u1FC4\u1FC6-\u1FD3\u1FD6-\u1FDB\u1FDD-\u1FEF\u1FF2-\u1FF4\u1FF6-\u1FFE\u2010-\u2027\u2030-\u205E\u2070-\u2071\u2074-\u208E\u2090-\u209C\u20A0-\u20C0\u2100-\u218B\u2190-\u2426\u2440-\u244A\u2460-\u27FF\u2801-\u2B73\u2B76-\u2B95\u2B97-\u2CEE\u2CF2-\u2CF3\u2CF9-\u2D25\u2D27\u2D2D\u2D30-\u2D67\u2D6F-\u2D70\u2D80-\u2D96\u2DA0-\u2DA6\u2DA8-\u2DAE\u2DB0-\u2DB6\u2DB8-\u2DBE\u2DC0-\u2DC6\u2DC8-\u2DCE\u2DD0-\u2DD6\u2DD8-\u2DDE\u2E00-\u2E5D\u2E80-\u2E99\u2E9B-\u2EF3\u2F00-\u2FD5\u2FF0-\u2FFF\u3001-\u3029\u3030-\u303F\u3041-\u3096\u309B-\u30FF\u3105-\u312F\u3131-\u3163\u3165-\u318E\u3190-\u31E3\u31EF-\u321E\u3220-\uA48C\uA490-\uA4C6\uA4D0-\uA62B\uA640-\uA66E\uA673\uA67E-\uA69D\uA6A0-\uA6EF\uA6F2-\uA6F7\uA700-\uA7CA\uA7D0-\uA7D1\uA7D3\uA7D5-\uA7D9\uA7F2-\uA801\uA803-\uA805\uA807-\uA80A\uA80C-\uA822\uA828-\uA82B\uA830-\uA839\uA840-\uA877\uA882-\uA8B3\uA8CE-\uA8D9\uA8F2-\uA8FE\uA900-\uA925\uA92E-\uA946\uA95F-\uA97C\uA984-\uA9B2\uA9C1-\uA9CD\uA9CF-\uA9D9\uA9DE-\uA9E4\uA9E6-\uA9FE\uAA00-\uAA28\uAA40-\uAA42\uAA44-\uAA4B\uAA50-\uAA59\uAA5C-\uAA7A\uAA7E-\uAAAF\uAAB1\uAAB5-\uAAB6\uAAB9-\uAABD\uAAC0\uAAC2\uAADB-\uAAEA\uAAF0-\uAAF4\uAB01-\uAB06\uAB09-\uAB0E\uAB11-\uAB16\uAB20-\uAB26\uAB28-\uAB2E\uAB30-\uAB6B\uAB70-\uABE2\uABEB\uABF0-\uABF9\uAC00-\uD7A3\uD7B0-\uD7C6\uD7CB-\uD7FB\uF900-\uFA6D\uFA70-\uFAD9\uFB00-\uFB06\uFB13-\uFB17\uFB1D\uFB1F-\uFB36\uFB38-\uFB3C\uFB3E\uFB40-\uFB41\uFB43-\uFB44\uFB46-\uFBC2\uFBD3-\uFD8F\uFD92-\uFDC7\uFDCF\uFDF0-\uFDFF\uFE10-\uFE19\uFE30-\uFE52\uFE54-\uFE66\uFE68-\uFE6B\uFE70-\uFE74\uFE76-\uFEFC\uFF01-\uFF9F\uFFA1-\uFFBE\uFFC2-\uFFC7\uFFCA-\uFFCF\uFFD2-\uFFD7\uFFDA-\uFFDC\uFFE0-\uFFE6\uFFE8-\uFFEE\uFFFC-\uFFFD𐀀-𐀋𐀍-𐀦𐀨-𐀺𐀼-𐀽𐀿-𐁍𐁐-𐁝𐂀-𐃺𐄀-𐄂𐄇-𐄳𐄷-𐆎𐆐-𐆜𐆠𐇐-𐇼𐊀-𐊜𐊠-𐋐𐋡-𐋻𐌀-𐌣𐌭-𐍊𐍐-𐍵𐎀-𐎝𐎟-𐏃𐏈-𐏕𐐀-𐒝𐒠-𐒩𐒰-𐓓𐓘-𐓻𐔀-𐔧𐔰-𐕣𐕯-𐕺𐕼-𐖊𐖌-𐖒𐖔-𐖕𐖗-𐖡𐖣-𐖱𐖳-𐖹𐖻-𐖼𐘀-𐜶𐝀-𐝕𐝠-𐝧𐞀-𐞅𐞇-𐞰𐞲-𐞺𐠀-𐠅𐠈𐠊-𐠵𐠷-𐠸𐠼𐠿-𐡕𐡗-𐢞𐢧-𐢯𐣠-𐣲𐣴-𐣵𐣻-𐤛𐤟-𐤹𐤿𐦀-𐦷𐦼-𐧏𐧒-𐨀𐨐-𐨓𐨕-𐨗𐨙-𐨵𐩀-𐩈𐩐-𐩘𐩠-𐪟𐫀-𐫤𐫫-𐫶𐬀-𐬵𐬹-𐭕𐭘-𐭲𐭸-𐮑𐮙-𐮜𐮩-𐮯𐰀-𐱈𐲀-𐲲𐳀-𐳲𐳺-𐴣𐴰-𐴹𐹠-𐹾𐺀-𐺩𐺭𐺰-𐺱𐼀-𐼧𐼰-𐽅𐽑-𐽙𐽰-𐾁𐾆-𐾉𐾰-𐿋𐿠-𐿶𑀃-𑀷𑁇-𑁍𑁒-𑁯𑁱-𑁲𑁵𑂃-𑂯𑂻-𑂼𑂾-𑃁𑃐-𑃨𑃰-𑃹𑄃-𑄦𑄶-𑅄𑅇𑅐-𑅲𑅴-𑅶𑆃-𑆲𑇁-𑇈𑇍𑇐-𑇟𑇡-𑇴𑈀-𑈑𑈓-𑈫𑈸-𑈽𑈿-𑉀𑊀-𑊆𑊈𑊊-𑊍𑊏-𑊝𑊟-𑊩𑊰-𑋞𑋰-𑋹𑌅-𑌌𑌏-𑌐𑌓-𑌨𑌪-𑌰𑌲-𑌳𑌵-𑌹𑌽𑍐𑍝-𑍡𑐀-𑐴𑑇-𑑛𑑝𑑟-𑑡𑒀-𑒯𑓄-𑓇𑓐-𑓙𑖀-𑖮𑗁-𑗛𑘀-𑘯𑙁-𑙄𑙐-𑙙𑙠-𑙬𑚀-𑚪𑚸-𑚹𑛀-𑛉𑜀-𑜚𑜰-𑝆𑠀-𑠫𑠻𑢠-𑣲𑣿-𑤆𑤉𑤌-𑤓𑤕-𑤖𑤘-𑤯𑤿𑥁𑥄-𑥆𑥐-𑥙𑦠-𑦧𑦪-𑧐𑧡-𑧣𑨀𑨋-𑨲𑨺𑨿-𑩆𑩐𑩜-𑪉𑪚-𑪢𑪰-𑫸𑬀-𑬉𑰀-𑰈𑰊-𑰮𑱀-𑱅𑱐-𑱬𑱰-𑲏𑴀-𑴆𑴈-𑴉𑴋-𑴰𑵆𑵐-𑵙𑵠-𑵥𑵧-𑵨𑵪-𑶉𑶘𑶠-𑶩𑻠-𑻲𑻷-𑻸𑼂𑼄-𑼐𑼒-𑼳𑽃-𑽙𑾰𑿀-𑿱𑿿-𒎙𒐀-𒑮𒑰-𒑴𒒀-𒕃𒾐-𒿲𓀀-𓐯𓑁-𓑆𔐀-𔙆𖠀-𖨸𖩀-𖩞𖩠-𖩩𖩮-𖪾𖫀-𖫉𖫐-𖫭𖫵𖬀-𖬯𖬷-𖭅𖭐-𖭙𖭛-𖭡𖭣-𖭷𖭽-𖮏𖹀-𖺚𖼀-𖽊𖽐𖾓-𖾟𖿠-𖿣𗀀-𘟷𘠀-𘳕𘴀-𘴈𚿰-𚿳𚿵-𚿻𚿽-𚿾𛀀-𛄢𛄲𛅐-𛅒𛅕𛅤-𛅧𛅰-𛋻𛰀-𛱪𛱰-𛱼𛲀-𛲈𛲐-𛲙𛲜𛲟𜽐-𜿃𝀀-𝃵𝄀-𝄦𝄩-𝅘𝅥𝅲𝅪-𝅬𝆃-𝆄𝆌-𝆩𝆮-𝇪𝈀-𝉁𝉅𝋀-𝋓𝋠-𝋳𝌀-𝍖𝍠-𝍸𝐀-𝑔𝑖-𝒜𝒞-𝒟𝒢𝒥-𝒦𝒩-𝒬𝒮-𝒹𝒻𝒽-𝓃𝓅-𝔅𝔇-𝔊𝔍-𝔔𝔖-𝔜𝔞-𝔹𝔻-𝔾𝕀-𝕄𝕆𝕊-𝕐𝕒-𝚥𝚨-𝟋𝟎-𝧿𝨷-𝨺𝩭-𝩴𝩶-𝪃𝪅-𝪋𝼀-𝼞𝼥-𝼪𞀰-𞁭𞄀-𞄬𞄷-𞄽𞅀-𞅉𞅎-𞅏𞊐-𞊭𞋀-𞋫𞋰-𞋹𞋿𞓐-𞓫𞓰-𞓹𞟠-𞟦𞟨-𞟫𞟭-𞟮𞟰-𞟾𞠀-𞣄𞣇-𞣏𞤀-𞥃𞥋𞥐-𞥙𞥞-𞥟𞱱-𞲴𞴁-𞴽𞸀-𞸃𞸅-𞸟𞸡-𞸢𞸤𞸧𞸩-𞸲𞸴-𞸷𞸹𞸻𞹂𞹇𞹉𞹋𞹍-𞹏𞹑-𞹒𞹔𞹗𞹙𞹛𞹝𞹟𞹡-𞹢𞹤𞹧-𞹪𞹬-𞹲𞹴-𞹷𞹹-𞹼𞹾𞺀-𞺉𞺋-𞺛𞺡-𞺣𞺥-𞺩𞺫-𞺻𞻰-𞻱🀀-🀫🀰-🂓🂠-🂮🂱-🂿🃁-🃏🃑-🃵🄀-🆭🇦-🈂🈐-🈻🉀-🉈🉐-🉑🉠-🉥🌀-🛗🛜-🛬🛰-🛼🜀-🝶🝻-🟙🟠-🟫🟰🠀-🠋🠐-🡇🡐-🡙🡠-🢇🢐-🢭🢰-🢱🤀-🩓🩠-🩭🩰-🩼🪀-🪈🪐-🪽🪿-🫅🫎-🫛🫠-🫨🫰-🫸🬀-🮒🮔-🯊🯰-🯹𠀀-𪛟𪜀-𫜹𫝀-𫠝𫠠-𬺡𬺰-𮯠𮯰-𮹝丽-𪘀𰀀-𱍊𱍐-𲎯]'
+
 info:
   title: TokenPak Proxy API
-  version: "1.17.0"
+  version: "1.19.0"
   description: |
     TokenPak is a drop-in HTTP proxy that sits between your app and LLM APIs.
     It compresses requests, deduplicates cache hits, and tracks token spend —
@@ -19,12 +27,12 @@ info:
 
     ## Authentication
 
-    The proxy forwards the credentials supplied by the client. Direct API
-    clients can set the standard provider environment variables
-    (`ANTHROPIC_API_KEY`, `OPENAI_API_KEY`, etc.) or pass them in the
-    `Authorization` / `x-api-key` header as usual. TokenPak itself does not
-    require a provider key; already-authenticated clients can keep using their
-    existing session credentials.
+    Localhost requests require no proxy credential. A non-localhost listener
+    requires `TOKENPAK_PROXY_AUTH_TOKEN` on the server and the matching
+    `Authorization: Bearer` credential from the client; TokenPak strips that
+    client-to-proxy credential before forwarding. Provider authentication is
+    separate and may come from server-side credentials, `x-api-key`, or an
+    already-authenticated client session.
 
   contact:
     name: TokenPak
@@ -36,6 +44,12 @@ info:
 servers:
   - url: http://localhost:8766
     description: Local proxy (default port)
+
+# Localhost requests are trusted. A client reaching a non-localhost listener
+# must use the Bearer scheme below, so both security alternatives are valid.
+security:
+  - {}
+  - ProxyBearerAuth: []
 
 tags:
   - name: passthrough
@@ -93,6 +107,55 @@ paths:
           $ref: "#/components/responses/RateLimitExceeded"
         "502":
           $ref: "#/components/responses/UpstreamError"
+
+  /v1/messages/session-economics:
+    post:
+      operationId: getSessionEconomics
+      summary: Session economics from the local ledger
+      description: |
+        Builds the immutable `session-economics/1` response from completed
+        local request-ledger rows. Missing measurements remain explicitly
+        unavailable rather than being coerced to zero. No upstream API call is
+        made.
+
+        Supply a stable session id in `X-Claude-Code-Session-Id` or in the
+        request body. If both are supplied, they must match.
+      tags: [passthrough]
+      parameters:
+        - name: X-Claude-Code-Session-Id
+          in: header
+          required: false
+          description: Stable session id used to select completed ledger rows.
+          schema:
+            type: string
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SessionEconomicsRequest"
+            example:
+              session_id: session-abc
+              model: claude-sonnet-4-5
+      responses:
+        "200":
+          description: Versioned session economics derived from local facts
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SessionEconomicsResponse"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "500":
+          description: Local ledger evaluation failed
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
 
   /v1/chat/completions:
     post:
@@ -153,7 +216,8 @@ paths:
               example:
                 status: ok
                 uptime_seconds: 3600
-                version: 1.17.0
+                version: 1.19.0
+                pid: 4242
                 requests_total: 42
                 requests_errors: 0
                 compression_ratio_avg: 0.44
@@ -301,22 +365,6 @@ paths:
               schema:
                 $ref: "#/components/schemas/CacheStats"
 
-  # ─── Vault ────────────────────────────────────────────────────────────────
-
-  /vault:
-    get:
-      operationId: getVaultIndex
-      summary: Vault index debug info
-      description: Returns the current state of the vault index including all loaded blocks.
-      tags: [vault]
-      responses:
-        "200":
-          description: Vault index state
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/VaultInfo"
-
   # ─── Metrics ──────────────────────────────────────────────────────────────
 
   /metrics:
@@ -389,72 +437,55 @@ paths:
 
   /ingest:
     post:
-      operationId: ingestDocument
-      summary: Ingest a document into vault context
-      description: Parses and indexes a document (text, markdown, code, etc.) into the vault for context injection.
+      operationId: acknowledgeIngest
+      summary: Acknowledge one compatibility payload
+      description: >-
+        Accepts one JSON payload and returns a generated record ID. In v1.19.0,
+        this compatibility endpoint does not persist or index its contents.
       tags: [ingest]
       requestBody:
-        required: true
+        required: false
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/IngestRequest"
+              description: Any JSON value; the v1.19.0 handler does not inspect its contents.
             example:
-              content: "# My Document\nThis is the content to index."
-              source_path: /home/user/docs/my-doc.md
-              risk_class: low
+              content: Compatibility payload
       responses:
         "200":
-          description: Ingest result
+          description: Acknowledgement with one generated ID
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/IngestResponse"
-        "400":
-          $ref: "#/components/responses/BadRequest"
-
-  /ingest/batch:
-    post:
-      operationId: ingestBatch
-      summary: Batch ingest multiple documents
-      description: Ingest multiple documents in a single request.
-      tags: [ingest]
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/IngestBatchRequest"
-      responses:
-        "200":
-          description: Batch ingest results
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/IngestBatchResponse"
-        "400":
-          $ref: "#/components/responses/BadRequest"
-
-  # ─── Interactive Docs ─────────────────────────────────────────────────────
-
-  /docs:
-    get:
-      operationId: getSwaggerUI
-      summary: Interactive API documentation (Swagger UI)
-      description: Serves a Swagger UI page for browsing and testing the API.
-      tags: [health]
-      responses:
-        "200":
-          description: Swagger UI HTML page
-          content:
-            text/html:
-              schema:
-                type: string
+                type: object
+                additionalProperties: false
+                required: [status, ids]
+                properties:
+                  status:
+                    type: string
+                    const: ok
+                  ids:
+                    type: array
+                    minItems: 1
+                    maxItems: 1
+                    items:
+                      type: string
+                      format: uuid
 
 
 # ─── Components ─────────────────────────────────────────────────────────────
 
 components:
+  securitySchemes:
+    ProxyBearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: opaque
+      description: |
+        Required for clients reaching a non-localhost listener. The value must
+        match the server's `TOKENPAK_PROXY_AUTH_TOKEN`. Localhost requests do
+        not require this credential, and TokenPak strips it before forwarding.
+
   schemas:
 
     # ── LLM passthrough schemas ──────────────────────────────────────────────
@@ -484,6 +515,812 @@ components:
           maximum: 1
         top_p:
           type: number
+
+    SessionEconomicsRequest:
+      type: object
+      description: Optional selectors for a completed local session.
+      properties:
+        session_id:
+          type: string
+          description: Stable session id; must match the stable session header when both are present.
+        model:
+          type: string
+          description: Optional model hint for ambiguous local ledger data.
+
+    SessionEconomicsResponse:
+      type: object
+      additionalProperties: true
+      description: >-
+        Immutable, truth-preserving session-economics/1 response. Consumers
+        accept additive fields for forward-compatible v1 evolution.
+      required: [schema_version, as_of, session, facts, state, runway, forecast, advisory]
+      properties:
+        schema_version:
+          type: string
+          const: session-economics/1
+        as_of:
+          type: string
+          format: date-time
+          pattern: '(?:Z|[+-][0-9]{2}(?::?[0-9]{2})?(?::?[0-9]{2}(?:[.,][0-9]+)?)?)$'
+        session:
+          $ref: "#/components/schemas/SessionEconomicsSession"
+        facts:
+          $ref: "#/components/schemas/SessionEconomicsFacts"
+        state:
+          $ref: "#/components/schemas/SessionEconomicsState"
+        runway:
+          $ref: "#/components/schemas/SessionEconomicsRunway"
+        forecast:
+          $ref: "#/components/schemas/SessionEconomicsForecast"
+        advisory:
+          type: "null"
+      allOf:
+        - if:
+            properties:
+              state:
+                properties:
+                  burn_usd_per_turn:
+                    properties:
+                      state:
+                        const: estimated
+          then:
+            properties:
+              facts:
+                properties:
+                  cost_usd:
+                    properties:
+                      state:
+                        const: estimated
+        - if:
+            properties:
+              state:
+                properties:
+                  burn_usd_per_turn:
+                    properties:
+                      state:
+                        const: observed
+          then:
+            properties:
+              facts:
+                properties:
+                  cost_usd:
+                    properties:
+                      state:
+                        const: observed
+        - if:
+            properties:
+              forecast:
+                properties:
+                  remaining_cost_usd_likely_50:
+                    properties:
+                      state:
+                        const: estimated
+          then:
+            properties:
+              facts:
+                properties:
+                  cost_usd:
+                    properties:
+                      state:
+                        const: estimated
+
+    SessionEconomicsNumericValue:
+      type: object
+      additionalProperties: true
+      required: [state, value]
+      properties:
+        state:
+          type: string
+          enum: [observed, estimated, no_data, unavailable, error]
+        value:
+          type: [number, "null"]
+          minimum: 0
+        source:
+          type: string
+          anyOf:
+            - maxLength: 0
+            - pattern: *tokenpak-rendering-base
+        confidence:
+          type: string
+          anyOf:
+            - maxLength: 0
+            - pattern: *tokenpak-rendering-base
+        reason:
+          type: string
+          anyOf:
+            - maxLength: 0
+            - pattern: *tokenpak-rendering-base
+        unit:
+          type: string
+          anyOf:
+            - maxLength: 0
+            - pattern: *tokenpak-rendering-base
+      description: >-
+        Observed or estimated values carry a numeric value and source. no_data,
+        unavailable, and error carry null; error also carries a reason.
+      allOf:
+        - if:
+            properties:
+              state:
+                enum: [observed, estimated]
+            required: [state]
+          then:
+            required: [source]
+            properties:
+              value:
+                type: number
+              source:
+                type: string
+                minLength: 1
+        - if:
+            properties:
+              state:
+                enum: [no_data, unavailable, error]
+            required: [state]
+          then:
+            properties:
+              value:
+                type: "null"
+        - if:
+            properties:
+              state:
+                const: error
+            required: [state]
+          then:
+            required: [reason]
+            properties:
+              reason:
+                type: string
+                minLength: 1
+
+    SessionEconomicsTokenFactValue:
+      allOf:
+        - $ref: "#/components/schemas/SessionEconomicsNumericValue"
+        - type: object
+          properties:
+            state:
+              type: string
+              enum: [observed, no_data, unavailable, error]
+            unit:
+              type: string
+              enum: ["", tokens]
+
+    SessionEconomicsTokenValue:
+      allOf:
+        - $ref: "#/components/schemas/SessionEconomicsNumericValue"
+        - type: object
+          properties:
+            unit:
+              type: string
+              enum: ["", tokens]
+
+    SessionEconomicsTokensPerTurnValue:
+      allOf:
+        - $ref: "#/components/schemas/SessionEconomicsNumericValue"
+        - type: object
+          properties:
+            unit:
+              type: string
+              enum: ["", tokens/turn]
+
+    SessionEconomicsUsdPerTurnValue:
+      allOf:
+        - $ref: "#/components/schemas/SessionEconomicsNumericValue"
+        - type: object
+          properties:
+            unit:
+              type: string
+              enum: ["", usd/turn]
+
+    SessionEconomicsSecondsValue:
+      allOf:
+        - $ref: "#/components/schemas/SessionEconomicsNumericValue"
+        - type: object
+          properties:
+            unit:
+              type: string
+              enum: ["", seconds]
+
+    SessionEconomicsProbabilityValue:
+      allOf:
+        - $ref: "#/components/schemas/SessionEconomicsNumericValue"
+        - type: object
+          properties:
+            value:
+              type: [number, "null"]
+              minimum: 0
+              maximum: 1
+            unit:
+              type: string
+              enum: ["", probability]
+
+    SessionEconomicsRateProvenance:
+      type: object
+      additionalProperties: true
+      required: [catalog_version, effective_at, source, freshness]
+      properties:
+        catalog_version:
+          type: [string, "null"]
+          pattern: *tokenpak-rendering-base
+        effective_at:
+          type: [string, "null"]
+          format: date-time
+          pattern: '(?:Z|[+-][0-9]{2}(?::?[0-9]{2})?(?::?[0-9]{2}(?:[.,][0-9]+)?)?)$'
+        source:
+          type: [string, "null"]
+          pattern: *tokenpak-rendering-base
+        freshness:
+          type: string
+          enum: [fresh, stale, unknown]
+
+    SessionEconomicsCostValue:
+      type: object
+      additionalProperties: true
+      required: [state, value, basis, rate_provenance]
+      properties:
+        state:
+          type: string
+          enum: [observed, estimated, no_data, unavailable, error]
+        value:
+          type: [number, "null"]
+          minimum: 0
+        basis:
+          type: string
+          enum: [provider_bill, rate_card, subscription, unknown]
+        rate_provenance:
+          $ref: "#/components/schemas/SessionEconomicsRateProvenance"
+        source:
+          type: string
+          anyOf:
+            - maxLength: 0
+            - pattern: *tokenpak-rendering-base
+        reason:
+          type: string
+          anyOf:
+            - maxLength: 0
+            - pattern: *tokenpak-rendering-base
+      description: >-
+        observed cost uses provider_bill plus a source. estimated cost uses
+        rate_card plus complete fresh rate provenance. Non-value states carry null.
+      allOf:
+        - if:
+            properties:
+              state:
+                const: observed
+            required: [state]
+          then:
+            required: [source]
+            properties:
+              value:
+                type: number
+              basis:
+                const: provider_bill
+              source:
+                type: string
+                minLength: 1
+        - if:
+            properties:
+              state:
+                const: estimated
+            required: [state]
+          then:
+            properties:
+              value:
+                type: number
+              basis:
+                const: rate_card
+              rate_provenance:
+                required: [catalog_version, effective_at, source, freshness]
+                properties:
+                  catalog_version:
+                    type: string
+                    minLength: 1
+                  effective_at:
+                    type: string
+                    format: date-time
+                  source:
+                    type: string
+                    minLength: 1
+                  freshness:
+                    const: fresh
+        - if:
+            properties:
+              state:
+                enum: [no_data, unavailable, error]
+            required: [state]
+          then:
+            properties:
+              value:
+                type: "null"
+        - if:
+            properties:
+              state:
+                const: error
+            required: [state]
+          then:
+            required: [reason]
+            properties:
+              reason:
+                type: string
+                minLength: 1
+
+    SessionEconomicsModel:
+      type: object
+      additionalProperties: true
+      required: [id, effort]
+      properties:
+        id:
+          type: string
+          pattern: *tokenpak-rendering-base
+        effort:
+          type: string
+          pattern: *tokenpak-rendering-base
+
+    SessionEconomicsSession:
+      type: object
+      additionalProperties: true
+      required: [id, identity_state, turns_observed, model]
+      properties:
+        id:
+          type: [string, "null"]
+          anyOf:
+            - maxLength: 0
+            - pattern: *tokenpak-rendering-base
+        identity_state:
+          type: string
+          enum: [observed, no_data, unavailable, error]
+        turns_observed:
+          type: integer
+          minimum: 0
+        model:
+          $ref: "#/components/schemas/SessionEconomicsModel"
+        reason:
+          type: string
+          anyOf:
+            - maxLength: 0
+            - pattern: *tokenpak-rendering-base
+      description: >-
+        An observed identity carries a non-empty id. Other identity states carry
+        null; error also carries a reason.
+      allOf:
+        - if:
+            properties:
+              identity_state:
+                const: observed
+            required: [identity_state]
+          then:
+            properties:
+              id:
+                type: string
+                minLength: 1
+        - if:
+            properties:
+              identity_state:
+                enum: [no_data, unavailable, error]
+            required: [identity_state]
+          then:
+            properties:
+              id:
+                type: "null"
+        - if:
+            properties:
+              identity_state:
+                const: error
+            required: [identity_state]
+          then:
+            required: [reason]
+            properties:
+              reason:
+                type: string
+                minLength: 1
+
+    SessionEconomicsFacts:
+      type: object
+      additionalProperties: true
+      required: [input_tokens, output_tokens, cache_read_tokens, cache_write_tokens, cost_usd]
+      properties:
+        input_tokens:
+          $ref: "#/components/schemas/SessionEconomicsTokenFactValue"
+        output_tokens:
+          $ref: "#/components/schemas/SessionEconomicsTokenFactValue"
+        cache_read_tokens:
+          $ref: "#/components/schemas/SessionEconomicsTokenFactValue"
+        cache_write_tokens:
+          $ref: "#/components/schemas/SessionEconomicsTokenFactValue"
+        cost_usd:
+          $ref: "#/components/schemas/SessionEconomicsCostValue"
+      description: >-
+        Token facts use unit tokens and never use the estimated state. Missing
+        measurements are null, not numeric zero.
+
+    SessionEconomicsState:
+      type: object
+      additionalProperties: true
+      required:
+        - context_tokens
+        - base_tokens
+        - context_growth_ewma
+        - burn_tokens_per_turn
+        - burn_usd_per_turn
+        - burn_slope
+        - idle_seconds
+        - cache_ttl_seconds
+        - cache_state
+      properties:
+        context_tokens:
+          $ref: "#/components/schemas/SessionEconomicsTokenValue"
+        base_tokens:
+          $ref: "#/components/schemas/SessionEconomicsTokenValue"
+        context_growth_ewma:
+          $ref: "#/components/schemas/SessionEconomicsTokensPerTurnValue"
+        burn_tokens_per_turn:
+          $ref: "#/components/schemas/SessionEconomicsTokensPerTurnValue"
+        burn_usd_per_turn:
+          $ref: "#/components/schemas/SessionEconomicsUsdPerTurnValue"
+        burn_slope:
+          type: string
+          enum: [unknown, down, flat, up]
+        idle_seconds:
+          $ref: "#/components/schemas/SessionEconomicsSecondsValue"
+        cache_ttl_seconds:
+          $ref: "#/components/schemas/SessionEconomicsSecondsValue"
+        cache_state:
+          type: string
+          enum: [warm, expired, unknown]
+      description: >-
+        Units are tokens, tokens/turn, usd/turn, or seconds according to the
+        enclosing field. Estimated USD burn requires estimated rate-card cost provenance.
+
+    SessionEconomicsRunway:
+      type: object
+      additionalProperties: true
+      required: [status, turns, binding_constraint, guard_state]
+      properties:
+        status:
+          type: string
+          enum: [available, learning, unavailable, error]
+        turns:
+          type: [integer, "null"]
+          minimum: 0
+        binding_constraint:
+          type: string
+          enum: [budget, context_soft, context_hard, rolling_cap, unknown]
+        guard_state:
+          type: string
+          enum: [allow, amber, soft_block, hard_stop, unknown]
+        reason:
+          type: string
+          anyOf:
+            - maxLength: 0
+            - pattern: *tokenpak-rendering-base
+      description: >-
+        available carries non-negative turns and a non-unknown binding constraint.
+        Other statuses carry null turns; error also carries a reason.
+      allOf:
+        - if:
+            properties:
+              status:
+                const: available
+            required: [status]
+          then:
+            properties:
+              turns:
+                type: integer
+                minimum: 0
+              binding_constraint:
+                enum: [budget, context_soft, context_hard, rolling_cap]
+        - if:
+            properties:
+              status:
+                enum: [learning, unavailable, error]
+            required: [status]
+          then:
+            properties:
+              turns:
+                type: "null"
+        - if:
+            properties:
+              status:
+                const: error
+            required: [status]
+          then:
+            required: [reason]
+            properties:
+              reason:
+                type: string
+                minLength: 1
+        - if:
+            properties:
+              guard_state:
+                const: hard_stop
+            required: [guard_state]
+          then:
+            properties:
+              turns:
+                type: [integer, "null"]
+                maximum: 0
+
+    SessionEconomicsInterval:
+      type: object
+      additionalProperties: true
+      required: [state, low, high]
+      properties:
+        state:
+          type: string
+          enum: [estimated, no_data, unavailable, error]
+        low:
+          type: [number, "null"]
+          minimum: 0
+        high:
+          type: [number, "null"]
+          minimum: 0
+        source:
+          type: string
+          anyOf:
+            - maxLength: 0
+            - pattern: *tokenpak-rendering-base
+        reason:
+          type: string
+          anyOf:
+            - maxLength: 0
+            - pattern: *tokenpak-rendering-base
+        unit:
+          type: string
+          anyOf:
+            - maxLength: 0
+            - pattern: *tokenpak-rendering-base
+      description: >-
+        Estimated intervals carry non-negative low and high bounds plus a
+        non-whitespace source. Other states carry null bounds; error also
+        carries a reason. The runtime enforces low <= high; JSON Schema cannot
+        compare sibling numeric properties directly.
+      allOf:
+        - if:
+            properties:
+              state:
+                const: estimated
+            required: [state]
+          then:
+            required: [source]
+            properties:
+              low:
+                type: number
+              high:
+                type: number
+              source:
+                type: string
+                minLength: 1
+        - if:
+            properties:
+              state:
+                enum: [no_data, unavailable, error]
+            required: [state]
+          then:
+            properties:
+              low:
+                type: "null"
+              high:
+                type: "null"
+        - if:
+            properties:
+              state:
+                const: error
+            required: [state]
+          then:
+            required: [reason]
+            properties:
+              reason:
+                type: string
+                minLength: 1
+
+    SessionEconomicsTokenInterval:
+      allOf:
+        - $ref: "#/components/schemas/SessionEconomicsInterval"
+        - type: object
+          properties:
+            unit:
+              type: string
+              enum: ["", tokens]
+
+    SessionEconomicsUsdInterval:
+      allOf:
+        - $ref: "#/components/schemas/SessionEconomicsInterval"
+        - type: object
+          properties:
+            unit:
+              type: string
+              enum: ["", usd]
+
+    SessionEconomicsTurnInterval:
+      allOf:
+        - $ref: "#/components/schemas/SessionEconomicsInterval"
+        - type: object
+          properties:
+            unit:
+              type: string
+              enum: ["", turns]
+
+    SessionEconomicsCoverage:
+      type: object
+      additionalProperties: true
+      required: [method, observed, history_n, drift_state]
+      properties:
+        method:
+          type: [string, "null"]
+          pattern: *tokenpak-rendering-base
+        observed:
+          type: [number, "null"]
+          minimum: 0
+          maximum: 1
+        history_n:
+          type: integer
+          minimum: 0
+        drift_state:
+          type: string
+          enum: [stable, drifting, unknown]
+
+    SessionEconomicsForecast:
+      type: object
+      additionalProperties: true
+      required:
+        - status
+        - remaining_tokens_likely_50
+        - remaining_tokens_ceiling_90
+        - remaining_cost_usd_likely_50
+        - remaining_cost_usd_ceiling_90
+        - expected_turns
+        - coverage
+        - predicted_block_probability
+      properties:
+        status:
+          type: string
+          enum: [learning, available, unavailable, error]
+        remaining_tokens_likely_50:
+          $ref: "#/components/schemas/SessionEconomicsTokenInterval"
+        remaining_tokens_ceiling_90:
+          $ref: "#/components/schemas/SessionEconomicsTokenValue"
+        remaining_cost_usd_likely_50:
+          $ref: "#/components/schemas/SessionEconomicsUsdInterval"
+        remaining_cost_usd_ceiling_90:
+          allOf:
+            - $ref: "#/components/schemas/SessionEconomicsNumericValue"
+            - type: object
+              properties:
+                unit:
+                  type: string
+                  enum: ["", usd]
+        expected_turns:
+          $ref: "#/components/schemas/SessionEconomicsTurnInterval"
+        coverage:
+          $ref: "#/components/schemas/SessionEconomicsCoverage"
+        predicted_block_probability:
+          $ref: "#/components/schemas/SessionEconomicsProbabilityValue"
+        reason:
+          type: string
+          anyOf:
+            - maxLength: 0
+            - pattern: *tokenpak-rendering-base
+      description: >-
+        Available carries estimated token and turn ranges. Learning,
+        unavailable, and error carry no predictions; error also carries a
+        reason. The runtime enforces that each 90-percent ceiling is at least
+        its matching likely-50 high bound; JSON Schema cannot compare those
+        values across sibling objects directly.
+      allOf:
+        - if:
+            properties:
+              status:
+                const: available
+            required: [status]
+          then:
+            properties:
+              remaining_tokens_likely_50:
+                properties:
+                  state:
+                    const: estimated
+              remaining_tokens_ceiling_90:
+                properties:
+                  state:
+                    const: estimated
+              expected_turns:
+                properties:
+                  state:
+                    const: estimated
+              coverage:
+                properties:
+                  method:
+                    type: string
+                    minLength: 1
+                  observed:
+                    type: number
+                    minimum: 0
+                    maximum: 1
+                  history_n:
+                    type: integer
+                    minimum: 1
+              predicted_block_probability:
+                properties:
+                  state:
+                    enum: [estimated, no_data, unavailable, error]
+            oneOf:
+              - properties:
+                  remaining_cost_usd_likely_50:
+                    properties:
+                      state:
+                        const: estimated
+                  remaining_cost_usd_ceiling_90:
+                    properties:
+                      state:
+                        const: estimated
+              - properties:
+                  remaining_cost_usd_likely_50:
+                    properties:
+                      state:
+                        const: no_data
+                  remaining_cost_usd_ceiling_90:
+                    properties:
+                      state:
+                        const: no_data
+              - properties:
+                  remaining_cost_usd_likely_50:
+                    properties:
+                      state:
+                        const: unavailable
+                  remaining_cost_usd_ceiling_90:
+                    properties:
+                      state:
+                        const: unavailable
+              - properties:
+                  remaining_cost_usd_likely_50:
+                    properties:
+                      state:
+                        const: error
+                  remaining_cost_usd_ceiling_90:
+                    properties:
+                      state:
+                        const: error
+        - if:
+            properties:
+              status:
+                enum: [learning, unavailable, error]
+            required: [status]
+          then:
+            properties:
+              remaining_tokens_likely_50:
+                properties:
+                  state:
+                    enum: [no_data, unavailable, error]
+              remaining_tokens_ceiling_90:
+                properties:
+                  state:
+                    enum: [no_data, unavailable, error]
+              remaining_cost_usd_likely_50:
+                properties:
+                  state:
+                    enum: [no_data, unavailable, error]
+              remaining_cost_usd_ceiling_90:
+                properties:
+                  state:
+                    enum: [no_data, unavailable, error]
+              expected_turns:
+                properties:
+                  state:
+                    enum: [no_data, unavailable, error]
+              predicted_block_probability:
+                properties:
+                  state:
+                    enum: [no_data, unavailable, error]
+        - if:
+            properties:
+              status:
+                const: error
+            required: [status]
+          then:
+            required: [reason]
+            properties:
+              reason:
+                type: string
+                minLength: 1
 
     AnthropicMessagesResponse:
       type: object
@@ -587,6 +1424,7 @@ components:
         - status
         - uptime_seconds
         - version
+        - pid
         - requests_total
         - requests_errors
         - compression_ratio_avg
@@ -609,6 +1447,9 @@ components:
           minimum: 0
         version:
           type: string
+        pid:
+          type: integer
+          minimum: 1
         requests_total:
           type: integer
           minimum: 0
@@ -650,6 +1491,7 @@ components:
         - status
         - uptime_seconds
         - version
+        - pid
         - requests_total
         - requests_errors
         - compression_ratio_avg
@@ -675,6 +1517,9 @@ components:
           minimum: 0
         version:
           type: string
+        pid:
+          type: integer
+          minimum: 1
         requests_total:
           type: integer
           minimum: 0
@@ -893,37 +1738,6 @@ components:
         total_savings_usd:
           type: number
 
-    # ── Vault ─────────────────────────────────────────────────────────────────
-
-    VaultInfo:
-      type: object
-      properties:
-        available:
-          type: boolean
-        blocks:
-          type: integer
-        total_tokens:
-          type: integer
-        path:
-          type: string
-        block_list:
-          type: array
-          items:
-            $ref: "#/components/schemas/VaultBlock"
-
-    VaultBlock:
-      type: object
-      properties:
-        block_id:
-          type: string
-        source_path:
-          type: string
-        risk_class:
-          type: string
-          enum: [low, medium, high]
-        raw_tokens:
-          type: integer
-
     VaultIndexSummary:
       type: object
       properties:
@@ -1025,57 +1839,6 @@ components:
                 type: string
                 format: date-time
 
-    # ── Ingest ────────────────────────────────────────────────────────────────
-
-    IngestRequest:
-      type: object
-      required: [content]
-      properties:
-        content:
-          type: string
-          description: Document text to ingest
-        source_path:
-          type: string
-          description: Logical path for this document (used as block ID)
-        risk_class:
-          type: string
-          enum: [low, medium, high]
-          default: low
-
-    IngestResponse:
-      type: object
-      properties:
-        status:
-          type: string
-          example: ok
-        block_id:
-          type: string
-        tokens:
-          type: integer
-
-    IngestBatchRequest:
-      type: object
-      required: [documents]
-      properties:
-        documents:
-          type: array
-          items:
-            $ref: "#/components/schemas/IngestRequest"
-
-    IngestBatchResponse:
-      type: object
-      properties:
-        status:
-          type: string
-        ingested:
-          type: integer
-        errors:
-          type: integer
-        results:
-          type: array
-          items:
-            $ref: "#/components/schemas/IngestResponse"
-
     # ── Errors ────────────────────────────────────────────────────────────────
 
     ErrorResponse:
@@ -1113,6 +1876,20 @@ components:
 
     BadRequest:
       description: Bad request
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ErrorResponse"
+
+    Unauthorized:
+      description: Proxy Bearer credential is missing or invalid
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ErrorResponse"
+
+    Forbidden:
+      description: Non-localhost access is disabled because no proxy auth token is configured
       content:
         application/json:
           schema:
