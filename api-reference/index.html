@@ -27,7 +27,7 @@
     
     
       
-        <title>API Reference (Extended) - TokenPak</title>
+        <title>TokenPak API reference - TokenPak</title>
       
     
     
@@ -113,7 +113,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              API Reference (Extended)
+              TokenPak API reference
             
           </span>
         </div>
@@ -486,6 +486,13 @@
   </span>
   
   
+    
+  
+  
+    <span class="md-status md-status--current"></span>
+  
+
+  
 
       </a>
     </li>
@@ -592,6 +599,13 @@
     
   </span>
   
+  
+    
+  
+  
+    <span class="md-status md-status--current"></span>
+  
+
   
 
       </a>
@@ -988,6 +1002,13 @@
   </span>
   
   
+    
+  
+  
+    <span class="md-status md-status--current"></span>
+  
+
+  
 
       </a>
     </li>
@@ -1229,6 +1250,13 @@
   </span>
   
   
+    
+  
+  
+    <span class="md-status md-status--current"></span>
+  
+
+  
 
           <span class="md-nav__icon md-icon"></span>
         </label>
@@ -1246,6 +1274,13 @@
     
   </span>
   
+  
+    
+  
+  
+    <span class="md-status md-status--current"></span>
+  
+
   
 
       </a>
@@ -1269,7 +1304,7 @@
   <a href="#table-of-contents" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Table of Contents
+        Table of contents
       
     </span>
   </a>
@@ -1303,24 +1338,13 @@
   <a href="#get-endpoints" class="md-nav__link">
     <span class="md-ellipsis">
       
-        GET Endpoints
+        GET endpoints
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="GET Endpoints">
+    <nav class="md-nav" aria-label="GET endpoints">
       <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#get" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        GET /
-      
-    </span>
-  </a>
-  
-</li>
         
           <li class="md-nav__item">
   <a href="#get-health" class="md-nav__link">
@@ -1360,17 +1384,6 @@
     <span class="md-ellipsis">
       
         GET /stats/session
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#get-savingssinceiso-date" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        GET /savings[?since=&lt;ISO-date&gt;]
       
     </span>
   </a>
@@ -1422,17 +1435,6 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#get-vault" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        GET /vault
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
   <a href="#get-metrics" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1465,28 +1467,6 @@
   
 </li>
         
-          <li class="md-nav__item">
-  <a href="#get-docs-get-docs" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        GET /docs / GET /docs/
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#get-openapiyaml" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        GET /openapi.yaml
-      
-    </span>
-  </a>
-  
-</li>
-        
       </ul>
     </nav>
   
@@ -1496,12 +1476,12 @@
   <a href="#post-endpoints" class="md-nav__link">
     <span class="md-ellipsis">
       
-        POST Endpoints
+        POST endpoints
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="POST Endpoints">
+    <nav class="md-nav" aria-label="POST endpoints">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -1509,6 +1489,17 @@
     <span class="md-ellipsis">
       
         POST /v1/messages
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#post-v1messagessession-economics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        POST /v1/messages/session-economics
       
     </span>
   </a>
@@ -1527,21 +1518,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#post-ingest-post-ingestbatch" class="md-nav__link">
+  <a href="#post-ingest" class="md-nav__link">
     <span class="md-ellipsis">
       
-        POST /ingest / POST /ingest/batch
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#post-configreload" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        POST /config/reload
+        POST /ingest
       
     </span>
   </a>
@@ -1554,10 +1534,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#error-format" class="md-nav__link">
+  <a href="#error-responses" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Error Format
+        Error responses
       
     </span>
   </a>
@@ -1573,19 +1553,19 @@
   <a href="#sdk-adapters" class="md-nav__link">
     <span class="md-ellipsis">
       
-        SDK Adapters
+        SDK adapters
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="SDK Adapters">
+    <nav class="md-nav" aria-label="SDK adapters">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
   <a href="#base-adapter-tokenpakadapter" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Base Adapter (TokenPakAdapter)
+        Base adapter: TokenPakAdapter
       
     </span>
   </a>
@@ -1640,7 +1620,7 @@
   <a href="#exception-hierarchy" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Exception Hierarchy
+        Exception hierarchy
       
     </span>
   </a>
@@ -1656,24 +1636,24 @@
   <a href="#cli-commands" class="md-nav__link">
     <span class="md-ellipsis">
       
-        CLI Commands
+        CLI commands
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="CLI Commands">
+    <nav class="md-nav" aria-label="CLI commands">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
   <a href="#proxy-lifecycle" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Proxy Lifecycle
+        Proxy lifecycle
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Proxy Lifecycle">
+    <nav class="md-nav" aria-label="Proxy lifecycle">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -1759,15 +1739,15 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#indexing-search" class="md-nav__link">
+  <a href="#indexing-and-search" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Indexing &amp; Search
+        Indexing and search
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Indexing &amp; Search">
+    <nav class="md-nav" aria-label="Indexing and search">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -1793,10 +1773,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#tokenpak-calibrate" class="md-nav__link">
+  <a href="#tokenpak-calibrate-directory" class="md-nav__link">
     <span class="md-ellipsis">
       
-        tokenpak calibrate
+        tokenpak calibrate &lt;directory&gt;
       
     </span>
   </a>
@@ -1809,15 +1789,15 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#monitoring-stats" class="md-nav__link">
+  <a href="#monitoring-and-stats" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Monitoring &amp; Stats
+        Monitoring and stats
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Monitoring &amp; Stats">
+    <nav class="md-nav" aria-label="Monitoring and stats">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -1843,10 +1823,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#tokenpak-savingssincedate" class="md-nav__link">
+  <a href="#tokenpak-savings" class="md-nav__link">
     <span class="md-ellipsis">
       
-        tokenpak savings[?since=&lt;date&gt;]
+        tokenpak savings
       
     </span>
   </a>
@@ -2003,10 +1983,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#tokenpak-preview-file" class="md-nav__link">
+  <a href="#tokenpak-preview-text" class="md-nav__link">
     <span class="md-ellipsis">
       
-        tokenpak preview &lt;file&gt;
+        tokenpak preview [&lt;text&gt;]
       
     </span>
   </a>
@@ -2099,12 +2079,12 @@
   <a href="#config-management" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Config Management
+        Config management
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Config Management">
+    <nav class="md-nav" aria-label="Config management">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -2149,12 +2129,12 @@
   <a href="#advanced-commands" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Advanced Commands
+        Advanced commands
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Advanced Commands">
+    <nav class="md-nav" aria-label="Advanced commands">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -2224,10 +2204,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#tokenpak-audit" class="md-nav__link">
+  <a href="#tokenpak-audit-planned" class="md-nav__link">
     <span class="md-ellipsis">
       
-        tokenpak audit
+        tokenpak audit (Planned)
       
     </span>
   </a>
@@ -2248,31 +2228,31 @@
   <a href="#configuration-reference" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Configuration Reference
+        Configuration reference
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Configuration Reference">
+    <nav class="md-nav" aria-label="Configuration reference">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
   <a href="#environment-variables" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Environment Variables
+        Environment variables
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Environment Variables">
+    <nav class="md-nav" aria-label="Environment variables">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
   <a href="#core-settings" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Core Settings
+        Core settings
       
     </span>
   </a>
@@ -2283,7 +2263,7 @@
   <a href="#compression-settings" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Compression Settings
+        Compression settings
       
     </span>
   </a>
@@ -2294,7 +2274,7 @@
   <a href="#vault-context-injection" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Vault Context Injection
+        Vault context injection
       
     </span>
   </a>
@@ -2305,7 +2285,7 @@
   <a href="#key-management" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Key Management
+        Key management
       
     </span>
   </a>
@@ -2316,7 +2296,7 @@
   <a href="#advanced-features" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Advanced Features
+        Advanced features
       
     </span>
   </a>
@@ -2329,10 +2309,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#configyaml" class="md-nav__link">
+  <a href="#configuration-file" class="md-nav__link">
     <span class="md-ellipsis">
       
-        config.yaml
+        Configuration file
       
     </span>
   </a>
@@ -3853,7 +3833,7 @@
   <a href="#table-of-contents" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Table of Contents
+        Table of contents
       
     </span>
   </a>
@@ -3887,24 +3867,13 @@
   <a href="#get-endpoints" class="md-nav__link">
     <span class="md-ellipsis">
       
-        GET Endpoints
+        GET endpoints
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="GET Endpoints">
+    <nav class="md-nav" aria-label="GET endpoints">
       <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#get" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        GET /
-      
-    </span>
-  </a>
-  
-</li>
         
           <li class="md-nav__item">
   <a href="#get-health" class="md-nav__link">
@@ -3944,17 +3913,6 @@
     <span class="md-ellipsis">
       
         GET /stats/session
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#get-savingssinceiso-date" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        GET /savings[?since=&lt;ISO-date&gt;]
       
     </span>
   </a>
@@ -4006,17 +3964,6 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#get-vault" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        GET /vault
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
   <a href="#get-metrics" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -4049,28 +3996,6 @@
   
 </li>
         
-          <li class="md-nav__item">
-  <a href="#get-docs-get-docs" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        GET /docs / GET /docs/
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#get-openapiyaml" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        GET /openapi.yaml
-      
-    </span>
-  </a>
-  
-</li>
-        
       </ul>
     </nav>
   
@@ -4080,12 +4005,12 @@
   <a href="#post-endpoints" class="md-nav__link">
     <span class="md-ellipsis">
       
-        POST Endpoints
+        POST endpoints
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="POST Endpoints">
+    <nav class="md-nav" aria-label="POST endpoints">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -4093,6 +4018,17 @@
     <span class="md-ellipsis">
       
         POST /v1/messages
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#post-v1messagessession-economics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        POST /v1/messages/session-economics
       
     </span>
   </a>
@@ -4111,21 +4047,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#post-ingest-post-ingestbatch" class="md-nav__link">
+  <a href="#post-ingest" class="md-nav__link">
     <span class="md-ellipsis">
       
-        POST /ingest / POST /ingest/batch
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#post-configreload" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        POST /config/reload
+        POST /ingest
       
     </span>
   </a>
@@ -4138,10 +4063,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#error-format" class="md-nav__link">
+  <a href="#error-responses" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Error Format
+        Error responses
       
     </span>
   </a>
@@ -4157,19 +4082,19 @@
   <a href="#sdk-adapters" class="md-nav__link">
     <span class="md-ellipsis">
       
-        SDK Adapters
+        SDK adapters
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="SDK Adapters">
+    <nav class="md-nav" aria-label="SDK adapters">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
   <a href="#base-adapter-tokenpakadapter" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Base Adapter (TokenPakAdapter)
+        Base adapter: TokenPakAdapter
       
     </span>
   </a>
@@ -4224,7 +4149,7 @@
   <a href="#exception-hierarchy" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Exception Hierarchy
+        Exception hierarchy
       
     </span>
   </a>
@@ -4240,24 +4165,24 @@
   <a href="#cli-commands" class="md-nav__link">
     <span class="md-ellipsis">
       
-        CLI Commands
+        CLI commands
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="CLI Commands">
+    <nav class="md-nav" aria-label="CLI commands">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
   <a href="#proxy-lifecycle" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Proxy Lifecycle
+        Proxy lifecycle
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Proxy Lifecycle">
+    <nav class="md-nav" aria-label="Proxy lifecycle">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -4343,15 +4268,15 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#indexing-search" class="md-nav__link">
+  <a href="#indexing-and-search" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Indexing &amp; Search
+        Indexing and search
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Indexing &amp; Search">
+    <nav class="md-nav" aria-label="Indexing and search">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -4377,10 +4302,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#tokenpak-calibrate" class="md-nav__link">
+  <a href="#tokenpak-calibrate-directory" class="md-nav__link">
     <span class="md-ellipsis">
       
-        tokenpak calibrate
+        tokenpak calibrate &lt;directory&gt;
       
     </span>
   </a>
@@ -4393,15 +4318,15 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#monitoring-stats" class="md-nav__link">
+  <a href="#monitoring-and-stats" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Monitoring &amp; Stats
+        Monitoring and stats
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Monitoring &amp; Stats">
+    <nav class="md-nav" aria-label="Monitoring and stats">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -4427,10 +4352,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#tokenpak-savingssincedate" class="md-nav__link">
+  <a href="#tokenpak-savings" class="md-nav__link">
     <span class="md-ellipsis">
       
-        tokenpak savings[?since=&lt;date&gt;]
+        tokenpak savings
       
     </span>
   </a>
@@ -4587,10 +4512,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#tokenpak-preview-file" class="md-nav__link">
+  <a href="#tokenpak-preview-text" class="md-nav__link">
     <span class="md-ellipsis">
       
-        tokenpak preview &lt;file&gt;
+        tokenpak preview [&lt;text&gt;]
       
     </span>
   </a>
@@ -4683,12 +4608,12 @@
   <a href="#config-management" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Config Management
+        Config management
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Config Management">
+    <nav class="md-nav" aria-label="Config management">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -4733,12 +4658,12 @@
   <a href="#advanced-commands" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Advanced Commands
+        Advanced commands
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Advanced Commands">
+    <nav class="md-nav" aria-label="Advanced commands">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -4808,10 +4733,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#tokenpak-audit" class="md-nav__link">
+  <a href="#tokenpak-audit-planned" class="md-nav__link">
     <span class="md-ellipsis">
       
-        tokenpak audit
+        tokenpak audit (Planned)
       
     </span>
   </a>
@@ -4832,31 +4757,31 @@
   <a href="#configuration-reference" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Configuration Reference
+        Configuration reference
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Configuration Reference">
+    <nav class="md-nav" aria-label="Configuration reference">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
   <a href="#environment-variables" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Environment Variables
+        Environment variables
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Environment Variables">
+    <nav class="md-nav" aria-label="Environment variables">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
   <a href="#core-settings" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Core Settings
+        Core settings
       
     </span>
   </a>
@@ -4867,7 +4792,7 @@
   <a href="#compression-settings" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Compression Settings
+        Compression settings
       
     </span>
   </a>
@@ -4878,7 +4803,7 @@
   <a href="#vault-context-injection" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Vault Context Injection
+        Vault context injection
       
     </span>
   </a>
@@ -4889,7 +4814,7 @@
   <a href="#key-management" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Key Management
+        Key management
       
     </span>
   </a>
@@ -4900,7 +4825,7 @@
   <a href="#advanced-features" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Advanced Features
+        Advanced features
       
     </span>
   </a>
@@ -4913,10 +4838,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#configyaml" class="md-nav__link">
+  <a href="#configuration-file" class="md-nav__link">
     <span class="md-ellipsis">
       
-        config.yaml
+        Configuration file
       
     </span>
   </a>
@@ -4948,39 +4873,43 @@
   
 
 
-<h1 id="tokenpak-api-reference">TokenPak API Reference<a class="headerlink" href="#tokenpak-api-reference" title="Permanent link">&para;</a></h1>
-<p><strong>Complete reference for the TokenPak proxy HTTP API, SDK adapters, and CLI.</strong></p>
+<h1 id="tokenpak-api-reference">TokenPak API reference<a class="headerlink" href="#tokenpak-api-reference" title="Permanent link">&para;</a></h1>
+<p>This reference is for developers integrating with the TokenPak proxy HTTP API,
+SDK adapters, or CLI. It covers the v1.19.0 surface described below.</p>
 <hr />
-<h2 id="table-of-contents">Table of Contents<a class="headerlink" href="#table-of-contents" title="Permanent link">&para;</a></h2>
+<h2 id="table-of-contents">Table of contents<a class="headerlink" href="#table-of-contents" title="Permanent link">&para;</a></h2>
 <ol>
 <li><a href="#proxy-http-api">Proxy HTTP API</a></li>
 <li><a href="#authentication">Authentication</a></li>
-<li><a href="#get-endpoints">GET Endpoints</a></li>
-<li><a href="#post-endpoints">POST Endpoints</a></li>
-<li><a href="#error-format">Error Format</a></li>
-<li><a href="#sdk-adapters">SDK Adapters</a></li>
-<li><a href="#base-adapter-tokenpakadapter">Base Adapter (TokenPakAdapter)</a></li>
+<li><a href="#get-endpoints">GET endpoints</a></li>
+<li><a href="#post-endpoints">POST endpoints</a></li>
+<li><a href="#error-responses">Error responses</a></li>
+<li><a href="#sdk-adapters">SDK adapters</a></li>
+<li><a href="#base-adapter-tokenpakadapter">Base adapter (TokenPakAdapter)</a></li>
 <li><a href="#anthropicadapter">AnthropicAdapter</a></li>
 <li><a href="#openaiadapter">OpenAIAdapter</a></li>
 <li><a href="#langchainadapter">LangChainAdapter</a></li>
 <li><a href="#litellmadapter">LiteLLMAdapter</a></li>
-<li><a href="#exception-hierarchy">Exception Hierarchy</a></li>
-<li><a href="#cli-commands">CLI Commands</a></li>
-<li><a href="#proxy-lifecycle">Proxy Lifecycle</a></li>
-<li><a href="#indexing--search">Indexing &amp; Search</a></li>
-<li><a href="#monitoring--stats">Monitoring &amp; Stats</a></li>
+<li><a href="#exception-hierarchy">Exception hierarchy</a></li>
+<li><a href="#cli-commands">CLI commands</a></li>
+<li><a href="#proxy-lifecycle">Proxy lifecycle</a></li>
+<li><a href="#indexing-and-search">Indexing and search</a></li>
+<li><a href="#monitoring-and-stats">Monitoring and stats</a></li>
 <li><a href="#diagnostics">Diagnostics</a></li>
-<li><a href="#config-management">Config Management</a></li>
-<li><a href="#advanced-commands">Advanced Commands</a></li>
-<li><a href="#configuration-reference">Configuration Reference</a></li>
-<li><a href="#environment-variables">Environment Variables</a></li>
-<li><a href="#configyaml">config.yaml</a></li>
+<li><a href="#config-management">Config management</a></li>
+<li><a href="#advanced-commands">Advanced commands</a></li>
+<li><a href="#configuration-reference">Configuration reference</a></li>
+<li><a href="#environment-variables">Environment variables</a></li>
+<li><a href="#configuration-file">config.yaml</a></li>
 </ol>
 <hr />
 <h2 id="proxy-http-api">Proxy HTTP API<a class="headerlink" href="#proxy-http-api" title="Permanent link">&para;</a></h2>
 <p>The TokenPak proxy runs on <code>localhost:8766</code> by default. It accepts standard HTTP requests and transparently forwards them to upstream providers after applying compression and context injection.</p>
 <h3 id="authentication">Authentication<a class="headerlink" href="#authentication" title="Permanent link">&para;</a></h3>
-<p>By default, TokenPak allows unauthenticated requests from localhost. For remote clients, authentication is required via header:</p>
+<p>TokenPak allows unauthenticated requests from localhost. A non-localhost bind
+is explicit: set <code>TOKENPAK_BIND_ADDRESS</code> and configure
+<code>TOKENPAK_PROXY_AUTH_TOKEN</code> on the server. Remote clients authenticate to the
+proxy with the matching Bearer credential:</p>
 <table>
 <thead>
 <tr>
@@ -4991,42 +4920,22 @@
 </thead>
 <tbody>
 <tr>
-<td><code>X-TokenPak-Key</code></td>
-<td><code>&lt;your-proxy-key&gt;</code></td>
-<td>Required for non-localhost clients</td>
+<td><code>Authorization</code></td>
+<td><code>Bearer &lt;proxy-auth-token&gt;</code></td>
+<td>Required for non-localhost clients; stripped before upstream forwarding</td>
 </tr>
 <tr>
 <td><code>x-api-key</code></td>
 <td><code>&lt;provider-api-key&gt;</code></td>
-<td>Provider key, forwarded to upstream</td>
-</tr>
-<tr>
-<td><code>Authorization</code></td>
-<td><code>Bearer &lt;token&gt;</code></td>
-<td>Alternative to <code>x-api-key</code></td>
+<td>Optional direct provider credential, forwarded upstream</td>
 </tr>
 </tbody>
 </table>
-<p>Requests from non-localhost without <code>X-TokenPak-Key</code> receive <code>401 Unauthorized</code>.</p>
+<p>Non-localhost requests receive <code>403 Forbidden</code> when the server has no
+<code>TOKENPAK_PROXY_AUTH_TOKEN</code>; a missing, malformed, or incorrect Bearer
+credential receives <code>401 Unauthorized</code>.</p>
 <hr />
-<h3 id="get-endpoints">GET Endpoints<a class="headerlink" href="#get-endpoints" title="Permanent link">&para;</a></h3>
-<h4 id="get"><code>GET /</code><a class="headerlink" href="#get" title="Permanent link">&para;</a></h4>
-<p>Welcome / status endpoint. Returns proxy identity and available endpoints.</p>
-<p><strong>Response:</strong>
-<div class="highlight"><pre><span></span><code><span class="p">{</span>
-<span class="w">  </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;TokenPak&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;version&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;1.16.0&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;status&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;running&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;endpoints&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nt">&quot;health&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;/health&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;stats&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;/stats&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;docs&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;/docs&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;proxy&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;/v1/messages (POST), /v1/chat/completions (POST)&quot;</span>
-<span class="w">  </span><span class="p">},</span>
-<span class="w">  </span><span class="nt">&quot;docs&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://github.com/tokenpak/tokenpak&quot;</span>
-<span class="p">}</span>
-</code></pre></div></p>
-<hr />
+<h3 id="get-endpoints">GET endpoints<a class="headerlink" href="#get-endpoints" title="Permanent link">&para;</a></h3>
 <h4 id="get-health"><code>GET /health</code><a class="headerlink" href="#get-health" title="Permanent link">&para;</a></h4>
 <p>Lightweight, uncached health check. The basic response has one stable top-level
 schema and is computed for every request. Add <code>?deep=true</code> for bounded provider,
@@ -5035,25 +4944,102 @@ process-memory, and disk diagnostics.</p>
 <div class="highlight"><pre><span></span><code><span class="p">{</span>
 <span class="w">  </span><span class="nt">&quot;status&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ok&quot;</span><span class="p">,</span>
 <span class="w">  </span><span class="nt">&quot;uptime_seconds&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">3600</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;version&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;1.16.0&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;version&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;1.19.0&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;pid&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">4242</span><span class="p">,</span>
 <span class="w">  </span><span class="nt">&quot;requests_total&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">142</span><span class="p">,</span>
 <span class="w">  </span><span class="nt">&quot;requests_errors&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span>
 <span class="w">  </span><span class="nt">&quot;compression_ratio_avg&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.4474</span><span class="p">,</span>
 <span class="w">  </span><span class="nt">&quot;is_degraded&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
 <span class="w">  </span><span class="nt">&quot;is_shutting_down&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
 <span class="w">  </span><span class="nt">&quot;in_flight_requests&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;memory_guard&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{},</span>
-<span class="w">  </span><span class="nt">&quot;admission&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{},</span>
-<span class="w">  </span><span class="nt">&quot;agent_concurrency&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{},</span>
+<span class="w">  </span><span class="nt">&quot;memory_guard&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;enabled&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;state&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;disabled&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;thread_alive&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;callback_policy&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;disabled&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;configuration&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;source&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;default&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;mode&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;off&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;plan_sha256&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;managed_config_path&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;/home/alex/.tpk/memory-optimization.json&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;managed_file_present&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;managed_file_ignored&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;triggering_env&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span>
+<span class="w">      </span><span class="nt">&quot;warning&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="nt">&quot;callbacks&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;compact&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;token&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;semantic&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="nt">&quot;admission&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;limit&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">16</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;available&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">16</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;rejected&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="nt">&quot;agent_concurrency&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;enabled&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;max_parallel_subagents&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;effective_cap&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;degraded_serial&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;in_flight&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;queued&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;queue_depth_max&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">14</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;admitted_total&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;queued_total&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;rejected_queue_full&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;rejected_wait_timeout&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;source&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;config&quot;</span>
+<span class="w">  </span><span class="p">},</span>
 <span class="w">  </span><span class="nt">&quot;timestamp&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2026-07-24T05:30:00Z&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;connection_pool&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{},</span>
-<span class="w">  </span><span class="nt">&quot;circuit_breakers&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span>
+<span class="w">  </span><span class="nt">&quot;connection_pool&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;http2_enabled&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;active_providers&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;api.anthropic.com&quot;</span><span class="p">],</span>
+<span class="w">    </span><span class="nt">&quot;total_requests&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">142</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;reused_connections&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">140</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;new_connections&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;errors&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;evicted_clients&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;reuse_rate&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.9859</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;cleanup_pending_close&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;cleanup_queued&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;cleanup_in_progress&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;cleanup_retrying&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;cleanup_failures_total&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;cleanup_worker_start_failures_total&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;cleanup_completed_total&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;cleanup_oldest_pending_seconds&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;cleanup_workers_alive&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;client_slots_used&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;client_slots_max&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">64</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;client_capacity_rejections_total&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;cleanup_saturated&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;retired_pending_close&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="nt">&quot;circuit_breakers&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;enabled&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;any_open&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;providers&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;anthropic&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;state&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;closed&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;failures_in_window&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;successes_in_window&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;failure_ratio&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;failure_threshold&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;min_failure_ratio&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.5</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;time_until_probe_seconds&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;total_trips&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;total_successes&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">140</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;total_failures&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div></p>
-<p>Also supports <code>HEAD /health</code> (returns 200 with no body — useful for Kubernetes liveness probes).</p>
-<hr />
 <h4 id="get-stats"><code>GET /stats</code><a class="headerlink" href="#get-stats" title="Permanent link">&para;</a></h4>
-<p>Full session statistics. Heavier than <code>/health</code> — includes per-model breakdown and recent requests.</p>
+<p>Current session counters, compilation mode, memory-guard status, and provider-cache
+read attribution.</p>
 <p><strong>Response:</strong>
 <div class="highlight"><pre><span></span><code><span class="p">{</span>
 <span class="w">  </span><span class="nt">&quot;session&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
@@ -5061,28 +5047,46 @@ process-memory, and disk diagnostics.</p>
 <span class="w">    </span><span class="nt">&quot;input_tokens&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">380000</span><span class="p">,</span>
 <span class="w">    </span><span class="nt">&quot;sent_input_tokens&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">210000</span><span class="p">,</span>
 <span class="w">    </span><span class="nt">&quot;saved_tokens&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">170000</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;protected_tokens&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
 <span class="w">    </span><span class="nt">&quot;output_tokens&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">95000</span><span class="p">,</span>
 <span class="w">    </span><span class="nt">&quot;cost&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.85</span><span class="p">,</span>
 <span class="w">    </span><span class="nt">&quot;cost_saved&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.42</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;start_time&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">1711584000.0</span><span class="p">,</span>
 <span class="w">    </span><span class="nt">&quot;errors&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;cache_hits&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">37</span>
+<span class="w">    </span><span class="nt">&quot;start_time&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">1711584000.0</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;cache_read_tokens&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">80000</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;cache_creation_tokens&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">15000</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;cache_read_client&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">80000</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;cache_read_proxy&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;cache_read_unknown&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;ingest_entries&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span>
 <span class="w">  </span><span class="p">},</span>
 <span class="w">  </span><span class="nt">&quot;compilation_mode&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;hybrid&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;vault_index&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nt">&quot;available&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;blocks&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">42</span>
-<span class="w">  </span><span class="p">},</span>
-<span class="w">  </span><span class="nt">&quot;router&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;enabled&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w"> </span><span class="p">},</span>
-<span class="w">  </span><span class="nt">&quot;today&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="err">...</span><span class="w"> </span><span class="p">},</span>
-<span class="w">  </span><span class="nt">&quot;by_model&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nt">&quot;claude-sonnet-4-6&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="nt">&quot;requests&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span>
-<span class="w">      </span><span class="nt">&quot;input_tokens&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">250000</span><span class="p">,</span>
-<span class="w">      </span><span class="nt">&quot;cost&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.60</span>
+<span class="w">  </span><span class="nt">&quot;memory_guard&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;enabled&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;state&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;disabled&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;thread_alive&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;callback_policy&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;disabled&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;configuration&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;source&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;default&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;mode&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;off&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;plan_sha256&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;managed_config_path&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;managed_file_present&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;managed_file_ignored&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;triggering_env&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span>
+<span class="w">      </span><span class="nt">&quot;warning&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="nt">&quot;callbacks&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;compact&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;token&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;semantic&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span>
 <span class="w">    </span><span class="p">}</span>
 <span class="w">  </span><span class="p">},</span>
-<span class="w">  </span><span class="nt">&quot;recent&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="err">...</span><span class="w"> </span><span class="p">]</span>
+<span class="w">  </span><span class="nt">&quot;cache_read_by_origin&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;client&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">80000</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;proxy&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;unknown&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span>
+<span class="w">  </span><span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div></p>
 <hr />
@@ -5090,23 +5094,21 @@ process-memory, and disk diagnostics.</p>
 <p>Per-request stats for the most recent proxied request.</p>
 <p><strong>Response:</strong>
 <div class="highlight"><pre><span></span><code><span class="p">{</span>
-<span class="w">  </span><span class="nt">&quot;request_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;req_abc123&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;timestamp&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2026-03-28T16:00:00Z&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;request_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;a1b2c3d4&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;timestamp&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2026-03-28T16:00:00&quot;</span><span class="p">,</span>
 <span class="w">  </span><span class="nt">&quot;model&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;claude-sonnet-4-6&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;tokens_saved&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1240</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;percent_saved&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">28.3</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;cost_saved&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.0037</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;session_total_saved&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.42</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;session_requests&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">142</span><span class="p">,</span>
 <span class="w">  </span><span class="nt">&quot;input_tokens_raw&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">4380</span><span class="p">,</span>
 <span class="w">  </span><span class="nt">&quot;input_tokens_sent&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">3140</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;output_tokens&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">512</span>
+<span class="w">  </span><span class="nt">&quot;output_tokens&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">512</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;tokens_saved&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1240</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;cost_saved&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.0037</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;percent_saved&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">28.3</span>
 <span class="p">}</span>
 </code></pre></div></p>
 <p><strong>Error (no requests yet):</strong>
 <div class="highlight"><pre><span></span><code><span class="p">{</span>
 <span class="w">  </span><span class="nt">&quot;error&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;no_requests&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;message&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;No requests captured yet. Send a message to see stats.&quot;</span>
+<span class="w">  </span><span class="nt">&quot;message&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;No requests captured yet.&quot;</span>
 <span class="p">}</span>
 </code></pre></div></p>
 <hr />
@@ -5127,27 +5129,6 @@ process-memory, and disk diagnostics.</p>
 <span class="p">}</span>
 </code></pre></div></p>
 <hr />
-<h4 id="get-savingssinceiso-date"><code>GET /savings[?since=&lt;ISO-date&gt;]</code><a class="headerlink" href="#get-savingssinceiso-date" title="Permanent link">&para;</a></h4>
-<p>Savings report, optionally filtered by start date.</p>
-<p><strong>Query Parameters:</strong></p>
-<table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>since</code></td>
-<td>ISO-8601 date string</td>
-<td>Filter to requests on/after this date</td>
-</tr>
-</tbody>
-</table>
-<p><strong>Example:</strong> <code>GET /savings?since=2026-03-01</code></p>
-<hr />
 <h4 id="get-cache-stats"><code>GET /cache-stats</code><a class="headerlink" href="#get-cache-stats" title="Permanent link">&para;</a></h4>
 <p>Detailed cache hit/miss breakdown.</p>
 <hr />
@@ -5155,13 +5136,36 @@ process-memory, and disk diagnostics.</p>
 <p>Full pipeline trace for the most recent request (debugging).</p>
 <p><strong>Response:</strong>
 <div class="highlight"><pre><span></span><code><span class="p">{</span>
-<span class="w">  </span><span class="nt">&quot;request_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;req_abc123&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;timestamp&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2026-03-28T16:00:00Z&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;request_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;a1b2c3d4&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;timestamp&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;16:00:00&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;model&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;claude-sonnet-4-6&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;input_tokens&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">4380</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;output_tokens&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">512</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;tokens_saved&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1240</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;cost_saved&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.0037</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;total_cost&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.012</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;duration_ms&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">317.0</span><span class="p">,</span>
 <span class="w">  </span><span class="nt">&quot;stages&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;compaction&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;duration_ms&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">45</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;tokens_before&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">4380</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;tokens_after&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">3140</span><span class="w"> </span><span class="p">},</span>
-<span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;vault_inject&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;duration_ms&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">12</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;blocks_injected&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="p">},</span>
-<span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;upstream_forward&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;duration_ms&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">260</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;provider&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;anthropic&quot;</span><span class="w"> </span><span class="p">}</span>
-<span class="w">  </span><span class="p">]</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;capsule_builder&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;enabled&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;input_tokens&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">4380</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;output_tokens&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">3140</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;tokens_delta&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1240</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;duration_ms&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">45.0</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;details&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;blocks_capsulized&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;ratio&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.7169</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;skip_reason&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">],</span>
+<span class="w">  </span><span class="nt">&quot;status&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;complete&quot;</span>
+<span class="p">}</span>
+</code></pre></div></p>
+<p><strong>Error (no traces yet):</strong>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;error&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;no_traces&quot;</span>
 <span class="p">}</span>
 </code></pre></div></p>
 <hr />
@@ -5172,27 +5176,32 @@ process-memory, and disk diagnostics.</p>
 <p>All stored pipeline traces (up to last N requests).</p>
 <p><strong>Response:</strong>
 <div class="highlight"><pre><span></span><code><span class="p">{</span>
-<span class="w">  </span><span class="nt">&quot;traces&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="err">...</span><span class="w"> </span><span class="p">],</span>
-<span class="w">  </span><span class="nt">&quot;count&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span>
-<span class="p">}</span>
-</code></pre></div></p>
-<hr />
-<h4 id="get-vault"><code>GET /vault</code><a class="headerlink" href="#get-vault" title="Permanent link">&para;</a></h4>
-<p>Vault index debug info — lists all indexed blocks.</p>
-<p><strong>Response:</strong>
-<div class="highlight"><pre><span></span><code><span class="p">{</span>
-<span class="w">  </span><span class="nt">&quot;available&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;blocks&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">42</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;total_tokens&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">185000</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;path&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;/home/user/vault/.tokenpak&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;block_list&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">  </span><span class="nt">&quot;traces&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
 <span class="w">    </span><span class="p">{</span>
-<span class="w">      </span><span class="nt">&quot;block_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;vault_001&quot;</span><span class="p">,</span>
-<span class="w">      </span><span class="nt">&quot;source_path&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;04_KNOWLEDGE/concepts/tokenpak.md&quot;</span><span class="p">,</span>
-<span class="w">      </span><span class="nt">&quot;risk_class&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;safe&quot;</span><span class="p">,</span>
-<span class="w">      </span><span class="nt">&quot;raw_tokens&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1240</span>
+<span class="w">      </span><span class="nt">&quot;request_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;a1b2c3d4&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;timestamp&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;16:00:00&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;model&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;claude-sonnet-4-6&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;input_tokens&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">4380</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;output_tokens&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">512</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;tokens_saved&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1240</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;cost_saved&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.0037</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;total_cost&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.012</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;duration_ms&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">317</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;stages&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">          </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;compaction&quot;</span><span class="p">,</span>
+<span class="w">          </span><span class="nt">&quot;enabled&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">          </span><span class="nt">&quot;input_tokens&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">4380</span><span class="p">,</span>
+<span class="w">          </span><span class="nt">&quot;output_tokens&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">3140</span><span class="p">,</span>
+<span class="w">          </span><span class="nt">&quot;tokens_delta&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1240</span><span class="p">,</span>
+<span class="w">          </span><span class="nt">&quot;duration_ms&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">45</span><span class="p">,</span>
+<span class="w">          </span><span class="nt">&quot;details&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">      </span><span class="p">],</span>
+<span class="w">      </span><span class="nt">&quot;status&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;complete&quot;</span>
 <span class="w">    </span><span class="p">}</span>
-<span class="w">  </span><span class="p">]</span>
+<span class="w">  </span><span class="p">],</span>
+<span class="w">  </span><span class="nt">&quot;count&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span>
 <span class="p">}</span>
 </code></pre></div></p>
 <hr />
@@ -5253,13 +5262,7 @@ tokenpak_uptime_seconds 16200
 <h4 id="get-dashboard-get-dashboardpath"><code>GET /dashboard</code> / <code>GET /dashboard/&lt;path&gt;</code><a class="headerlink" href="#get-dashboard-get-dashboardpath" title="Permanent link">&para;</a></h4>
 <p>Serves the built-in HTML monitoring dashboard.</p>
 <hr />
-<h4 id="get-docs-get-docs"><code>GET /docs</code> / <code>GET /docs/</code><a class="headerlink" href="#get-docs-get-docs" title="Permanent link">&para;</a></h4>
-<p>Serves the built-in API documentation page (HTML).</p>
-<hr />
-<h4 id="get-openapiyaml"><code>GET /openapi.yaml</code><a class="headerlink" href="#get-openapiyaml" title="Permanent link">&para;</a></h4>
-<p>OpenAPI 3.0 spec for the proxy HTTP API.</p>
-<hr />
-<h3 id="post-endpoints">POST Endpoints<a class="headerlink" href="#post-endpoints" title="Permanent link">&para;</a></h3>
+<h3 id="post-endpoints">POST endpoints<a class="headerlink" href="#post-endpoints" title="Permanent link">&para;</a></h3>
 <h4 id="post-v1messages"><code>POST /v1/messages</code><a class="headerlink" href="#post-v1messages" title="Permanent link">&para;</a></h4>
 <p>Anthropic Messages API — the primary proxy path for Claude models.</p>
 <p>TokenPak intercepts this request, applies compression, and forwards to the upstream Anthropic API. The response is transparently passed back.</p>
@@ -5396,6 +5399,43 @@ tokenpak_uptime_seconds 16200
 <span class="p">}</span>
 </code></pre></div></p>
 <hr />
+<h4 id="post-v1messagessession-economics"><code>POST /v1/messages/session-economics</code><a class="headerlink" href="#post-v1messagessession-economics" title="Permanent link">&para;</a></h4>
+<p>Build a versioned session-economics snapshot from completed local request
+ledger rows. This endpoint never forwards a provider request.</p>
+<p>Supply the stable session identity in <code>X-Claude-Code-Session-Id</code> or as
+<code>session_id</code> in the JSON body. If both are present, they must match. <code>model</code> is
+an optional hint when the ledger does not identify a model unambiguously.</p>
+<p><strong>Request body:</strong></p>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;session_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;session-abc&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;model&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;claude-sonnet-4-5&quot;</span>
+<span class="p">}</span>
+</code></pre></div>
+<p><strong>Selected response fields:</strong></p>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;schema_version&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;session-economics/1&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;as_of&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2026-08-12T00:00:00Z&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;session&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;session-abc&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;identity_state&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;observed&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;turns_observed&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">12</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;model&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;claude-sonnet-4-5&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;effort&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;unknown&quot;</span><span class="p">}</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="nt">&quot;runway&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;status&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;available&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;turns&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">8</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;binding_constraint&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;context_soft&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;guard_state&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;amber&quot;</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="nt">&quot;advisory&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>The full immutable response also includes truth-preserving <code>facts</code>, <code>state</code>,
+and <code>forecast</code> objects. Missing measurements use explicit <code>no_data</code>,
+<code>unavailable</code>, or <code>error</code> states and <code>null</code> values; they are never represented
+as measured zero. Runway can be <code>learning</code>, <code>unavailable</code>, or <code>error</code> when the
+local facts are insufficient or invalid.</p>
+<hr />
 <h4 id="post-v1chatcompletions"><code>POST /v1/chat/completions</code><a class="headerlink" href="#post-v1chatcompletions" title="Permanent link">&para;</a></h4>
 <p>OpenAI Chat Completions API — compatible path for OpenAI SDK clients, LangChain, and LiteLLM.</p>
 <p><strong>Headers:</strong></p>
@@ -5415,8 +5455,8 @@ tokenpak_uptime_seconds 16200
 </tr>
 <tr>
 <td><code>Authorization</code></td>
-<td><code>Bearer &lt;api-key&gt;</code></td>
-<td>Yes</td>
+<td><code>Bearer &lt;provider-api-key&gt;</code></td>
+<td>Yes for localhost direct-key traffic; remote clients use this header for proxy auth and need separate upstream credentials</td>
 </tr>
 </tbody>
 </table>
@@ -5487,99 +5527,32 @@ tokenpak_uptime_seconds 16200
 </tbody>
 </table>
 <hr />
-<h4 id="post-ingest-post-ingestbatch"><code>POST /ingest</code> / <code>POST /ingest/batch</code><a class="headerlink" href="#post-ingest-post-ingestbatch" title="Permanent link">&para;</a></h4>
-<p>Ingest context blocks directly into the vault index at runtime.</p>
-<p><strong>Request Body:</strong>
+<h4 id="post-ingest"><code>POST /ingest</code><a class="headerlink" href="#post-ingest" title="Permanent link">&para;</a></h4>
+<p>Accept one JSON payload and return one generated record ID. In v1.19.0, this
+compatibility endpoint acknowledges the payload but does not persist or index
+its contents.</p>
+<p><strong>Request body:</strong>
 <div class="highlight"><pre><span></span><code><span class="p">{</span>
-<span class="w">  </span><span class="nt">&quot;block_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;my-context-001&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;content&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;This is important context to inject...&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;source_path&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;custom/context.md&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;risk_class&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;safe&quot;</span>
+<span class="w">  </span><span class="nt">&quot;content&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Compatibility payload&quot;</span>
 <span class="p">}</span>
 </code></pre></div></p>
-<p><strong>Batch variant</strong> (<code>/ingest/batch</code>) accepts an array of blocks.</p>
-<hr />
-<h4 id="post-configreload"><code>POST /config/reload</code><a class="headerlink" href="#post-configreload" title="Permanent link">&para;</a></h4>
-<p>Hot-reload configuration from environment variables (localhost only).</p>
-<p>Equivalent to sending <code>SIGHUP</code> to the proxy process.</p>
 <p><strong>Response:</strong>
 <div class="highlight"><pre><span></span><code><span class="p">{</span>
 <span class="w">  </span><span class="nt">&quot;status&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ok&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;message&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Config reloaded: TOKENPAK_MODE=hybrid, TOKENPAK_COMPACT=1&quot;</span>
+<span class="w">  </span><span class="nt">&quot;ids&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;2bd628a3-8b9b-4ed8-9248-b21c90dcdd4b&quot;</span><span class="p">]</span>
 <span class="p">}</span>
 </code></pre></div></p>
-<p><strong>Note:</strong> Only accepts requests from <code>127.0.0.1</code> or <code>::1</code>. Remote calls receive <code>403 Forbidden</code>.</p>
 <hr />
-<h3 id="error-format">Error Format<a class="headerlink" href="#error-format" title="Permanent link">&para;</a></h3>
-<p>All error responses use a consistent JSON structure:</p>
-<div class="highlight"><pre><span></span><code><span class="p">{</span>
-<span class="w">  </span><span class="nt">&quot;error&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;error_type&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;message&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Human-readable description&quot;</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-<p><strong>Common error types:</strong></p>
-<table>
-<thead>
-<tr>
-<th>HTTP Status</th>
-<th><code>error.type</code></th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>400</td>
-<td><code>bad_request</code></td>
-<td>Malformed request body</td>
-</tr>
-<tr>
-<td>401</td>
-<td><code>unauthorized</code></td>
-<td>Missing or invalid <code>X-TokenPak-Key</code></td>
-</tr>
-<tr>
-<td>403</td>
-<td><code>forbidden</code></td>
-<td>Operation not allowed from this IP</td>
-</tr>
-<tr>
-<td>404</td>
-<td><code>not_found</code></td>
-<td>Unknown endpoint path</td>
-</tr>
-<tr>
-<td>405</td>
-<td><code>method_not_allowed</code></td>
-<td>Wrong HTTP method (e.g. GET on POST-only path)</td>
-</tr>
-<tr>
-<td>429</td>
-<td><code>rate_limit_exceeded</code></td>
-<td>Too many requests from this IP</td>
-</tr>
-<tr>
-<td>500</td>
-<td><code>internal_error</code></td>
-<td>Proxy-side error</td>
-</tr>
-<tr>
-<td>503</td>
-<td><code>circuit_open</code></td>
-<td>Upstream provider circuit breaker open</td>
-</tr>
-<tr>
-<td>503</td>
-<td><code>upstream_unreachable</code></td>
-<td>Cannot reach upstream provider</td>
-</tr>
-</tbody>
-</table>
+<h3 id="error-responses">Error responses<a class="headerlink" href="#error-responses" title="Permanent link">&para;</a></h3>
+<p>Error bodies are endpoint-specific. TokenPak-generated application errors are
+usually JSON, unsupported paths use the standard HTTP server error response,
+and provider passthrough routes can return the upstream provider's status and
+body. Clients should branch on the HTTP status and parse the documented
+endpoint response instead of assuming one universal error envelope.</p>
 <hr />
-<h2 id="sdk-adapters">SDK Adapters<a class="headerlink" href="#sdk-adapters" title="Permanent link">&para;</a></h2>
+<h2 id="sdk-adapters">SDK adapters<a class="headerlink" href="#sdk-adapters" title="Permanent link">&para;</a></h2>
 <p>TokenPak provides adapters that route requests through the proxy while preserving the native API shape of each SDK.</p>
-<h3 id="base-adapter-tokenpakadapter">Base Adapter (<code>TokenPakAdapter</code>)<a class="headerlink" href="#base-adapter-tokenpakadapter" title="Permanent link">&para;</a></h3>
+<h3 id="base-adapter-tokenpakadapter">Base adapter: <code>TokenPakAdapter</code><a class="headerlink" href="#base-adapter-tokenpakadapter" title="Permanent link">&para;</a></h3>
 <p>All adapters inherit from <code>TokenPakAdapter</code> and implement four lifecycle hooks.</p>
 <div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">tokenpak.sdk.base</span><span class="w"> </span><span class="kn">import</span> <span class="n">TokenPakAdapter</span>
 </code></pre></div>
@@ -5646,7 +5619,7 @@ tokenpak_uptime_seconds 16200
 <tr>
 <td><code>extract_tokens</code></td>
 <td><code>(response: dict) -&gt; dict</code></td>
-<td>Extract <code>{input, output, cache_read, cache_creation}</code> token counts</td>
+<td>Extract <code>{input_tokens, output_tokens, cache_read, cache_write, total}</code> token counts</td>
 </tr>
 </tbody>
 </table>
@@ -5716,8 +5689,9 @@ tokenpak_uptime_seconds 16200
 <div class="highlight"><pre><span></span><code><span class="p">{</span>
   <span class="s2">&quot;input_tokens&quot;</span><span class="p">:</span> <span class="mi">3140</span><span class="p">,</span>
   <span class="s2">&quot;output_tokens&quot;</span><span class="p">:</span> <span class="mi">512</span><span class="p">,</span>
-  <span class="s2">&quot;cache_read_input_tokens&quot;</span><span class="p">:</span> <span class="mi">1200</span><span class="p">,</span>
-  <span class="s2">&quot;cache_creation_input_tokens&quot;</span><span class="p">:</span> <span class="mi">800</span>
+  <span class="s2">&quot;cache_read&quot;</span><span class="p">:</span> <span class="mi">1200</span><span class="p">,</span>
+  <span class="s2">&quot;cache_write&quot;</span><span class="p">:</span> <span class="mi">800</span><span class="p">,</span>
+  <span class="s2">&quot;total&quot;</span><span class="p">:</span> <span class="mi">3652</span>
 <span class="p">}</span>
 </code></pre></div></p>
 <hr />
@@ -5851,7 +5825,7 @@ tokenpak_uptime_seconds 16200
 </tbody>
 </table>
 <hr />
-<h3 id="exception-hierarchy">Exception Hierarchy<a class="headerlink" href="#exception-hierarchy" title="Permanent link">&para;</a></h3>
+<h3 id="exception-hierarchy">Exception hierarchy<a class="headerlink" href="#exception-hierarchy" title="Permanent link">&para;</a></h3>
 <p>All adapters raise canonical exceptions — never raw <code>requests</code> exceptions.</p>
 <div class="highlight"><pre><span></span><code>TokenPakAdapterError (base)
 ├── TokenPakTimeoutError      — proxy did not respond within timeout_s
@@ -5878,15 +5852,13 @@ tokenpak_uptime_seconds 16200
     <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Adapter error: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2"> (HTTP </span><span class="si">{</span><span class="n">e</span><span class="o">.</span><span class="n">status_code</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span>
 </code></pre></div></p>
 <hr />
-<h2 id="cli-commands">CLI Commands<a class="headerlink" href="#cli-commands" title="Permanent link">&para;</a></h2>
+<h2 id="cli-commands">CLI commands<a class="headerlink" href="#cli-commands" title="Permanent link">&para;</a></h2>
 <p>All commands are invoked as <code>tokenpak &lt;command&gt; [options]</code>.</p>
-<h3 id="proxy-lifecycle">Proxy Lifecycle<a class="headerlink" href="#proxy-lifecycle" title="Permanent link">&para;</a></h3>
+<h3 id="proxy-lifecycle">Proxy lifecycle<a class="headerlink" href="#proxy-lifecycle" title="Permanent link">&para;</a></h3>
 <h4 id="tokenpak-start"><code>tokenpak start</code><a class="headerlink" href="#tokenpak-start" title="Permanent link">&para;</a></h4>
-<p>Start the proxy (default: <code>localhost:8766</code>).</p>
+<p>Start the managed background proxy (default: <code>localhost:8766</code>).</p>
 <div class="highlight"><pre><span></span><code>tokenpak<span class="w"> </span>start<span class="w">                    </span><span class="c1"># Start on default port 8766</span>
 tokenpak<span class="w"> </span>start<span class="w"> </span>--port<span class="w"> </span><span class="m">9000</span><span class="w">        </span><span class="c1"># Custom port</span>
-tokenpak<span class="w"> </span>start<span class="w"> </span>--debug<span class="w">            </span><span class="c1"># Verbose logging</span>
-tokenpak<span class="w"> </span>start<span class="w"> </span>--background<span class="w">       </span><span class="c1"># Run as background daemon</span>
 </code></pre></div>
 <p><strong>Options:</strong></p>
 <table>
@@ -5905,18 +5877,6 @@ tokenpak<span class="w"> </span>start<span class="w"> </span>--background<span c
 <td><code>8766</code></td>
 <td>Port to listen on</td>
 </tr>
-<tr>
-<td><code>--debug</code></td>
-<td>flag</td>
-<td>off</td>
-<td>Enable debug logging</td>
-</tr>
-<tr>
-<td><code>--background</code></td>
-<td>flag</td>
-<td>off</td>
-<td>Daemonize the process</td>
-</tr>
 </tbody>
 </table>
 <hr />
@@ -5934,7 +5894,6 @@ tokenpak<span class="w"> </span>start<span class="w"> </span>--background<span c
 <p>Show recent proxy log output.</p>
 <div class="highlight"><pre><span></span><code>tokenpak<span class="w"> </span>logs<span class="w">                </span><span class="c1"># Last 50 lines</span>
 tokenpak<span class="w"> </span>logs<span class="w"> </span>-n<span class="w"> </span><span class="m">100</span><span class="w">         </span><span class="c1"># Last 100 lines</span>
-tokenpak<span class="w"> </span>logs<span class="w"> </span>--follow<span class="w">       </span><span class="c1"># Stream new log lines (tail -f)</span>
 </code></pre></div>
 <p><strong>Options:</strong></p>
 <table>
@@ -5971,7 +5930,7 @@ tokenpak<span class="w"> </span>logs<span class="w"> </span>--follow<span class=
 <div class="highlight"><pre><span></span><code>tokenpak<span class="w"> </span>update
 </code></pre></div>
 <hr />
-<h3 id="indexing-search">Indexing &amp; Search<a class="headerlink" href="#indexing-search" title="Permanent link">&para;</a></h3>
+<h3 id="indexing-and-search">Indexing and search<a class="headerlink" href="#indexing-and-search" title="Permanent link">&para;</a></h3>
 <h4 id="tokenpak-index-directory"><code>tokenpak index [directory]</code><a class="headerlink" href="#tokenpak-index-directory" title="Permanent link">&para;</a></h4>
 <p>Index a directory for vault-based context injection.</p>
 <div class="highlight"><pre><span></span><code>tokenpak<span class="w"> </span>index<span class="w"> </span>~/your-vault<span class="w">           </span><span class="c1"># Index the vault</span>
@@ -6054,22 +6013,21 @@ tokenpak<span class="w"> </span>search<span class="w"> </span><span class="s2">&
 </tbody>
 </table>
 <hr />
-<h4 id="tokenpak-calibrate"><code>tokenpak calibrate</code><a class="headerlink" href="#tokenpak-calibrate" title="Permanent link">&para;</a></h4>
+<h4 id="tokenpak-calibrate-directory"><code>tokenpak calibrate &lt;directory&gt;</code><a class="headerlink" href="#tokenpak-calibrate-directory" title="Permanent link">&para;</a></h4>
 <p>Calibrate the optimal worker count for parallel indexing on this host.</p>
-<div class="highlight"><pre><span></span><code>tokenpak<span class="w"> </span>calibrate
+<div class="highlight"><pre><span></span><code>tokenpak<span class="w"> </span>calibrate<span class="w"> </span>~/your-vault
 </code></pre></div>
 <hr />
-<h3 id="monitoring-stats">Monitoring &amp; Stats<a class="headerlink" href="#monitoring-stats" title="Permanent link">&para;</a></h3>
+<h3 id="monitoring-and-stats">Monitoring and stats<a class="headerlink" href="#monitoring-and-stats" title="Permanent link">&para;</a></h3>
 <h4 id="tokenpak-stats"><code>tokenpak stats</code><a class="headerlink" href="#tokenpak-stats" title="Permanent link">&para;</a></h4>
 <p>Show registry statistics (request counts, token usage, cost breakdown).</p>
 <div class="highlight"><pre><span></span><code>tokenpak<span class="w"> </span>stats
-tokenpak<span class="w"> </span>stats<span class="w"> </span>--raw<span class="w">             </span><span class="c1"># JSON output</span>
 </code></pre></div>
 <hr />
 <h4 id="tokenpak-models"><code>tokenpak models</code><a class="headerlink" href="#tokenpak-models" title="Permanent link">&para;</a></h4>
 <p>Show per-model usage and efficiency breakdown.</p>
 <div class="highlight"><pre><span></span><code>tokenpak<span class="w"> </span>models<span class="w">                      </span><span class="c1"># Summary table</span>
-tokenpak<span class="w"> </span>models<span class="w"> </span>--detail<span class="w"> </span>sonnet<span class="w">      </span><span class="c1"># Detailed view for models matching &quot;sonnet&quot;</span>
+tokenpak<span class="w"> </span>models<span class="w"> </span>sonnet<span class="w">               </span><span class="c1"># Details for models matching &quot;sonnet&quot;</span>
 tokenpak<span class="w"> </span>models<span class="w"> </span>--raw<span class="w">                </span><span class="c1"># JSON output</span>
 </code></pre></div>
 <p><strong>Options:</strong></p>
@@ -6083,9 +6041,9 @@ tokenpak<span class="w"> </span>models<span class="w"> </span>--raw<span class="
 </thead>
 <tbody>
 <tr>
-<td><code>--detail</code></td>
+<td><code>model</code></td>
 <td>string</td>
-<td>Show details for a specific model (partial match)</td>
+<td>Optional positional model name (partial match)</td>
 </tr>
 <tr>
 <td><code>--raw</code></td>
@@ -6095,10 +6053,11 @@ tokenpak<span class="w"> </span>models<span class="w"> </span>--raw<span class="
 </tbody>
 </table>
 <hr />
-<h4 id="tokenpak-savingssincedate"><code>tokenpak savings[?since=&lt;date&gt;]</code><a class="headerlink" href="#tokenpak-savingssincedate" title="Permanent link">&para;</a></h4>
+<h4 id="tokenpak-savings"><code>tokenpak savings</code><a class="headerlink" href="#tokenpak-savings" title="Permanent link">&para;</a></h4>
 <p>Show savings summary — tokens and cost saved by compression.</p>
 <div class="highlight"><pre><span></span><code>tokenpak<span class="w"> </span>savings
-tokenpak<span class="w"> </span>savings<span class="w"> </span>--since<span class="w"> </span><span class="m">2026</span>-03-01
+tokenpak<span class="w"> </span>savings<span class="w"> </span>--days<span class="w"> </span><span class="m">30</span>
+tokenpak<span class="w"> </span>savings<span class="w"> </span>--json
 </code></pre></div>
 <hr />
 <h4 id="tokenpak-usage"><code>tokenpak usage</code><a class="headerlink" href="#tokenpak-usage" title="Permanent link">&para;</a></h4>
@@ -6170,10 +6129,10 @@ tokenpak<span class="w"> </span>dashboard<span class="w"> </span>--public<span c
 - Vault index health
 - Config file validity</p>
 <hr />
-<h4 id="tokenpak-preview-file"><code>tokenpak preview &lt;file&gt;</code><a class="headerlink" href="#tokenpak-preview-file" title="Permanent link">&para;</a></h4>
+<h4 id="tokenpak-preview-text"><code>tokenpak preview [&lt;text&gt;]</code><a class="headerlink" href="#tokenpak-preview-text" title="Permanent link">&para;</a></h4>
 <p>Preview compression dry-run on a file — shows token savings before sending to API.</p>
-<div class="highlight"><pre><span></span><code>tokenpak<span class="w"> </span>preview<span class="w"> </span>prompt.txt
-tokenpak<span class="w"> </span>preview<span class="w"> </span>--mode<span class="w"> </span>aggressive<span class="w"> </span>prompt.txt
+<div class="highlight"><pre><span></span><code>tokenpak<span class="w"> </span>preview<span class="w"> </span><span class="s2">&quot;Long prompt text&quot;</span>
+tokenpak<span class="w"> </span>preview<span class="w"> </span>--file<span class="w"> </span>prompt.txt
 </code></pre></div>
 <hr />
 <h4 id="tokenpak-debug-onoffstatus"><code>tokenpak debug on|off|status</code><a class="headerlink" href="#tokenpak-debug-onoffstatus" title="Permanent link">&para;</a></h4>
@@ -6216,7 +6175,7 @@ tokenpak<span class="w"> </span>replay<span class="w"> </span>clear<span class="
 tokenpak<span class="w"> </span>vault-health<span class="w"> </span>repair<span class="w">     </span><span class="c1"># Rebuild stale vault index</span>
 </code></pre></div>
 <hr />
-<h3 id="config-management">Config Management<a class="headerlink" href="#config-management" title="Permanent link">&para;</a></h3>
+<h3 id="config-management">Config management<a class="headerlink" href="#config-management" title="Permanent link">&para;</a></h3>
 <h4 id="tokenpak-setup"><code>tokenpak setup</code><a class="headerlink" href="#tokenpak-setup" title="Permanent link">&para;</a></h4>
 <p>Interactive first-time configuration wizard.</p>
 <div class="highlight"><pre><span></span><code>tokenpak<span class="w"> </span>setup
@@ -6235,11 +6194,11 @@ tokenpak<span class="w"> </span>config<span class="w"> </span>path<span class="w
 <h4 id="tokenpak-route"><code>tokenpak route</code><a class="headerlink" href="#tokenpak-route" title="Permanent link">&para;</a></h4>
 <p>Manage manual model routing rules.</p>
 <div class="highlight"><pre><span></span><code>tokenpak<span class="w"> </span>route<span class="w"> </span>list<span class="w">              </span><span class="c1"># List routing rules</span>
-tokenpak<span class="w"> </span>route<span class="w"> </span>add<span class="w">               </span><span class="c1"># Add a rule</span>
+tokenpak<span class="w"> </span>route<span class="w"> </span>add<span class="w"> </span>--model<span class="w"> </span><span class="s2">&quot;gpt-4*&quot;</span><span class="w"> </span>--target<span class="w"> </span>openai/gpt-4o
 tokenpak<span class="w"> </span>route<span class="w"> </span>remove<span class="w"> </span>&lt;id&gt;<span class="w">       </span><span class="c1"># Remove a rule</span>
 </code></pre></div>
 <hr />
-<h3 id="advanced-commands">Advanced Commands<a class="headerlink" href="#advanced-commands" title="Permanent link">&para;</a></h3>
+<h3 id="advanced-commands">Advanced commands<a class="headerlink" href="#advanced-commands" title="Permanent link">&para;</a></h3>
 <h4 id="tokenpak-serve"><code>tokenpak serve</code><a class="headerlink" href="#tokenpak-serve" title="Permanent link">&para;</a></h4>
 <p>Start monitoring proxy or telemetry ingest server.</p>
 <div class="highlight"><pre><span></span><code>tokenpak<span class="w"> </span>serve<span class="w">                   </span><span class="c1"># Standard proxy</span>
@@ -6257,17 +6216,17 @@ tokenpak<span class="w"> </span>benchmark<span class="w"> </span>--json<span cla
 </code></pre></div>
 <hr />
 <h4 id="tokenpak-macro"><code>tokenpak macro</code><a class="headerlink" href="#tokenpak-macro" title="Permanent link">&para;</a></h4>
-<p>Manage and run compression macros.</p>
+<p>Manage and run premade and user-defined macros.</p>
 <div class="highlight"><pre><span></span><code>tokenpak<span class="w"> </span>macro<span class="w"> </span>list<span class="w">              </span><span class="c1"># List all macros</span>
 tokenpak<span class="w"> </span>macro<span class="w"> </span>run<span class="w"> </span>&lt;name&gt;<span class="w">        </span><span class="c1"># Run a macro</span>
-tokenpak<span class="w"> </span>macro<span class="w"> </span>create<span class="w">            </span><span class="c1"># Create a user-defined YAML macro</span>
+tokenpak<span class="w"> </span>macro<span class="w"> </span>create<span class="w"> </span>--name<span class="w"> </span>daily-check<span class="w"> </span>--step<span class="w"> </span><span class="s1">&#39;Check status:tokenpak status&#39;</span>
 tokenpak<span class="w"> </span>macro<span class="w"> </span>show<span class="w"> </span>&lt;name&gt;<span class="w">       </span><span class="c1"># Show macro definition</span>
 tokenpak<span class="w"> </span>macro<span class="w"> </span>delete<span class="w"> </span>&lt;name&gt;<span class="w">     </span><span class="c1"># Delete a user-defined macro</span>
 </code></pre></div>
 <hr />
 <h4 id="tokenpak-recipe"><code>tokenpak recipe</code><a class="headerlink" href="#tokenpak-recipe" title="Permanent link">&para;</a></h4>
 <p>Manage compression recipes (YAML workflow definitions).</p>
-<div class="highlight"><pre><span></span><code>tokenpak<span class="w"> </span>recipe<span class="w"> </span>create<span class="w">           </span><span class="c1"># Scaffold a new recipe YAML</span>
+<div class="highlight"><pre><span></span><code>tokenpak<span class="w"> </span>recipe<span class="w"> </span>create<span class="w"> </span>my-recipe<span class="w"> </span><span class="c1"># Scaffold a new recipe YAML</span>
 tokenpak<span class="w"> </span>recipe<span class="w"> </span>validate<span class="w"> </span>&lt;file&gt;<span class="w">  </span><span class="c1"># Validate recipe against schema</span>
 tokenpak<span class="w"> </span>recipe<span class="w"> </span><span class="nb">test</span><span class="w"> </span>&lt;file&gt;<span class="w">      </span><span class="c1"># Test recipe against sample input</span>
 tokenpak<span class="w"> </span>recipe<span class="w"> </span>benchmark<span class="w"> </span>&lt;file&gt;<span class="w"> </span><span class="c1"># Benchmark recipe performance</span>
@@ -6276,8 +6235,8 @@ tokenpak<span class="w"> </span>recipe<span class="w"> </span>benchmark<span cla
 <h4 id="tokenpak-fleet"><code>tokenpak fleet</code><a class="headerlink" href="#tokenpak-fleet" title="Permanent link">&para;</a></h4>
 <p>Manage and query a multi-machine proxy fleet.</p>
 <div class="highlight"><pre><span></span><code>tokenpak<span class="w"> </span>fleet<span class="w"> </span>init<span class="w">              </span><span class="c1"># Configure fleet interactively</span>
-tokenpak<span class="w"> </span>fleet<span class="w"> </span>status<span class="w">            </span><span class="c1"># Show fleet health</span>
-tokenpak<span class="w"> </span>fleet<span class="w"> </span>list<span class="w">              </span><span class="c1"># List fleet members</span>
+tokenpak<span class="w"> </span>fleet<span class="w">                   </span><span class="c1"># Show fleet health</span>
+tokenpak<span class="w"> </span>fleet<span class="w"> </span>--json<span class="w">            </span><span class="c1"># Show fleet health as JSON</span>
 </code></pre></div>
 <hr />
 <h4 id="tokenpak-template"><code>tokenpak template</code><a class="headerlink" href="#tokenpak-template" title="Permanent link">&para;</a></h4>
@@ -6289,19 +6248,17 @@ tokenpak<span class="w"> </span>template<span class="w"> </span>remove<span clas
 tokenpak<span class="w"> </span>template<span class="w"> </span>use<span class="w"> </span>&lt;name&gt;<span class="w">     </span><span class="c1"># Expand a template with variables</span>
 </code></pre></div>
 <hr />
-<h4 id="tokenpak-audit"><code>tokenpak audit</code><a class="headerlink" href="#tokenpak-audit" title="Permanent link">&para;</a></h4>
-<p>Enterprise audit log management.</p>
-<div class="highlight"><pre><span></span><code>tokenpak<span class="w"> </span>audit<span class="w"> </span>list<span class="w">              </span><span class="c1"># List audit log entries</span>
-tokenpak<span class="w"> </span>audit<span class="w"> </span><span class="nb">export</span><span class="w">            </span><span class="c1"># Export to file</span>
-tokenpak<span class="w"> </span>audit<span class="w"> </span>verify<span class="w">            </span><span class="c1"># Verify hash chain integrity</span>
-tokenpak<span class="w"> </span>audit<span class="w"> </span>prune<span class="w">             </span><span class="c1"># Remove old entries</span>
-tokenpak<span class="w"> </span>audit<span class="w"> </span>summary<span class="w">           </span><span class="c1"># Show audit stats</span>
-</code></pre></div>
+<h4 id="tokenpak-audit-planned"><code>tokenpak audit</code> (Planned)<a class="headerlink" href="#tokenpak-audit-planned" title="Permanent link">&para;</a></h4>
+<p>The <code>audit</code> command is a reserved, planned stub in v1.19.0. It does not expose
+audit-log subcommands in this release.</p>
 <hr />
-<h2 id="configuration-reference">Configuration Reference<a class="headerlink" href="#configuration-reference" title="Permanent link">&para;</a></h2>
-<h3 id="environment-variables">Environment Variables<a class="headerlink" href="#environment-variables" title="Permanent link">&para;</a></h3>
-<p>The proxy reads configuration from <code>~/.tokenpak/config.yaml</code> with environment variable overrides. Environment variables always take precedence.</p>
-<h4 id="core-settings">Core Settings<a class="headerlink" href="#core-settings" title="Permanent link">&para;</a></h4>
+<h2 id="configuration-reference">Configuration reference<a class="headerlink" href="#configuration-reference" title="Permanent link">&para;</a></h2>
+<h3 id="environment-variables">Environment variables<a class="headerlink" href="#environment-variables" title="Permanent link">&para;</a></h3>
+<p>The proxy resolves configuration through <code>TOKENPAK_HOME</code> and the state-bearing
+TokenPak home. New installs use <code>~/.tpk/config.yaml</code>; existing legacy installs
+may continue using <code>~/.tokenpak/config.yaml</code>. Environment variables take
+precedence.</p>
+<h4 id="core-settings">Core settings<a class="headerlink" href="#core-settings" title="Permanent link">&para;</a></h4>
 <table>
 <thead>
 <tr>
@@ -6317,6 +6274,16 @@ tokenpak<span class="w"> </span>audit<span class="w"> </span>summary<span class=
 <td>Proxy listen port</td>
 </tr>
 <tr>
+<td><code>TOKENPAK_BIND_ADDRESS</code></td>
+<td><code>127.0.0.1</code></td>
+<td>Proxy bind address; set explicitly for non-localhost access</td>
+</tr>
+<tr>
+<td><code>TOKENPAK_PROXY_AUTH_TOKEN</code></td>
+<td>—</td>
+<td>Required server-side token for non-localhost access</td>
+</tr>
+<tr>
 <td><code>TOKENPAK_MODE</code></td>
 <td><code>hybrid</code></td>
 <td>Compression mode: <code>strict</code>, <code>hybrid</code>, <code>aggressive</code></td>
@@ -6324,16 +6291,16 @@ tokenpak<span class="w"> </span>audit<span class="w"> </span>summary<span class=
 <tr>
 <td><code>TOKENPAK_COMPACT</code></td>
 <td><code>1</code></td>
-<td>Master on/off switch (0 = disable all compression)</td>
+<td>Legacy compatibility value; it does not toggle body compaction on the default HTTP proxy path</td>
 </tr>
 <tr>
 <td><code>TOKENPAK_DB</code></td>
-<td><code>.tokenpak/monitor.db</code></td>
-<td>SQLite database path</td>
+<td><code>~/.tpk/monitor.db</code></td>
+<td>SQLite database path for a fresh install; existing legacy stores are still discovered</td>
 </tr>
 </tbody>
 </table>
-<h4 id="compression-settings">Compression Settings<a class="headerlink" href="#compression-settings" title="Permanent link">&para;</a></h4>
+<h4 id="compression-settings">Compression settings<a class="headerlink" href="#compression-settings" title="Permanent link">&para;</a></h4>
 <table>
 <thead>
 <tr>
@@ -6350,7 +6317,7 @@ tokenpak<span class="w"> </span>audit<span class="w"> </span>summary<span class=
 </tr>
 <tr>
 <td><code>TOKENPAK_COMPACT_THRESHOLD_TOKENS</code></td>
-<td><code>4500</code></td>
+<td><code>1500</code></td>
 <td>Skip compression below this token count</td>
 </tr>
 <tr>
@@ -6358,14 +6325,9 @@ tokenpak<span class="w"> </span>audit<span class="w"> </span>summary<span class=
 <td><code>2000</code></td>
 <td>Compression result cache entries</td>
 </tr>
-<tr>
-<td><code>TOKENPAK_MAX_COMPRESSION_TIME_MS</code></td>
-<td><code>5000</code></td>
-<td>Max compression time before skipping (0 = no cap)</td>
-</tr>
 </tbody>
 </table>
-<h4 id="vault-context-injection">Vault Context Injection<a class="headerlink" href="#vault-context-injection" title="Permanent link">&para;</a></h4>
+<h4 id="vault-context-injection">Vault context injection<a class="headerlink" href="#vault-context-injection" title="Permanent link">&para;</a></h4>
 <table>
 <thead>
 <tr>
@@ -6377,7 +6339,7 @@ tokenpak<span class="w"> </span>audit<span class="w"> </span>summary<span class=
 <tbody>
 <tr>
 <td><code>TOKENPAK_VAULT_INDEX</code></td>
-<td><code>~/.tokenpak</code></td>
+<td><code>~/vault/.tokenpak</code></td>
 <td>Path to vault index directory</td>
 </tr>
 <tr>
@@ -6402,7 +6364,7 @@ tokenpak<span class="w"> </span>audit<span class="w"> </span>summary<span class=
 </tr>
 </tbody>
 </table>
-<h4 id="key-management">Key Management<a class="headerlink" href="#key-management" title="Permanent link">&para;</a></h4>
+<h4 id="key-management">Key management<a class="headerlink" href="#key-management" title="Permanent link">&para;</a></h4>
 <table>
 <thead>
 <tr>
@@ -6444,7 +6406,7 @@ tokenpak<span class="w"> </span>audit<span class="w"> </span>summary<span class=
 </tr>
 </tbody>
 </table>
-<h4 id="advanced-features">Advanced Features<a class="headerlink" href="#advanced-features" title="Permanent link">&para;</a></h4>
+<h4 id="advanced-features">Advanced features<a class="headerlink" href="#advanced-features" title="Permanent link">&para;</a></h4>
 <table>
 <thead>
 <tr>
@@ -6477,57 +6439,40 @@ tokenpak<span class="w"> </span>audit<span class="w"> </span>summary<span class=
 </tbody>
 </table>
 <hr />
-<h3 id="configyaml">config.yaml<a class="headerlink" href="#configyaml" title="Permanent link">&para;</a></h3>
-<p>Default location: <code>~/.tokenpak/config.yaml</code></p>
-<div class="highlight"><pre><span></span><code><span class="c1"># TokenPak configuration</span>
-<span class="c1"># All settings can also be overridden via environment variables</span>
+<h3 id="configuration-file">Configuration file<a class="headerlink" href="#configuration-file" title="Permanent link">&para;</a></h3>
+<p>New-install location: <code>~/.tpk/config.yaml</code>. Existing state in
+<code>~/.tokenpak/config.yaml</code> remains in place until explicitly migrated.</p>
+<p>This excerpt uses released configuration keys. Run <code>tokenpak config init</code> to
+generate the complete file for the installed version.</p>
+<div class="highlight"><pre><span></span><code><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">8766</span>
+<span class="nt">mode</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">hybrid</span>
 
 <span class="nt">compression</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
-<span class="w">  </span><span class="nt">mode</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">hybrid</span><span class="w">               </span><span class="c1"># strict | hybrid | aggressive</span>
-<span class="w">  </span><span class="nt">max_chars</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">120</span><span class="w">             </span><span class="c1"># Max chars per compressed chunk</span>
-<span class="w">  </span><span class="nt">threshold_tokens</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">4500</span><span class="w">     </span><span class="c1"># Skip compression below this token count</span>
+<span class="w">  </span><span class="nt">max_chars</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">120</span>
+<span class="w">  </span><span class="nt">threshold_tokens</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1500</span>
+<span class="w">  </span><span class="nt">cache_size</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2000</span>
 
-<span class="nt">cache</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
-<span class="w">  </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">memory</span><span class="w">               </span><span class="c1"># memory | disk</span>
-<span class="w">  </span><span class="nt">ttl_seconds</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3600</span>
-<span class="w">  </span><span class="nt">max_size_mb</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">256</span>
+<span class="nt">vault</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">index_path</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">~/vault/.tokenpak</span>
+<span class="w">  </span><span class="nt">inject_budget</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">4000</span>
+<span class="w">  </span><span class="nt">inject_top_k</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5</span>
+<span class="w">  </span><span class="nt">inject_min_score</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2.0</span>
+<span class="w">  </span><span class="nt">retrieval_backend</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">json_blocks</span>
 
-<span class="nt">logging</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
-<span class="w">  </span><span class="nt">level</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">info</span><span class="w">                </span><span class="c1"># debug | info | warning | error</span>
-<span class="w">  </span><span class="nt">destination</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">file</span><span class="w">          </span><span class="c1"># file | stdout</span>
-<span class="w">  </span><span class="nt">retention_days</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">30</span>
-<span class="w">  </span><span class="nt">include_request_body</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
-<span class="w">  </span><span class="nt">include_response_body</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
-
-<span class="nt">metrics</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
-<span class="w">  </span><span class="nt">collection_window_seconds</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">60</span>
-<span class="w">  </span><span class="nt">retention_days</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">7</span>
-
-<span class="nt">security</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">require_api_key</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
-<span class="w">  </span><span class="nt">api_key</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span><span class="w">              </span><span class="c1"># X-TokenPak-Key for non-localhost clients</span>
-<span class="w">  </span><span class="nt">allowed_origins</span><span class="p">:</span>
-<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;*&quot;</span>
-<span class="w">  </span><span class="nt">rate_limit_per_minute</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1000</span>
-
-<span class="nt">advanced</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">vault_index_path</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;~/.tokenpak/.index&quot;</span>
-<span class="w">  </span><span class="nt">enable_trace_logs</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
-<span class="w">  </span><span class="nt">proxy_timeout_seconds</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">30</span>
-<span class="w">  </span><span class="nt">max_request_size_bytes</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10485760</span><span class="w">    </span><span class="c1"># 10 MB</span>
+<span class="nt">rate_limit_rpm</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">60</span>
 </code></pre></div>
 <hr />
-<p><em>This reference covers TokenPak v1.16.0.</em></p>
+<p><em>This reference covers TokenPak v1.19.0.</em></p>
 
 
 
 
 
 
+
+  
+  
 
 
 

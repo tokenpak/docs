@@ -25,7 +25,7 @@
     
     
       
-        <title>TokenPak</title>
+        <title>TokenPak - TokenPak</title>
       
     
     
@@ -111,7 +111,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Home
+              TokenPak
             
           </span>
         </div>
@@ -495,6 +495,13 @@
   </span>
   
   
+    
+  
+  
+    <span class="md-status md-status--current"></span>
+  
+
+  
 
           <span class="md-nav__icon md-icon"></span>
         </label>
@@ -512,6 +519,13 @@
     
   </span>
   
+  
+    
+  
+  
+    <span class="md-status md-status--current"></span>
+  
+
   
 
       </a>
@@ -565,10 +579,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#source-package" class="md-nav__link">
+  <a href="#source-and-package" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Source + package
+        Source and package
       
     </span>
   </a>
@@ -683,6 +697,13 @@
     
   </span>
   
+  
+    
+  
+  
+    <span class="md-status md-status--current"></span>
+  
+
   
 
       </a>
@@ -1079,6 +1100,13 @@
   </span>
   
   
+    
+  
+  
+    <span class="md-status md-status--current"></span>
+  
+
+  
 
       </a>
     </li>
@@ -1305,6 +1333,13 @@
     
   </span>
   
+  
+    
+  
+  
+    <span class="md-status md-status--current"></span>
+  
+
   
 
       </a>
@@ -2845,10 +2880,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#source-package" class="md-nav__link">
+  <a href="#source-and-package" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Source + package
+        Source and package
       
     </span>
   </a>
@@ -2879,17 +2914,22 @@
 
 <h1 id="tokenpak">TokenPak<a class="headerlink" href="#tokenpak" title="Permanent link">&para;</a></h1>
 <p><strong>A local proxy that packs LLM context before it reaches the API, with per-request records of what changed.</strong></p>
-<p>TokenPak sits between your AI tools and the upstream LLM provider, with its
+<p>This page is for developers evaluating or getting started with TokenPak.
+TokenPak sits between your AI tools and the upstream LLM provider, with its
 proxy listening on <code>127.0.0.1</code>. It deterministically packages context (Prompt
 Packing), routes requests, evaluates configured Spend Guard limits before
 provider send, and records request results locally. Provider-bound requests
 still travel to the selected upstream provider; TokenPak operates no cloud
 relay and requires no application code changes.</p>
 <div class="admonition note">
-<p class="admonition-title">v1.18.5</p>
-<p>These docs describe TokenPak <strong>v1.18.5</strong>, the currently published release
-on PyPI (<code>pip install tokenpak</code>). See <a href="known-issues/">Known Issues</a> for
-current limitations.</p>
+<p class="admonition-title">v1.19.0</p>
+<p>The commands below, <a href="QUICKSTART/">Quick Start</a>,
+<a href="api-reference/">extended API reference</a>, and
+<a href="DOCKER/">Docker guide</a> describe TokenPak <strong>v1.19.0</strong>, the currently
+published release on PyPI (<code>pip install tokenpak</code>). The separate
+<a href="installation/">Installation page</a> retains older-release guidance; use
+the Quick Start for the current setup path. Other pages with explicit
+version pins describe the release line named on that page.</p>
 </div>
 <hr />
 <h2 id="what-ships-in-the-oss-beta">What ships in the OSS beta<a class="headerlink" href="#what-ships-in-the-oss-beta" title="Permanent link">&para;</a></h2>
@@ -2899,21 +2939,21 @@ current limitations.</p>
   prompts and credentials are sent to the upstream provider you configure, not
   to a TokenPak cloud service.</li>
 <li><strong>Spend Guard</strong> — pre-send circuit breaker with rolling caps; blocks runaway requests before they reach the provider and returns a clear release directive.</li>
-<li><strong>Nine client integrations</strong> — Claude Code, Cursor, Cline, Continue, Aider, Codex CLI, Gemini CLI, OpenAI SDK, Anthropic SDK.</li>
+<li><strong>Nine client integrations</strong> — Claude Code, Cursor, Cline, Continue, Aider, Codex CLI, OpenAI SDK, Anthropic SDK, LiteLLM.</li>
 <li><strong>Savings Ledger + local dashboard</strong> — every request logged to a local SQLite store with causal attribution; TUI + web dashboard.</li>
 <li><strong>Vault indexing + semantic search</strong> — index your codebase, search without an LLM call.</li>
 <li><strong>TIP-1.0 protocol contracts</strong> — canonical headers, metadata fields, capability labels, manifest schemas. Conformance gate runnable via <code>tokenpak doctor --conformance</code>.</li>
 <li><strong>Pak recall (read-only)</strong> — storage, FTS, <code>tokenpak pak inspect</code>. Scoring and assembly are not part of the OSS beta.</li>
-<li><strong>50 built-in compression profiles</strong> — YAML, customizable.</li>
+<li><strong>Three built-in setup profiles and 50+ compression recipes</strong> — minimal, balanced, and aggressive profiles plus customizable packaged YAML recipes.</li>
 </ul>
 <hr />
 <h2 id="quick-start">Quick start<a class="headerlink" href="#quick-start" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code>pip<span class="w"> </span>install<span class="w"> </span>tokenpak
-tokenpak<span class="w"> </span>setup
+tokenpak<span class="w"> </span>setup<span class="w"> </span>--start
 <span class="c1"># Then point your client at http://127.0.0.1:8766</span>
 </code></pre></div>
-<p>→ <a href="installation/">Full installation guide</a>
-→ <a href="QUICKSTART/">5-minute Quick Start</a></p>
+<p>→ <a href="QUICKSTART/">5-minute Quick Start</a>
+→ <a href="installation/">Older-release installation guide</a></p>
 <hr />
 <h2 id="documentation-map">Documentation map<a class="headerlink" href="#documentation-map" title="Permanent link">&para;</a></h2>
 <table>
@@ -2926,7 +2966,7 @@ tokenpak<span class="w"> </span>setup
 <tbody>
 <tr>
 <td><a href="installation/">Installation</a></td>
-<td><code>pip install</code>, system requirements, first run</td>
+<td>Older-release installation guidance; use the Quick Start for v1.19.0</td>
 </tr>
 <tr>
 <td><a href="QUICKSTART/">Quick Start</a></td>
@@ -2979,7 +3019,7 @@ tokenpak<span class="w"> </span>setup
 </tbody>
 </table>
 <hr />
-<h2 id="source-package">Source + package<a class="headerlink" href="#source-package" title="Permanent link">&para;</a></h2>
+<h2 id="source-and-package">Source and package<a class="headerlink" href="#source-and-package" title="Permanent link">&para;</a></h2>
 <ul>
 <li><strong>GitHub</strong>: <a href="https://github.com/tokenpak/tokenpak">github.com/tokenpak/tokenpak</a></li>
 <li><strong>PyPI</strong>: <a href="https://pypi.org/project/tokenpak">pypi.org/project/tokenpak</a></li>

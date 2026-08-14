@@ -27,7 +27,7 @@
     
     
       
-        <title>Docker Deployment - TokenPak</title>
+        <title>Deploy TokenPak with Docker - TokenPak</title>
       
     
     
@@ -80,7 +80,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#tokenpak-docker-deployment-guide" class="md-skip">
+        <a href="#deploy-tokenpak-with-docker" class="md-skip">
           Skip to content
         </a>
       
@@ -113,7 +113,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Docker Deployment
+              Deploy TokenPak with Docker
             
           </span>
         </div>
@@ -486,6 +486,13 @@
   </span>
   
   
+    
+  
+  
+    <span class="md-status md-status--current"></span>
+  
+
+  
 
       </a>
     </li>
@@ -592,6 +599,13 @@
     
   </span>
   
+  
+    
+  
+  
+    <span class="md-status md-status--current"></span>
+  
+
   
 
       </a>
@@ -1002,6 +1016,13 @@
   </span>
   
   
+    
+  
+  
+    <span class="md-status md-status--current"></span>
+  
+
+  
 
           <span class="md-nav__icon md-icon"></span>
         </label>
@@ -1019,6 +1040,13 @@
     
   </span>
   
+  
+    
+  
+  
+    <span class="md-status md-status--current"></span>
+  
+
   
 
       </a>
@@ -1039,449 +1067,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#quick-start" class="md-nav__link">
+  <a href="#prerequisites" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Quick Start
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Quick Start">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#build-the-image" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Build the Image
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#run-a-single-container" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Run a Single Container
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#docker-compose-recommended" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Docker Compose (Recommended)
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#build-instructions" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Build Instructions
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Build Instructions">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#standard-build" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Standard Build
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#build-with-custom-base-image" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Build with Custom Base Image
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#check-image-size" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Check Image Size
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#configuration" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Configuration
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Configuration">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#environment-variables" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Environment Variables
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#config-volume" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Config Volume
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#env-file" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        .env File
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#volume-management" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Volume Management
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Volume Management">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#logs-volume" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Logs Volume
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#cache-volume" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Cache Volume
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#config-volume-development" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Config Volume (Development)
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#running-behind-nginx" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Running Behind Nginx
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Running Behind Nginx">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#nginx-reverse-proxy-setup" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Nginx Reverse Proxy Setup
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#docker-compose-with-nginx" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Docker Compose with Nginx
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#health-checks" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Health Checks
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Health Checks">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#docker-health-check" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Docker Health Check
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#health-check-response" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Health Check Response
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#kubernetes-liveness-probe" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Kubernetes Liveness Probe
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#multi-container-setup-with-redis" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Multi-Container Setup (With Redis)
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Multi-Container Setup (With Redis)">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#enable-redis-cache" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Enable Redis Cache
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#docker-compose-with-redis" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Docker Compose (with Redis)
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#troubleshooting" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Troubleshooting
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Troubleshooting">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#container-wont-start" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Container Won't Start
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#health-check-failing" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Health Check Failing
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#high-memory-usage" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        High Memory Usage
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#logs-not-persisting" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Logs Not Persisting
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#cloud-deployment" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Cloud Deployment
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Cloud Deployment">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#gcp-cloud-run" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        GCP Cloud Run
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#aws-ecs" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        AWS ECS
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#azure-container-instances" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Azure Container Instances
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#production-checklist" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Production Checklist
+        Prerequisites
       
     </span>
   </a>
@@ -1489,60 +1078,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#performance-tuning" class="md-nav__link">
+  <a href="#1-check-out-v1190" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Performance Tuning
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Performance Tuning">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#resource-allocation" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Resource Allocation
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#log-rotation" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Log Rotation
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#connection-pool" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Connection Pool
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#security-best-practices" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Security Best Practices
+        1. Check out v1.19.0
       
     </span>
   </a>
@@ -1550,41 +1089,112 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#monitoring" class="md-nav__link">
+  <a href="#2-build-the-image" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Monitoring
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Monitoring">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#prometheus-metrics" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Prometheus Metrics
+        2. Build the image
       
     </span>
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
-  <a href="#container-logs" class="md-nav__link">
+      
+        <li class="md-nav__item">
+  <a href="#3-create-the-proxy-credential" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Container Logs
+        3. Create the proxy credential
       
     </span>
   </a>
   
 </li>
-        
-      </ul>
-    </nav>
+      
+        <li class="md-nav__item">
+  <a href="#4-run-a-proxy-reachable-from-the-host" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Run a proxy reachable from the host
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-verify-the-deployment" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Verify the deployment
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#optional-custom-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Optional custom configuration
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#optional-docker-compose-deployment" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Optional Docker Compose deployment
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#health-and-diagnostics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Health and diagnostics
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#resource-limits" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Resource limits
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#stop-or-remove-the-container" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Stop or remove the container
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#deployment-boundary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Deployment boundary
+      
+    </span>
+  </a>
   
 </li>
       
@@ -1816,6 +1426,13 @@
     
   </span>
   
+  
+    
+  
+  
+    <span class="md-status md-status--current"></span>
+  
+
   
 
       </a>
@@ -3321,449 +2938,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#quick-start" class="md-nav__link">
+  <a href="#prerequisites" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Quick Start
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Quick Start">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#build-the-image" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Build the Image
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#run-a-single-container" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Run a Single Container
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#docker-compose-recommended" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Docker Compose (Recommended)
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#build-instructions" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Build Instructions
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Build Instructions">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#standard-build" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Standard Build
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#build-with-custom-base-image" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Build with Custom Base Image
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#check-image-size" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Check Image Size
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#configuration" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Configuration
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Configuration">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#environment-variables" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Environment Variables
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#config-volume" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Config Volume
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#env-file" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        .env File
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#volume-management" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Volume Management
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Volume Management">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#logs-volume" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Logs Volume
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#cache-volume" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Cache Volume
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#config-volume-development" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Config Volume (Development)
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#running-behind-nginx" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Running Behind Nginx
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Running Behind Nginx">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#nginx-reverse-proxy-setup" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Nginx Reverse Proxy Setup
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#docker-compose-with-nginx" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Docker Compose with Nginx
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#health-checks" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Health Checks
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Health Checks">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#docker-health-check" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Docker Health Check
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#health-check-response" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Health Check Response
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#kubernetes-liveness-probe" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Kubernetes Liveness Probe
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#multi-container-setup-with-redis" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Multi-Container Setup (With Redis)
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Multi-Container Setup (With Redis)">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#enable-redis-cache" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Enable Redis Cache
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#docker-compose-with-redis" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Docker Compose (with Redis)
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#troubleshooting" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Troubleshooting
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Troubleshooting">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#container-wont-start" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Container Won't Start
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#health-check-failing" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Health Check Failing
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#high-memory-usage" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        High Memory Usage
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#logs-not-persisting" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Logs Not Persisting
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#cloud-deployment" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Cloud Deployment
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Cloud Deployment">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#gcp-cloud-run" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        GCP Cloud Run
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#aws-ecs" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        AWS ECS
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#azure-container-instances" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Azure Container Instances
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#production-checklist" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Production Checklist
+        Prerequisites
       
     </span>
   </a>
@@ -3771,60 +2949,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#performance-tuning" class="md-nav__link">
+  <a href="#1-check-out-v1190" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Performance Tuning
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Performance Tuning">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#resource-allocation" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Resource Allocation
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#log-rotation" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Log Rotation
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#connection-pool" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Connection Pool
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#security-best-practices" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Security Best Practices
+        1. Check out v1.19.0
       
     </span>
   </a>
@@ -3832,41 +2960,112 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#monitoring" class="md-nav__link">
+  <a href="#2-build-the-image" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Monitoring
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Monitoring">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#prometheus-metrics" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Prometheus Metrics
+        2. Build the image
       
     </span>
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
-  <a href="#container-logs" class="md-nav__link">
+      
+        <li class="md-nav__item">
+  <a href="#3-create-the-proxy-credential" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Container Logs
+        3. Create the proxy credential
       
     </span>
   </a>
   
 </li>
-        
-      </ul>
-    </nav>
+      
+        <li class="md-nav__item">
+  <a href="#4-run-a-proxy-reachable-from-the-host" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Run a proxy reachable from the host
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-verify-the-deployment" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Verify the deployment
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#optional-custom-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Optional custom configuration
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#optional-docker-compose-deployment" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Optional Docker Compose deployment
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#health-and-diagnostics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Health and diagnostics
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#resource-limits" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Resource limits
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#stop-or-remove-the-container" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Stop or remove the container
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#deployment-boundary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Deployment boundary
+      
+    </span>
+  </a>
   
 </li>
       
@@ -3890,390 +3089,149 @@
   
 
 
-<h1 id="tokenpak-docker-deployment-guide">TokenPak Docker Deployment Guide<a class="headerlink" href="#tokenpak-docker-deployment-guide" title="Permanent link">&para;</a></h1>
-<p>Complete guide for deploying TokenPak proxy using Docker and Docker Compose.</p>
-<h2 id="quick-start">Quick Start<a class="headerlink" href="#quick-start" title="Permanent link">&para;</a></h2>
-<h3 id="build-the-image">Build the Image<a class="headerlink" href="#build-the-image" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>build<span class="w"> </span>-t<span class="w"> </span>tokenpak<span class="w"> </span>.
-</code></pre></div>
-<h3 id="run-a-single-container">Run a Single Container<a class="headerlink" href="#run-a-single-container" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><span class="c1"># Basic (uses defaults) — the container starts the proxy with `tokenpak serve`</span>
-docker<span class="w"> </span>run<span class="w"> </span>-p<span class="w"> </span><span class="m">8766</span>:8766<span class="w"> </span>tokenpak<span class="w"> </span>tokenpak<span class="w"> </span>serve
-
-<span class="c1"># With config volume</span>
-docker<span class="w"> </span>run<span class="w"> </span>-p<span class="w"> </span><span class="m">8766</span>:8766<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>-v<span class="w"> </span><span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span>/config/tokenpack.config.json:/app/tokenpack.config.json:ro<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>-v<span class="w"> </span>tokenpak-logs:/logs<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>tokenpak<span class="w"> </span>tokenpak<span class="w"> </span>serve
-
-<span class="c1"># With environment variables</span>
-docker<span class="w"> </span>run<span class="w"> </span>-p<span class="w"> </span><span class="m">8766</span>:8766<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>-e<span class="w"> </span><span class="nv">TOKENPAK_LOG_LEVEL</span><span class="o">=</span>debug<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>-e<span class="w"> </span><span class="nv">TOKENPAK_ENABLE_METRICS</span><span class="o">=</span><span class="nb">true</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>tokenpak<span class="w"> </span>tokenpak<span class="w"> </span>serve
-</code></pre></div>
-<h3 id="docker-compose-recommended">Docker Compose (Recommended)<a class="headerlink" href="#docker-compose-recommended" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><span class="c1"># Copy environment file</span>
-cp<span class="w"> </span>.env.example<span class="w"> </span>.env
-
-<span class="c1"># Copy config file</span>
-cp<span class="w"> </span>config/tokenpack.config.json.example<span class="w"> </span>config/tokenpack.config.json
-
-<span class="c1"># Start services</span>
-docker-compose<span class="w"> </span>up<span class="w"> </span>-d
-
-<span class="c1"># Check status</span>
-docker-compose<span class="w"> </span>ps
-
-<span class="c1"># View logs</span>
-docker-compose<span class="w"> </span>logs<span class="w"> </span>-f<span class="w"> </span>tokenpak
-
-<span class="c1"># Stop services</span>
-docker-compose<span class="w"> </span>down
-</code></pre></div>
-<h2 id="build-instructions">Build Instructions<a class="headerlink" href="#build-instructions" title="Permanent link">&para;</a></h2>
-<h3 id="standard-build">Standard Build<a class="headerlink" href="#standard-build" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>build<span class="w"> </span>-t<span class="w"> </span>tokenpak:latest<span class="w"> </span>.
-docker<span class="w"> </span>build<span class="w"> </span>-t<span class="w"> </span>tokenpak:v1.16.0<span class="w"> </span>.<span class="w">  </span><span class="c1"># With version tag</span>
-</code></pre></div>
-<h3 id="build-with-custom-base-image">Build with Custom Base Image<a class="headerlink" href="#build-with-custom-base-image" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>build<span class="w"> </span>--build-arg<span class="w"> </span><span class="nv">BASE_IMAGE</span><span class="o">=</span>python:3.12-slim<span class="w"> </span>-t<span class="w"> </span>tokenpak<span class="w"> </span>.
-</code></pre></div>
-<h3 id="check-image-size">Check Image Size<a class="headerlink" href="#check-image-size" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>images<span class="w"> </span>tokenpak
-<span class="c1"># Expected: &lt;500MB</span>
-</code></pre></div>
-<h2 id="configuration">Configuration<a class="headerlink" href="#configuration" title="Permanent link">&para;</a></h2>
-<h3 id="environment-variables">Environment Variables<a class="headerlink" href="#environment-variables" title="Permanent link">&para;</a></h3>
-<table>
-<thead>
-<tr>
-<th>Variable</th>
-<th>Default</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>TOKENPAK_PORT</code></td>
-<td>8766</td>
-<td>Port to listen on</td>
-</tr>
-<tr>
-<td><code>TOKENPAK_LOG_LEVEL</code></td>
-<td>info</td>
-<td>Log level: debug, info, warn, error</td>
-</tr>
-<tr>
-<td><code>TOKENPAK_ENABLE_METRICS</code></td>
-<td>true</td>
-<td>Enable metrics collection</td>
-</tr>
-</tbody>
-</table>
-<h3 id="config-volume">Config Volume<a class="headerlink" href="#config-volume" title="Permanent link">&para;</a></h3>
-<p>Mount configuration at container startup:</p>
-<div class="highlight"><pre><span></span><code><span class="c1"># Using docker run</span>
-docker<span class="w"> </span>run<span class="w"> </span>-v<span class="w"> </span><span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span>/config/tokenpack.config.json:/app/tokenpack.config.json:ro<span class="w"> </span>tokenpak
-
-<span class="c1"># Using docker-compose (automatic)</span>
-docker-compose<span class="w"> </span>up
-</code></pre></div>
-<h3 id="env-file">.env File<a class="headerlink" href="#env-file" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><span class="c1"># .env</span>
-<span class="nv">TOKENPAK_PORT</span><span class="o">=</span><span class="m">8766</span>
-<span class="nv">TOKENPAK_LOG_LEVEL</span><span class="o">=</span>info
-<span class="nv">TOKENPAK_ENABLE_METRICS</span><span class="o">=</span><span class="nb">true</span>
-</code></pre></div>
-<h2 id="volume-management">Volume Management<a class="headerlink" href="#volume-management" title="Permanent link">&para;</a></h2>
-<h3 id="logs-volume">Logs Volume<a class="headerlink" href="#logs-volume" title="Permanent link">&para;</a></h3>
-<p>Persistent log storage (created by docker-compose):</p>
-<div class="highlight"><pre><span></span><code><span class="c1"># View logs from host</span>
-docker-compose<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>tokenpak<span class="w"> </span>tail<span class="w"> </span>-f<span class="w"> </span>/logs/proxy-2026-03-10.log
-
-<span class="c1"># Mount custom path</span>
-volumes:
-<span class="w">  </span>-<span class="w"> </span>/var/log/tokenpak:/logs
-</code></pre></div>
-<h3 id="cache-volume">Cache Volume<a class="headerlink" href="#cache-volume" title="Permanent link">&para;</a></h3>
-<p>Optional cache persistence:</p>
-<div class="highlight"><pre><span></span><code><span class="nt">volumes</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">tokenpak-cache</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">driver</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">local</span>
-</code></pre></div>
-<h3 id="config-volume-development">Config Volume (Development)<a class="headerlink" href="#config-volume-development" title="Permanent link">&para;</a></h3>
-<p>For live config updates during development:</p>
-<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>run<span class="w"> </span>-v<span class="w"> </span><span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span>/config:/app/config:ro<span class="w"> </span>tokenpak
-</code></pre></div>
-<h2 id="running-behind-nginx">Running Behind Nginx<a class="headerlink" href="#running-behind-nginx" title="Permanent link">&para;</a></h2>
-<h3 id="nginx-reverse-proxy-setup">Nginx Reverse Proxy Setup<a class="headerlink" href="#nginx-reverse-proxy-setup" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><span class="k">upstream</span><span class="w"> </span><span class="s">tokenpak</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kn">server</span><span class="w"> </span><span class="n">localhost</span><span class="p">:</span><span class="mi">8766</span><span class="p">;</span>
-<span class="p">}</span>
-
-<span class="k">server</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kn">listen</span><span class="w"> </span><span class="mi">80</span><span class="p">;</span>
-<span class="w">    </span><span class="kn">server_name</span><span class="w"> </span><span class="s">api.example.com</span><span class="p">;</span>
-
-<span class="w">    </span><span class="kn">location</span><span class="w"> </span><span class="s">/</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="kn">proxy_pass</span><span class="w"> </span><span class="s">http://tokenpak</span><span class="p">;</span>
-<span class="w">        </span><span class="kn">proxy_set_header</span><span class="w"> </span><span class="s">Host</span><span class="w"> </span><span class="nv">$host</span><span class="p">;</span>
-<span class="w">        </span><span class="kn">proxy_set_header</span><span class="w"> </span><span class="s">X-Real-IP</span><span class="w"> </span><span class="nv">$remote_addr</span><span class="p">;</span>
-<span class="w">        </span><span class="kn">proxy_set_header</span><span class="w"> </span><span class="s">X-Forwarded-For</span><span class="w"> </span><span class="nv">$proxy_add_x_forwarded_for</span><span class="p">;</span>
-<span class="w">        </span><span class="kn">proxy_set_header</span><span class="w"> </span><span class="s">X-Forwarded-Proto</span><span class="w"> </span><span class="nv">$scheme</span><span class="p">;</span>
-
-<span class="w">        </span><span class="c1"># Timeout settings</span>
-<span class="w">        </span><span class="kn">proxy_connect_timeout</span><span class="w"> </span><span class="s">30s</span><span class="p">;</span>
-<span class="w">        </span><span class="kn">proxy_send_timeout</span><span class="w"> </span><span class="s">30s</span><span class="p">;</span>
-<span class="w">        </span><span class="kn">proxy_read_timeout</span><span class="w"> </span><span class="s">30s</span><span class="p">;</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-<h3 id="docker-compose-with-nginx">Docker Compose with Nginx<a class="headerlink" href="#docker-compose-with-nginx" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><span class="nt">services</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">nginx</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">nginx:alpine</span>
-<span class="w">    </span><span class="nt">ports</span><span class="p">:</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;80:80&quot;</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;443:443&quot;</span>
-<span class="w">    </span><span class="nt">volumes</span><span class="p">:</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">./nginx.conf:/etc/nginx/nginx.conf:ro</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">./ssl:/etc/nginx/ssl:ro</span>
-<span class="w">    </span><span class="nt">depends_on</span><span class="p">:</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">tokenpak</span>
-<span class="w">    </span><span class="nt">networks</span><span class="p">:</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">tokenpak-network</span>
-
-<span class="w">  </span><span class="nt">tokenpak</span><span class="p">:</span>
-<span class="w">    </span><span class="c1"># ... existing config</span>
-<span class="w">    </span><span class="nt">networks</span><span class="p">:</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">tokenpak-network</span>
-</code></pre></div>
-<h2 id="health-checks">Health Checks<a class="headerlink" href="#health-checks" title="Permanent link">&para;</a></h2>
-<h3 id="docker-health-check">Docker Health Check<a class="headerlink" href="#docker-health-check" title="Permanent link">&para;</a></h3>
-<p>Built-in health check via <code>/health</code> endpoint:</p>
-<div class="highlight"><pre><span></span><code><span class="c1"># Check health status</span>
-docker<span class="w"> </span>inspect<span class="w"> </span>tokenpak<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-A<span class="w"> </span><span class="m">10</span><span class="w"> </span><span class="s2">&quot;Health&quot;</span>
-
-<span class="c1"># Manual health check</span>
-curl<span class="w"> </span>http://localhost:8766/health
-</code></pre></div>
-<h3 id="health-check-response">Health Check Response<a class="headerlink" href="#health-check-response" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><span class="p">{</span>
-<span class="w">  </span><span class="nt">&quot;status&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ok&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;uptime_seconds&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">3600</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;version&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;1.16.0&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;requests_total&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">15000</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;requests_errors&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;compression_ratio_avg&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.23</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;is_degraded&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;is_shutting_down&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;in_flight_requests&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;memory_guard&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{},</span>
-<span class="w">  </span><span class="nt">&quot;admission&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{},</span>
-<span class="w">  </span><span class="nt">&quot;agent_concurrency&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{},</span>
-<span class="w">  </span><span class="nt">&quot;timestamp&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2026-07-24T05:30:00Z&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;connection_pool&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{},</span>
-<span class="w">  </span><span class="nt">&quot;circuit_breakers&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span>
-<span class="p">}</span>
-</code></pre></div>
-<h3 id="kubernetes-liveness-probe">Kubernetes Liveness Probe<a class="headerlink" href="#kubernetes-liveness-probe" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><span class="nt">livenessProbe</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">httpGet</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/health</span>
-<span class="w">    </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">8766</span>
-<span class="w">  </span><span class="nt">initialDelaySeconds</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">40</span>
-<span class="w">  </span><span class="nt">periodSeconds</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">30</span>
-<span class="w">  </span><span class="nt">timeoutSeconds</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10</span>
-<span class="w">  </span><span class="nt">failureThreshold</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3</span>
-</code></pre></div>
-<h2 id="multi-container-setup-with-redis">Multi-Container Setup (With Redis)<a class="headerlink" href="#multi-container-setup-with-redis" title="Permanent link">&para;</a></h2>
-<h3 id="enable-redis-cache">Enable Redis Cache<a class="headerlink" href="#enable-redis-cache" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><span class="c1"># Option 1: .env file</span>
-<span class="nv">COMPOSE_PROFILES</span><span class="o">=</span>with-cache
-
-<span class="c1"># Option 2: Command line</span>
-docker-compose<span class="w"> </span>--profile<span class="w"> </span>with-cache<span class="w"> </span>up
-</code></pre></div>
-<h3 id="docker-compose-with-redis">Docker Compose (with Redis)<a class="headerlink" href="#docker-compose-with-redis" title="Permanent link">&para;</a></h3>
-<p>Redis service is optional but recommended for production:</p>
-<div class="highlight"><pre><span></span><code><span class="c1"># Start TokenPak + Redis</span>
-docker-compose<span class="w"> </span>--profile<span class="w"> </span>with-cache<span class="w"> </span>up<span class="w"> </span>-d
-
-<span class="c1"># View both services</span>
-docker-compose<span class="w"> </span>ps
-<span class="c1"># tokenpak    Up (healthy)</span>
-<span class="c1"># redis       Up</span>
-
-<span class="c1"># Connect TokenPak to Redis</span>
-<span class="c1"># Requires: TOKENPAK_CACHE_TYPE=redis</span>
-<span class="c1">#          TOKENPAK_REDIS_HOST=redis</span>
-<span class="c1">#          TOKENPAK_REDIS_PORT=6379</span>
-</code></pre></div>
-<h2 id="troubleshooting">Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permanent link">&para;</a></h2>
-<h3 id="container-wont-start">Container Won't Start<a class="headerlink" href="#container-wont-start" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><span class="c1"># Check logs</span>
-docker-compose<span class="w"> </span>logs<span class="w"> </span>tokenpak
-
-<span class="c1"># Common issues:</span>
-<span class="c1"># - Port already in use: change TOKENPAK_PORT in .env</span>
-<span class="c1"># - Config file missing: cp config/tokenpack.config.json.example config/tokenpack.config.json</span>
-<span class="c1"># - Permission denied: check volume mount permissions</span>
-</code></pre></div>
-<h3 id="health-check-failing">Health Check Failing<a class="headerlink" href="#health-check-failing" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><span class="c1"># Debug health endpoint</span>
-docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>tokenpak<span class="w"> </span>curl<span class="w"> </span>-v<span class="w"> </span>http://localhost:8766/health
-
-<span class="c1"># Check logs for errors</span>
-docker-compose<span class="w"> </span>logs<span class="w"> </span>tokenpak<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-i<span class="w"> </span>error
-
-<span class="c1"># Increase health check start period if startup is slow</span>
-healthcheck:
-<span class="w">  </span>start_period:<span class="w"> </span>60s<span class="w">  </span><span class="c1"># Increase from 40s</span>
-</code></pre></div>
-<h3 id="high-memory-usage">High Memory Usage<a class="headerlink" href="#high-memory-usage" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><span class="c1"># Check resource usage</span>
-docker<span class="w"> </span>stats<span class="w"> </span>tokenpak
-
-<span class="c1"># Limit memory</span>
-docker<span class="w"> </span>run<span class="w"> </span>-m<span class="w"> </span>512m<span class="w"> </span>tokenpak
-
-<span class="c1"># Or in docker-compose</span>
-deploy:
-<span class="w">  </span>resources:
-<span class="w">    </span>limits:
-<span class="w">      </span>memory:<span class="w"> </span>512M
-</code></pre></div>
-<h3 id="logs-not-persisting">Logs Not Persisting<a class="headerlink" href="#logs-not-persisting" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><span class="c1"># Check volume mount</span>
-docker<span class="w"> </span>inspect<span class="w"> </span>tokenpak<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-A<span class="w"> </span><span class="m">20</span><span class="w"> </span>Mounts
-
-<span class="c1"># Verify logs directory exists</span>
-docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>tokenpak<span class="w"> </span>ls<span class="w"> </span>-la<span class="w"> </span>/logs
-
-<span class="c1"># Create directory if missing</span>
-docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>tokenpak<span class="w"> </span>mkdir<span class="w"> </span>-p<span class="w"> </span>/logs
-</code></pre></div>
-<h2 id="cloud-deployment">Cloud Deployment<a class="headerlink" href="#cloud-deployment" title="Permanent link">&para;</a></h2>
-<h3 id="gcp-cloud-run">GCP Cloud Run<a class="headerlink" href="#gcp-cloud-run" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><span class="c1"># Build and push to GCP Registry</span>
-docker<span class="w"> </span>build<span class="w"> </span>-t<span class="w"> </span>gcr.io/PROJECT_ID/tokenpak<span class="w"> </span>.
-docker<span class="w"> </span>push<span class="w"> </span>gcr.io/PROJECT_ID/tokenpak
-
-<span class="c1"># Deploy to Cloud Run</span>
-gcloud<span class="w"> </span>run<span class="w"> </span>deploy<span class="w"> </span>tokenpak<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--image<span class="w"> </span>gcr.io/PROJECT_ID/tokenpak<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--port<span class="w"> </span><span class="m">8766</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--memory<span class="w"> </span>512Mi<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--timeout<span class="w"> </span><span class="m">30</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--allow-unauthenticated
-</code></pre></div>
-<h3 id="aws-ecs">AWS ECS<a class="headerlink" href="#aws-ecs" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><span class="c1"># Push to ECR</span>
-aws<span class="w"> </span>ecr<span class="w"> </span>get-login-password<span class="w"> </span>--region<span class="w"> </span>us-east-1<span class="w"> </span><span class="p">|</span><span class="w"> </span>docker<span class="w"> </span>login<span class="w"> </span>--username<span class="w"> </span>AWS<span class="w"> </span>--password-stdin<span class="w"> </span><span class="m">123456789</span>.dkr.ecr.us-east-1.amazonaws.com
-
-docker<span class="w"> </span>build<span class="w"> </span>-t<span class="w"> </span>tokenpak<span class="w"> </span>.
-docker<span class="w"> </span>tag<span class="w"> </span>tokenpak:latest<span class="w"> </span><span class="m">123456789</span>.dkr.ecr.us-east-1.amazonaws.com/tokenpak:latest
-docker<span class="w"> </span>push<span class="w"> </span><span class="m">123456789</span>.dkr.ecr.us-east-1.amazonaws.com/tokenpak:latest
-
-<span class="c1"># Create ECS task definition + service</span>
-<span class="c1"># (See AWS documentation for details)</span>
-</code></pre></div>
-<h3 id="azure-container-instances">Azure Container Instances<a class="headerlink" href="#azure-container-instances" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><span class="c1"># Push to Azure Container Registry</span>
-az<span class="w"> </span>acr<span class="w"> </span>build<span class="w"> </span>--registry<span class="w"> </span>myregistry<span class="w"> </span>--image<span class="w"> </span>tokenpak:latest<span class="w"> </span>.
-
-<span class="c1"># Deploy</span>
-az<span class="w"> </span>container<span class="w"> </span>create<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--resource-group<span class="w"> </span>mygroup<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--name<span class="w"> </span>tokenpak<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--image<span class="w"> </span>myregistry.azurecr.io/tokenpak:latest<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--ports<span class="w"> </span><span class="m">8766</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--memory<span class="w"> </span><span class="m">0</span>.5
-</code></pre></div>
-<h2 id="production-checklist">Production Checklist<a class="headerlink" href="#production-checklist" title="Permanent link">&para;</a></h2>
-<ul class="task-list">
-<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Dockerfile built successfully (&lt;500MB)</li>
-<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Health check responding (curl /health)</li>
-<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Logging enabled (<code>TOKENPAK_LOG_LEVEL=info</code>)</li>
-<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Metrics enabled (<code>TOKENPAK_ENABLE_METRICS=true</code>)</li>
-<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Config volume mounted (read-only)</li>
-<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Logs volume mounted (persistent)</li>
-<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Non-root user running (tokenpak:tokenpak)</li>
-<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Resource limits set (CPU, memory)</li>
-<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Reverse proxy configured (Nginx/HAProxy)</li>
-<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> TLS/SSL enabled (for production)</li>
-<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Log aggregation configured (e.g., ELK, Datadog)</li>
-<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Monitoring alerts set up</li>
-<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Backup strategy for logs + cache</li>
-</ul>
-<h2 id="performance-tuning">Performance Tuning<a class="headerlink" href="#performance-tuning" title="Permanent link">&para;</a></h2>
-<h3 id="resource-allocation">Resource Allocation<a class="headerlink" href="#resource-allocation" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><span class="nt">deploy</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">resources</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">limits</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">cpus</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;2&#39;</span>
-<span class="w">      </span><span class="nt">memory</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1G</span>
-<span class="w">    </span><span class="nt">reservations</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">cpus</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;1&#39;</span>
-<span class="w">      </span><span class="nt">memory</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">512M</span>
-</code></pre></div>
-<h3 id="log-rotation">Log Rotation<a class="headerlink" href="#log-rotation" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><span class="nt">logging</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">driver</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;json-file&quot;</span>
-<span class="w">  </span><span class="nt">options</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">max-size</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;10m&quot;</span><span class="w">    </span><span class="c1"># Rotate at 10MB</span>
-<span class="w">    </span><span class="nt">max-file</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;3&quot;</span><span class="w">      </span><span class="c1"># Keep 3 files</span>
-</code></pre></div>
-<h3 id="connection-pool">Connection Pool<a class="headerlink" href="#connection-pool" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>run<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>-e<span class="w"> </span><span class="nv">TOKENPAK_CACHE_POOL_SIZE</span><span class="o">=</span><span class="m">10</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>-e<span class="w"> </span><span class="nv">TOKENPAK_DB_POOL_SIZE</span><span class="o">=</span><span class="m">5</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>tokenpak
-</code></pre></div>
-<h2 id="security-best-practices">Security Best Practices<a class="headerlink" href="#security-best-practices" title="Permanent link">&para;</a></h2>
+<h1 id="deploy-tokenpak-with-docker">Deploy TokenPak with Docker<a class="headerlink" href="#deploy-tokenpak-with-docker" title="Permanent link">&para;</a></h1>
+<p>This guide is for developers who want to build the TokenPak v1.19.0 image and
+run its proxy from Docker on the host's loopback interface. The image's default
+<code>tokenpak serve</code> command binds to loopback inside the container, so publishing
+port 8766 alone does not make that listener reachable from the host.</p>
+<h2 id="prerequisites">Prerequisites<a class="headerlink" href="#prerequisites" title="Permanent link">&para;</a></h2>
 <ul>
-<li>✅ Non-root user (UID 1000)</li>
-<li>✅ No secrets in Dockerfile</li>
-<li>✅ Environment variables for configuration</li>
-<li>✅ Read-only filesystem for code</li>
-<li>✅ Resource limits enforced</li>
-<li>✅ Health checks enabled</li>
-<li>✅ Logging enabled for audit trail</li>
-<li>✅ TLS in front (Nginx proxy)</li>
+<li>A checkout of the public TokenPak v1.19.0 tag.</li>
+<li>The <code>git</code>, <code>docker</code>, <code>curl</code>, and <code>openssl</code> commands.</li>
+<li>Docker Compose v2 if you want to use the optional Compose procedure.</li>
+<li>An unused host port 8766 and permission to run local containers.</li>
 </ul>
-<h2 id="monitoring">Monitoring<a class="headerlink" href="#monitoring" title="Permanent link">&para;</a></h2>
-<h3 id="prometheus-metrics">Prometheus Metrics<a class="headerlink" href="#prometheus-metrics" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><span class="nt">volumes</span><span class="p">:</span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/etc/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro</span>
-
-<span class="c1"># In prometheus.yml</span>
-<span class="nt">scrape_configs</span><span class="p">:</span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">job_name</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;tokenpak&#39;</span>
-<span class="w">    </span><span class="nt">static_configs</span><span class="p">:</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">targets</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&#39;localhost:8766&#39;</span><span class="p p-Indicator">]</span>
+<h2 id="1-check-out-v1190">1. Check out v1.19.0<a class="headerlink" href="#1-check-out-v1190" title="Permanent link">&para;</a></h2>
+<p>Check out the released source:</p>
+<div class="highlight"><pre><span></span><code>git<span class="w"> </span>checkout<span class="w"> </span>v1.19.0
 </code></pre></div>
-<h3 id="container-logs">Container Logs<a class="headerlink" href="#container-logs" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><span class="c1"># View logs</span>
-docker-compose<span class="w"> </span>logs<span class="w"> </span>-f<span class="w"> </span>tokenpak
-
-<span class="c1"># Export logs</span>
-docker-compose<span class="w"> </span>logs<span class="w"> </span>tokenpak<span class="w"> </span>&gt;<span class="w"> </span>logs.txt
-
-<span class="c1"># Filter by timestamp</span>
-docker-compose<span class="w"> </span>logs<span class="w"> </span>--since<span class="w"> </span><span class="m">2026</span>-03-10<span class="w"> </span>tokenpak
+<h2 id="2-build-the-image">2. Build the image<a class="headerlink" href="#2-build-the-image" title="Permanent link">&para;</a></h2>
+<p>Build the source checkout as <code>tokenpak:v1.19.0</code>:</p>
+<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>build<span class="w"> </span>-t<span class="w"> </span>tokenpak:v1.19.0<span class="w"> </span>.
 </code></pre></div>
-<hr />
-<p>For more information, see:
-- DEPLOYMENT.md — System setup guide
-- LOGGING.md — Logging configuration
-- <a href="https://docs.docker.com/">Docker documentation</a></p>
+<p>The shipped Dockerfile uses Python 3.11. It does not declare a configurable
+base-image build argument.</p>
+<h2 id="3-create-the-proxy-credential">3. Create the proxy credential<a class="headerlink" href="#3-create-the-proxy-credential" title="Permanent link">&para;</a></h2>
+<p>Generate the Bearer credential that every non-localhost client must present:</p>
+<div class="highlight"><pre><span></span><code><span class="nb">export</span><span class="w"> </span><span class="nv">TOKENPAK_PROXY_AUTH_TOKEN</span><span class="o">=</span><span class="s2">&quot;</span><span class="k">$(</span>openssl<span class="w"> </span>rand<span class="w"> </span>-hex<span class="w"> </span><span class="m">32</span><span class="k">)</span><span class="s2">&quot;</span>
+</code></pre></div>
+<p>Keep this shell open for the remaining steps.</p>
+<h2 id="4-run-a-proxy-reachable-from-the-host">4. Run a proxy reachable from the host<a class="headerlink" href="#4-run-a-proxy-reachable-from-the-host" title="Permanent link">&para;</a></h2>
+<p>Bind the proxy to all interfaces <em>inside</em> the container, publish it only on the
+host's loopback interface, and require a proxy credential:</p>
+<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>-d<span class="w"> </span>--name<span class="w"> </span>tokenpak-proxy<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-p<span class="w"> </span><span class="m">127</span>.0.0.1:8766:8766<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-e<span class="w"> </span><span class="nv">TOKENPAK_BIND_ADDRESS</span><span class="o">=</span><span class="m">0</span>.0.0.0<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-e<span class="w"> </span><span class="nv">TOKENPAK_PROXY_AUTH_TOKEN</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$TOKENPAK_PROXY_AUTH_TOKEN</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>tokenpak:v1.19.0<span class="w"> </span>python<span class="w"> </span>-m<span class="w"> </span>tokenpak.proxy.server
+</code></pre></div>
+<p>The host-side loopback publish keeps the service off the LAN. Docker bridge
+traffic is non-localhost traffic from the proxy's perspective, so the Bearer
+credential is still required.</p>
+<h2 id="5-verify-the-deployment">5. Verify the deployment<a class="headerlink" href="#5-verify-the-deployment" title="Permanent link">&para;</a></h2>
+<p>Call the host-published health endpoint with the credential from step 3:</p>
+<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-H<span class="w"> </span><span class="s2">&quot;Authorization: Bearer </span><span class="nv">$TOKENPAK_PROXY_AUTH_TOKEN</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>http://127.0.0.1:8766/health
+</code></pre></div>
+<p>The deployment is ready when the response includes <code>"status": "ok"</code> and
+<code>"version": "1.19.0"</code>.</p>
+<h2 id="optional-custom-configuration">Optional custom configuration<a class="headerlink" href="#optional-custom-configuration" title="Permanent link">&para;</a></h2>
+<p>Built-in defaults are used when <code>TOKENPAK_CONFIG</code> is omitted. To replace the
+running container with one that mounts a specific configuration, first create
+the host file, then stop the current container and pass the file's container
+path explicitly:</p>
+<div class="highlight"><pre><span></span><code><span class="nb">test</span><span class="w"> </span>-f<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$PWD</span><span class="s2">/config/config.yaml&quot;</span>
+docker<span class="w"> </span>stop<span class="w"> </span>tokenpak-proxy
+
+docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>-d<span class="w"> </span>--name<span class="w"> </span>tokenpak-proxy<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-p<span class="w"> </span><span class="m">127</span>.0.0.1:8766:8766<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-e<span class="w"> </span><span class="nv">TOKENPAK_BIND_ADDRESS</span><span class="o">=</span><span class="m">0</span>.0.0.0<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-e<span class="w"> </span><span class="nv">TOKENPAK_PROXY_AUTH_TOKEN</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$TOKENPAK_PROXY_AUTH_TOKEN</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-e<span class="w"> </span><span class="nv">TOKENPAK_CONFIG</span><span class="o">=</span>/app/config/config.yaml<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-v<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$PWD</span><span class="s2">/config/config.yaml:/app/config/config.yaml:ro&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>tokenpak:v1.19.0<span class="w"> </span>python<span class="w"> </span>-m<span class="w"> </span>tokenpak.proxy.server
+</code></pre></div>
+<p>Proxy authentication and provider authentication are separate. The
+<code>Authorization: Bearer</code> value above authenticates a non-localhost client to
+TokenPak and is stripped before forwarding. Configure provider credentials
+separately through the client or the proxy's provider credential settings.</p>
+<h2 id="optional-docker-compose-deployment">Optional Docker Compose deployment<a class="headerlink" href="#optional-docker-compose-deployment" title="Permanent link">&para;</a></h2>
+<p>The repository's v1.19.0 <code>docker-compose.yml</code> is not an out-of-the-box
+host-facing deployment recipe: it retains the container-loopback entrypoint
+and requires <code>./config/config.yaml</code>. Do not use that file unchanged for host
+access.</p>
+<p>For a minimal host-loopback deployment, save this as <code>compose.host.yml</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="nt">services</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">tokenpak</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">tokenpak:v1.19.0</span>
+<span class="w">    </span><span class="nt">container_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">tokenpak-proxy</span>
+<span class="w">    </span><span class="nt">command</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&quot;python&quot;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&quot;-m&quot;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&quot;tokenpak.proxy.server&quot;</span><span class="p p-Indicator">]</span>
+<span class="w">    </span><span class="nt">ports</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;127.0.0.1:8766:8766&quot;</span>
+<span class="w">    </span><span class="nt">environment</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">TOKENPAK_BIND_ADDRESS</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;0.0.0.0&quot;</span>
+<span class="w">      </span><span class="nt">TOKENPAK_PROXY_AUTH_TOKEN</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;${TOKENPAK_PROXY_AUTH_TOKEN:?set</span><span class="nv"> </span><span class="s">TOKENPAK_PROXY_AUTH_TOKEN}&quot;</span>
+<span class="w">    </span><span class="nt">restart</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">unless-stopped</span>
+</code></pre></div>
+<p>Then stop any single-container deployment and start Compose with the credential
+created in step 3:</p>
+<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>stop<span class="w"> </span>tokenpak-proxy<span class="w"> </span><span class="m">2</span>&gt;/dev/null<span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="nb">true</span>
+docker<span class="w"> </span>compose<span class="w"> </span>-f<span class="w"> </span>compose.host.yml<span class="w"> </span>up<span class="w"> </span>-d
+docker<span class="w"> </span>compose<span class="w"> </span>-f<span class="w"> </span>compose.host.yml<span class="w"> </span>ps
+</code></pre></div>
+<p>Add a read-only config mount and <code>TOKENPAK_CONFIG</code> only when the host file
+actually exists, as shown in the single-container recipe.</p>
+<h2 id="health-and-diagnostics">Health and diagnostics<a class="headerlink" href="#health-and-diagnostics" title="Permanent link">&para;</a></h2>
+<p>Inspect the Dockerfile health check:</p>
+<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>inspect<span class="w"> </span>--format<span class="w"> </span><span class="s1">&#39;{{json .State.Health}}&#39;</span><span class="w"> </span>tokenpak-proxy
+</code></pre></div>
+<p>Run a container-local check with Python. The slim image does not include
+<code>curl</code>, and a request from container loopback does not require proxy auth:</p>
+<div class="highlight"><pre><span></span><code>docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>tokenpak-proxy<span class="w"> </span>python<span class="w"> </span>-c<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span><span class="s2">&quot;import urllib.request; print(urllib.request.urlopen(&#39;http://127.0.0.1:8766/health&#39;, timeout=5).read().decode())&quot;</span>
+</code></pre></div>
+<p>View process output through Docker rather than assuming an application log
+path inside the image:</p>
+<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>logs<span class="w"> </span>--tail<span class="w"> </span><span class="m">100</span><span class="w"> </span>tokenpak-proxy
+docker<span class="w"> </span>logs<span class="w"> </span>-f<span class="w"> </span>tokenpak-proxy
+</code></pre></div>
+<h2 id="resource-limits">Resource limits<a class="headerlink" href="#resource-limits" title="Permanent link">&para;</a></h2>
+<p>Docker can apply CPU and memory limits without changing TokenPak. Replace the
+running single-container deployment with the limited alternative:</p>
+<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>stop<span class="w"> </span>tokenpak-proxy
+docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>-d<span class="w"> </span>--name<span class="w"> </span>tokenpak-proxy<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--cpus<span class="w"> </span><span class="m">1</span><span class="w"> </span>--memory<span class="w"> </span>512m<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-p<span class="w"> </span><span class="m">127</span>.0.0.1:8766:8766<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-e<span class="w"> </span><span class="nv">TOKENPAK_BIND_ADDRESS</span><span class="o">=</span><span class="m">0</span>.0.0.0<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-e<span class="w"> </span><span class="nv">TOKENPAK_PROXY_AUTH_TOKEN</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$TOKENPAK_PROXY_AUTH_TOKEN</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>tokenpak:v1.19.0<span class="w"> </span>python<span class="w"> </span>-m<span class="w"> </span>tokenpak.proxy.server
+</code></pre></div>
+<h2 id="stop-or-remove-the-container">Stop or remove the container<a class="headerlink" href="#stop-or-remove-the-container" title="Permanent link">&para;</a></h2>
+<p>The <code>--rm</code> single-container recipe removes the stopped container while keeping
+the locally built image:</p>
+<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>stop<span class="w"> </span>tokenpak-proxy
+</code></pre></div>
+<p>For the Compose recipe:</p>
+<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>compose<span class="w"> </span>-f<span class="w"> </span>compose.host.yml<span class="w"> </span>down
+</code></pre></div>
+<h2 id="deployment-boundary">Deployment boundary<a class="headerlink" href="#deployment-boundary" title="Permanent link">&para;</a></h2>
+<p>Kubernetes, public reverse proxies, and cloud container services require the
+same two controls: a non-loopback bind inside the container and a configured
+<code>TOKENPAK_PROXY_AUTH_TOKEN</code> presented by every non-localhost client. TokenPak
+v1.19.0 does not ship a separately verified Kubernetes or cloud-service
+manifest, so this guide does not present those platform-specific snippets as
+copy-paste deployment recipes.</p>
+<p>Never expose port 8766 publicly without proxy authentication and an external
+TLS boundary.</p>
 
 
 
 
 
 
+
+  
+  
 
 
 
