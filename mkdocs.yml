@@ -64,6 +64,7 @@ nav:
     - Component Diagram: COMPONENT-DIAGRAM.md
     - API Reference: API.md
     - API Reference (Extended): api-reference.md
+    - Stateful Provider APIs: stateful-apis.md
     - Features: features.md
     - Plugin Guide: plugin-guide.md
     - Architecture Diagrams: assets/DIAGRAMS.md
