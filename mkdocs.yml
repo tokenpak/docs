@@ -55,7 +55,7 @@ nav:
     - Adapter Reference: adapters.md
     - Error Handling: error-handling.md
     - Troubleshooting: troubleshooting.md
-    - Known Issues: known-issues.md
+    - Known Limitations: KNOWN_LIMITATIONS.md
     - Docker Deployment: DOCKER.md
     - Savings: SAVINGS.md
     - Security: SECURITY.md
@@ -116,6 +116,7 @@ plugins:
         quickstart.md: QUICKSTART.md
         install.md: installation.md
         cli.md: cli-reference.md
+        known-issues.md: KNOWN_LIMITATIONS.md
 
 markdown_extensions:
   - pymdownx.emoji:

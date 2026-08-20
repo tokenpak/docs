@@ -2,7 +2,7 @@
 title: "TokenPak quickstart: first savings in 5 minutes"
 rung: 1
 audience: Developers installing TokenPak for the first time.
-updated: 2026-08-13
+updated: 2026-08-20
 status: current
 ---
 
@@ -116,7 +116,7 @@ Check health:
 curl http://127.0.0.1:8766/health
 ```
 
-For v1.19.0, the expected response includes `{"status": "ok", "version": "1.19.0"}`.
+The expected response includes `{"status": "ok", "version": "1.20.0"}`.
 
 ## See your savings
 

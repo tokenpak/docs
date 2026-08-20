@@ -4,7 +4,7 @@
 
 ### Is TokenPak production-ready?
 
-TokenPak is currently in **OSS beta**. The proxy core, Prompt Packing pipeline, Spend Guard, Savings Ledger, and client integrations are stable and used in real workflows today. Some surfaces (Pak scoring/assembly, fleet orchestration, advanced recipes) are explicitly read-only or experimental in the beta — see [Known Issues](known-issues.md) for the current line.
+TokenPak is currently in **OSS beta**. The proxy core, Prompt Packing pipeline, Spend Guard, Savings Ledger, and client integrations are stable and used in real workflows today. Some surfaces (Pak scoring/assembly, fleet orchestration, advanced recipes) are explicitly read-only or experimental in the beta — see [Known Limitations](KNOWN_LIMITATIONS.md) for the current line.
 
 We don't claim an SLA for the OSS package: TokenPak runs on your machine, so reliability is determined by your machine and the upstream provider, not by any infrastructure we operate.
 

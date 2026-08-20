@@ -57,4 +57,4 @@ We aim to acknowledge reports within a few business days and to share a remediat
 
 ## Supported Versions
 
-Security fixes are prepared for the v1.17.0 release line. Until v1.17.0 is published, install the current public package from PyPI; the release record will identify the published version. Older pre-beta versions are not maintained.
+Security fixes are prepared for the latest published release line. Install the current public package from PyPI (`pip install --upgrade tokenpak`) to stay on a supported version; older pre-beta versions are not maintained.

@@ -2,7 +2,7 @@
 title: "Use TokenPak with Codex CLI"
 rung: 2
 audience: Developers who have Codex CLI installed and want to route its ChatGPT-subscription traffic through TokenPak for cost tracking and compression.
-updated: 2026-07-23
+updated: 2026-08-20
 status: current
 ---
 
@@ -27,7 +27,7 @@ selected, or Codex's own default.
 ## Copy-paste setup
 
 ```bash
-pip install --upgrade tokenpak==1.16.0
+pip install --upgrade tokenpak
 tokenpak setup
 tokenpak codex
 ```

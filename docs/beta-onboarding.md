@@ -19,7 +19,7 @@ You don't need to use agents to benefit — any uncached LLM workload sees Promp
 
 ```bash
 pip install tokenpak
-tokenpak --version    # expect: tokenpak 1.16.0
+tokenpak --version    # expect: tokenpak 1.20.0
 tokenpak setup        # interactive wizard
 ```
 
@@ -78,7 +78,7 @@ If you're evaluating TokenPak, start with a direct-API workload to see the pipel
 
 ## Known limitations
 
-Read the full list before reporting: [Known Issues](known-issues.md).
+Read the full list before reporting: [Known Limitations](KNOWN_LIMITATIONS.md).
 
 Highlights:
 
