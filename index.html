@@ -1058,19 +1058,26 @@
   
   
     <li class="md-nav__item">
-      <a href="known-issues/" class="md-nav__link">
+      <a href="KNOWN_LIMITATIONS/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Known Issues
+    Known Limitations
   
 
     
   </span>
   
+  
+    
+  
+  
+    <span class="md-status md-status--current"></span>
+  
+
   
 
       </a>
@@ -2922,10 +2929,10 @@ provider send, and records request results locally. Provider-bound requests
 still travel to the selected upstream provider; TokenPak operates no cloud
 relay and requires no application code changes.</p>
 <div class="admonition note">
-<p class="admonition-title">v1.19.0</p>
+<p class="admonition-title">v1.20.0</p>
 <p>The commands below, <a href="QUICKSTART/">Quick Start</a>,
 <a href="api-reference/">extended API reference</a>, and
-<a href="DOCKER/">Docker guide</a> describe TokenPak <strong>v1.19.0</strong>, the currently
+<a href="DOCKER/">Docker guide</a> describe TokenPak <strong>v1.20.0</strong>, the currently
 published release on PyPI (<code>pip install tokenpak</code>). The separate
 <a href="installation/">Installation page</a> retains older-release guidance; use
 the Quick Start for the current setup path. Other pages with explicit
@@ -2945,6 +2952,7 @@ version pins describe the release line named on that page.</p>
 <li><strong>TIP-1.0 protocol contracts</strong> — canonical headers, metadata fields, capability labels, manifest schemas. Conformance gate runnable via <code>tokenpak doctor --conformance</code>.</li>
 <li><strong>Pak recall (read-only)</strong> — storage, FTS, <code>tokenpak pak inspect</code>. Scoring and assembly are not part of the OSS beta.</li>
 <li><strong>Three built-in setup profiles and 50+ compression recipes</strong> — minimal, balanced, and aggressive profiles plus customizable packaged YAML recipes.</li>
+<li><strong>Session economics trip computer</strong> — a deterministic spent/burn/binding-runway/guard-state summary built only from completed local ledger rows, on <code>tokenpak status</code>, the dashboard, and an MCP tool. Coverage-tracked calibrated forecasts fill in as a model×effort cell earns enough history; cold cells report an explicit <code>learning</code> state rather than a guess.</li>
 </ul>
 <hr />
 <h2 id="quick-start">Quick start<a class="headerlink" href="#quick-start" title="Permanent link">&para;</a></h2>
@@ -2966,7 +2974,7 @@ tokenpak<span class="w"> </span>setup<span class="w"> </span>--start
 <tbody>
 <tr>
 <td><a href="installation/">Installation</a></td>
-<td>Older-release installation guidance; use the Quick Start for v1.19.0</td>
+<td>Older-release installation guidance; use the Quick Start for v1.20.0</td>
 </tr>
 <tr>
 <td><a href="QUICKSTART/">Quick Start</a></td>
@@ -3001,8 +3009,8 @@ tokenpak<span class="w"> </span>setup<span class="w"> </span>--start
 <td>Common symptoms and fixes that work</td>
 </tr>
 <tr>
-<td><a href="known-issues/">Known Issues</a></td>
-<td>Current OSS-beta limitations</td>
+<td><a href="KNOWN_LIMITATIONS/">Known Limitations</a></td>
+<td>Current OSS-beta limitations, intentional-vs-bug status, and workarounds</td>
 </tr>
 <tr>
 <td><a href="faq/">FAQ</a></td>

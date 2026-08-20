@@ -1100,19 +1100,26 @@
   
   
     <li class="md-nav__item">
-      <a href="../known-issues/" class="md-nav__link">
+      <a href="../KNOWN_LIMITATIONS/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Known Issues
+    Known Limitations
   
 
     
   </span>
   
+  
+    
+  
+  
+    <span class="md-status md-status--current"></span>
+  
+
   
 
       </a>
@@ -3006,7 +3013,7 @@
 <p>You don't need to use agents to benefit — any uncached LLM workload sees Prompt Packing in action. Agent workloads simply have more room to compress.</p>
 <h2 id="install">Install<a class="headerlink" href="#install" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code>pip<span class="w"> </span>install<span class="w"> </span>tokenpak
-tokenpak<span class="w"> </span>--version<span class="w">    </span><span class="c1"># expect: tokenpak 1.16.0</span>
+tokenpak<span class="w"> </span>--version<span class="w">    </span><span class="c1"># expect: tokenpak 1.20.0</span>
 tokenpak<span class="w"> </span>setup<span class="w">        </span><span class="c1"># interactive wizard</span>
 </code></pre></div>
 <p><code>tokenpak setup</code> scans your environment for <code>ANTHROPIC_API_KEY</code>, <code>OPENAI_API_KEY</code>, and <code>GOOGLE_API_KEY</code>, asks which provider to proxy, picks a compression profile, writes <code>~/.tpk/config.yaml</code> (or <code>~/.tokenpak/config.yaml</code> on systems that already have the legacy directory), and starts the proxy on <code>127.0.0.1:8766</code>.</p>
@@ -3048,7 +3055,7 @@ tokenpak<span class="w"> </span>dashboard<span class="w">                       
 <p>TokenPak's headline benchmark is a deterministic reduction pinned to a CI agent-style fixture (a blocking check on every PR; reproduce with <code>make benchmark-headline</code>). On favorable uncached workloads it can reach <strong>up to</strong> 90%+; provider-cached flows like Claude Code show lower incremental gains. <code>tokenpak savings</code> separates proxy saves from provider cache hits.</p>
 <p>If you're evaluating TokenPak, start with a direct-API workload to see the pipeline's actual effectiveness, then layer in your cached flows to see the marginal contribution on top.</p>
 <h2 id="known-limitations">Known limitations<a class="headerlink" href="#known-limitations" title="Permanent link">&para;</a></h2>
-<p>Read the full list before reporting: <a href="../known-issues/">Known Issues</a>.</p>
+<p>Read the full list before reporting: <a href="../KNOWN_LIMITATIONS/">Known Limitations</a>.</p>
 <p>Highlights:</p>
 <ul>
 <li>The OSS beta ships the <strong>Pak recall data plane</strong> only. Scoring, ranking, and assembly enforcement are planned, not shipped — <code>severity = block</code> flags are stored but not enforced by OSS.</li>

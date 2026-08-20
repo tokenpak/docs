@@ -960,19 +960,26 @@
   
   
     <li class="md-nav__item">
-      <a href="../known-issues/" class="md-nav__link">
+      <a href="../KNOWN_LIMITATIONS/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Known Issues
+    Known Limitations
   
 
     
   </span>
   
+  
+    
+  
+  
+    <span class="md-status md-status--current"></span>
+  
+
   
 
       </a>
@@ -4875,7 +4882,7 @@
 
 <h1 id="tokenpak-api-reference">TokenPak API reference<a class="headerlink" href="#tokenpak-api-reference" title="Permanent link">&para;</a></h1>
 <p>This reference is for developers integrating with the TokenPak proxy HTTP API,
-SDK adapters, or CLI. It covers the v1.19.0 surface described below.</p>
+SDK adapters, or CLI. It covers the v1.20.0 surface described below.</p>
 <hr />
 <h2 id="table-of-contents">Table of contents<a class="headerlink" href="#table-of-contents" title="Permanent link">&para;</a></h2>
 <ol>
@@ -4944,7 +4951,7 @@ process-memory, and disk diagnostics.</p>
 <div class="highlight"><pre><span></span><code><span class="p">{</span>
 <span class="w">  </span><span class="nt">&quot;status&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ok&quot;</span><span class="p">,</span>
 <span class="w">  </span><span class="nt">&quot;uptime_seconds&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">3600</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;version&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;1.19.0&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;version&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;1.20.0&quot;</span><span class="p">,</span>
 <span class="w">  </span><span class="nt">&quot;pid&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">4242</span><span class="p">,</span>
 <span class="w">  </span><span class="nt">&quot;requests_total&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">142</span><span class="p">,</span>
 <span class="w">  </span><span class="nt">&quot;requests_errors&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span>
@@ -5405,6 +5412,12 @@ ledger rows. This endpoint never forwards a provider request.</p>
 <p>Supply the stable session identity in <code>X-Claude-Code-Session-Id</code> or as
 <code>session_id</code> in the JSON body. If both are present, they must match. <code>model</code> is
 an optional hint when the ledger does not identify a model unambiguously.</p>
+<p>If neither is supplied, v1.20.0 resolves a default session: an explicit id and
+the caller's active-session marker are checked first, and if neither exists
+the proxy falls back to the most recent session with at least one completed,
+non-empty ledger row. If no defaultable session exists yet (empty ledger, or
+no completed rows), the response reports an explicit no-data/unavailable
+state rather than inventing a session.</p>
 <p><strong>Request body:</strong></p>
 <div class="highlight"><pre><span></span><code><span class="p">{</span>
 <span class="w">  </span><span class="nt">&quot;session_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;session-abc&quot;</span><span class="p">,</span>
@@ -5528,7 +5541,7 @@ local facts are insufficient or invalid.</p>
 </table>
 <hr />
 <h4 id="post-ingest"><code>POST /ingest</code><a class="headerlink" href="#post-ingest" title="Permanent link">&para;</a></h4>
-<p>Accept one JSON payload and return one generated record ID. In v1.19.0, this
+<p>Accept one JSON payload and return one generated record ID. In v1.20.0, this
 compatibility endpoint acknowledges the payload but does not persist or index
 its contents.</p>
 <p><strong>Request body:</strong>
@@ -6249,7 +6262,7 @@ tokenpak<span class="w"> </span>template<span class="w"> </span>use<span class="
 </code></pre></div>
 <hr />
 <h4 id="tokenpak-audit-planned"><code>tokenpak audit</code> (Planned)<a class="headerlink" href="#tokenpak-audit-planned" title="Permanent link">&para;</a></h4>
-<p>The <code>audit</code> command is a reserved, planned stub in v1.19.0. It does not expose
+<p>The <code>audit</code> command is a reserved, planned stub in v1.20.0. It does not expose
 audit-log subcommands in this release.</p>
 <hr />
 <h2 id="configuration-reference">Configuration reference<a class="headerlink" href="#configuration-reference" title="Permanent link">&para;</a></h2>
@@ -6463,7 +6476,7 @@ generate the complete file for the installed version.</p>
 <span class="nt">rate_limit_rpm</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">60</span>
 </code></pre></div>
 <hr />
-<p><em>This reference covers TokenPak v1.19.0.</em></p>
+<p><em>This reference covers TokenPak v1.20.0.</em></p>
 
 
 

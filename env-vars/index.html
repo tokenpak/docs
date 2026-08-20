@@ -1144,19 +1144,26 @@
   
   
     <li class="md-nav__item">
-      <a href="../known-issues/" class="md-nav__link">
+      <a href="../KNOWN_LIMITATIONS/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Known Issues
+    Known Limitations
   
 
     
   </span>
   
+  
+    
+  
+  
+    <span class="md-status md-status--current"></span>
+  
+
   
 
       </a>
@@ -3621,6 +3628,12 @@ Env vars always take precedence over config file values.</p>
 <td><code>false</code></td>
 <td>bool</td>
 <td>Send HTTP 100 Continue for keepalive</td>
+</tr>
+<tr>
+<td><code>TOKENPAK_STATUS_SESSION_ECONOMICS</code></td>
+<td><code>true</code></td>
+<td>bool</td>
+<td>Show the session-economics trip computer on default <code>tokenpak status</code>/dashboard surfaces; <code>status --json</code> and the MCP tool always return the data regardless of this toggle</td>
 </tr>
 </tbody>
 </table>
