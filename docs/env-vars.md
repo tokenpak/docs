@@ -123,6 +123,7 @@ Env vars always take precedence over config file values.
 | `TOKENPAK_TERM_RESOLVER_MAX_BYTES` | `200` | int | Max bytes per term card |
 | `TOKENPAK_CHAT_FOOTER` | `false` | bool | Append cost/token footer to chat responses |
 | `TOKENPAK_HTTP100_KEEPALIVE` | `false` | bool | Send HTTP 100 Continue for keepalive |
+| `TOKENPAK_STATUS_SESSION_ECONOMICS` | `true` | bool | Show the session-economics trip computer on default `tokenpak status`/dashboard surfaces; `status --json` and the MCP tool always return the data regardless of this toggle |
 
 ## WebSocket
 
