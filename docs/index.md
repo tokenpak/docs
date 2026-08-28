@@ -21,10 +21,10 @@ provider send, and records request results locally. Provider-bound requests
 still travel to the selected upstream provider; TokenPak operates no cloud
 relay and requires no application code changes.
 
-!!! note "v1.20.0"
+!!! note "v1.21.0"
     The commands below, [Quick Start](QUICKSTART.md),
     [extended API reference](api-reference.md), and
-    [Docker guide](DOCKER.md) describe TokenPak **v1.20.0**, the currently
+    [Docker guide](DOCKER.md) describe TokenPak **v1.21.0**, the currently
     published release on PyPI (`pip install tokenpak`). The separate
     [Installation page](installation.md) retains older-release guidance; use
     the Quick Start for the current setup path. Other pages with explicit
@@ -66,7 +66,7 @@ tokenpak setup --start
 
 | Section | What it covers |
 |---------|-----------------|
-| [Installation](installation.md)            | Older-release installation guidance; use the Quick Start for v1.20.0 |
+| [Installation](installation.md)            | Older-release installation guidance; use the Quick Start for v1.21.0 |
 | [Quick Start](QUICKSTART.md)               | Setup wizard, client integration, first savings in 5 minutes |
 | [Configuration](configuration.md)          | How configuration works (env vars + YAML, precedence) |
 | [Environment Variables](env-vars.md)       | Complete `TOKENPAK_*` reference |
