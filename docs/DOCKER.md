@@ -8,32 +8,32 @@ status: current
 
 # Deploy TokenPak with Docker
 
-This guide is for developers who want to build the TokenPak v1.21.0 image and
+This guide is for developers who want to build the TokenPak v1.22.0 image and
 run its proxy from Docker on the host's loopback interface. The image's default
 `tokenpak serve` command binds to loopback inside the container, so publishing
 port 8766 alone does not make that listener reachable from the host.
 
 ## Prerequisites
 
-- A checkout of the public TokenPak v1.21.0 tag.
+- A checkout of the public TokenPak v1.22.0 tag.
 - The `git`, `docker`, `curl`, and `openssl` commands.
 - Docker Compose v2 if you want to use the optional Compose procedure.
 - An unused host port 8766 and permission to run local containers.
 
-## 1. Check out v1.21.0
+## 1. Check out v1.22.0
 
 Check out the released source:
 
 ```bash
-git checkout v1.21.0
+git checkout v1.22.0
 ```
 
 ## 2. Build the image
 
-Build the source checkout as `tokenpak:v1.21.0`:
+Build the source checkout as `tokenpak:v1.22.0`:
 
 ```bash
-docker build -t tokenpak:v1.21.0 .
+docker build -t tokenpak:v1.22.0 .
 ```
 
 The shipped Dockerfile uses Python 3.11. It does not declare a configurable
@@ -59,7 +59,7 @@ docker run --rm -d --name tokenpak-proxy \
   -p 127.0.0.1:8766:8766 \
   -e TOKENPAK_BIND_ADDRESS=0.0.0.0 \
   -e TOKENPAK_PROXY_AUTH_TOKEN="$TOKENPAK_PROXY_AUTH_TOKEN" \
-  tokenpak:v1.21.0 python -m tokenpak.proxy.server
+  tokenpak:v1.22.0 python -m tokenpak.proxy.server
 ```
 
 The host-side loopback publish keeps the service off the LAN. Docker bridge
@@ -76,7 +76,7 @@ curl -H "Authorization: Bearer $TOKENPAK_PROXY_AUTH_TOKEN" \
 ```
 
 The deployment is ready when the response includes `"status": "ok"` and
-`"version": "1.21.0"`.
+`"version": "1.22.0"`.
 
 ## Optional custom configuration
 
@@ -95,7 +95,7 @@ docker run --rm -d --name tokenpak-proxy \
   -e TOKENPAK_PROXY_AUTH_TOKEN="$TOKENPAK_PROXY_AUTH_TOKEN" \
   -e TOKENPAK_CONFIG=/app/config/config.yaml \
   -v "$PWD/config/config.yaml:/app/config/config.yaml:ro" \
-  tokenpak:v1.21.0 python -m tokenpak.proxy.server
+  tokenpak:v1.22.0 python -m tokenpak.proxy.server
 ```
 
 Proxy authentication and provider authentication are separate. The
@@ -105,7 +105,7 @@ separately through the client or the proxy's provider credential settings.
 
 ## Optional Docker Compose deployment
 
-The repository's v1.21.0 `docker-compose.yml` is not an out-of-the-box
+The repository's v1.22.0 `docker-compose.yml` is not an out-of-the-box
 host-facing deployment recipe: it retains the container-loopback entrypoint
 and requires `./config/config.yaml`. Do not use that file unchanged for host
 access.
@@ -115,7 +115,7 @@ For a minimal host-loopback deployment, save this as `compose.host.yml`:
 ```yaml
 services:
   tokenpak:
-    image: tokenpak:v1.21.0
+    image: tokenpak:v1.22.0
     container_name: tokenpak-proxy
     command: ["python", "-m", "tokenpak.proxy.server"]
     ports:
@@ -174,7 +174,7 @@ docker run --rm -d --name tokenpak-proxy \
   -p 127.0.0.1:8766:8766 \
   -e TOKENPAK_BIND_ADDRESS=0.0.0.0 \
   -e TOKENPAK_PROXY_AUTH_TOKEN="$TOKENPAK_PROXY_AUTH_TOKEN" \
-  tokenpak:v1.21.0 python -m tokenpak.proxy.server
+  tokenpak:v1.22.0 python -m tokenpak.proxy.server
 ```
 
 ## Stop or remove the container
@@ -197,7 +197,7 @@ docker compose -f compose.host.yml down
 Kubernetes, public reverse proxies, and cloud container services require the
 same two controls: a non-loopback bind inside the container and a configured
 `TOKENPAK_PROXY_AUTH_TOKEN` presented by every non-localhost client. TokenPak
-v1.21.0 does not ship a separately verified Kubernetes or cloud-service
+v1.22.0 does not ship a separately verified Kubernetes or cloud-service
 manifest, so this guide does not present those platform-specific snippets as
 copy-paste deployment recipes.
 
