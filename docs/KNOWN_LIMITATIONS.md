@@ -9,7 +9,7 @@ status: current
 # Known Limitations — OSS beta
 
 This page documents current, honest limitations of the **OSS beta**
-(`pip install tokenpak`, **v1.21.0**). If a capability described elsewhere in
+(`pip install tokenpak`, **v1.22.0**). If a capability described elsewhere in
 these docs isn't shipping the way the rest of the docs imply, it shows up
 here — that is the point of this page. Each entry states what's limited,
 whether it's an intentional scope choice or a known defect, the honest

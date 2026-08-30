@@ -10,7 +10,7 @@ x-tokenpak-session-economics-visible-text:
 
 info:
   title: TokenPak Proxy API
-  version: "1.21.0"
+  version: "1.22.0"
   description: |
     TokenPak is a drop-in HTTP proxy that sits between your app and LLM APIs.
     It compresses requests, deduplicates cache hits, and tracks token spend —
@@ -121,7 +121,7 @@ paths:
         Supply a stable session id in `X-Claude-Code-Session-Id` or in the
         request body. If both are supplied, they must match.
 
-        If neither is supplied, v1.21.0 resolves a default session: an
+        If neither is supplied, v1.22.0 resolves a default session: an
         explicit id and the caller's active-session marker are checked
         first, and if neither exists the proxy falls back to the most
         recent session with at least one completed, non-empty ledger row.
@@ -223,7 +223,7 @@ paths:
               example:
                 status: ok
                 uptime_seconds: 3600
-                version: 1.21.0
+                version: 1.22.0
                 pid: 4242
                 requests_total: 42
                 requests_errors: 0
@@ -447,7 +447,7 @@ paths:
       operationId: acknowledgeIngest
       summary: Acknowledge one compatibility payload
       description: >-
-        Accepts one JSON payload and returns a generated record ID. In v1.21.0,
+        Accepts one JSON payload and returns a generated record ID. In v1.22.0,
         this compatibility endpoint does not persist or index its contents.
       tags: [ingest]
       requestBody:
@@ -455,7 +455,7 @@ paths:
         content:
           application/json:
             schema:
-              description: Any JSON value; the v1.21.0 handler does not inspect its contents.
+              description: Any JSON value; the v1.22.0 handler does not inspect its contents.
             example:
               content: Compatibility payload
       responses:
