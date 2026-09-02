@@ -30,7 +30,7 @@ pip install tokenpak
 
 ```bash
 tokenpak --version
-# Output: tokenpak 1.22.0
+# Output: tokenpak 1.23.0
 ```
 
 ### (Optional) Install with Extras
@@ -133,7 +133,7 @@ tokenpak start
 
 **Output:**
 ```
-[2026-05-17 09:00:00] TokenPak Proxy v1.22.0 starting...
+[2026-05-17 09:00:00] TokenPak Proxy v1.23.0 starting...
 [2026-05-15 09:00:00] Listening on http://127.0.0.1:8766
 [2026-05-15 09:00:00] Ready to proxy requests
 ```
