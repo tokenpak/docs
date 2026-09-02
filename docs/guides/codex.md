@@ -63,7 +63,7 @@ Expected response shape:
 {
   "status": "ok",
   "uptime_seconds": 3,
-  "version": "1.22.0",
+  "version": "1.23.0",
   "requests_total": 0,
   "requests_errors": 0,
   "compression_ratio_avg": 0.0
