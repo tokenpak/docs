@@ -1085,10 +1085,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#1-check-out-v1220" class="md-nav__link">
+  <a href="#1-check-out-v1230" class="md-nav__link">
     <span class="md-ellipsis">
       
-        1. Check out v1.22.0
+        1. Check out v1.23.0
       
     </span>
   </a>
@@ -2956,10 +2956,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#1-check-out-v1220" class="md-nav__link">
+  <a href="#1-check-out-v1230" class="md-nav__link">
     <span class="md-ellipsis">
       
-        1. Check out v1.22.0
+        1. Check out v1.23.0
       
     </span>
   </a>
@@ -3097,24 +3097,24 @@
 
 
 <h1 id="deploy-tokenpak-with-docker">Deploy TokenPak with Docker<a class="headerlink" href="#deploy-tokenpak-with-docker" title="Permanent link">&para;</a></h1>
-<p>This guide is for developers who want to build the TokenPak v1.22.0 image and
+<p>This guide is for developers who want to build the TokenPak v1.23.0 image and
 run its proxy from Docker on the host's loopback interface. The image's default
 <code>tokenpak serve</code> command binds to loopback inside the container, so publishing
 port 8766 alone does not make that listener reachable from the host.</p>
 <h2 id="prerequisites">Prerequisites<a class="headerlink" href="#prerequisites" title="Permanent link">&para;</a></h2>
 <ul>
-<li>A checkout of the public TokenPak v1.22.0 tag.</li>
+<li>A checkout of the public TokenPak v1.23.0 tag.</li>
 <li>The <code>git</code>, <code>docker</code>, <code>curl</code>, and <code>openssl</code> commands.</li>
 <li>Docker Compose v2 if you want to use the optional Compose procedure.</li>
 <li>An unused host port 8766 and permission to run local containers.</li>
 </ul>
-<h2 id="1-check-out-v1220">1. Check out v1.22.0<a class="headerlink" href="#1-check-out-v1220" title="Permanent link">&para;</a></h2>
+<h2 id="1-check-out-v1230">1. Check out v1.23.0<a class="headerlink" href="#1-check-out-v1230" title="Permanent link">&para;</a></h2>
 <p>Check out the released source:</p>
-<div class="highlight"><pre><span></span><code>git<span class="w"> </span>checkout<span class="w"> </span>v1.22.0
+<div class="highlight"><pre><span></span><code>git<span class="w"> </span>checkout<span class="w"> </span>v1.23.0
 </code></pre></div>
 <h2 id="2-build-the-image">2. Build the image<a class="headerlink" href="#2-build-the-image" title="Permanent link">&para;</a></h2>
-<p>Build the source checkout as <code>tokenpak:v1.22.0</code>:</p>
-<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>build<span class="w"> </span>-t<span class="w"> </span>tokenpak:v1.22.0<span class="w"> </span>.
+<p>Build the source checkout as <code>tokenpak:v1.23.0</code>:</p>
+<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>build<span class="w"> </span>-t<span class="w"> </span>tokenpak:v1.23.0<span class="w"> </span>.
 </code></pre></div>
 <p>The shipped Dockerfile uses Python 3.11. It does not declare a configurable
 base-image build argument.</p>
@@ -3130,7 +3130,7 @@ host's loopback interface, and require a proxy credential:</p>
 <span class="w">  </span>-p<span class="w"> </span><span class="m">127</span>.0.0.1:8766:8766<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>-e<span class="w"> </span><span class="nv">TOKENPAK_BIND_ADDRESS</span><span class="o">=</span><span class="m">0</span>.0.0.0<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>-e<span class="w"> </span><span class="nv">TOKENPAK_PROXY_AUTH_TOKEN</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$TOKENPAK_PROXY_AUTH_TOKEN</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>tokenpak:v1.22.0<span class="w"> </span>python<span class="w"> </span>-m<span class="w"> </span>tokenpak.proxy.server
+<span class="w">  </span>tokenpak:v1.23.0<span class="w"> </span>python<span class="w"> </span>-m<span class="w"> </span>tokenpak.proxy.server
 </code></pre></div>
 <p>The host-side loopback publish keeps the service off the LAN. Docker bridge
 traffic is non-localhost traffic from the proxy's perspective, so the Bearer
@@ -3141,7 +3141,7 @@ credential is still required.</p>
 <span class="w">  </span>http://127.0.0.1:8766/health
 </code></pre></div>
 <p>The deployment is ready when the response includes <code>"status": "ok"</code> and
-<code>"version": "1.22.0"</code>.</p>
+<code>"version": "1.23.0"</code>.</p>
 <h2 id="optional-custom-configuration">Optional custom configuration<a class="headerlink" href="#optional-custom-configuration" title="Permanent link">&para;</a></h2>
 <p>Built-in defaults are used when <code>TOKENPAK_CONFIG</code> is omitted. To replace the
 running container with one that mounts a specific configuration, first create
@@ -3156,21 +3156,21 @@ docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </
 <span class="w">  </span>-e<span class="w"> </span><span class="nv">TOKENPAK_PROXY_AUTH_TOKEN</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$TOKENPAK_PROXY_AUTH_TOKEN</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>-e<span class="w"> </span><span class="nv">TOKENPAK_CONFIG</span><span class="o">=</span>/app/config/config.yaml<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>-v<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$PWD</span><span class="s2">/config/config.yaml:/app/config/config.yaml:ro&quot;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>tokenpak:v1.22.0<span class="w"> </span>python<span class="w"> </span>-m<span class="w"> </span>tokenpak.proxy.server
+<span class="w">  </span>tokenpak:v1.23.0<span class="w"> </span>python<span class="w"> </span>-m<span class="w"> </span>tokenpak.proxy.server
 </code></pre></div>
 <p>Proxy authentication and provider authentication are separate. The
 <code>Authorization: Bearer</code> value above authenticates a non-localhost client to
 TokenPak and is stripped before forwarding. Configure provider credentials
 separately through the client or the proxy's provider credential settings.</p>
 <h2 id="optional-docker-compose-deployment">Optional Docker Compose deployment<a class="headerlink" href="#optional-docker-compose-deployment" title="Permanent link">&para;</a></h2>
-<p>The repository's v1.22.0 <code>docker-compose.yml</code> is not an out-of-the-box
+<p>The repository's v1.23.0 <code>docker-compose.yml</code> is not an out-of-the-box
 host-facing deployment recipe: it retains the container-loopback entrypoint
 and requires <code>./config/config.yaml</code>. Do not use that file unchanged for host
 access.</p>
 <p>For a minimal host-loopback deployment, save this as <code>compose.host.yml</code>:</p>
 <div class="highlight"><pre><span></span><code><span class="nt">services</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">tokenpak</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">tokenpak:v1.22.0</span>
+<span class="w">    </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">tokenpak:v1.23.0</span>
 <span class="w">    </span><span class="nt">container_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">tokenpak-proxy</span>
 <span class="w">    </span><span class="nt">command</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&quot;python&quot;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&quot;-m&quot;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&quot;tokenpak.proxy.server&quot;</span><span class="p p-Indicator">]</span>
 <span class="w">    </span><span class="nt">ports</span><span class="p">:</span>
@@ -3211,7 +3211,7 @@ docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </
 <span class="w">  </span>-p<span class="w"> </span><span class="m">127</span>.0.0.1:8766:8766<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>-e<span class="w"> </span><span class="nv">TOKENPAK_BIND_ADDRESS</span><span class="o">=</span><span class="m">0</span>.0.0.0<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>-e<span class="w"> </span><span class="nv">TOKENPAK_PROXY_AUTH_TOKEN</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$TOKENPAK_PROXY_AUTH_TOKEN</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>tokenpak:v1.22.0<span class="w"> </span>python<span class="w"> </span>-m<span class="w"> </span>tokenpak.proxy.server
+<span class="w">  </span>tokenpak:v1.23.0<span class="w"> </span>python<span class="w"> </span>-m<span class="w"> </span>tokenpak.proxy.server
 </code></pre></div>
 <h2 id="stop-or-remove-the-container">Stop or remove the container<a class="headerlink" href="#stop-or-remove-the-container" title="Permanent link">&para;</a></h2>
 <p>The <code>--rm</code> single-container recipe removes the stopped container while keeping
@@ -3225,7 +3225,7 @@ the locally built image:</p>
 <p>Kubernetes, public reverse proxies, and cloud container services require the
 same two controls: a non-loopback bind inside the container and a configured
 <code>TOKENPAK_PROXY_AUTH_TOKEN</code> presented by every non-localhost client. TokenPak
-v1.22.0 does not ship a separately verified Kubernetes or cloud-service
+v1.23.0 does not ship a separately verified Kubernetes or cloud-service
 manifest, so this guide does not present those platform-specific snippets as
 copy-paste deployment recipes.</p>
 <p>Never expose port 8766 publicly without proxy authentication and an external
