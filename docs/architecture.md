@@ -265,7 +265,7 @@ TokenPak is configured via environment variables and a local config file (`~/.to
 TOKENPAK_BIND_ADDRESS=127.0.0.1   # default bind host (loopback only)
 TOKENPAK_PORT=8766                # default listen port
 TOKENPAK_MODE=hybrid              # compression mode: strict | hybrid | aggressive
-TOKENPAK_COMPACT=1                # master compression switch (0 = off)
+TOKENPAK_COMPACT=1                # compatibility-only; no default-HTTP consumer
 
 # Storage
 TOKENPAK_DB=.tokenpak/monitor.db  # SQLite database path

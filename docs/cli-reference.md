@@ -69,6 +69,7 @@ View API spend
 - `--month` — Show monthly totals
 - `--by-model` — Break down by model
 - `--export-csv` — Export as CSV
+- `--json` — Emit machine-readable JSON output (mutually exclusive with `--export-csv`)
 
 **Subcommands:**
 
@@ -429,7 +430,7 @@ Start proxy server
 - `--profile` — Workflow profile for this proxy process (default: TOKENPAK_PROFILE or balanced) — choices: `safe`, `balanced`, `aggressive`, `agentic`, `transparent`
 - `--stats-footer` — Print a per-request token-savings receipt (estimated dollars) in the proxy terminal (default: off)
 - `--shutdown-timeout` — Seconds to wait for in-flight requests to complete before forcing shutdown (default: 30, or TOKENPAK_SHUTDOWN_TIMEOUT env var)
-- `--safe` — Disable compression defaults (restore pre-1.1 passthrough behavior). Equivalent to TOKENPAK_COMPACT=0.
+- `--safe` — Apply legacy safety compatibility settings for this process; does not toggle default HTTP body compaction. `TOKENPAK_COMPACT` and its threshold are compatibility-only there — only integrations that explicitly call the request-compaction helper are affected.
 
 ---
 
