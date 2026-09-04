@@ -4030,6 +4030,7 @@ The proxy reads config from tokenpak.yaml or ~/.tokenpak/config.yaml</p>
 <li><code>--month</code> — Show monthly totals</li>
 <li><code>--by-model</code> — Break down by model</li>
 <li><code>--export-csv</code> — Export as CSV</li>
+<li><code>--json</code> — Emit machine-readable JSON output (mutually exclusive with <code>--export-csv</code>)</li>
 </ul>
 <p><strong>Subcommands:</strong></p>
 <ul>
@@ -4336,7 +4337,7 @@ then launches Codex with any user-provided arguments.</p>
 <li><code>--profile</code> — Workflow profile for this proxy process (default: TOKENPAK_PROFILE or balanced) — choices: <code>safe</code>, <code>balanced</code>, <code>aggressive</code>, <code>agentic</code>, <code>transparent</code></li>
 <li><code>--stats-footer</code> — Print a per-request token-savings receipt (estimated dollars) in the proxy terminal (default: off)</li>
 <li><code>--shutdown-timeout</code> — Seconds to wait for in-flight requests to complete before forcing shutdown (default: 30, or TOKENPAK_SHUTDOWN_TIMEOUT env var)</li>
-<li><code>--safe</code> — Disable compression defaults (restore pre-1.1 passthrough behavior). Equivalent to TOKENPAK_COMPACT=0.</li>
+<li><code>--safe</code> — Apply legacy safety compatibility settings for this process; does not toggle default HTTP body compaction. <code>TOKENPAK_COMPACT</code> and its threshold are compatibility-only there — only integrations that explicitly call the request-compaction helper are affected.</li>
 </ul>
 <hr />
 <h2 id="additional-commands">Additional Commands<a class="headerlink" href="#additional-commands" title="Permanent link">&para;</a></h2>
