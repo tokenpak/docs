@@ -18,7 +18,7 @@ Env vars always take precedence over config file values.
 
 | Variable | Default | Type | Description |
 |----------|---------|------|-------------|
-| `TOKENPAK_COMPACT` | `true` | bool | Master on/off switch for context compaction |
+| `TOKENPAK_COMPACT` | `true` | bool | Compatibility-only; the default HTTP request path does not consume it. Only integrations that explicitly call the request-compaction helper are affected. |
 | `TOKENPAK_MODE` | `hybrid` | str | Compilation mode: `strict`, `hybrid`, `aggressive` |
 | `TOKENPAK_COMPACT_MAX_CHARS` | `120` | int | Max chars per compacted text segment |
 | `TOKENPAK_COMPACT_THRESHOLD_TOKENS` | `1500` | int | Skip compaction below this token count (default lowered from 4500 for out-of-the-box savings; `tokenpak serve --safe` restores 4500) |
