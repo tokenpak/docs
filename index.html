@@ -1156,6 +1156,90 @@
   
   
     <li class="md-nav__item">
+      <a href="measurement-methodology/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Measurement Methodology
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="token-counting-methods/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Token Counting Methods
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="upgrading-1.25.1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Upgrading to 1.25.1
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="SECURITY/" class="md-nav__link">
         
   
@@ -2929,10 +3013,10 @@ provider send, and records request results locally. Provider-bound requests
 still travel to the selected upstream provider; TokenPak operates no cloud
 relay and requires no application code changes.</p>
 <div class="admonition note">
-<p class="admonition-title">v1.24.0</p>
+<p class="admonition-title">v1.25.1</p>
 <p>The commands below, <a href="QUICKSTART/">Quick Start</a>,
 <a href="api-reference/">extended API reference</a>, and
-<a href="DOCKER/">Docker guide</a> describe TokenPak <strong>v1.24.0</strong>, the currently
+<a href="DOCKER/">Docker guide</a> describe TokenPak <strong>v1.25.1</strong>, the currently
 published release on PyPI (<code>pip install tokenpak</code>). The separate
 <a href="installation/">Installation page</a> retains older-release guidance; use
 the Quick Start for the current setup path. Other pages with explicit
@@ -2941,7 +3025,11 @@ version pins describe the release line named on that page.</p>
 <hr />
 <h2 id="what-ships-in-the-oss-beta">What ships in the OSS beta<a class="headerlink" href="#what-ships-in-the-oss-beta" title="Permanent link">&para;</a></h2>
 <ul>
-<li><strong>Prompt Packing pipeline</strong> — deterministic context reduction on real agent workloads; reduction pinned to an agent-style CI fixture (reproduce with <code>make benchmark-headline</code>); provider-cached flows show lower incremental gains. Measure your own with <code>tokenpak savings</code>.</li>
+<li><strong>Context tools and truthful receipts</strong> — explicit compression operations can
+  reduce eligible content. Role-bearing conversation history remains intact;
+  byte-preserved proxy requests report zero product-attributed reduction. Use
+  <a href="measurement-methodology/">measurement methodology</a> to interpret savings
+  and compare counting methods.</li>
 <li><strong>Local proxy on 127.0.0.1</strong> — processing and records stay local; provider-bound
   prompts and credentials are sent to the upstream provider you configure, not
   to a TokenPak cloud service.</li>
@@ -2974,7 +3062,7 @@ tokenpak<span class="w"> </span>setup<span class="w"> </span>--start
 <tbody>
 <tr>
 <td><a href="installation/">Installation</a></td>
-<td>Older-release installation guidance; use the Quick Start for v1.24.0</td>
+<td>Older-release installation guidance; use the Quick Start for v1.25.1</td>
 </tr>
 <tr>
 <td><a href="QUICKSTART/">Quick Start</a></td>

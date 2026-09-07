@@ -1686,6 +1686,90 @@
   
   
     <li class="md-nav__item">
+      <a href="../measurement-methodology/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Measurement Methodology
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../token-counting-methods/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Token Counting Methods
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../upgrading-1.25.1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Upgrading to 1.25.1
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../SECURITY/" class="md-nav__link">
         
   
@@ -4452,7 +4536,13 @@ Use this command to test compression on arbitrary content.</p>
 <p><strong>Flags:</strong></p>
 <ul>
 <li><code>--days</code> — Rolling window in days (default: 30)</li>
+<li><code>--json</code> — Structured savings output.</li>
+<li><code>--verify</code> — Compare the byte estimator with an independent tokenizer on a
+  packaged fixture corpus. Requires <code>tokenpak[tokens]</code> and cached encoding data
+  for offline use. This does not recount stored request text or change savings.</li>
 </ul>
+<p>See <a href="../measurement-methodology/">measurement methodology</a> for the baseline,
+counting methods, aggregation, and limitations.</p>
 <h3 id="tokenpak-vault"><code>tokenpak vault</code><a class="headerlink" href="#tokenpak-vault" title="Permanent link">&para;</a></h3>
 <p>Check the health of your vault index and repair stale or corrupted entries.
 The vault index stores compressed context blocks and metadata about requests.</p>
