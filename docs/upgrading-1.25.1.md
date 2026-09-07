@@ -1,7 +1,7 @@
-# Upgrading to TokenPak 1.25.0
+# Upgrading to TokenPak 1.25.1
 
 ```bash
-python -m pip install --upgrade "tokenpak==1.25.0"
+python -m pip install --upgrade "tokenpak==1.25.1"
 tokenpak --version
 tokenpak doctor
 ```
@@ -14,7 +14,7 @@ stored costs.
 ## Changes to check
 
 - `tokenpak savings --verify` compares the byte estimator with an independent
-  tokenizer on a packaged corpus. Install `tokenpak[tokens]==1.25.0`; offline
+  tokenizer on a packaged corpus. Install `tokenpak[tokens]==1.25.1`; offline
   use also needs its encoding data cached. Stored prompts are not reconstructed.
 - Where vault injection is enabled, retrieval has a configurable 2,000 ms
   deadline and two worker slots. Timeout or backlog forwards the original bytes
@@ -33,7 +33,7 @@ stored costs.
 
 ## Optional Pro daemon
 
-Pro 0.2.0 declares support for exactly OSS 1.25.0 and TIP-1.0. Upgrade that pair
+Pro 0.2.0 declares support for exactly OSS 1.25.1 and TIP-1.0. Upgrade that pair
 together through the licensed package index. The installed package metadata and
 daemon handshake must agree before readiness is reported as active. Missing,
 malformed, unconfigured, or incompatible declarations produce a diagnostic.
@@ -53,3 +53,7 @@ For a Pro installation, restore the prior Pro 0.1.6 / OSS 1.24.0 pair together
 from the retained environment and configuration backup. Preserve private
 observations and adverse records. Recheck version, doctor, proxy health, and
 the integrations used by your installation after either upgrade or rollback.
+
+Version 1.25.0 was tagged but never published after a release test dependency
+failure. Upgrade to the corrected 1.25.1 package; the prior published rollback
+version remains 1.24.0.
