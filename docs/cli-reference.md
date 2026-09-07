@@ -573,6 +573,13 @@ Show compression savings summary.
 **Flags:**
 
 - `--days` — Rolling window in days (default: 30)
+- `--json` — Structured savings output.
+- `--verify` — Compare the byte estimator with an independent tokenizer on a
+  packaged fixture corpus. Requires `tokenpak[tokens]` and cached encoding data
+  for offline use. This does not recount stored request text or change savings.
+
+See [measurement methodology](measurement-methodology.md) for the baseline,
+counting methods, aggregation, and limitations.
 
 ### `tokenpak vault`
 
@@ -591,4 +598,3 @@ Example:
 - `repair`
 
 ---
-
