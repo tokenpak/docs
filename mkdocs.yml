@@ -60,6 +60,7 @@ nav:
     - Savings: SAVINGS.md
     - Measurement Methodology: measurement-methodology.md
     - Token Counting Methods: token-counting-methods.md
+    - Upgrading to 1.25.2: upgrading-1.25.2.md
     - Upgrading to 1.25.1: upgrading-1.25.1.md
     - Security: SECURITY.md
   - Architecture:
