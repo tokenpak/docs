@@ -58,6 +58,9 @@ nav:
     - Known Limitations: KNOWN_LIMITATIONS.md
     - Docker Deployment: DOCKER.md
     - Savings: SAVINGS.md
+    - Measurement Methodology: measurement-methodology.md
+    - Token Counting Methods: token-counting-methods.md
+    - Upgrading to 1.25.0: upgrading-1.25.0.md
     - Security: SECURITY.md
   - Architecture:
     - Overview: architecture.md

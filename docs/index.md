@@ -21,10 +21,10 @@ provider send, and records request results locally. Provider-bound requests
 still travel to the selected upstream provider; TokenPak operates no cloud
 relay and requires no application code changes.
 
-!!! note "v1.24.0"
+!!! note "v1.25.0"
     The commands below, [Quick Start](QUICKSTART.md),
     [extended API reference](api-reference.md), and
-    [Docker guide](DOCKER.md) describe TokenPak **v1.24.0**, the currently
+    [Docker guide](DOCKER.md) describe TokenPak **v1.25.0**, the currently
     published release on PyPI (`pip install tokenpak`). The separate
     [Installation page](installation.md) retains older-release guidance; use
     the Quick Start for the current setup path. Other pages with explicit
@@ -34,7 +34,11 @@ relay and requires no application code changes.
 
 ## What ships in the OSS beta
 
-- **Prompt Packing pipeline** — deterministic context reduction on real agent workloads; reduction pinned to an agent-style CI fixture (reproduce with `make benchmark-headline`); provider-cached flows show lower incremental gains. Measure your own with `tokenpak savings`.
+- **Context tools and truthful receipts** — explicit compression operations can
+  reduce eligible content. Role-bearing conversation history remains intact;
+  byte-preserved proxy requests report zero product-attributed reduction. Use
+  [measurement methodology](measurement-methodology.md) to interpret savings
+  and compare counting methods.
 - **Local proxy on 127.0.0.1** — processing and records stay local; provider-bound
   prompts and credentials are sent to the upstream provider you configure, not
   to a TokenPak cloud service.
@@ -66,7 +70,7 @@ tokenpak setup --start
 
 | Section | What it covers |
 |---------|-----------------|
-| [Installation](installation.md)            | Older-release installation guidance; use the Quick Start for v1.24.0 |
+| [Installation](installation.md)            | Older-release installation guidance; use the Quick Start for v1.25.0 |
 | [Quick Start](QUICKSTART.md)               | Setup wizard, client integration, first savings in 5 minutes |
 | [Configuration](configuration.md)          | How configuration works (env vars + YAML, precedence) |
 | [Environment Variables](env-vars.md)       | Complete `TOKENPAK_*` reference |

@@ -9,7 +9,7 @@ status: current
 # Known Limitations — OSS beta
 
 This page documents current, honest limitations of the **OSS beta**
-(`pip install tokenpak`, **v1.24.0**). If a capability described elsewhere in
+(`pip install tokenpak`, **v1.25.0**). If a capability described elsewhere in
 these docs isn't shipping the way the rest of the docs imply, it shows up
 here — that is the point of this page. Each entry states what's limited,
 whether it's an intentional scope choice or a known defect, the honest
@@ -203,9 +203,11 @@ model×effort cell to clear a measured-history trust floor before it
 produces a numeric coverage/forecast band.
 
 **Current behavior:** cold cells report an explicit `learning` state rather
-than a number. The underlying observed facts (spent tokens, cost, burn)
-stay visible and accurate even while the forecast itself is still learning.
-Stale or unknown provider rates leave USD unavailable while token-based
+than a number. Observed token usage stays visible while the forecast is learning.
+Cost and burn are derived estimates and are labeled accordingly.
+Mixed model or effort histories are not treated as homogeneous calibration
+evidence, unsupported effort values remain unavailable, and inactivity is not
+proof of task completion. Stale or unknown provider rates leave USD unavailable while token-based
 ranges stay intact. Measured walk-forward coverage is reported as observed,
 never asserted as nominal, and drifting coverage triggers a refit rather
 than a relabel.
