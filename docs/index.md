@@ -21,14 +21,14 @@ provider send, and records request results locally. Provider-bound requests
 still travel to the selected upstream provider; TokenPak operates no cloud
 relay and requires no application code changes.
 
-!!! note "v1.26.0"
+!!! note "v1.27.0"
     The commands below, [Quick Start](QUICKSTART.md),
     [extended API reference](api-reference.md), and
-    [Docker guide](DOCKER.md) describe TokenPak **v1.26.0**, the currently
+    [Docker guide](DOCKER.md) describe TokenPak **v1.27.0**, the currently
     published release on PyPI (`pip install tokenpak`). The separate
     [Installation page](installation.md) retains older-release guidance; use
     the Quick Start for the current setup path. See the
-    [1.26.0 upgrade guide](upgrading-1.26.0.md) for native observations, paired
+    [1.27.0 upgrade guide](upgrading-1.27.0.md) for default companion forecasts, paired
     compatibility and known optional dependency findings. Other pages with explicit
     version pins describe the release line named on that page.
 
@@ -51,6 +51,7 @@ relay and requires no application code changes.
 - **TIP-1.0 protocol contracts** — canonical headers, metadata fields, capability labels, manifest schemas. Conformance gate runnable via `tokenpak doctor --conformance`.
 - **Pak recall (read-only)** — storage, FTS, `tokenpak pak inspect`. Scoring and assembly are not part of the OSS beta.
 - **Three built-in setup profiles and 50+ compression recipes** — minimal, balanced, and aggressive profiles plus customizable packaged YAML recipes.
+- **Companion forecast footer** — visible by default in interactive Claude Code and Codex launches. See [terminal forecasts](companion-session-forecast.md) for prerequisites, estimates and opt-out settings.
 - **Session economics trip computer** — a deterministic spent/burn/binding-runway/guard-state summary built only from completed local ledger rows, on `tokenpak status`, the dashboard, and an MCP tool. Coverage-tracked calibrated forecasts fill in as a model×effort cell earns enough history; cold cells report an explicit `learning` state rather than a guess.
 
 ---
@@ -72,7 +73,7 @@ tokenpak setup --start
 
 | Section | What it covers |
 |---------|-----------------|
-| [Installation](installation.md)            | Older-release installation guidance; use the Quick Start for v1.26.0 |
+| [Installation](installation.md)            | Older-release installation guidance; use the Quick Start for v1.27.0 |
 | [Quick Start](QUICKSTART.md)               | Setup wizard, client integration, first savings in 5 minutes |
 | [Configuration](configuration.md)          | How configuration works (env vars + YAML, precedence) |
 | [Environment Variables](env-vars.md)       | Complete `TOKENPAK_*` reference |
