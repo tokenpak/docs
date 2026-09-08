@@ -9,7 +9,7 @@ status: current
 # TokenPak API reference
 
 This reference is for developers integrating with the TokenPak proxy HTTP API,
-SDK adapters, or CLI. It covers the v1.26.0 surface described below.
+SDK adapters, or CLI. It covers the v1.27.0 surface described below.
 
 ---
 
@@ -75,7 +75,7 @@ process-memory, and disk diagnostics.
 {
   "status": "ok",
   "uptime_seconds": 3600,
-  "version": "1.26.0",
+  "version": "1.27.0",
   "pid": 4242,
   "requests_total": 142,
   "requests_errors": 2,
@@ -521,7 +521,7 @@ Supply the stable session identity in `X-Claude-Code-Session-Id` or as
 `session_id` in the JSON body. If both are present, they must match. `model` is
 an optional hint when the ledger does not identify a model unambiguously.
 
-If neither is supplied, v1.26.0 resolves a default session: an explicit id and
+If neither is supplied, v1.27.0 resolves a default session: an explicit id and
 the caller's active-session marker are checked first, and if neither exists
 the proxy falls back to the most recent session with at least one completed,
 non-empty ledger row. If no defaultable session exists yet (empty ledger, or
@@ -607,7 +607,7 @@ OpenAI Chat Completions API — compatible path for OpenAI SDK clients, LangChai
 
 #### `POST /ingest`
 
-Accept one JSON payload and return one generated record ID. In v1.26.0, this
+Accept one JSON payload and return one generated record ID. In v1.27.0, this
 compatibility endpoint acknowledges the payload but does not persist or index
 its contents.
 
@@ -1377,7 +1377,7 @@ tokenpak template use <name>     # Expand a template with variables
 
 #### `tokenpak audit` (Planned)
 
-The `audit` command is a reserved, planned stub in v1.26.0. It does not expose
+The `audit` command is a reserved, planned stub in v1.27.0. It does not expose
 audit-log subcommands in this release.
 
 ---
@@ -1486,6 +1486,6 @@ These reads expose bounded observations and preserve missing-evidence reasons.
 They do not meter another request or grant spending or recommendation permission.
 See [request workload observations](request-workload-observations.md),
 [workload pricing](workload-pricing.md), and the
-[upgrade guide](upgrading-1.26.0.md) for schemas, supported inputs and limits.
+[upgrade guide](upgrading-1.27.0.md) for schemas, supported inputs and limits.
 
-*This reference covers TokenPak v1.26.0.*
+*This reference covers TokenPak v1.27.0.*
