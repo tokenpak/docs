@@ -116,7 +116,7 @@ Check health:
 curl http://127.0.0.1:8766/health
 ```
 
-The expected response includes `{"status": "ok", "version": "1.25.3"}`.
+The expected response includes `{"status": "ok", "version": "1.26.0"}`.
 
 ## See your savings
 

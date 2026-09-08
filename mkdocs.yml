@@ -60,6 +60,7 @@ nav:
     - Savings: SAVINGS.md
     - Measurement Methodology: measurement-methodology.md
     - Token Counting Methods: token-counting-methods.md
+    - Upgrading to 1.26.0: upgrading-1.26.0.md
     - Upgrading to 1.25.3: upgrading-1.25.3.md
     - Upgrading to 1.25.2: upgrading-1.25.2.md
     - Upgrading to 1.25.1: upgrading-1.25.1.md
@@ -69,6 +70,8 @@ nav:
     - Component Diagram: COMPONENT-DIAGRAM.md
     - API Reference: API.md
     - API Reference (Extended): api-reference.md
+    - Request Workload Observations: request-workload-observations.md
+    - Workload Pricing: workload-pricing.md
     - Features: features.md
     - Plugin Guide: plugin-guide.md
     - Architecture Diagrams: assets/DIAGRAMS.md
