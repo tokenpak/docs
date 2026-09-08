@@ -121,6 +121,10 @@
          <lastmod>2026-09-08</lastmod>
     </url>
     <url>
+         <loc>https://docs.tokenpak.ai/request-workload-observations/</loc>
+         <lastmod>2026-09-08</lastmod>
+    </url>
+    <url>
          <loc>https://docs.tokenpak.ai/token-counting-methods/</loc>
          <lastmod>2026-09-08</lastmod>
     </url>
@@ -138,6 +142,14 @@
     </url>
     <url>
          <loc>https://docs.tokenpak.ai/upgrading-1.25.3/</loc>
+         <lastmod>2026-09-08</lastmod>
+    </url>
+    <url>
+         <loc>https://docs.tokenpak.ai/upgrading-1.26.0/</loc>
+         <lastmod>2026-09-08</lastmod>
+    </url>
+    <url>
+         <loc>https://docs.tokenpak.ai/workload-pricing/</loc>
          <lastmod>2026-09-08</lastmod>
     </url>
     <url>
