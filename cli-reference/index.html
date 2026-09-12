@@ -4316,7 +4316,7 @@ compressed requests to your configured LLM providers.</p>
 The proxy reads config from tokenpak.yaml or ~/.tokenpak/config.yaml</p>
 <p><strong>Flags:</strong></p>
 <ul>
-<li><code>--port</code> — Port to listen on (default: 8766) (default: 8766)</li>
+<li><code>--port</code> — Port to listen on (default: 8766, or TOKENPAK_PORT)</li>
 <li><code>--workers</code> — Number of worker processes (default: 2) (default: 2)</li>
 <li><code>--log-level</code> — Logging level (default: info) (default: info) — choices: <code>debug</code>, <code>info</code>, <code>warning</code>, <code>error</code></li>
 </ul>
@@ -4356,6 +4356,8 @@ The proxy reads config from tokenpak.yaml or ~/.tokenpak/config.yaml</p>
 <p>Check proxy health</p>
 <p><strong>Flags:</strong></p>
 <ul>
+<li><code>--line</code> — Compact session forecast</li>
+<li><code>--session</code> — Exact native session ID</li>
 <li><code>--limit</code> — Max retry events to show (default: 20)</li>
 <li><code>--full</code> — Expanded view with all details</li>
 <li><code>--by-source</code> — Breakdown by request source (Claude Code, Codex, API, etc.)</li>
@@ -4520,7 +4522,10 @@ The proxy reads config from tokenpak.yaml or ~/.tokenpak/config.yaml</p>
 <p>Update tokenpak</p>
 <p><strong>Flags:</strong></p>
 <ul>
-<li><code>--check</code> — Check for updates without installing</li>
+<li><code>--check</code> — Check for updates once without installing</li>
+<li><code>--enable-checks</code> — Enable automatic daily update checks (no request now)</li>
+<li><code>--disable-checks</code> — Disable automatic update checks (no request)</li>
+<li><code>--check-status</code> — Show saved automatic-check state without a request</li>
 <li><code>--force</code> — Force update even if already up to date</li>
 <li><code>--core-only</code> — Update core only, skip config merge</li>
 <li><code>--dry-run</code> — Show what would change without applying</li>
@@ -4645,7 +4650,7 @@ then launches Codex with any user-provided arguments.</p>
 <p>Start proxy server</p>
 <p><strong>Flags:</strong></p>
 <ul>
-<li><code>--port</code> — default: 8766</li>
+<li><code>--port</code> — Port to listen on (default: 8766, or TOKENPAK_PORT, or config's <code>port</code>)</li>
 <li><code>--telemetry</code> — Start telemetry ingest server</li>
 <li><code>--ingest</code> — Start Phase 5A ingest API server</li>
 <li><code>--workers</code> — Number of uvicorn workers</li>
@@ -4665,8 +4670,8 @@ then launches Codex with any user-provided arguments.</p>
 <h3 id="tokenpak-compress"><code>tokenpak compress</code><a class="headerlink" href="#tokenpak-compress" title="Permanent link">&para;</a></h3>
 <p>Compress a piece of text, JSON, or code using TokenPak's compression.
 Shows token savings and compressed output.</p>
-<p>Note: The proxy handles compression automatically for API requests.
-Use this command to test compression on arbitrary content.</p>
+<p>The default HTTP proxy does not invoke this body-compaction path.
+Use this command explicitly to compress arbitrary content.</p>
 <p>Example:
   tokenpak compress &lt; myfile.json
   echo '{"data": "...large JSON..."}' | tokenpak compress --verbose</p>
