@@ -32,7 +32,7 @@ The proxy reads config from tokenpak.yaml or ~/.tokenpak/config.yaml
 
 **Flags:**
 
-- `--port` — Port to listen on (default: 8766) (default: 8766)
+- `--port` — Port to listen on (default: 8766, or TOKENPAK_PORT)
 - `--workers` — Number of worker processes (default: 2) (default: 2)
 - `--log-level` — Logging level (default: info) (default: info) — choices: `debug`, `info`, `warning`, `error`
 
@@ -82,6 +82,8 @@ Check proxy health
 
 **Flags:**
 
+- `--line` — Compact session forecast
+- `--session` — Exact native session ID
 - `--limit` — Max retry events to show (default: 20)
 - `--full` — Expanded view with all details
 - `--by-source` — Breakdown by request source (Claude Code, Codex, API, etc.)
@@ -268,7 +270,10 @@ Update tokenpak
 
 **Flags:**
 
-- `--check` — Check for updates without installing
+- `--check` — Check for updates once without installing
+- `--enable-checks` — Enable automatic daily update checks (no request now)
+- `--disable-checks` — Disable automatic update checks (no request)
+- `--check-status` — Show saved automatic-check state without a request
 - `--force` — Force update even if already up to date
 - `--core-only` — Update core only, skip config merge
 - `--dry-run` — Show what would change without applying
@@ -423,7 +428,7 @@ Start proxy server
 
 **Flags:**
 
-- `--port` — default: 8766
+- `--port` — Port to listen on (default: 8766, or TOKENPAK_PORT, or config's `port`)
 - `--telemetry` — Start telemetry ingest server
 - `--ingest` — Start Phase 5A ingest API server
 - `--workers` — Number of uvicorn workers
@@ -448,8 +453,8 @@ Start proxy server
 Compress a piece of text, JSON, or code using TokenPak's compression.
 Shows token savings and compressed output.
 
-Note: The proxy handles compression automatically for API requests.
-Use this command to test compression on arbitrary content.
+The default HTTP proxy does not invoke this body-compaction path.
+Use this command explicitly to compress arbitrary content.
 
 Example:
   tokenpak compress < myfile.json
