@@ -60,6 +60,7 @@ nav:
     - Savings: SAVINGS.md
     - Measurement Methodology: measurement-methodology.md
     - Token Counting Methods: token-counting-methods.md
+    - Upgrading: upgrading.md
     - Upgrading to 1.27.0: upgrading-1.27.0.md
     - Terminal forecasts: companion-session-forecast.md
     - Upgrading to 1.26.0: upgrading-1.26.0.md
