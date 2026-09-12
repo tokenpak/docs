@@ -3235,12 +3235,13 @@
 
 
 <h1 id="tokenpak">TokenPak<a class="headerlink" href="#tokenpak" title="Permanent link">&para;</a></h1>
-<p><strong>A local proxy that packs LLM context before it reaches the API, with per-request records of what changed.</strong></p>
+<p><strong>A local LLM proxy with request records and explicit context tools.</strong></p>
 <p>This page is for developers evaluating or getting started with TokenPak.
 TokenPak sits between your AI tools and the upstream LLM provider, with its
-proxy listening on <code>127.0.0.1</code>. It deterministically packages context (Prompt
-Packing), routes requests, evaluates configured Spend Guard limits before
-provider send, and records request results locally. Provider-bound requests
+proxy listening on <code>127.0.0.1</code>. The default proxy preserves conversation turns,
+evaluates configured Spend Guard limits before provider send, and records
+request results locally. Explicit compression operations can reduce eligible
+content; the default path does not promise automatic token savings. Provider-bound requests
 still travel to the selected upstream provider; TokenPak operates no cloud
 relay and requires no application code changes.</p>
 <div class="admonition note">
@@ -3267,7 +3268,9 @@ version pins describe the release line named on that page.</p>
   prompts and credentials are sent to the upstream provider you configure, not
   to a TokenPak cloud service.</li>
 <li><strong>Spend Guard</strong> — pre-send circuit breaker with rolling caps; blocks runaway requests before they reach the provider and returns a clear release directive.</li>
-<li><strong>Nine client integrations</strong> — Claude Code, Cursor, Cline, Continue, Aider, Codex CLI, OpenAI SDK, Anthropic SDK, LiteLLM.</li>
+<li><strong>Client integrations</strong> — tested SDK adapters: OpenAI SDK, Anthropic SDK and
+  LiteLLM; first-class integrations: Claude Code and Codex. Cursor, Cline,
+  Continue and Aider are compatibility targets, not yet independently verified.</li>
 <li><strong>Savings Ledger + local dashboard</strong> — every request logged to a local SQLite store with causal attribution; TUI + web dashboard.</li>
 <li><strong>Vault indexing + semantic search</strong> — index your codebase, search without an LLM call.</li>
 <li><strong>TIP-1.0 protocol contracts</strong> — canonical headers, metadata fields, capability labels, manifest schemas. Conformance gate runnable via <code>tokenpak doctor --conformance</code>.</li>
@@ -3300,7 +3303,7 @@ tokenpak<span class="w"> </span>setup<span class="w"> </span>--start
 </tr>
 <tr>
 <td><a href="QUICKSTART/">Quick Start</a></td>
-<td>Setup wizard, client integration, first savings in 5 minutes</td>
+<td>Setup wizard, client integration, first request receipt, including zero savings</td>
 </tr>
 <tr>
 <td><a href="configuration/">Configuration</a></td>
