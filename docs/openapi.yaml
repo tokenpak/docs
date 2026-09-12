@@ -10,11 +10,13 @@ x-tokenpak-session-economics-visible-text:
 
 info:
   title: TokenPak Proxy API
-  version: "1.25.0"
+  version: "1.28.0"
   description: |
     TokenPak is a drop-in HTTP proxy that sits between your app and LLM APIs.
-    It compresses requests, deduplicates cache hits, and tracks token spend —
-    with zero SDK changes required.
+    It forwards requests and records available usage without SDK changes.
+    The default proxy preserves conversation turns. Explicit compression
+    operations can reduce eligible content; a byte-preserved request reports
+    zero product-attributed reduction.
 
     ## Usage
 
@@ -81,8 +83,11 @@ paths:
       summary: Anthropic Messages API (passthrough)
       description: |
         Drop-in replacement for the Anthropic `/v1/messages` endpoint.
-        TokenPak compresses the context before forwarding, then returns the
-        upstream response unchanged.
+        The default proxy preserves conversation turns when forwarding.
+        Explicit context tools and configured injection are separate operations;
+        this endpoint does not promise automatic context reduction. Available
+        usage and cache attribution are recorded without treating provider cache
+        hits as TokenPak compression.
       tags: [passthrough]
       requestBody:
         required: true
@@ -223,7 +228,7 @@ paths:
               example:
                 status: ok
                 uptime_seconds: 3600
-                version: 1.25.0
+                version: 1.28.0
                 pid: 4242
                 requests_total: 42
                 requests_errors: 0

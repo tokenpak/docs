@@ -11,13 +11,14 @@ hide:
 
 # TokenPak
 
-**A local proxy that packs LLM context before it reaches the API, with per-request records of what changed.**
+**A local LLM proxy with request records and explicit context tools.**
 
 This page is for developers evaluating or getting started with TokenPak.
 TokenPak sits between your AI tools and the upstream LLM provider, with its
-proxy listening on `127.0.0.1`. It deterministically packages context (Prompt
-Packing), routes requests, evaluates configured Spend Guard limits before
-provider send, and records request results locally. Provider-bound requests
+proxy listening on `127.0.0.1`. The default proxy preserves conversation turns,
+evaluates configured Spend Guard limits before provider send, and records
+request results locally. Explicit compression operations can reduce eligible
+content; the default path does not promise automatic token savings. Provider-bound requests
 still travel to the selected upstream provider; TokenPak operates no cloud
 relay and requires no application code changes.
 
@@ -45,7 +46,9 @@ relay and requires no application code changes.
   prompts and credentials are sent to the upstream provider you configure, not
   to a TokenPak cloud service.
 - **Spend Guard** — pre-send circuit breaker with rolling caps; blocks runaway requests before they reach the provider and returns a clear release directive.
-- **Nine client integrations** — Claude Code, Cursor, Cline, Continue, Aider, Codex CLI, OpenAI SDK, Anthropic SDK, LiteLLM.
+- **Client integrations** — tested SDK adapters: OpenAI SDK, Anthropic SDK and
+  LiteLLM; first-class integrations: Claude Code and Codex. Cursor, Cline,
+  Continue and Aider are compatibility targets, not yet independently verified.
 - **Savings Ledger + local dashboard** — every request logged to a local SQLite store with causal attribution; TUI + web dashboard.
 - **Vault indexing + semantic search** — index your codebase, search without an LLM call.
 - **TIP-1.0 protocol contracts** — canonical headers, metadata fields, capability labels, manifest schemas. Conformance gate runnable via `tokenpak doctor --conformance`.
@@ -74,7 +77,7 @@ tokenpak setup --start
 | Section | What it covers |
 |---------|-----------------|
 | [Installation](installation.md)            | Older-release installation guidance; use the Quick Start for v1.28.0 |
-| [Quick Start](QUICKSTART.md)               | Setup wizard, client integration, first savings in 5 minutes |
+| [Quick Start](QUICKSTART.md)               | Setup wizard, client integration, first request receipt, including zero savings |
 | [Configuration](configuration.md)          | How configuration works (env vars + YAML, precedence) |
 | [Environment Variables](env-vars.md)       | Complete `TOKENPAK_*` reference |
 | [CLI Reference](cli-reference.md)          | Every verb, flag, and exit code (auto-generated) |
