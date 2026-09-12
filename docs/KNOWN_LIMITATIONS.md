@@ -2,14 +2,14 @@
 title: "Known Limitations — OSS beta"
 rung: 2
 audience: Developers evaluating or running the TokenPak OSS beta who want an honest account of what isn't production-quality yet.
-updated: 2026-08-20
+updated: 2026-09-12
 status: current
 ---
 
 # Known Limitations — OSS beta
 
 This page documents current, honest limitations of the **OSS beta**
-(`pip install tokenpak`, **v1.27.0**). If a capability described elsewhere in
+(`pip install tokenpak`, **v1.28.0**). If a capability described elsewhere in
 these docs isn't shipping the way the rest of the docs imply, it shows up
 here — that is the point of this page. Each entry states what's limited,
 whether it's an intentional scope choice or a known defect, the honest
