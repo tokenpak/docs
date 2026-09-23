@@ -1127,6 +1127,39 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#native-token-accounting-requires-complete-evidence" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Native token accounting requires complete evidence
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dispatch-remains-an-alpha-capability" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Dispatch remains an alpha capability
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#optional-dependency-security-advisories" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Optional dependency security advisories
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#when-not-to-use-tokenpak" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -3326,6 +3359,39 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#native-token-accounting-requires-complete-evidence" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Native token accounting requires complete evidence
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dispatch-remains-an-alpha-capability" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Dispatch remains an alpha capability
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#optional-dependency-security-advisories" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Optional dependency security advisories
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#when-not-to-use-tokenpak" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -3369,7 +3435,7 @@
 
 <h1 id="known-limitations-oss-beta">Known Limitations — OSS beta<a class="headerlink" href="#known-limitations-oss-beta" title="Permanent link">&para;</a></h1>
 <p>This page documents current, honest limitations of the <strong>OSS beta</strong>
-(<code>pip install tokenpak</code>, <strong>v1.28.0</strong>). If a capability described elsewhere in
+(<code>pip install tokenpak</code>, <strong>v1.29.0</strong>). If a capability described elsewhere in
 these docs isn't shipping the way the rest of the docs imply, it shows up
 here — that is the point of this page. Each entry states what's limited,
 whether it's an intentional scope choice or a known defect, the honest
@@ -3521,6 +3587,49 @@ session/model/effort combination with enough history if a calibrated band
 is needed immediately.</p>
 <p><strong>Retirement condition:</strong> none. Never fabricating a forecast the data
 doesn't support is a durable design commitment, not scheduled for removal.</p>
+<hr />
+<h2 id="native-token-accounting-requires-complete-evidence">Native token accounting requires complete evidence<a class="headerlink" href="#native-token-accounting-requires-complete-evidence" title="Permanent link">&para;</a></h2>
+<p><strong>Status:</strong> intentional safety boundary in v1.29.0.</p>
+<p><strong>What:</strong> native provider-token accounting is opt-in. A local snapshot is an
+observation of the configured accounting domain, not a universal measurement
+of every adapter or request.</p>
+<p><strong>Current behavior:</strong> the <a href="../api-reference/#native-token-snapshot">native token snapshot</a>
+requires authenticated loopback access, durable reservations and the
+<code>provider_tokens</code> accounting basis. Disabled accounting returns an explicit
+unavailable response. Incomplete evidence must not be treated as zero usage
+or permission to spend. Existing estimated accounting is not relabeled as
+native provider usage during upgrade.</p>
+<p><strong>Workaround:</strong> keep the existing accounting mode unless your integration
+can supply the required observations. Inspect availability and reasons before
+using native observations in a budget decision.</p>
+<p><strong>Retirement condition:</strong> update this entry when additional integrations have
+verified complete observation coverage. The requirement to preserve missing
+evidence remains.</p>
+<hr />
+<h2 id="dispatch-remains-an-alpha-capability">Dispatch remains an alpha capability<a class="headerlink" href="#dispatch-remains-an-alpha-capability" title="Permanent link">&para;</a></h2>
+<p><strong>Status:</strong> released alpha in v1.29.0, not a general automation guarantee.</p>
+<p><strong>What:</strong> including Dispatch commands in the package does not establish that
+every executor, model, operating system or containment environment is supported.</p>
+<p><strong>Current behavior:</strong> released packages include the CLI and runtime modules;
+runtime commands require the optional <code>[dispatch]</code> dependencies. Intake,
+routing, decisions and the run ledger are available. Live station execution and
+delivery receipts are not wired yet. See the
+<a href="https://github.com/tokenpak/tokenpak/blob/v1.29.0/docs/guides/dispatch.md">versioned Dispatch guide</a>.</p>
+<p><strong>Workaround:</strong> use the preview to inspect workflow decisions. Complete and
+verify the actual task through your existing workflow.</p>
+<p><strong>Retirement condition:</strong> update the alpha designation only after the supported
+execution environments and their acceptance criteria are verified and published.</p>
+<hr />
+<h2 id="optional-dependency-security-advisories">Optional dependency security advisories<a class="headerlink" href="#optional-dependency-security-advisories" title="Permanent link">&para;</a></h2>
+<p><strong>Status:</strong> disclosed limitations of optional integrations in v1.29.0.</p>
+<p><strong>What:</strong> the release records unresolved advisories for optional dependencies.
+See the <a href="https://github.com/tokenpak/tokenpak/blob/v1.29.0/SECURITY.md">versioned security policy</a>
+for affected versions, exposure and mitigations.</p>
+<p><strong>Current behavior:</strong> passing the supported release checks does not remove
+these advisories. Install only the extras your workflow needs and apply the
+documented mitigations before enabling an affected integration.</p>
+<p><strong>Retirement condition:</strong> update this entry when the affected dependencies are
+replaced or fixed and the corresponding integration is verified again.</p>
 <hr />
 <h2 id="when-not-to-use-tokenpak">When NOT to use TokenPak<a class="headerlink" href="#when-not-to-use-tokenpak" title="Permanent link">&para;</a></h2>
 <p>TokenPak is not the right fit for every workload today. Stating that

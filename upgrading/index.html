@@ -80,7 +80,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#upgrade-to-tokenpak-1280" class="md-skip">
+        <a href="#upgrade-to-tokenpak-1290" class="md-skip">
           Skip to content
         </a>
       
@@ -1191,6 +1191,17 @@
       Table of contents
     </label>
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#native-token-observations-and-first-session-reliability" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Native token observations and first-session reliability
+      
+    </span>
+  </a>
+  
+</li>
       
         <li class="md-nav__item">
   <a href="#session-history-and-recorded-usage" class="md-nav__link">
@@ -3172,6 +3183,17 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#native-token-observations-and-first-session-reliability" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Native token observations and first-session reliability
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#session-history-and-recorded-usage" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -3235,8 +3257,24 @@
   
 
 
-<h1 id="upgrade-to-tokenpak-1280">Upgrade to TokenPak 1.28.0<a class="headerlink" href="#upgrade-to-tokenpak-1280" title="Permanent link">&para;</a></h1>
-<p>This guide is for developers upgrading from TokenPak 1.27.0.</p>
+<h1 id="upgrade-to-tokenpak-1290">Upgrade to TokenPak 1.29.0<a class="headerlink" href="#upgrade-to-tokenpak-1290" title="Permanent link">&para;</a></h1>
+<p>This guide is for developers upgrading from TokenPak 1.28.0. The compatible
+published pair is OSS 1.29.0 and the separately distributed Pro 0.5.0.</p>
+<h2 id="native-token-observations-and-first-session-reliability">Native token observations and first-session reliability<a class="headerlink" href="#native-token-observations-and-first-session-reliability" title="Permanent link">&para;</a></h2>
+<p>Opt-in native token observations keep token measurements separate from billed
+cost. They include request coverage, bounded reservations and evidence that a
+response finished. Missing or incomplete observations remain unavailable; a token
+count does not establish a successful task, calibrated forecast or paid savings.
+See the <a href="../api-reference/#native-token-snapshot">native token snapshot API</a>.</p>
+<p>Fresh companion journals record the first Claude prompt even when the external
+SQLite executable is absent. Background writes no longer keep the prompt's
+response pipes open. Prompt metadata does not count as completed work or provider
+usage, and configured shell-hook budgets retain their refusal behavior when
+SQLite is unavailable.</p>
+<p>The companion MCP server keeps JSON-RPC on stdout and writes startup and
+content-free malformed-input diagnostics to stderr. Dispatch ships an alpha CLI
+and runtime with optional dependencies; station execution and delivery remain
+unfinished. See the <a href="https://github.com/tokenpak/tokenpak/blob/v1.29.0/docs/guides/dispatch.md">packaged Dispatch guide</a>.</p>
 <h2 id="session-history-and-recorded-usage">Session history and recorded usage<a class="headerlink" href="#session-history-and-recorded-usage" title="Permanent link">&para;</a></h2>
 <p>Completed Codex turns can be recovered into the local companion journal from
 native history. The intake handles forked sessions and large records, preserves
@@ -3257,11 +3295,12 @@ learning or unavailable. See <a href="../companion-session-forecast/">terminal f
 <ol>
 <li>Back up configuration and use consistent backups for SQLite state. Retain the
    previous package pair and environment for rollback.</li>
-<li>Install <code>tokenpak==1.28.0</code> with the extras already used by your installation.
-   The standard service profile is <code>tokenpak[serve,tokens,telemetry]==1.28.0</code>.</li>
-<li>If you use Pro, install the separately distributed Pro 0.4.3 package. Its
-   supported OSS range is 1.26.0 through 1.28.0 with TIP-1.0. Pro 0.4.2 supports
-   OSS only through 1.27.0.</li>
+<li>Install <code>tokenpak==1.29.0</code> with the extras already used by your installation.
+   The standard service profile is <code>tokenpak[serve,tokens,telemetry]==1.29.0</code>.</li>
+<li>If you use Pro, install Pro 0.5.0 through your existing licensed delivery
+   channel. Its supported OSS range is 1.26.0 through 1.29.0 with TIP-1.0.
+   Native token measurement requires OSS 1.29.0. Pro 0.4.3 supports OSS only
+   through 1.28.0, so upgrade the packages together.</li>
 <li>After active requests finish, restart the services that use the replaced
    environment. Reinstall or repoint configured companion hooks when changing
    environment paths. Preserve explicit journal-root settings and verify the
@@ -3270,20 +3309,24 @@ learning or unavailable. See <a href="../companion-session-forecast/">terminal f
    <code>tokenpak status --json --session ID</code> for a session you intend to inspect.
    Start a new managed client launch to use updated hooks and display code.</li>
 </ol>
-<p>No database migration or automatic rerouting is introduced by this release.
-Existing running client sessions and native history need not be deleted.</p>
+<p>Database migrations are additive and one-way. They preserve historical rows and
+priced reservation domains without relabeling them as measured native tokens.
+This release does not enable automatic rerouting or require deleting sessions.
+Existing clients may retain older modules until they exit.</p>
 <h2 id="roll-back">Roll back<a class="headerlink" href="#roll-back" title="Permanent link">&para;</a></h2>
-<p>Restore <code>tokenpak==1.27.0</code> with the same extras and Pro 0.4.2 if rolling back the
-pair. Restore the previous environment pointer and hook configuration after
-active requests finish. Preserve newer state before restoring any backup.
-Published artifacts and tags are never overwritten.</p>
+<p>Restore OSS 1.28.0 and Pro 0.4.3 together with the pre-upgrade database backup.
+Preserve a separate copy of post-upgrade state before restoring that backup;
+never overwrite newer evidence without retaining it. Do not try to reverse the
+schema migration in place. Restore the previous environment pointer and hook
+configuration after active requests finish. Published artifacts and tags are
+never overwritten.</p>
 <h2 id="limits-and-dependency-findings">Limits and dependency findings<a class="headerlink" href="#limits-and-dependency-findings" title="Permanent link">&para;</a></h2>
 <p>Recovered journal entries are metadata about recorded turns, not accepted task
 outcomes or admitted Reroute priors. Recorded-usage subtotals do not make an
 incomplete or mixed session eligible for forecasting. Human comprehension and
 realized reroute savings require their own evidence.</p>
 <p>Optional dependency findings are documented in
-<a href="https://github.com/tokenpak/tokenpak/blob/v1.28.0/SECURITY.md">SECURITY.md</a>.
+<a href="https://github.com/tokenpak/tokenpak/blob/v1.29.0/SECURITY.md">SECURITY.md</a>.
 Release validation covers changed behavior, installed artifacts, paired
 compatibility, upgrade and rollback. Publication, deployment and the observation
 period remain separate milestones.</p>
