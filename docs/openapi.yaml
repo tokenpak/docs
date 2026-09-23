@@ -10,7 +10,7 @@ x-tokenpak-session-economics-visible-text:
 
 info:
   title: TokenPak Proxy API
-  version: "1.28.0"
+  version: "1.29.0"
   description: |
     TokenPak is a drop-in HTTP proxy that sits between your app and LLM APIs.
     It forwards requests and records available usage without SDK changes.
@@ -35,6 +35,10 @@ info:
     client-to-proxy credential before forwarding. Provider authentication is
     separate and may come from server-side credentials, `x-api-key`, or an
     already-authenticated client session.
+
+    Native session snapshots are an exception to localhost trust: they require
+    loopback access and `X-TPK-Key` matching `TOKENPAK_PROXY_KEY`, and reject
+    browser origins.
 
   contact:
     name: TokenPak
@@ -74,6 +78,58 @@ tags:
     description: Circuit breaker and degradation state
 
 paths:
+
+  /tpk/v1/sessions/token-snapshot:
+    post:
+      operationId: readNativeTokenSnapshot
+      summary: Read native provider-token observations for one session
+      description: |
+        Requires loopback access and the configured application key, even when
+        other localhost requests are trusted. Browser origins, query parameters,
+        duplicate JSON keys and caller-supplied observations are rejected. Send
+        JSON with one Content-Length header and no Transfer-Encoding header.
+        Stable session headers, if present, must agree with session_id.
+        Durable reservations must be enabled with accounting_basis=provider_tokens.
+        Missing or incomplete evidence is not zero usage or permission to spend.
+        Responses use Cache-Control: no-store.
+      security:
+        - SnapshotAppKey: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: false
+              required: [session_id]
+              properties:
+                session_id:
+                  type: string
+                  minLength: 1
+                  maxLength: 512
+                  description: No control characters or surrounding whitespace.
+      responses:
+        "200":
+          description: |
+            native-token-snapshot/1 envelope with session_id, owner_instance_id,
+            effective_policy_sha256 and observation components. Check component
+            availability and reasons before using the observations.
+          content:
+            application/json:
+              schema:
+                type: object
+        "400":
+          description: Invalid snapshot input or contradictory session identity.
+        "401":
+          description: Invalid application key or non-loopback caller.
+        "403":
+          description: Browser Origin header is forbidden.
+        "413":
+          description: Snapshot body exceeds the allowed size or is empty.
+        "503":
+          description: |
+            Authentication configuration, snapshot owner, token accounting or
+            snapshot resolution is unavailable. The error field gives the reason.
 
   # ─── LLM Passthrough ──────────────────────────────────────────────────────
 
@@ -228,7 +284,7 @@ paths:
               example:
                 status: ok
                 uptime_seconds: 3600
-                version: 1.28.0
+                version: 1.29.0
                 pid: 4242
                 requests_total: 42
                 requests_errors: 0
@@ -489,6 +545,11 @@ paths:
 
 components:
   securitySchemes:
+    SnapshotAppKey:
+      type: apiKey
+      in: header
+      name: X-TPK-Key
+      description: Must match TOKENPAK_PROXY_KEY; loopback access is also required.
     ProxyBearerAuth:
       type: http
       scheme: bearer

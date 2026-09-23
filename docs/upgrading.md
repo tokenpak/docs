@@ -2,13 +2,33 @@
 title: Upgrade TokenPak
 rung: 2
 audience: Developers upgrading an existing TokenPak installation.
-updated: 2026-09-12
+updated: 2026-09-22
 status: current
 ---
 
-# Upgrade to TokenPak 1.28.0
+# Upgrade to TokenPak 1.29.0
 
-This guide is for developers upgrading from TokenPak 1.27.0.
+This guide is for developers upgrading from TokenPak 1.28.0. The compatible
+published pair is OSS 1.29.0 and the separately distributed Pro 0.5.0.
+
+## Native token observations and first-session reliability
+
+Opt-in native token observations keep token measurements separate from billed
+cost. They include request coverage, bounded reservations and evidence that a
+response finished. Missing or incomplete observations remain unavailable; a token
+count does not establish a successful task, calibrated forecast or paid savings.
+See the [native token snapshot API](api-reference.md#native-token-snapshot).
+
+Fresh companion journals record the first Claude prompt even when the external
+SQLite executable is absent. Background writes no longer keep the prompt's
+response pipes open. Prompt metadata does not count as completed work or provider
+usage, and configured shell-hook budgets retain their refusal behavior when
+SQLite is unavailable.
+
+The companion MCP server keeps JSON-RPC on stdout and writes startup and
+content-free malformed-input diagnostics to stderr. Dispatch ships an alpha CLI
+and runtime with optional dependencies; station execution and delivery remain
+unfinished. See the [packaged Dispatch guide](https://github.com/tokenpak/tokenpak/blob/v1.29.0/docs/guides/dispatch.md).
 
 ## Session history and recorded usage
 
@@ -34,11 +54,12 @@ learning or unavailable. See [terminal forecasts](companion-session-forecast.md)
 
 1. Back up configuration and use consistent backups for SQLite state. Retain the
    previous package pair and environment for rollback.
-2. Install `tokenpak==1.28.0` with the extras already used by your installation.
-   The standard service profile is `tokenpak[serve,tokens,telemetry]==1.28.0`.
-3. If you use Pro, install the separately distributed Pro 0.4.3 package. Its
-   supported OSS range is 1.26.0 through 1.28.0 with TIP-1.0. Pro 0.4.2 supports
-   OSS only through 1.27.0.
+2. Install `tokenpak==1.29.0` with the extras already used by your installation.
+   The standard service profile is `tokenpak[serve,tokens,telemetry]==1.29.0`.
+3. If you use Pro, install Pro 0.5.0 through your existing licensed delivery
+   channel. Its supported OSS range is 1.26.0 through 1.29.0 with TIP-1.0.
+   Native token measurement requires OSS 1.29.0. Pro 0.4.3 supports OSS only
+   through 1.28.0, so upgrade the packages together.
 4. After active requests finish, restart the services that use the replaced
    environment. Reinstall or repoint configured companion hooks when changing
    environment paths. Preserve explicit journal-root settings and verify the
@@ -47,15 +68,19 @@ learning or unavailable. See [terminal forecasts](companion-session-forecast.md)
    `tokenpak status --json --session ID` for a session you intend to inspect.
    Start a new managed client launch to use updated hooks and display code.
 
-No database migration or automatic rerouting is introduced by this release.
-Existing running client sessions and native history need not be deleted.
+Database migrations are additive and one-way. They preserve historical rows and
+priced reservation domains without relabeling them as measured native tokens.
+This release does not enable automatic rerouting or require deleting sessions.
+Existing clients may retain older modules until they exit.
 
 ## Roll back
 
-Restore `tokenpak==1.27.0` with the same extras and Pro 0.4.2 if rolling back the
-pair. Restore the previous environment pointer and hook configuration after
-active requests finish. Preserve newer state before restoring any backup.
-Published artifacts and tags are never overwritten.
+Restore OSS 1.28.0 and Pro 0.4.3 together with the pre-upgrade database backup.
+Preserve a separate copy of post-upgrade state before restoring that backup;
+never overwrite newer evidence without retaining it. Do not try to reverse the
+schema migration in place. Restore the previous environment pointer and hook
+configuration after active requests finish. Published artifacts and tags are
+never overwritten.
 
 ## Limits and dependency findings
 
@@ -65,7 +90,7 @@ incomplete or mixed session eligible for forecasting. Human comprehension and
 realized reroute savings require their own evidence.
 
 Optional dependency findings are documented in
-[SECURITY.md](https://github.com/tokenpak/tokenpak/blob/v1.28.0/SECURITY.md).
+[SECURITY.md](https://github.com/tokenpak/tokenpak/blob/v1.29.0/SECURITY.md).
 Release validation covers changed behavior, installed artifacts, paired
 compatibility, upgrade and rollback. Publication, deployment and the observation
 period remain separate milestones.

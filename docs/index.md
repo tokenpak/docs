@@ -22,15 +22,15 @@ content; the default path does not promise automatic token savings. Provider-bou
 still travel to the selected upstream provider; TokenPak operates no cloud
 relay and requires no application code changes.
 
-!!! note "v1.28.0"
+!!! note "v1.29.0"
     The commands below, [Quick Start](QUICKSTART.md),
     [extended API reference](api-reference.md), and
-    [Docker guide](DOCKER.md) describe TokenPak **v1.28.0**, the currently
+    [Docker guide](DOCKER.md) describe TokenPak **v1.29.0**, the currently
     published release on PyPI (`pip install tokenpak`). The separate
     [Installation page](installation.md) retains older-release guidance; use
     the Quick Start for the current setup path. See the
-    [1.28.0 upgrade guide](upgrading.md) for recovered session history, recorded usage coverage, paired
-    compatibility and known optional dependency findings. Other pages with explicit
+    [1.29.0 upgrade guide](upgrading.md) for native token observations, first-session
+    reliability, paired compatibility, additive migrations and optional dependency findings. Other pages with explicit
     version pins describe the release line named on that page.
 
 ---
@@ -76,7 +76,7 @@ tokenpak setup --start
 
 | Section | What it covers |
 |---------|-----------------|
-| [Installation](installation.md)            | Older-release installation guidance; use the Quick Start for v1.28.0 |
+| [Installation](installation.md)            | Older-release installation guidance; use the Quick Start for v1.29.0 |
 | [Quick Start](QUICKSTART.md)               | Setup wizard, client integration, first request receipt, including zero savings |
 | [Configuration](configuration.md)          | How configuration works (env vars + YAML, precedence) |
 | [Environment Variables](env-vars.md)       | Complete `TOKENPAK_*` reference |
