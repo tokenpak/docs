@@ -2,14 +2,14 @@
 title: "Known Limitations — OSS beta"
 rung: 2
 audience: Developers evaluating or running the TokenPak OSS beta who want an honest account of what isn't production-quality yet.
-updated: 2026-09-12
+updated: 2026-09-22
 status: current
 ---
 
 # Known Limitations — OSS beta
 
 This page documents current, honest limitations of the **OSS beta**
-(`pip install tokenpak`, **v1.28.0**). If a capability described elsewhere in
+(`pip install tokenpak`, **v1.29.0**). If a capability described elsewhere in
 these docs isn't shipping the way the rest of the docs imply, it shows up
 here — that is the point of this page. Each entry states what's limited,
 whether it's an intentional scope choice or a known defect, the honest
@@ -218,6 +218,69 @@ is needed immediately.
 
 **Retirement condition:** none. Never fabricating a forecast the data
 doesn't support is a durable design commitment, not scheduled for removal.
+
+---
+
+## Native token accounting requires complete evidence
+
+**Status:** intentional safety boundary in v1.29.0.
+
+**What:** native provider-token accounting is opt-in. A local snapshot is an
+observation of the configured accounting domain, not a universal measurement
+of every adapter or request.
+
+**Current behavior:** the [native token snapshot](api-reference.md#native-token-snapshot)
+requires authenticated loopback access, durable reservations and the
+`provider_tokens` accounting basis. Disabled accounting returns an explicit
+unavailable response. Incomplete evidence must not be treated as zero usage
+or permission to spend. Existing estimated accounting is not relabeled as
+native provider usage during upgrade.
+
+**Workaround:** keep the existing accounting mode unless your integration
+can supply the required observations. Inspect availability and reasons before
+using native observations in a budget decision.
+
+**Retirement condition:** update this entry when additional integrations have
+verified complete observation coverage. The requirement to preserve missing
+evidence remains.
+
+---
+
+## Dispatch remains an alpha capability
+
+**Status:** released alpha in v1.29.0, not a general automation guarantee.
+
+**What:** including Dispatch commands in the package does not establish that
+every executor, model, operating system or containment environment is supported.
+
+**Current behavior:** released packages include the CLI and runtime modules;
+runtime commands require the optional `[dispatch]` dependencies. Intake,
+routing, decisions and the run ledger are available. Live station execution and
+delivery receipts are not wired yet. See the
+[versioned Dispatch guide](https://github.com/tokenpak/tokenpak/blob/v1.29.0/docs/guides/dispatch.md).
+
+**Workaround:** use the preview to inspect workflow decisions. Complete and
+verify the actual task through your existing workflow.
+
+**Retirement condition:** update the alpha designation only after the supported
+execution environments and their acceptance criteria are verified and published.
+
+---
+
+## Optional dependency security advisories
+
+**Status:** disclosed limitations of optional integrations in v1.29.0.
+
+**What:** the release records unresolved advisories for optional dependencies.
+See the [versioned security policy](https://github.com/tokenpak/tokenpak/blob/v1.29.0/SECURITY.md)
+for affected versions, exposure and mitigations.
+
+**Current behavior:** passing the supported release checks does not remove
+these advisories. Install only the extras your workflow needs and apply the
+documented mitigations before enabling an affected integration.
+
+**Retirement condition:** update this entry when the affected dependencies are
+replaced or fixed and the corresponding integration is verified again.
 
 ---
 
