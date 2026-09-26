@@ -3149,6 +3149,16 @@
 
 
 <h1 id="wire-headers-x-tokenpak-">Wire headers (<code>X-TokenPak-*</code>)<a class="headerlink" href="#wire-headers-x-tokenpak-" title="Permanent link">&para;</a></h1>
+<div class="admonition warning">
+<p class="admonition-title">Not yet implemented in the reference proxy</p>
+<p>This page specifies the TIP-1.0 wire-header contract as designed and reserved
+in the registry schema. <strong>The reference proxy does not currently emit or read
+any of these <code>X-TokenPak-*</code> headers.</strong> They are not live on the wire today —
+do not build an integration against this page expecting them to show up in
+real requests or responses. Treat everything below (including the worked
+examples) as the specified target contract, not a description of current
+proxy behavior.</p>
+</div>
 <p>TIP-1.0 defines a family of <code>X-TokenPak-*</code> headers carried on data-plane requests
 and responses. They are <strong>informational metadata</strong>: they describe what a TIP
 component did with a request, but they never alter the request body. A component
