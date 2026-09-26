@@ -1,5 +1,14 @@
 # Wire headers (`X-TokenPak-*`)
 
+!!! warning "Not yet implemented in the reference proxy"
+    This page specifies the TIP-1.0 wire-header contract as designed and reserved
+    in the registry schema. **The reference proxy does not currently emit or read
+    any of these `X-TokenPak-*` headers.** They are not live on the wire today —
+    do not build an integration against this page expecting them to show up in
+    real requests or responses. Treat everything below (including the worked
+    examples) as the specified target contract, not a description of current
+    proxy behavior.
+
 TIP-1.0 defines a family of `X-TokenPak-*` headers carried on data-plane requests
 and responses. They are **informational metadata**: they describe what a TIP
 component did with a request, but they never alter the request body. A component
