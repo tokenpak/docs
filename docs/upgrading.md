@@ -8,7 +8,10 @@ status: current
 
 # Upgrade to TokenPak 1.30.0
 
-This guide is for developers upgrading from TokenPak 1.29.0.
+This guide is for developers upgrading from TokenPak 1.29.0. The compatible
+published pair is OSS 1.30.0 and the separately distributed Pro 0.5.1. If you
+are upgrading from an earlier release, also read the 1.29.0 and 1.28.0 changes
+below.
 
 ## Execution ledger recovery signal
 
@@ -27,6 +30,49 @@ refresher is wired into the thread-based proxy server; savings, compare and
 leaderboard reads are retargeted onto the canonical monitor store; and
 vault-index load failures now emit explicit telemetry instead of a silent
 print. None of these change the public CLI, HTTP, or configuration surface.
+
+## Native token observations and first-session reliability
+
+*Introduced in 1.29.0.*
+
+Opt-in native token observations keep token measurements separate from billed
+cost. They include request coverage, bounded reservations and evidence that a
+response finished. Missing or incomplete observations remain unavailable; a token
+count does not establish a successful task, calibrated forecast or paid savings.
+See the [native token snapshot API](api-reference.md#native-token-snapshot).
+
+Fresh companion journals record the first Claude prompt even when the external
+SQLite executable is absent. Background writes no longer keep the prompt's
+response pipes open. Prompt metadata does not count as completed work or provider
+usage, and configured shell-hook budgets retain their refusal behavior when
+SQLite is unavailable.
+
+The companion MCP server keeps JSON-RPC on stdout and writes startup and
+content-free malformed-input diagnostics to stderr. Dispatch ships an alpha CLI
+and runtime with optional dependencies; station execution and delivery remain
+unfinished. See the [packaged Dispatch guide](https://github.com/tokenpak/tokenpak/blob/v1.29.0/docs/guides/dispatch.md).
+
+## Session history and recorded usage
+
+*Introduced in 1.28.0.*
+
+Completed Codex turns can be recovered into the local companion journal from
+native history. The intake handles forked sessions and large records, preserves
+existing entries, and avoids duplicate entries on replay. History listings show
+the number of recorded entries. A completed turn does not establish that the
+task succeeded, or supply missing provider usage.
+
+Session economics includes an optional `recorded_usage` object. It exposes
+measured token subtotals, request coverage and failed-request counts when full
+session totals are unavailable. The terminal footer shows `usage N/M` for this
+coverage. Any cost subtotal carries its recorded cost basis; it is not an invoice
+or a complete session total. Missing usage and failed requests continue to affect
+the full-session totals, guard and forecast inputs.
+
+Explicit `xhigh` effort is a separate forecast cell when its recorded provenance
+supports that value. It does not borrow histories from unknown effort. Forecasts
+still require eligible histories and scored coverage; sparse cells remain
+learning or unavailable. See [terminal forecasts](companion-session-forecast.md).
 
 ## Install and verify
 
