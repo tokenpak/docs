@@ -1,12 +1,12 @@
 ---
-title: "TokenPak quickstart: first measured receipt in 5 minutes"
+title: "TokenPak quickstart: your first measured receipt"
 rung: 1
 audience: Developers installing TokenPak for the first time.
 updated: 2026-09-29
 status: current
 ---
 
-# TokenPak quickstart: first measured receipt in 5 minutes
+# TokenPak quickstart: your first measured receipt
 
 This quickstart is for developers installing TokenPak for the first time.
 Install it, launch your agent through it, and get a measured receipt on the
@@ -74,7 +74,7 @@ export OPENAI_BASE_URL=http://127.0.0.1:8766/v1
 
 Claude Code reads `ANTHROPIC_BASE_URL` from the environment the same as the SDK. Start Claude Code after setting the env var and it will route through TokenPak automatically.
 
-On provider-cached flows like Claude Code, the provider's own prompt cache already absorbs most of the token pool, and the default proxy preserves conversation turns, so a forwarded request can truthfully report zero tokens saved. See the [Savings reporting](SAVINGS.md) page for the full framing.
+With Claude Code, the default proxy preserves conversation turns, so a forwarded request can truthfully report zero tokens saved. Provider cache reuse is distinct from TokenPak context reduction; inspect attribution with `tokenpak status --tip-cache`. See the [Savings reporting](SAVINGS.md) page for the full framing.
 
 ### Codex CLI with OAuth
 
@@ -135,9 +135,9 @@ The local web dashboard at **`http://127.0.0.1:8766/dashboard`** visualizes cost
 
 TokenPak reports what it measured on your own traffic. It does not promise a savings figure, because the result depends on your integration path.
 
-- **Default proxy path:** the default proxy preserves conversation turns, so a forwarded request can truthfully report zero tokens saved. That result verifies routing and accounting; it is not a failure.
+- **Default proxy path:** the default proxy preserves conversation turns, so a forwarded request can truthfully report zero tokens saved. That result verifies routing and accounting without claiming savings that did not occur.
 - **Explicit context tools:** compression operations that you invoke explicitly can reduce eligible content. Measure the effect on your own traffic with `tokenpak savings`.
-- **Provider-cached flows (Claude Code and similar):** the provider's own prompt cache already absorbs most of the token pool. Provider cache reuse is reported separately from TokenPak context reduction; `tokenpak status --tip-cache` shows the attribution.
+- **Provider cache:** Provider cache reuse is distinct from TokenPak context reduction; inspect attribution with `tokenpak status --tip-cache`.
 
 If you're evaluating TokenPak, start with a real session in Claude Code or Codex, read the receipt and `tokenpak status`, and then try explicit context tools on your own workload.
 
@@ -197,7 +197,7 @@ provider credential separately, such as with `x-api-key`.
 
 - Zero is a correct result for a forwarded request: the default proxy preserves conversation turns (see [Savings reporting](SAVINGS.md)).
 - Check `tokenpak status` — it should show request count + token metrics.
-- Provider cache hits are reported separately from TokenPak context reduction; `tokenpak status --tip-cache` shows the attribution.
+- Provider cache reuse is distinct from TokenPak context reduction; inspect attribution with `tokenpak status --tip-cache`.
 
 **Wizard prints "No API keys detected"**
 

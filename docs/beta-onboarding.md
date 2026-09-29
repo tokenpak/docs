@@ -15,7 +15,7 @@ Welcome to the TokenPak OSS beta. This page is the fastest path from "I heard ab
 
 Cursor, Cline, Continue and Aider are compatibility targets, not yet independently verified. You are welcome to try them and report what you find; their guides describe an expected setup.
 
-You don't need to use an agent to try TokenPak: any LLM request you send through the proxy is recorded locally. The default proxy preserves conversation turns, so a forwarded request can truthfully report zero tokens saved.
+You don't need to use an agent to try TokenPak: any LLM request you send through the proxy is recorded. The default proxy preserves conversation turns, so a forwarded request can truthfully report zero tokens saved.
 
 ## Install
 
@@ -32,10 +32,10 @@ Point your existing client at the proxy:
 ```bash
 export ANTHROPIC_BASE_URL=http://127.0.0.1:8766
 # or, for OpenAI-compatible clients:
-export OPENAI_BASE_URL=http://127.0.0.1:8766
+export OPENAI_BASE_URL=http://127.0.0.1:8766/v1
 ```
 
-Claude Code honors the same env vars, and Codex launches through `tokenpak codex`. Cursor, Cline, Continue and Aider are compatibility targets, not yet independently verified. Full per-client patterns: [Quickstart](QUICKSTART.md).
+Codex launches through `tokenpak codex`. Cursor, Cline, Continue and Aider are compatibility targets, not yet independently verified. Full per-client patterns: [Quickstart](QUICKSTART.md).
 
 ## Trust posture
 
@@ -66,15 +66,15 @@ If `tokenpak status` shows the proxy up and your request count climbing, you're 
 These are the workflows where beta feedback is most valuable. Pick whichever matches your daily work:
 
 1. **Direct-API agent loop** — any code that makes a sequence of LLM calls (Anthropic SDK, OpenAI SDK, LiteLLM, your own loop). Easiest to compare before / after.
-2. **Coding assistant** — Claude Code or Codex (first-class); Cursor, Cline, Continue and Aider are compatibility targets, not yet independently verified. Run a real task end to end (open a feature branch, ask for a refactor, iterate). Note: provider cache hits are reported separately from TokenPak context reduction, and `tokenpak savings` will distinguish proxy-caused saves from provider cache hits.
+2. **Coding assistant** — Claude Code or Codex (first-class); Cursor, Cline, Continue and Aider are compatibility targets, not yet independently verified. Run a real task end to end (open a feature branch, ask for a refactor, iterate). Inspect recorded usage with `tokenpak savings`; inspect provider-cache versus TokenPak attribution with `tokenpak status --tip-cache`.
 3. **Long multi-turn session** — extended chat or pair-programming session where the context keeps growing. Watch measured usage, burn and runway in the session footer or `tokenpak status`.
-4. **CLI / SDK script** — short Python or shell scripts that hit the LLM API directly. Cleanest case to measure explicit context tools because there's no provider-cache muddle.
+4. **CLI / SDK script** — short Python or shell scripts that hit the LLM API directly. Inspect recorded usage with `tokenpak savings`.
 5. **Spend Guard** — set a deliberate low cap and trigger the pre-send 402: `tokenpak budget --help` for knobs. Worth verifying behavior in your environment before relying on it.
 6. **Vault indexing** — point `tokenpak index <dir>` at a project and try `tokenpak search "<query>"`. We want to know if results match what you'd expect.
 
 ## What savings to expect
 
-TokenPak reports what it measured on your own traffic and does not promise a savings figure. The default proxy preserves conversation turns, so a forwarded request can truthfully report zero tokens saved; explicit context tools can reduce eligible content. `make benchmark-headline` exercises a fixed fixture, and its result is not a default-proxy savings receipt. `tokenpak savings` separates proxy saves from provider cache hits.
+TokenPak reports what it measured on your own traffic and does not promise a savings figure. The default proxy preserves conversation turns, so a forwarded request can truthfully report zero tokens saved; explicit context tools can reduce eligible content. `make benchmark-headline` exercises a fixed fixture, and its result is not a default-proxy savings receipt. Inspect recorded usage with `tokenpak savings`; inspect provider-cache versus TokenPak attribution with `tokenpak status --tip-cache`.
 
 If you're evaluating TokenPak, start with a real session in Claude Code or Codex, read the receipt and `tokenpak status`, and then try explicit context tools on your own workload.
 

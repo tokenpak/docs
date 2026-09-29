@@ -204,7 +204,7 @@ In notebooks, restart the kernel after changing shell environment variables.
 
 ### savings shows 0 after several requests
 
-Zero is a correct result for a forwarded request: the default proxy preserves conversation turns. Use `tokenpak status` and check `compression_ratio_avg` in the `/health` response.
+Zero is a correct result for a forwarded request: the default proxy preserves conversation turns. Use `tokenpak status` to confirm requests reach the proxy. Inspect recorded usage with `tokenpak savings` and provider-cache attribution with `tokenpak status --tip-cache`.
 
 ---
 

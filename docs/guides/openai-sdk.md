@@ -180,11 +180,7 @@ TokenPak forwards your `OPENAI_API_KEY` to OpenAI unmodified. If you see a 401:
 
 ### Responses look correct but savings are zero
 
-Zero is a correct result for a forwarded request: the default proxy preserves conversation turns. Use `tokenpak status` and check `compression_ratio_avg` in the `/health` response. Compaction skips prompts below `TOKENPAK_COMPACT_THRESHOLD_TOKENS`; lower it with:
-
-```bash
-export TOKENPAK_COMPACT_THRESHOLD_TOKENS=1000
-```
+Zero is a correct result for a forwarded request. The default proxy preserves conversation turns. Use `tokenpak status` to verify routing; use explicit context tools to reduce eligible content.
 
 ---
 

@@ -209,7 +209,7 @@ In remote Cursor sessions, `localhost` means the machine where the Cursor extens
 
 ### savings shows 0 after several turns
 
-Zero is a correct result for a forwarded request: the default proxy preserves conversation turns. Use `tokenpak status` to confirm requests reach the proxy, and check `compression_ratio_avg` in the `/health` response.
+Zero is a correct result for a forwarded request: the default proxy preserves conversation turns. Use `tokenpak status` to confirm requests reach the proxy. Inspect recorded usage with `tokenpak savings` and provider-cache attribution with `tokenpak status --tip-cache`.
 
 ---
 
