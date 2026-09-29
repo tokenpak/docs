@@ -59,13 +59,32 @@
 /*
  * Links in page content are underlined in both schemes, so the underline, not
  * the colour, carries the affordance. They are ink on the light page and accent
- * on the dark page. Hover and focus shift to the accent (Material default).
- * On the light page the active navigation item is bold, because its colour now
- * matches the rest.
+ * on the dark page.
+ *
+ * On the light page, hover and focus keep ink and thicken the underline,
+ * because accent text on paper is below the WCAG 1.4.3 contrast minimum. On the
+ * dark page they shift to the accent (Material default). The active navigation
+ * item is bold on the light page, because its colour now matches the rest.
  */
 .md-typeset a:not(.headerlink) {
   text-decoration: underline;
   text-underline-offset: 0.15em;
+}
+[data-md-color-scheme="default"] .md-typeset a:not(.headerlink):is(:hover, :focus),
+[data-md-color-scheme="default"] .md-typeset a:not(.headerlink):is(:hover, :focus) code {
+  color: var(--tp-ink);
+  text-decoration-thickness: 2px;
+}
+[data-md-color-scheme="default"] .md-nav__link:is([href], [for]):is(:hover, :focus),
+[data-md-color-scheme="default"] .md-nav__link:is([href], [for]):is(:hover, :focus) code {
+  color: var(--tp-ink);
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 0.15em;
+}
+[data-md-color-scheme="default"] .md-typeset .headerlink:is(:hover, :focus),
+[data-md-color-scheme="default"] .md-typeset :target > .headerlink {
+  color: var(--tp-ink);
 }
 [data-md-color-scheme="default"] .md-nav__link--active {
   font-weight: 600;
