@@ -48,7 +48,7 @@ response = client.messages.create(
 print(response.content[0].text)
 ```
 
-The proxy transparently applies compression and context handling, then forwards to the upstream provider.
+The proxy evaluates configured Spend Guard limits, records the request, and forwards it to the upstream provider. The default proxy preserves conversation turns; explicit compression operations can reduce eligible content.
 
 ---
 

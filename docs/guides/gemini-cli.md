@@ -2,13 +2,13 @@
 title: "Use TokenPak with Gemini CLI"
 rung: 2
 audience: Developers using Google's Gemini CLI who want to route Gemini requests through TokenPak.
-updated: 2026-05-04
+updated: 2026-09-29
 status: current
 ---
 
 # Use TokenPak with Gemini CLI
 
-This guide is for developers using Google's Gemini CLI who want TokenPak cost tracking, telemetry, and compression on Gemini requests.
+This guide is for developers using Google's Gemini CLI who want TokenPak request records, cost tracking, and telemetry on Gemini requests.
 
 Gemini CLI supports a custom Gemini API base URL through `GOOGLE_GEMINI_BASE_URL`. Point that variable at TokenPak's local proxy. TokenPak then forwards Google Generative AI requests upstream while recording usage.
 
@@ -109,16 +109,16 @@ If `requests_total` remains 0, Gemini CLI did not inherit `GOOGLE_GEMINI_BASE_UR
 
 ---
 
-## 4. Check your savings
+## 4. Check your usage and savings
 
 After a few Gemini CLI prompts:
 
 ```bash
 tokenpak cost --week      # spend by model
-tokenpak savings          # tokens compressed vs. uncompressed
+tokenpak savings          # recorded token savings; zero is a valid result
 ```
 
-Short prompts may pass through with little or no compression. Larger repeated context is where TokenPak has the most room to reduce tokens.
+The default proxy preserves conversation turns, so a forwarded request can truthfully report zero tokens saved. Explicit context tools can reduce eligible content; measure their effect with `tokenpak savings`.
 
 ---
 
@@ -191,7 +191,7 @@ If you run Gemini CLI from an editor task runner or terminal multiplexer, make s
 
 ### Tools or function-calling requests fail
 
-TokenPak's Google adapter does not yet translate Google function-calling/tool schemas. Plain text prompts are supported; tool-heavy workflows may fail loudly instead of being silently altered. Use Claude Code, OpenAI SDK, or Cline routes for tool-calling workflows until Google tool translation ships.
+TokenPak's Google adapter does not yet translate Google function-calling/tool schemas. Plain text prompts are supported; tool-heavy workflows may fail loudly instead of being silently altered. Use Claude Code or OpenAI SDK routes for tool-calling workflows until Google tool translation ships.
 
 ---
 

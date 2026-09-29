@@ -172,14 +172,14 @@ except TokenPakTimeoutError:
 # Option 1: Reduce message size — keep only relevant context
 short_context = "Summary of relevant context only..."
 
-# Option 2: Let the proxy compress context automatically
-#   (compression is enabled by default; tune via config.yaml / env vars)
+# Option 2: Use an explicit compression operation on eligible context
+#   (the default proxy preserves conversation turns; see the compression tuning guide)
 
 # Option 3: Split into multiple smaller requests
 ```
 
 **Prevention:**
-- Enable compression (on by default — see config.yaml)
+- Use explicit compression on eligible content (the default proxy preserves conversation turns)
 - Use vault context injection selectively
 - Preview compression savings on a file with `tokenpak preview <file>`
 

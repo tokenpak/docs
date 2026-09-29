@@ -1,14 +1,14 @@
 ---
 title: "Use TokenPak with the OpenAI Python SDK"
 rung: 2
-audience: Developers using the OpenAI Python SDK (or any OpenAI-compatible client) who want to route traffic through TokenPak for cost tracking and compression.
-updated: 2026-05-04
+audience: Developers using the OpenAI Python SDK who want to route traffic through TokenPak for request records and cost tracking.
+updated: 2026-09-29
 status: current
 ---
 
 # Use TokenPak with the OpenAI Python SDK
 
-This guide is for developers using the OpenAI Python SDK (or any client that accepts a custom `base_url`) who want to route traffic through TokenPak for cost tracking, cache analytics, and prompt compression.
+This guide is for developers using the OpenAI Python SDK who want to route traffic through TokenPak for request records, cost tracking, and cache analytics.
 
 TokenPak's proxy speaks the OpenAI wire protocol — no code changes required, only a base URL swap.
 
@@ -116,16 +116,16 @@ You should see at least one request in the recent activity table. If `requests_t
 
 ---
 
-## 4. Check your savings
+## 4. Check your usage and savings
 
 After a few requests:
 
 ```bash
 tokenpak cost --week      # spend by model
-tokenpak savings          # tokens compressed vs. uncompressed
+tokenpak savings          # recorded token savings; zero is a valid result
 ```
 
-Agent-style workloads (large system prompts, repeated context) see the largest savings. Short one-off completions will show minimal compression — this is expected behavior.
+The default proxy preserves conversation turns, so a forwarded request can truthfully report zero tokens saved. Explicit context tools can reduce eligible content; measure their effect with `tokenpak savings`.
 
 ---
 
@@ -180,7 +180,7 @@ TokenPak forwards your `OPENAI_API_KEY` to OpenAI unmodified. If you see a 401:
 
 ### Responses look correct but savings are zero
 
-Compression runs on prompts above a configurable default threshold. Short chat messages are passed through unchanged. For larger prompts, use `tokenpak status` and check `compression_ratio_avg` in the `/health` response — a value of `0.0` after many requests suggests all prompts fell below the threshold. Lower the threshold with:
+Zero is a correct result for a forwarded request: the default proxy preserves conversation turns. Use `tokenpak status` and check `compression_ratio_avg` in the `/health` response. Compaction skips prompts below `TOKENPAK_COMPACT_THRESHOLD_TOKENS`; lower it with:
 
 ```bash
 export TOKENPAK_COMPACT_THRESHOLD_TOKENS=1000
