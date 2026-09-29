@@ -1421,7 +1421,7 @@ precedence.
 
 | Variable | Default | Description |
 |----------|---------|-------------|
-| `TOKENPAK_VAULT_INDEX` | `~/vault/.tokenpak` | Path to vault index directory |
+| `TOKENPAK_VAULT_INDEX` | `~/your-vault/.tokenpak` | Path to vault index directory |
 | `TOKENPAK_INJECT_BUDGET` | `4000` | Max tokens to inject from vault per request |
 | `TOKENPAK_INJECT_TOP_K` | `5` | Max vault blocks to inject per request |
 | `TOKENPAK_INJECT_MIN_SCORE` | `2.0` | Minimum BM25 score to include a block |
@@ -1468,7 +1468,7 @@ compression:
   cache_size: 2000
 
 vault:
-  index_path: ~/vault/.tokenpak
+  index_path: ~/your-vault/.tokenpak
   inject_budget: 4000
   inject_top_k: 5
   inject_min_score: 2.0
