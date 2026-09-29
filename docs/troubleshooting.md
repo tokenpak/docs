@@ -245,7 +245,7 @@ curl http://localhost:8766/circuit-breakers
 curl http://localhost:8766/degradation
 
 # If the provider is actually down:
-# TokenPak will automatically try fallback providers
+# automatic fallback enforcement is not active by default
 ```
 
 ### Error: "Invalid API key for provider: openai"

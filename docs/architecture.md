@@ -200,17 +200,17 @@ graph TD
 - **Rate Limiter:** Per-IP, per-model, and cost-based limits
 - **Monitor:** Real-time stats and usage reporting
 - **FormatAdapter:** Converts between OpenAI and native formats transparently
-- **Circuit Breaker:** Detects and routes around failing providers
+- **Circuit Breaker:** Not verified against current release evidence; automatic fallback enforcement is not active by default
 
 ---
 
 ## Caching Strategy
 
-TokenPak uses a three-tier caching approach to maximize token savings:
+TokenPak's caching layers are described below. Provider cache reuse is distinct from TokenPak context reduction, and a forwarded request can report zero tokens saved.
 
 1. **Exact Match Cache** — If we've seen this exact request before, return the cached response instantly (0 tokens).
 2. **Semantic Cache (opt-in)** — When explicitly enabled via `TOKENPAK_SEMANTIC_CACHE_STAGE`, TokenPak may serve cached responses for a narrow set of read-shaped route classes (status checks, summarization, configuration inspection) at conservative per-route similarity thresholds. All code-generation, code-edit, code-review, debugging, test-failure, log-analysis, git-diff-review, and shell-command-analysis prompts are bypassed entirely. Streaming requests are never served from semantic cache. Claude Code traffic is excluded to preserve message-id fidelity. Unknown route classes default to no response substitution. The TokenPak semantic cache stores normalized + hashed query forms only — entries hold a 12-character query hash, response bytes, content type, and wire format. Raw prompt text is not persisted in the semantic-cache store. (This statement scopes only the semantic-cache store; other TokenPak surfaces — request telemetry, trace records, companion journal, capsule storage — have their own retention rules documented in their respective standards and operator configuration.)
-3. **Prompt Cache Headers** — When available, TokenPak automatically injects prompt caching headers so the LLM provider caches expensive prompt prefixes.
+3. **Prompt Cache Headers** — Not verified against current release evidence. Claude Code request bytes remain byte-preserved.
 
 ---
 

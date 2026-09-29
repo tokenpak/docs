@@ -34,24 +34,11 @@ TokenPak is built in the open because it works better that way. The protocol it 
 
 ### How does TokenPak route requests to providers?
 
-You define a routing strategy in `config.yaml`:
-
-```yaml
-routing:
-  primary: anthropic    # Default provider
-  fallback: openai      # Backup if primary fails
-  strategies:
-    - provider: anthropic
-      models: ["claude-3-*"]
-    - provider: openai
-      models: ["gpt-4", "gpt-3.5-turbo"]
-```
-
-TokenPak matches the requested model to a provider and routes there. If the provider fails, it automatically tries fallbacks. No code changes needed.
+Routing policy is configuration and observe-mode records. Automatic model changes and fallback enforcement are not active by default.
 
 ### Does TokenPak support streaming?
 
-Yes, completely. TokenPak proxies Server-Sent Events (SSE) from providers without buffering. Your streaming requests work exactly as if you called the provider directly — you get chunks in real-time with full backpressure handling.
+The proxy handles streamed responses, and empty streamed responses preserve ordinary accounting observations. If the proxy restarts mid-stream, a retried request gets an explicit `terminally_failed` / `recovery_status` signal instead of a bare connection reset; transparent replay is not implemented.
 
 ### How does caching work? Will I get stale responses?
 
@@ -59,7 +46,7 @@ TokenPak caches responses based on request hashing (model + prompt). Cache hits 
 
 ### What about token counting? Is it accurate?
 
-TokenPak uses native token counters for each provider (Anthropic's `token-counter`, OpenAI's `tiktoken`). We don't approximate — you get exact counts. For unsupported providers, we use a fallback estimator (~4 chars per token), which you can override.
+Some counts are estimates. `tokenpak savings --verify` compares TokenPak's existing UTF-8 byte estimator with an independent `cl100k_base` count on a packaged fixture corpus and reports both counts and their divergence; it does not recount stored requests, whose source text is not retained. Session displays label estimates.
 
 ---
 
@@ -95,15 +82,11 @@ Yes. Every request is logged to the local SQLite ledger with metadata (model, to
 
 ### What's the performance overhead?
 
-**Proxy internals:** TokenPak adds modest processing overhead per request on typical agent prompts. Routing, token counting, and cache lookup are lightweight, in-memory operations.
+**Proxy internals:** This page does not publish latency figures. Measure the proxy's overhead on your own workload.
 
 **End-to-end latency:** when measured against direct API calls, the proxy adds some overhead due to the network round-trip and connection-pooling differences. This is expected for any local proxy.
 
-**Context:** the latency overhead is acceptable because:
-
-- Where you use explicit context tools, token reduction can offset the latency cost; measure it on your workload.
-- Cache hits eliminate provider round-trip latency entirely.
-- Compression batching improves throughput for batch/async workloads.
+**Context:** Measure the effect of explicit context tools on your own workload.
 
 For applications where sub-millisecond response time is critical, either run the proxy on the same machine as your client (recommended), or use the SDK in-process.
 
@@ -130,7 +113,7 @@ You can scrape this in Prometheus, Datadog, or any metrics platform. Logs are JS
 
 ### What if a provider goes down? How does failover work?
 
-TokenPak automatically detects provider failures via health checks and circuit breakers. When a provider is unhealthy, it routes to the fallback provider (no user action needed). Once the primary provider recovers, routing resumes. You can also manually force a provider state via the CLI (`tokenpak provider-status`).
+Automatic model changes and fallback enforcement are not active by default; routing policy is configuration and observe-mode records. If the proxy restarts mid-stream, a retried request gets an explicit `terminally_failed` / `recovery_status` signal instead of a bare connection reset; transparent replay is not implemented.
 
 ---
 

@@ -13,8 +13,8 @@ All features are **FREE and open source** under the Apache 2.0 license.
 | Category | Feature | Status | Notes |
 |----------|---------|--------|-------|
 | **Core Routing** | Multiple provider adapters | ✅ | Built-in adapters: Anthropic, OpenAI, Google, xAI/Grok, Ollama |
-| | Fallback chains | ✅ | Auto-failover to backup providers |
-| | Circuit breaker | ✅ | Recovers from rate limits |
+| | Fallback chains | ⚠️ | Not active by default; routing policy is configuration and observe-mode records |
+| | Circuit breaker | ⚠️ | Spend Guard is a pre-send circuit breaker that blocks runaway requests before the provider call |
 | **Token Management** | Token counting (all providers) | ✅ | Unified across Anthropic, OpenAI, Google |
 | | Cost tracking | ✅ | Basic tracking + reporting |
 | **Compression** | Deduplication | ✅ | Remove repeated content |
@@ -29,7 +29,7 @@ All features are **FREE and open source** under the Apache 2.0 license.
 | | Streaming support | ✅ | Handle streaming + non-streaming |
 | **Vault Integration** | Document indexing | ✅ | Index local files (.md, .txt, .pdf) |
 | | Semantic search | ✅ | Search vault by meaning |
-| | Auto-injection | ✅ | Automatically add relevant docs to context |
+| | Context injection | ⚠️ | Off by default; enabling it is an explicit decision (`TOKENPAK_VAULT_INJECTION`) |
 | | Symbol extraction | ✅ | Extract functions, classes, variables |
 | | AST parsing | ✅ | Parse code structure |
 | | Chunk optimization | ✅ | Smart chunking for injection |
@@ -92,7 +92,7 @@ Normalized errors, automatic retries with exponential backoff, and circuit break
 
 ### Vault Features
 
-Indexing, search, auto-injection, symbol extraction, AST parsing, chunking, watcher, SQLite backend
+Indexing, search, symbol extraction, AST parsing, chunking, watcher, SQLite backend. Context injection is off by default.
 
 ```yaml
 vault:
