@@ -1,21 +1,11 @@
 # TokenPak + LiteLLM Adapter
 
-[LiteLLM](https://github.com/BerriAI/litellm) is a multi-provider LLM router that abstracts away provider differences under a unified OpenAI-compatible API. By routing LiteLLM through TokenPak, you gain request records, token accounting, and explicit context tools — all while maintaining LiteLLM's multi-provider fallback and cost-optimization features.
+[LiteLLM](https://github.com/BerriAI/litellm) is a tested SDK adapter; TokenPak records usage and estimated cost.
 
 ## Why Use LiteLLM + TokenPak?
 
-| Feature | LiteLLM | TokenPak | Together |
-|---------|---------|----------|----------|
-| **Multi-provider routing** | ✅ Fallback, cost optimization | — | ✅ Add request records and explicit context tools |
-| **OpenAI compatibility** | ✅ Unified API | ✅ `/v1/chat/completions` | ✅ Seamless integration |
-| **Token compression** | — | ⚠️ Explicit tools can reduce eligible content; the default proxy preserves conversation turns | ⚠️ Where the content is eligible |
-| **Request caching** | — | ✅ Cache identical prompts | ✅ Deduplicate across clients |
-| **Token accounting** | Limited | ✅ Detailed stats/usage | ✅ Unified usage tracking |
-
-### Use Cases
-- **Multi-provider fallback** with TokenPak records: Use LiteLLM's fallback to Claude → Gemini → GPT, with TokenPak recording requests across all routes
-- **Cost visibility** across providers: LiteLLM handles provider selection, TokenPak records usage and estimated cost per request
-- **Controlled multi-client access**: Route multiple services through TokenPak proxy + LiteLLM for unified auth and cost tracking
+- **Usage records:** TokenPak records usage and estimated cost for requests routed through it.
+- **Default behavior:** The default proxy preserves conversation turns, so a forwarded request can report zero tokens saved. Explicit context tools can reduce eligible content.
 
 ---
 
@@ -123,9 +113,9 @@ Your App → LiteLLM Proxy (8000) → TokenPak Proxy (8766) → Anthropic API
 
 ---
 
-### Pattern 3: Multi-Provider Fallback with TokenPak Caching
+### Pattern 3: LiteLLM Fallback with TokenPak
 
-Combine LiteLLM's fallback logic with TokenPak's caching for resilient + efficient routing:
+Use LiteLLM's own fallback settings with TokenPak recording the requests it receives:
 
 ```yaml
 # litellm_config.yaml
@@ -148,10 +138,8 @@ router_settings:
 ```
 
 **How it works:**
-1. LiteLLM routes 80% of requests to Claude (primary)
-2. On failures, automatically routes to GPT-4
-3. **TokenPak caches both paths** — identical prompts are deduplicated across providers
-4. Unified token usage tracking across all routes
+1. LiteLLM handles routing and fallback according to its own configuration
+2. TokenPak records the requests it receives on each path
 
 ---
 

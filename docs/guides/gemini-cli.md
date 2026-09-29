@@ -1,16 +1,18 @@
 ---
 title: "Use TokenPak with Gemini CLI"
 rung: 2
-audience: Developers using Google's Gemini CLI who want to route Gemini requests through TokenPak.
+audience: Developers using Google's Gemini CLI who want to try routing Gemini requests through TokenPak.
 updated: 2026-09-29
 status: current
 ---
 
 # Use TokenPak with Gemini CLI
 
-This guide is for developers using Google's Gemini CLI who want TokenPak request records, cost tracking, and telemetry on Gemini requests.
+> **Not verified by current release evidence.** The first-class integrations are Claude Code and Codex, and the tested adapters are the OpenAI SDK, Anthropic SDK and LiteLLM; this guide describes an expected setup for Gemini CLI.
 
-Gemini CLI supports a custom Gemini API base URL through `GOOGLE_GEMINI_BASE_URL`. Point that variable at TokenPak's local proxy. TokenPak then forwards Google Generative AI requests upstream while recording usage.
+This guide is for developers using Google's Gemini CLI who want to try routing Gemini requests through TokenPak.
+
+Gemini CLI supports a custom Gemini API base URL through `GOOGLE_GEMINI_BASE_URL`. Point that variable at TokenPak's local proxy.
 
 **What you need before starting:**
 
@@ -191,7 +193,7 @@ If you run Gemini CLI from an editor task runner or terminal multiplexer, make s
 
 ### Tools or function-calling requests fail
 
-TokenPak's Google adapter does not yet translate Google function-calling/tool schemas. Plain text prompts are supported; tool-heavy workflows may fail loudly instead of being silently altered. Use Claude Code or OpenAI SDK routes for tool-calling workflows until Google tool translation ships.
+Tool and function-calling requests are not verified by current release evidence for this integration. For workflows that need verified behavior, use a first-class integration (Claude Code or Codex) or a tested adapter (OpenAI SDK, Anthropic SDK or LiteLLM).
 
 ---
 
