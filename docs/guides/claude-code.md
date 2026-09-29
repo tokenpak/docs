@@ -161,7 +161,7 @@ Some package managers (Homebrew, conda) reset PATH and environment on upgrade. A
 
 ### tokenpak savings shows 0 after several prompts
 
-Zero is a correct result for a forwarded request: the default proxy preserves conversation turns. Use `tokenpak status` to confirm requests reach the proxy — the `compression_ratio_avg` field in `/health` shows the running average.
+Zero is a correct result for a forwarded request: the default proxy preserves conversation turns. Use `tokenpak status` to confirm requests reach the proxy. Inspect recorded usage with `tokenpak savings` and provider-cache attribution with `tokenpak status --tip-cache`.
 
 ---
 

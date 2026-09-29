@@ -6,7 +6,7 @@ It depends on your workload — specifically how much of your context repeats an
 
 The default proxy preserves conversation turns, so a forwarded request can truthfully report zero tokens saved. Explicit context tools can reduce eligible content.
 
-> **A note on numbers:** TokenPak does not publish headline savings or cost figures until they are backed by a validated, frozen-fixture benchmark run. Our benchmark suite is in progress; receipt-backed figures will publish once it produces a validated run. Until then, the most reliable savings number is the one you measure on your own workload with `tokenpak stats` and `tokenpak report --json`.
+> **A note on numbers:** TokenPak does not publish headline savings or cost figures until they are backed by a validated, frozen-fixture benchmark run. Our benchmark suite is in progress; receipt-backed figures will publish once it produces a validated run. Until then, the most reliable savings number is the one you measure on your own workload with `tokenpak savings`.
 
 ---
 
@@ -14,20 +14,19 @@ The default proxy preserves conversation turns, so a forwarded request can truth
 
 ### What TokenPak Does
 
-1. **Records every request** — Keeps a local record of each request that goes through the proxy, including measured usage and estimated cost
+1. **Records every request** — Records each request that goes through the proxy, including measured usage and estimated cost
 2. **Preserves conversation turns by default** — A forwarded request can correctly report zero tokens saved
-3. **Reduces eligible content on request** — Explicit compression operations can deduplicate repeated text or summarize long, repetitive blocks
-4. **Reports what changed** — Shows tokens and estimated cost reduced, per request, where a reduction happened
+3. **Reduces eligible content on request** — Explicit compression operations can reduce eligible content
+4. **Reports recorded usage** — `tokenpak savings` shows recorded usage, and `tokenpak status --tip-cache` shows provider-cache attribution
 
 ### The Impact
 
-When you use explicit context tools, the reduction comes from these techniques:
+Explicit context tools can reduce eligible content:
 
 | Technique | What it does | When it helps |
 |-----------|--------------|---------------|
-| **Request deduplication** | Avoids resending an identical prompt | When you ask the same question twice |
-| **Semantic compression** | Shrinks repetitive or verbose context | When you send large documents or code contexts |
-| **Selected profile** | Applies compression at the strength of the profile you choose | Where the content is eligible |
+| **Text deduplication** | Removes repeated content within eligible input | When that input contains repetition |
+| **Explicit compression** | Reduces eligible content | Where the content is eligible |
 
 How much each of these saves depends entirely on your workload and repeat rate — there is no single number that holds across all traffic.
 
@@ -35,13 +34,12 @@ How much each of these saves depends entirely on your workload and repeat rate �
 
 ## How Savings Behave in Practice
 
-Where explicit context tools apply, savings are workload-dependent. On the default path, a forwarded request can report zero tokens saved. The general shape:
+Savings depend on your workload. On the default path, a forwarded request can report zero tokens saved.
 
-- **Highly repetitive traffic** (agent loops, batch jobs, knowledge-base lookups) benefits most from explicit tools, because cached and compressible context dominates.
-- **Provider-cached flows** show lower incremental gains, because the provider is already discounting repeated context.
-- **One-off, highly unique requests** benefit least, because there is little to dedup or compress.
+- Repeated content may offer opportunities for explicit compression; measure the result on your own workload.
+- Provider cache reuse is distinct from TokenPak context reduction; inspect attribution with `tokenpak status --tip-cache`.
 
-The only way to know your number is to run TokenPak on your traffic and read the report.
+The only way to know your number is to run TokenPak on your traffic and read `tokenpak savings`.
 
 ---
 
@@ -78,20 +76,7 @@ The output reports the requests, tokens, and estimated cost saved for *your* tra
 
 ### 4. Understand the Breakdown
 
-```bash
-# Detailed report with per-model savings
-tokenpak report --json
-```
-
-Returns:
-
-- `input_tokens` — Tokens you actually sent to the API (after any explicit compression)
-- `saved_tokens` — Tokens we didn't send (already cached or compressed)
-- `compression_ratio` — How aggressively we compressed your context, where compression applied
-- `cost_saved` — Estimated dollar amount saved
-- `cache_hit_rate` — Share of your requests that hit the cache
-
-Because these are computed from your own traffic, they are the authoritative measure of what TokenPak does for you — far more reliable than any generic headline figure.
+Inspect recorded usage with `tokenpak savings` and provider-cache attribution with `tokenpak status --tip-cache`.
 
 ---
 
@@ -105,9 +90,9 @@ Consider an agent that:
 
 **Without TokenPak:** Every Claude call re-sends the full search context, so you pay for the same large context on each call.
 
-**With TokenPak:** The proxy records each call. Whether later calls cost less depends on provider prompt caching and on the explicit context tools you use; `tokenpak status --tip-cache` shows provider cache attribution separately from TokenPak reduction.
+**With TokenPak:** The proxy records each call. Provider cache reuse is distinct from TokenPak context reduction; inspect attribution with `tokenpak status --tip-cache`.
 
-This is the workload shape where repeated context is most likely — but the actual saving depends on how much context repeats across your calls. Run `tokenpak report --json` against your own agent to see the real figure, which can be zero.
+The actual saving depends on how much context repeats across your calls and on the explicit context tools you use. Run `tokenpak savings` against your own agent to see the real figure, which can be zero.
 
 ---
 
@@ -154,7 +139,7 @@ Proxy for most requests + SDK mode for special cases (cost-critical paths).
 
 ## Profiles: Tune Savings vs. Risk
 
-TokenPak ships with compression profiles tuned for different workloads. Heavier compression generally trades more aggressively for savings; lighter compression prioritizes fidelity. A profile sets the strength of compression where compression applies: in the reference setup, the built-in Pak builder leaves every system, user, and assistant turn intact even under the `aggressive` profile, so the receipt reports zero tokens saved.
+TokenPak ships with compression profiles tuned for different workloads. Heavier compression generally trades more aggressively for savings; lighter compression prioritizes fidelity. In the reference setup, the built-in Pak builder leaves every system, user, and assistant turn intact even under the `aggressive` profile, so the receipt reports zero tokens saved.
 
 | Profile | Compression | Risk | Use Case |
 |---------|-------------|------|----------|
@@ -188,7 +173,7 @@ response = client.messages.create(
 To estimate your own return, measure first, then extrapolate:
 
 1. Run TokenPak over a representative slice of your traffic.
-2. Read your measured saving from `tokenpak savings` / `tokenpak report --json`; it can be zero on the default path.
+2. Read your measured saving from `tokenpak savings`; it can be zero on the default path.
 3. Apply that measured rate to your monthly LLM spend.
 
 Deploying the proxy is low-effort — typically a single URL swap in your client — so you can measure your real savings rate before committing to a wider rollout.
@@ -197,24 +182,14 @@ Deploying the proxy is low-effort — typically a single URL swap in your client
 
 ## Caveats & Tradeoffs
 
-### When Explicit Context Tools Help Most
-
-- ✅ Agent loops
-- ✅ Batch processing with repeated contexts
-- ✅ Knowledge-base lookups with large doc chunks
-- ✅ Codebase indexing and semantic search
-
 ### When Savings Are Lower
 
 - ⚠️ The default proxy path (conversation turns are preserved, so a forwarded request can report zero tokens saved)
-- ⚠️ One-off requests (no cache hits, no dedup)
-- ⚠️ Highly unique contexts (compression is less effective)
-- ⚠️ Provider-cached flows (the provider already discounts repeated context, so incremental gains are smaller)
-- ⚠️ Streaming responses (cache benefits hit less often)
+- ⚠️ Provider cache reuse (distinct from TokenPak context reduction; inspect attribution with `tokenpak status --tip-cache`)
 
 ### Quality Tradeoffs
 
-The default proxy preserves conversation turns. Explicit compression operations change eligible content, so they can change what the model sees. Lighter profiles favor fidelity; heavier profiles such as `aggressive` compress more to favor cost savings, which can affect accuracy on some tasks. Test any compression setting on your workload before relying on it.
+The default proxy preserves conversation turns. Explicit compression operations change eligible content, so they can change what the model sees. Test any compression setting on your workload before relying on it.
 
 ---
 
@@ -229,7 +204,7 @@ The default proxy preserves conversation turns. Explicit compression operations 
 
 ## Questions?
 
-- **How do I verify the savings are real?** → Check `tokenpak savings`, `tokenpak stats`, or `tokenpak report --json` for a token-by-token breakdown of your own traffic
+- **How do I verify the savings are real?** → Inspect recorded usage with `tokenpak savings` and provider-cache attribution with `tokenpak status --tip-cache`
 - **Will this slow down my requests?** → The proxy adds a network hop; the added latency depends on your deployment path (run it on the same machine/network to minimize it). SDK mode adds no network hop.
 - **Can I bypass TokenPak for specific requests?** → Yes, set header `X-TokenPak-Bypass: true`
 - **What if the LLM needs the exact original tokens?** → Use bypass header or switch to `safe` profile

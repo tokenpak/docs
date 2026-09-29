@@ -10,11 +10,11 @@ status: current
 
 This guide is for developers using OpenAI Codex CLI who want to route its traffic through TokenPak for request records, cost tracking, and cache analytics.
 
-Codex CLI signs in to your ChatGPT account and stores an OAuth token at `~/.codex/auth.json`. TokenPak's Codex adapter detects the JWT-shaped bearer token, routes the request to the ChatGPT backend (`chatgpt.com/backend-api`), and records the request. No code changes — only a base URL swap.
+Run `tokenpak codex` with an already authenticated Codex client. The reference path reuses its existing OAuth login and selected or default model.
 
 **What you need before starting:**
 
-- Codex CLI installed and authenticated (`codex --version` works and `~/.codex/auth.json` exists)
+- Codex CLI installed and authenticated (`codex --version` works)
 - Python 3.10+
 - No existing `OPENAI_BASE_URL` override that conflicts
 
@@ -107,7 +107,7 @@ Then reload:
 source ~/.bashrc   # or source ~/.zshrc
 ```
 
-You do not edit `~/.codex/auth.json` — Codex CLI owns that file and rotates the OAuth token itself. TokenPak reads the token from the request's `Authorization` header at proxy time, recognizes the JWT shape, and forwards byte-preserved to the ChatGPT backend.
+TokenPak reuses your existing Codex OAuth login; no separate credential is required for this path.
 
 ### When another Codex session is already running
 

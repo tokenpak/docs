@@ -21,8 +21,8 @@ TokenPak is a local proxy for coding agents that records each request and shows 
   computer (measured usage, estimated cost, burn and runway, with forecasts
   shown only where calibrated), on by default in the Claude Code footer and the
   Codex pane from 1.27.0 and in `tokenpak status`; Spend Guard limits; and
-  explicit context tools. Pro 0.4.0 and later add prepared stay-versus-fresh
-  session comparisons, with measurements and an explicit confirm or decline.
+  explicit context tools. Pro adds prepared context bundles, observed-reference
+  measurement, and fresh confirmation and decline records.
 - **Planned:** calibrated forecasts for more model and effort combinations; Pro
   reroute recommendations once calibration evidence exists; and any automation
   later, gated separately.
