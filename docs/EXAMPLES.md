@@ -4,7 +4,7 @@ created: 2026-03-24T19:05:55Z
 ---
 # TokenPak Usage Examples
 
-> Copy-paste ready examples for common TokenPak patterns. The compression and vault examples set explicit modes and options; the default proxy preserves conversation turns, so a forwarded request can report zero tokens saved.
+> Copy-paste ready examples for common TokenPak patterns. The default proxy preserves conversation turns, so a forwarded request can report zero tokens saved; the compression and vault examples show optional modes and settings.
 
 ---
 

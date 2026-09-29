@@ -27,7 +27,7 @@ When you use explicit context tools, the reduction comes from these techniques:
 |-----------|--------------|---------------|
 | **Request deduplication** | Avoids resending an identical prompt | When you ask the same question twice |
 | **Semantic compression** | Shrinks repetitive or verbose context | When you send large documents or code contexts |
-| **Selected profile** | Applies caching and compression at the strength of the profile you choose | Where the content is eligible |
+| **Selected profile** | Applies compression at the strength of the profile you choose | Where the content is eligible |
 
 How much each of these saves depends entirely on your workload and repeat rate — there is no single number that holds across all traffic.
 
