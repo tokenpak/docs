@@ -1,20 +1,20 @@
 # TokenPak + LiteLLM Adapter
 
-[LiteLLM](https://github.com/BerriAI/litellm) is a multi-provider LLM router that abstracts away provider differences under a unified OpenAI-compatible API. By routing LiteLLM through TokenPak, you gain automatic compression, caching, and token accounting — all while maintaining LiteLLM's multi-provider fallback and cost-optimization features.
+[LiteLLM](https://github.com/BerriAI/litellm) is a multi-provider LLM router that abstracts away provider differences under a unified OpenAI-compatible API. By routing LiteLLM through TokenPak, you gain request records, token accounting, and explicit context tools — all while maintaining LiteLLM's multi-provider fallback and cost-optimization features.
 
 ## Why Use LiteLLM + TokenPak?
 
 | Feature | LiteLLM | TokenPak | Together |
 |---------|---------|----------|----------|
-| **Multi-provider routing** | ✅ Fallback, cost optimization | — | ✅ Add compression + caching |
+| **Multi-provider routing** | ✅ Fallback, cost optimization | — | ✅ Add request records and explicit context tools |
 | **OpenAI compatibility** | ✅ Unified API | ✅ `/v1/chat/completions` | ✅ Seamless integration |
-| **Token compression** | — | ✅ Reduce input/output tokens | ✅ Lower costs further |
+| **Token compression** | — | ⚠️ Explicit tools can reduce eligible content; the default proxy preserves conversation turns | ⚠️ Where the content is eligible |
 | **Request caching** | — | ✅ Cache identical prompts | ✅ Deduplicate across clients |
 | **Token accounting** | Limited | ✅ Detailed stats/usage | ✅ Unified usage tracking |
 
 ### Use Cases
-- **Multi-provider fallback** with TokenPak compression: Use LiteLLM's fallback to Claude → Gemini → GPT, with TokenPak deduplicating requests across all routes
-- **Cost optimization** across providers: LiteLLM optimizes provider selection, TokenPak optimizes tokens — compound savings
+- **Multi-provider fallback** with TokenPak records: Use LiteLLM's fallback to Claude → Gemini → GPT, with TokenPak recording requests across all routes
+- **Cost visibility** across providers: LiteLLM handles provider selection, TokenPak records usage and estimated cost per request
 - **Controlled multi-client access**: Route multiple services through TokenPak proxy + LiteLLM for unified auth and cost tracking
 
 ---
@@ -73,7 +73,7 @@ print(response.choices[0].message.content)
 **Key points:**
 - Use `openai/<model-name>` format: LiteLLM routes to the OpenAI-compatible endpoint
 - `api_base` points to TokenPak proxy (default: `localhost:8766/v1`)
-- TokenPak handles compression, caching, and token accounting
+- TokenPak records requests and handles token accounting
 
 ---
 

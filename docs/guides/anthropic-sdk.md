@@ -1,14 +1,14 @@
 ---
 title: "Use TokenPak with the Anthropic Python SDK"
 rung: 2
-audience: Developers using the Anthropic Python SDK who want to route API calls through TokenPak for cost tracking and compression.
-updated: 2026-05-04
+audience: Developers using the Anthropic Python SDK who want to route API calls through TokenPak for request records and cost tracking.
+updated: 2026-09-29
 status: current
 ---
 
 # Use TokenPak with the Anthropic Python SDK
 
-This guide is for developers using the Anthropic Python SDK who want to route API calls through TokenPak for cost tracking, cache analytics, and prompt compression.
+This guide is for developers using the Anthropic Python SDK who want to route API calls through TokenPak for request records, cost tracking, and cache analytics.
 
 TokenPak accepts Anthropic Messages API traffic at the same local proxy URL Claude Code uses. You can point the SDK at TokenPak with `ANTHROPIC_BASE_URL` or with the `base_url` argument in code.
 
@@ -118,16 +118,16 @@ You should see at least one request in the recent activity table. If `requests_t
 
 ---
 
-## 4. Check your savings
+## 4. Check your usage and savings
 
 After a few requests:
 
 ```bash
 tokenpak cost --week      # spend by model
-tokenpak savings          # tokens compressed vs. uncompressed
+tokenpak savings          # recorded token savings; zero is a valid result
 ```
 
-Agent-style workloads with large repeated context see the largest savings. Short one-off messages may show little or no compression because they fall below the default compression threshold.
+The default proxy preserves conversation turns, so a forwarded request can truthfully report zero tokens saved. Explicit context tools can reduce eligible content; measure their effect with `tokenpak savings`.
 
 ---
 
@@ -204,7 +204,7 @@ In notebooks, restart the kernel after changing shell environment variables.
 
 ### savings shows 0 after several requests
 
-Compression runs on prompts above a configurable default threshold. Short chat messages are passed through unchanged. For larger prompts, use `tokenpak status` and check `compression_ratio_avg` in the `/health` response.
+Zero is a correct result for a forwarded request: the default proxy preserves conversation turns. Use `tokenpak status` and check `compression_ratio_avg` in the `/health` response.
 
 ---
 

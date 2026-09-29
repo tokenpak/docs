@@ -10,7 +10,7 @@ TokenPak exposes an OpenAI-compatible endpoint at `/v1/chat/completions`. If you
 Your app (openai SDK) → POST /v1/chat/completions → TokenPak proxy → Anthropic API
 ```
 
-TokenPak translates the OpenAI Chat Completions format to Anthropic's Messages API, applies compression + caching, then translates the response back.
+TokenPak translates the OpenAI Chat Completions format to Anthropic's Messages API, records the request, then translates the response back.
 
 ---
 

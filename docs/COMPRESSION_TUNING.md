@@ -8,11 +8,13 @@ tags: [tokenpak, compression, tuning, performance]
 
 # TokenPak Compression Tuning Guide
 
+> **Scope:** This guide covers TokenPak's explicit compression operations. The default proxy preserves conversation turns, so a forwarded request can truthfully report zero tokens saved.
+
 This guide explains **how to tune TokenPak's compression engine** to maximize token savings while minimizing latency impact for your specific workload.
 
 ## Overview: Why Compression Matters
 
-LLM API costs scale with token count. TokenPak's compression pipeline intercepts requests and re-expresses semantically equivalent content with fewer tokens, with the magnitude of the reduction depending on your data.
+LLM API costs scale with token count. When you run explicit compression operations, TokenPak's compression pipeline re-expresses eligible content with fewer tokens, with the magnitude of the reduction depending on your data.
 
 > **Note on numbers:** This guide intentionally describes savings and latency in qualitative terms. TokenPak does not publish specific latency, savings, or cache-hit figures until they are backed by a validated, frozen-fixture benchmark run. Receipt-backed figures will be added once TokenPak's benchmark suite produces a validated run. In the meantime, **measure savings and latency on your own workload** — see [Monitoring](#monitoring) and run `tokenpak savings` / `tokenpak stats`.
 

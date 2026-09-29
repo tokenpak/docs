@@ -42,7 +42,7 @@ SDK adapters, or CLI. It covers the v1.30.0 surface described below.
 
 ## Proxy HTTP API
 
-The TokenPak proxy runs on `localhost:8766` by default. It accepts standard HTTP requests and transparently forwards them to upstream providers after applying compression and context injection.
+The TokenPak proxy runs on `localhost:8766` by default. It accepts standard HTTP requests, evaluates configured Spend Guard limits, records the request, and forwards it to the upstream provider. The default proxy preserves conversation turns; explicit compression operations can reduce eligible content.
 
 ### Authentication
 

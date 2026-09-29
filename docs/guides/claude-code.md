@@ -1,14 +1,14 @@
 ---
 title: "Use TokenPak with Claude Code"
 rung: 2
-audience: Developers who have Claude Code installed and want to route it through TokenPak for cost tracking and compression.
-updated: 2026-05-04
+audience: Developers who have Claude Code installed and want to route it through TokenPak for request records and cost tracking.
+updated: 2026-09-29
 status: current
 ---
 
 # Use TokenPak with Claude Code
 
-This guide is for developers who have Claude Code installed and want to route it through TokenPak for cost tracking, cache analytics, and prompt compression.
+This guide is for developers who have Claude Code installed and want to route it through TokenPak for request records, cost tracking, and cache analytics.
 
 **What you need before starting:**
 
@@ -105,16 +105,16 @@ You should see at least one request in the recent activity table. If `requests_t
 
 ---
 
-## 4. Check your savings
+## 4. Check your usage and savings
 
 After a few prompts:
 
 ```bash
 tokenpak cost --week      # spend by model
-tokenpak savings          # tokens compressed vs. uncompressed
+tokenpak savings          # recorded token savings; zero is a valid result
 ```
 
-Agent-style workloads (lots of repeated context across turns) see the largest savings. A fresh session with short prompts will show minimal compression — this is expected.
+The default proxy preserves conversation turns, so a forwarded request can truthfully report zero tokens saved. Explicit context tools can reduce eligible content; measure their effect with `tokenpak savings`.
 
 ---
 
@@ -161,7 +161,7 @@ Some package managers (Homebrew, conda) reset PATH and environment on upgrade. A
 
 ### tokenpak savings shows 0 after several prompts
 
-Compression applies to prompts above a configurable default threshold. Short prompts are passed through unchanged. To confirm compression is running for longer prompts, use `tokenpak status` — the `compression_ratio_avg` field in `/health` shows the running average.
+Zero is a correct result for a forwarded request: the default proxy preserves conversation turns. Use `tokenpak status` to confirm requests reach the proxy — the `compression_ratio_avg` field in `/health` shows the running average.
 
 ---
 

@@ -1,16 +1,16 @@
 ---
 title: "Use TokenPak with Codex CLI"
 rung: 2
-audience: Developers who have Codex CLI installed and want to route its ChatGPT-subscription traffic through TokenPak for cost tracking and compression.
-updated: 2026-08-20
+audience: Developers who have Codex CLI installed and want to route its ChatGPT-subscription traffic through TokenPak for request records and cost tracking.
+updated: 2026-09-29
 status: current
 ---
 
 # Use TokenPak with Codex CLI
 
-This guide is for developers using OpenAI Codex CLI who want to route its traffic through TokenPak for cost tracking, cache analytics, and prompt compression.
+This guide is for developers using OpenAI Codex CLI who want to route its traffic through TokenPak for request records, cost tracking, and cache analytics.
 
-Codex CLI signs in to your ChatGPT account and stores an OAuth token at `~/.codex/auth.json`. TokenPak's Codex adapter detects the JWT-shaped bearer token, routes the request to the ChatGPT backend (`chatgpt.com/backend-api`), and applies the same compression pipeline available to OpenAI SDK callers. No code changes — only a base URL swap.
+Codex CLI signs in to your ChatGPT account and stores an OAuth token at `~/.codex/auth.json`. TokenPak's Codex adapter detects the JWT-shaped bearer token, routes the request to the ChatGPT backend (`chatgpt.com/backend-api`), and records the request. No code changes — only a base URL swap.
 
 **What you need before starting:**
 
@@ -144,16 +144,16 @@ You should see at least one row of recent activity attributed to the `openai-cod
 
 ---
 
-## 4. Check your savings
+## 4. Check your usage and savings
 
 After a few requests:
 
 ```bash
 tokenpak cost --week      # spend by model
-tokenpak savings          # tokens compressed vs. uncompressed
+tokenpak savings          # recorded token savings; zero is a valid result
 ```
 
-Codex CLI conversations carry repeated context (file snippets, prior turns), so the compression payoff is largest on long sessions. Short one-shot prompts compress less — this is expected.
+The default proxy preserves conversation turns, so a forwarded request can truthfully report zero tokens saved. Explicit context tools can reduce eligible content; measure their effect with `tokenpak savings`.
 
 ---
 

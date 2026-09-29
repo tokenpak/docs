@@ -4,13 +4,13 @@ created: 2026-03-24T19:05:55Z
 ---
 # TokenPak Usage Examples
 
-> Copy-paste ready examples for common TokenPak patterns.
+> Copy-paste ready examples for common TokenPak patterns. The compression and vault examples set explicit modes and options; the default proxy preserves conversation turns, so a forwarded request can report zero tokens saved.
 
 ---
 
 ## Example 1: Hello World — Basic Proxy Setup
 
-**Problem:** You want to route your Anthropic API calls through TokenPak to get automatic compression and cost tracking.
+**Problem:** You want to route your Anthropic API calls through TokenPak to get request records and cost tracking.
 
 **Solution:** Start the proxy, point your client at `localhost:8766` instead of `api.anthropic.com`.
 

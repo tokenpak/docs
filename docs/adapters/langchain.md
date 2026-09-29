@@ -1,11 +1,11 @@
 # LangChain Adapter — Quick-Start
 
-Route your LangChain applications through the TokenPak proxy for cost tracking, compression, and vault context injection.
+Route your LangChain applications through the TokenPak proxy for request records, cost tracking, and explicit context tools.
 
 ## Why Route Through TokenPak?
 
 - **Cost tracking:** Every token counted and categorized by model/provider
-- **Request compression:** Reduces token usage via built-in context optimization
+- **Explicit compression:** Compression directives you set can reduce eligible content; the default proxy preserves conversation turns
 - **Vault injection:** Automatically enrich prompts with your knowledge base
 - **Request caching:** Deduplicate identical calls across applications
 - **Usage analytics:** Dashboard metrics for model spend and performance
@@ -201,7 +201,7 @@ print(f"\nProxy stats: {stats['total_requests']} requests processed")
 
 ## Advanced: Request Injection & Compression
 
-TokenPak supports vault injection (prepend your knowledge base) and automatic compression. These work transparently with LangChain:
+TokenPak supports vault injection (prepend your knowledge base) and compression directives that you set explicitly with request headers, as in this example:
 
 ```python
 import os
@@ -218,7 +218,7 @@ llm = ChatAnthropic(
     }
 )
 
-# All requests now use vault injection + compression
+# Requests from this client now carry the vault and compression directives set above
 response = llm.invoke("What should I know about Python async?")
 ```
 
