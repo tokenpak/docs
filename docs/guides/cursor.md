@@ -1,14 +1,16 @@
 ---
 title: "Use TokenPak with Cursor"
 rung: 2
-audience: Developers using Cursor who want to route model requests through TokenPak for cost tracking and compression.
-updated: 2026-05-04
-status: current
+audience: Developers using Cursor who want to try routing model requests through TokenPak for request records and cost tracking.
+updated: 2026-09-29
+status: compatibility-target
 ---
 
 # Use TokenPak with Cursor
 
-This guide is for developers using Cursor who want to route chat, composer, or agent model requests through TokenPak for cost tracking, cache analytics, and prompt compression.
+> **Compatibility target, not yet independently verified.** The first-class integrations are Claude Code and Codex; this guide describes an expected setup for Cursor.
+
+This guide is for developers using Cursor who want to route chat, composer, or agent model requests through TokenPak for request records, cost tracking, and cache analytics.
 
 Cursor provider settings change over time. Use the stable rule: configure Cursor to use an OpenAI-compatible custom base URL, then point that URL at TokenPak's local `/v1` endpoint.
 
@@ -126,16 +128,16 @@ You should see at least one recent request. If `requests_total` is still 0 after
 
 ---
 
-## 5. Check your savings
+## 5. Check your usage and savings
 
 After a few Cursor turns:
 
 ```bash
 tokenpak cost --week      # spend by model
-tokenpak savings          # tokens compressed vs. uncompressed
+tokenpak savings          # recorded token savings; zero is a valid result
 ```
 
-Cursor agent workflows often send repeated repository context and instructions. Those repeated payloads are where TokenPak has the most room to reduce tokens. Very short prompts may pass through unchanged.
+The default proxy preserves conversation turns, so a forwarded request can truthfully report zero tokens saved. Explicit context tools can reduce eligible content; measure their effect with `tokenpak savings`.
 
 ---
 
@@ -207,7 +209,7 @@ In remote Cursor sessions, `localhost` means the machine where the Cursor extens
 
 ### savings shows 0 after several turns
 
-Compression runs on prompts above a configurable default threshold. Short prompts are passed through unchanged. For larger tasks, use `tokenpak status` and check `compression_ratio_avg` in the `/health` response.
+Zero is a correct result for a forwarded request: the default proxy preserves conversation turns. Use `tokenpak status` to confirm requests reach the proxy, and check `compression_ratio_avg` in the `/health` response.
 
 ---
 

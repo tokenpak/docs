@@ -1,14 +1,16 @@
 ---
 title: "Use TokenPak with Cline"
 rung: 2
-audience: Developers using Cline in VS Code who want to route model requests through TokenPak for cost tracking and compression.
-updated: 2026-05-04
-status: current
+audience: Developers using Cline in VS Code who want to try routing model requests through TokenPak for request records and cost tracking.
+updated: 2026-09-29
+status: compatibility-target
 ---
 
 # Use TokenPak with Cline
 
-This guide is for developers using Cline in VS Code who want to route model requests through TokenPak for cost tracking, cache analytics, and prompt compression.
+> **Compatibility target, not yet independently verified.** The first-class integrations are Claude Code and Codex; this guide describes an expected setup for Cline.
+
+This guide is for developers using Cline in VS Code who want to route model requests through TokenPak for request records, cost tracking, and cache analytics.
 
 Cline provider settings change across releases. Use the provider-agnostic rule: choose a provider mode that lets you set a custom OpenAI-compatible base URL, then point it at TokenPak's local `/v1` endpoint. If your Cline build exposes an Anthropic-compatible custom base URL instead, use the Anthropic URL noted below.
 
@@ -119,16 +121,16 @@ You should see at least one request in the recent activity table. If `requests_t
 
 ---
 
-## 4. Check your savings
+## 4. Check your usage and savings
 
 After a few Cline turns:
 
 ```bash
 tokenpak cost --week      # spend by model
-tokenpak savings          # tokens compressed vs. uncompressed
+tokenpak savings          # recorded token savings; zero is a valid result
 ```
 
-Cline agent tasks can include repeated repository context, tool results, and instructions. Those larger repeated payloads are where TokenPak has the most room to reduce tokens. Very short prompts may show little or no compression.
+The default proxy preserves conversation turns, so a forwarded request can truthfully report zero tokens saved. Explicit context tools can reduce eligible content; measure their effect with `tokenpak savings`.
 
 ---
 
@@ -203,7 +205,7 @@ In remote VS Code sessions, `localhost` means the machine where the Cline extens
 
 ### savings shows 0 after several turns
 
-Compression runs on prompts above a configurable default threshold. Short Cline tasks are passed through unchanged. For larger tasks, use `tokenpak status` and check `compression_ratio_avg` in the `/health` response.
+Zero is a correct result for a forwarded request: the default proxy preserves conversation turns. Use `tokenpak status` to confirm requests reach the proxy, and check `compression_ratio_avg` in the `/health` response.
 
 ---
 

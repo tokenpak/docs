@@ -1,14 +1,16 @@
 ---
 title: "Use TokenPak with Continue.dev"
 rung: 2
-audience: Developers using Continue.dev who want to route chat and autocomplete requests through TokenPak with a local JSON provider config.
-updated: 2026-05-04
-status: current
+audience: Developers using Continue.dev who want to try routing chat and autocomplete requests through TokenPak with a local JSON provider config.
+updated: 2026-09-29
+status: compatibility-target
 ---
 
 # Use TokenPak with Continue.dev
 
-This guide is for developers using Continue.dev who want to route chat and autocomplete requests through TokenPak for cost tracking, TokenPak cache analytics, and prompt compression.
+> **Compatibility target, not yet independently verified.** The first-class integrations are Claude Code and Codex; this guide describes an expected setup for Continue.dev.
+
+This guide is for developers using Continue.dev who want to route chat and autocomplete requests through TokenPak for request records, cost tracking, and TokenPak cache analytics.
 
 Continue reads model providers from `~/.continue/config.json`. Add a TokenPak-backed OpenAI-compatible model entry that points `apiBase` at `http://localhost:8766/v1`.
 
@@ -143,7 +145,7 @@ curl -s http://localhost:8766/health | python3 -m json.tool
 
 ---
 
-## 5. Check savings after real coding sessions
+## 5. Check usage and savings after real coding sessions
 
 After several Continue turns with file or workspace context:
 
@@ -152,7 +154,7 @@ tokenpak savings
 tokenpak cost --week
 ```
 
-Continue requests with larger context usually show more savings than short one-line chats. Short prompts may pass through unchanged when they are below TokenPak's compression threshold.
+The default proxy preserves conversation turns, so a forwarded request can truthfully report zero tokens saved. Explicit context tools can reduce eligible content; measure their effect with `tokenpak savings`.
 
 ---
 

@@ -1,14 +1,16 @@
 ---
 title: "Use TokenPak with Aider"
 rung: 2
-audience: Developers using Aider who want to route chat/edit traffic through TokenPak with Aider's OpenAI-compatible CLI flags.
-updated: 2026-05-04
-status: current
+audience: Developers using Aider who want to try routing chat/edit traffic through TokenPak with Aider's OpenAI-compatible CLI flags.
+updated: 2026-09-29
+status: compatibility-target
 ---
 
 # Use TokenPak with Aider
 
-This guide is for developers using Aider who want to route chat/edit traffic through TokenPak for cost tracking, cache analytics, and prompt compression.
+> **Compatibility target, not yet independently verified.** The first-class integrations are Claude Code and Codex; this guide describes an expected setup for Aider.
+
+This guide is for developers using Aider who want to route chat/edit traffic through TokenPak for request records, cost tracking, and cache analytics.
 
 Aider can send requests to an OpenAI-compatible endpoint. Point that endpoint at TokenPak with `--openai-api-base`, then use Aider's `openai/<model-name>` model format.
 
@@ -109,7 +111,7 @@ curl -s http://localhost:8766/health | python3 -m json.tool
 
 ---
 
-## 4. Check savings after real coding sessions
+## 4. Check usage and savings after real coding sessions
 
 After a few Aider turns with repository context:
 
@@ -118,7 +120,7 @@ tokenpak savings
 tokenpak cost --week
 ```
 
-Aider sessions with large file context usually show more savings than short one-message chats. Short prompts may pass through unchanged when they are below TokenPak's compression threshold.
+The default proxy preserves conversation turns, so a forwarded request can truthfully report zero tokens saved. Explicit context tools can reduce eligible content; measure their effect with `tokenpak savings`.
 
 ---
 
@@ -182,7 +184,7 @@ aider --model openai/gpt-4o --openai-api-base http://localhost:8767/v1
 
 ### Savings show as zero
 
-TokenPak may pass short prompts through unchanged. Aider requests with larger repository context should show compression over time. Check request counts first with `tokenpak status`, then run:
+Zero is a correct result for a forwarded request: the default proxy preserves conversation turns. Check request counts first with `tokenpak status`, then run:
 
 ```bash
 tokenpak savings
