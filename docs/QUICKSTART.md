@@ -1,15 +1,17 @@
 ---
-title: "TokenPak quickstart: first savings in 5 minutes"
+title: "TokenPak quickstart: first measured receipt in 5 minutes"
 rung: 1
 audience: Developers installing TokenPak for the first time.
-updated: 2026-09-12
+updated: 2026-09-29
 status: current
 ---
 
-# TokenPak quickstart: first savings in 5 minutes
+# TokenPak quickstart: first measured receipt in 5 minutes
 
-This quickstart is for developers installing TokenPak for the first time. Get
-the proxy running and see your first cost savings in under 5 minutes.
+This quickstart is for developers installing TokenPak for the first time.
+Install it, launch your agent through it, and get a measured receipt on the
+first request, then see your session's usage and runway as you work, without
+changing your code. The reference target is five minutes.
 
 ## Install
 
@@ -72,7 +74,7 @@ export OPENAI_BASE_URL=http://127.0.0.1:8766/v1
 
 Claude Code reads `ANTHROPIC_BASE_URL` from the environment the same as the SDK. Start Claude Code after setting the env var and it will route through TokenPak automatically.
 
-On provider-cached flows like Claude Code, observed incremental savings can be lower than on direct-API workloads — the provider's own prompt cache already absorbs most of the token pool. TokenPak optimizes the user-controlled portion. See the [Savings reporting](SAVINGS.md) page for the full framing.
+On provider-cached flows like Claude Code, the provider's own prompt cache already absorbs most of the token pool, and the default proxy preserves conversation turns, so a forwarded request can truthfully report zero tokens saved. See the [Savings reporting](SAVINGS.md) page for the full framing.
 
 ### Codex CLI with OAuth
 
@@ -89,7 +91,7 @@ temporary-session behavior when another Codex session is already running.
 
 ### Other client tools
 
-These accept an `ANTHROPIC_BASE_URL` or `OPENAI_BASE_URL` override via their config file or environment — consult the tool's own docs for the exact setting. The common pattern is "override the base URL; TokenPak is drop-in compatible."
+Cursor, Cline, Continue and Aider are compatibility targets, not yet independently verified. If a tool accepts an `ANTHROPIC_BASE_URL` or `OPENAI_BASE_URL` override in its config file or environment, you can point it at TokenPak and check `tokenpak status` for the request count. Consult the tool's own docs for the exact setting, and see the [Cursor](guides/cursor.md), [Cline](guides/cline.md), [Continue](guides/continue.md) and [Aider](guides/aider.md) guides.
 
 ### Direct Python with the SDK
 
@@ -108,7 +110,7 @@ client = anthropic.Anthropic(
 tokenpak status
 ```
 
-You should see the proxy up, request count climbing, and per-session compression metrics.
+You should see the proxy up, the request count climbing, and per-session token metrics.
 
 Check health:
 
@@ -118,7 +120,7 @@ curl http://127.0.0.1:8766/health
 
 The expected response includes `{"status": "ok", "version": "1.30.0"}`.
 
-## See your savings
+## See your usage and savings
 
 After a handful of real requests through the proxy:
 
@@ -127,20 +129,21 @@ tokenpak savings
 tokenpak cost --week
 ```
 
-The local web dashboard at **`http://127.0.0.1:8766/dashboard`** visualizes cost + savings over time (also reachable via `tokenpak dashboard`).
+The local web dashboard at **`http://127.0.0.1:8766/dashboard`** visualizes cost and savings over time (also reachable via `tokenpak dashboard`).
 
 ### How much to expect
 
-TokenPak's savings depend on your integration path — we don't collapse this into a single number because that would be dishonest.
+TokenPak reports what it measured on your own traffic. It does not promise a savings figure, because the result depends on your integration path.
 
-- **Direct API calls, CLI tools, SDK integrations, and any uncached workload:** the compression pipeline operates on the full token pool; on favorable uncached workloads savings can reach **up to** 90%+. Reproduce the headline benchmark with `make benchmark-headline`; measure your own with `tokenpak savings`.
-- **Provider-cached flows (Claude Code and similar):** the provider's own prompt cache already absorbs most of the token pool. TokenPak only optimizes the user-controlled portion, so incremental savings can be a few percent of total spend. This isn't TokenPak failing — it's an honest division of labor with the provider.
+- **Default proxy path:** the default proxy preserves conversation turns, so a forwarded request can truthfully report zero tokens saved. That result verifies routing and accounting; it is not a failure.
+- **Explicit context tools:** compression operations that you invoke explicitly can reduce eligible content. Measure the effect on your own traffic with `tokenpak savings`.
+- **Provider-cached flows (Claude Code and similar):** the provider's own prompt cache already absorbs most of the token pool. Provider cache reuse is reported separately from TokenPak context reduction; `tokenpak status --tip-cache` shows the attribution.
 
-If you're evaluating TokenPak, start with a direct-API workload to see the pipeline's actual effectiveness, then layer in your cached flows to see the marginal contribution on top.
+If you're evaluating TokenPak, start with a real session in Claude Code or Codex, read the receipt and `tokenpak status`, and then try explicit context tools on your own workload.
 
 ## Keep it running
 
-For continuous savings, use TokenPak's managed background process. Both
+To keep the proxy available between sessions, use TokenPak's managed background process. Both
 `tokenpak setup --start` and `tokenpak start` launch it detached:
 
 ```bash
@@ -190,11 +193,11 @@ provider credential separately, such as with `x-api-key`.
 - Ensure your provider key is set: `echo $ANTHROPIC_API_KEY`.
 - TokenPak is transparent — your API key must be valid upstream.
 
-**No savings showing after a few requests**
+**Savings show zero after a few requests**
 
+- Zero is a correct result for a forwarded request: the default proxy preserves conversation turns (see [Savings reporting](SAVINGS.md)).
 - Check `tokenpak status` — it should show request count + token metrics.
-- If the proxy is correctly receiving traffic but savings look low, verify your workload path. Provider-cached flows (Claude Code) show lower incremental gains (see [Savings reporting](SAVINGS.md)).
-- First request is always uncached; give it a few more.
+- Provider cache hits are reported separately from TokenPak context reduction; `tokenpak status --tip-cache` shows the attribution.
 
 **Wizard prints "No API keys detected"**
 
