@@ -11,8 +11,8 @@ This comparison covers the most popular LLM proxy and observability solutions. W
 | **Self-hosted** | ✅ Yes | ✅ Yes | ⚠️ Cloud or self-hosted (Docker) | ❌ Cloud only |
 | **Open source** | ✅ Yes (Apache 2.0) | ✅ Yes (MIT) | ✅ Yes (Apache 2.0) | ❌ Proprietary |
 | **Provider support** | 4 (Claude, Gemini, OpenAI, Ollama) | 100+ | 20+ | 150+ |
-| **Vault compression** | ✅ Yes (built-in) | ❌ No | ❌ No | ❌ No |
-| **Token counting accuracy** | ✅ Native (per-provider) | ✅ Native (per-provider) | ✅ Native | ⚠️ Approximate |
+| **Vault compression** | ⚠️ Explicit tools only (not applied to default requests) | ❌ No | ❌ No | ❌ No |
+| **Token counting accuracy** | ⚠️ Provider-reported usage where available; estimates are labelled | ✅ Native (per-provider) | ✅ Native | ⚠️ Approximate |
 | **Cost tracking per-request** | ✅ Yes | ✅ Yes (with dashboard) | ✅ Yes (with dashboard) | ✅ Yes (cloud only) |
 | **Streaming support** | ✅ Full SSE | ✅ Full SSE | ✅ Full SSE | ✅ Full SSE |
 | **Python SDK** | ✅ Yes | ✅ Yes | ✅ Yes | ✅ Yes |
@@ -20,8 +20,8 @@ This comparison covers the most popular LLM proxy and observability solutions. W
 | **Docker support** | ✅ Yes | ✅ Yes | ✅ Yes (production-grade Helm) | ❌ Cloud only |
 | **Proxy overhead** | Designed for minimal local overhead | Local proxy (self-hosted) | Depends on self-host | Network-bound (cloud-routed) |
 | **Caching** | ✅ LRU (TTL-based) | ⚠️ Via enterprise integrations | ✅ Via observability | ❌ No |
-| **Automatic failover** | ✅ Yes | ✅ Yes (routing) | ⚠️ Via AI Gateway (newer) | ❌ No |
-| **Privacy (no data logging)** | ✅ Yes (local-only) | ✅ Yes (with config) | ⚠️ Logs to platform (GDPR compliant) | ❌ Logs to cloud |
+| **Automatic failover** | ⚠️ Not active by default (observe-mode routing records) | ✅ Yes (routing) | ⚠️ Via AI Gateway (newer) | ❌ No |
+| **No cloud logging by the proxy** | ✅ Yes (records stay on your machine) | ✅ Yes (with config) | ⚠️ Logs to platform (GDPR compliant) | ❌ Logs to cloud |
 | **Rate limiting** | ✅ Yes | ✅ Yes | ✅ Yes | ✅ Yes (cloud-side) |
 | **Free tier** | ✅ Yes (unlimited, self-hosted) | ✅ Yes (limited requests) | ✅ Yes (10k/month) | ✅ Yes ($5 initial credit) |
 
@@ -30,32 +30,34 @@ This comparison covers the most popular LLM proxy and observability solutions. W
 ## Detailed Comparison
 
 ### TokenPak
-**Position:** Lightweight, zero-data-sharing LLM proxy for cost-conscious teams.
+**Position:** A local proxy for coding agents that records each request and shows how far the session can go: measured usage, estimated cost, burn and runway.
 
 **Strengths:**
-- **Minimal setup** — `pip install tokenpak && tokenpak serve` — running in minutes
-- **Vault compression** — Built-in prompt caching and vault compression (unique feature) reduces redundant API calls
-- **No data logging** — Requests never leave your infrastructure; full privacy by design
+- **Short setup** — `pip install tokenpak && tokenpak serve` — running in minutes
+- **Session trip computer** — Measured usage, estimated cost, burn and runway, on by default in the Claude Code footer and the Codex pane and in `tokenpak status`; forecasts appear only where calibrated
+- **Explicit context tools** — Compression operations and vault indexing that you invoke can reduce eligible content; the default proxy preserves conversation turns, so a forwarded request can report zero tokens saved
+- **No added cloud service** — Requests go to the provider you already use, credentials stay in your existing client and provider flow, and TokenPak does not persist them
 - **Lightweight proxy** — Designed to add minimal overhead in front of your providers
-- **Apache 2.0 licensed** — Permissive open source; no restrictions
-- **Cost discipline** — Per-request cost tracking with native token counting (not approximated)
+- **Apache 2.0 licensed core** — Permissive open source; TokenPak Pro is proprietary
+- **Cost tracking** — Per-request cost recorded locally from provider-reported usage where available, with estimates labelled
 
 **Trade-offs:**
 - Fewer provider integrations (4 core: Claude, Gemini, OpenAI, Ollama) vs. 100+ in LiteLLM
-- No built-in observability dashboard (use your own monitoring)
+- A local dashboard and `tokenpak status`, not a hosted observability platform
+- Automatic failover and model changes are not active by default
 - Smaller ecosystem and community
 
 **Best for:**
-- Teams that need **cost transparency and privacy** (healthcare, finance, regulated industries)
+- Developers and tech leads running long coding-agent sessions in Claude Code or Codex who want to see what a session has used, what finishing will likely cost, and how far it can go
 - Projects with **Anthropic + OpenAI + Gemini** as primary providers
-- Developers who want to **run locally** with zero external dependencies
+- Developers who want to **run locally** with no TokenPak cloud service
 - Applications where **keeping proxy overhead low** is a priority
-- Teams avoiding vendor lock-in or data sharing concerns
 
 **When NOT to use TokenPak:**
 - If you need support for 50+ niche LLM providers (LiteLLM is better)
 - If you need a comprehensive observability dashboard (Helicone is better)
 - If you want no infrastructure overhead (OpenRouter cloud-only is simpler)
+- If you need a hosted, multi-tenant or centrally managed proxy
 
 ---
 
@@ -84,9 +86,9 @@ This comparison covers the most popular LLM proxy and observability solutions. W
 - **Enterprise deployments** with strict SLAs
 
 **When NOT to use LiteLLM:**
-- If you want to **avoid logging infrastructure** (TokenPak is privacy-first)
+- If you want to **avoid logging infrastructure** (TokenPak adds no cloud service)
 - If you want the **leanest possible proxy footprint** (TokenPak is intentionally minimal)
-- If you want **vault compression** (TokenPak-specific feature)
+- If you want TokenPak's **explicit context tools**, such as vault compression
 - If you're a solo developer (overkill for small projects)
 
 ---
@@ -117,7 +119,7 @@ This comparison covers the most popular LLM proxy and observability solutions. W
 - **Regulated industries** needing SOC 2 compliance
 
 **When NOT to use Helicone:**
-- If you need **zero data sharing** (TokenPak is better)
+- If you want **no hosted logging platform** in the request path (TokenPak adds no cloud service)
 - If you want **minimal setup overhead** (TokenPak or cloud-only solutions better)
 - If you want the **leanest proxy footprint** (a full observability stack adds more moving parts)
 - If you only use 2-3 providers (TokenPak or LiteLLM simpler)
@@ -150,18 +152,18 @@ This comparison covers the most popular LLM proxy and observability solutions. W
 - **Side projects or MVPs** (no infrastructure overhead)
 
 **When NOT to use OpenRouter:**
-- If you have **privacy or regulatory requirements** (cannot send data to cloud)
-- If you need **cost predictability** (TokenPak's native counting is better)
-- If you want **zero setup overhead** and **local privacy** (TokenPak)
-- If you need **redundancy and failover** (LiteLLM or TokenPak)
+- If you do not want a **hosted service in the request path** (TokenPak adds no cloud service; requests go to the provider you already use)
+- If you want **per-request cost records on your own machine** (TokenPak records them locally)
+- If you want a **local proxy** rather than a hosted marketplace (TokenPak)
+- If you need **redundancy and failover** (LiteLLM)
 
 ---
 
 ## Quick Decision Tree
 
 ```
-Are you in a regulated industry or need strict privacy?
-├─ YES → TokenPak (self-hosted, zero data sharing)
+Do you run long coding-agent sessions in Claude Code or Codex and want to see usage, cost and runway?
+├─ YES → TokenPak (local proxy, no cloud service added)
 └─ NO → Continue...
 
 Do you route to 20+ different LLM providers?
@@ -201,15 +203,15 @@ Do you want the simplest setup (no local infrastructure)?
 
 ---
 
-## TokenPak's Unique Differentiators
+## What TokenPak Focuses On
 
-1. **Vault Compression** — Unique feature: prompt caching and vault compression reduce redundant API calls. No other proxy offers this.
+1. **Session Trip Computer** — Measured usage, estimated cost, burn and runway for a coding-agent session, on by default in the Claude Code footer and the Codex pane and in `tokenpak status`. Forecasts appear only where calibrated.
 
-2. **Native Token Counting** — Uses provider-native token counting (not approximations). Accurate cost tracking by default.
+2. **Measured Receipts** — Each request is recorded locally, and the first request gives you a measured receipt. A forwarded request can truthfully report zero tokens saved.
 
-3. **Privacy by Default** — Requests stay local. No external logging, no dashboard telemetry, no data sharing.
+3. **No Added Cloud Service** — Requests go to the provider you already use, credentials stay in your existing client and provider flow, and TokenPak does not persist them.
 
-4. **Minimal Setup** — `pip install tokenpak && tokenpak serve` — no databases, no Redis, no infrastructure.
+4. **Short Setup** — `pip install tokenpak && tokenpak serve` — no external database, no Redis, no other infrastructure.
 
 5. **Lightweight by Design** — A minimal proxy layer intended to add little overhead in front of your providers. Receipt-backed performance figures will publish once TokenPak's benchmark suite produces a validated run.
 
@@ -221,10 +223,10 @@ Do you want the simplest setup (no local infrastructure)?
 |----------|----------|---------|----------|-----------|
 | **Infrastructure** | Free (self-hosted) | Free (self-hosted) | $0/mo (10k free tier) or $50+/mo (cloud) | $0 (no infra) |
 | **API costs (100k requests/mo)** | Pass-through | Pass-through | Pass-through | Pass-through |
-| **Repeated-context caching** | ✅ Reduces repeated-context cost via caching + vault compression | ❌ No built-in caching | ❌ Observability-focused (no caching) | ❌ No caching |
-| **Cost profile** | Caching can reduce repeated-context spend | Pass-through only | Pass-through + platform | Pass-through (cloud) |
+| **Repeated-context caching** | ⚠️ Provider cache reuse is separate from TokenPak context reduction; explicit context tools can reduce eligible content | ❌ No built-in caching | ❌ Observability-focused (no caching) | ❌ No caching |
+| **Cost profile** | Pass-through, with measured usage and estimated cost recorded locally | Pass-through only | Pass-through + platform | Pass-through (cloud) |
 
-Actual cost impact depends on your traffic and how much repeated context your workload contains. Receipt-backed savings figures will publish once TokenPak's benchmark suite produces a validated run.
+Actual cost impact depends on your traffic and how much repeated context your workload contains. The default proxy preserves conversation turns, so a forwarded request can truthfully report zero tokens saved. Receipt-backed savings figures will publish once TokenPak's benchmark suite produces a validated run.
 
 ---
 
@@ -300,11 +302,11 @@ response = client.chat.completions.create(
 
 ## Summary
 
-**TokenPak** is ideal for teams prioritizing **cost control, privacy, and simplicity**. It excels at keeping your LLM infrastructure lightweight and data local.
+**TokenPak** is built for developers and tech leads running long coding-agent sessions who want to see usage, cost and runway. It adds no cloud service and keeps request records on your machine.
 
 **Choose alternatives** if you need **multi-provider routing at scale** (LiteLLM), **observability dashboards** (Helicone), or **zero infrastructure** (OpenRouter).
 
-All four are production-ready. The best choice depends on your team's priorities: privacy vs. breadth, self-hosted vs. cloud, simplicity vs. features.
+The best choice depends on your priorities: session visibility vs. provider breadth, self-hosted vs. cloud, simplicity vs. features.
 
 ---
 
