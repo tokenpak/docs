@@ -1,7 +1,8 @@
 # TokenPak Documentation
 
-This repository builds the public documentation for TokenPak, the local proxy
-that packs AI requests before they reach a provider and records what changed.
+This repository builds the public documentation for TokenPak. TokenPak is a
+local proxy for coding agents that records each request and shows how far the
+session can go: measured usage, estimated cost, burn and runway.
 
 It is for developers evaluating, installing, or operating the open-source
 `tokenpak` package. Start with the [Quick Start](docs/QUICKSTART.md), then use

@@ -2,7 +2,7 @@
 title: TokenPak
 rung: 1
 audience: Developers evaluating or getting started with TokenPak.
-updated: 2026-09-12
+updated: 2026-09-29
 status: current
 hide:
   - navigation
@@ -11,7 +11,25 @@ hide:
 
 # TokenPak
 
-**A local LLM proxy with request records and explicit context tools.**
+**TokenPak is the open logistics layer for AI context.**
+
+TokenPak is a local proxy for coding agents that records each request and shows how far the session can go: measured usage, estimated cost, burn and runway.
+
+**Know how far your agent can go.**
+
+- **Today (release 1.30.0):** request records and receipts; the session trip
+  computer (measured usage, estimated cost, burn and runway, with forecasts
+  shown only where calibrated), on by default in the Claude Code footer and the
+  Codex pane from 1.27.0 and in `tokenpak status`; Spend Guard limits; and
+  explicit context tools. Pro 0.4.0 and later add prepared stay-versus-fresh
+  session comparisons, with measurements and an explicit confirm or decline.
+- **Planned:** calibrated forecasts for more model and effort combinations; Pro
+  reroute recommendations once calibration evidence exists; and any automation
+  later, gated separately.
+
+**Who it's for.** Developers and tech leads running long coding-agent sessions
+in Claude Code or Codex who want to see what a session has used, what finishing
+will likely cost, and how far it can go.
 
 This page is for developers evaluating or getting started with TokenPak.
 TokenPak sits between your AI tools and the upstream LLM provider, with its
@@ -88,7 +106,7 @@ tokenpak setup --start
 | [Known Limitations](KNOWN_LIMITATIONS.md)  | Current OSS-beta limitations, intentional-vs-bug status, and workarounds |
 | [FAQ](faq.md)                              | General questions |
 | [Recall overview](recall/index.md)         | Paks, reason codes, risk flags — the OSS data plane |
-| [Client Guides](guides/claude-code.md)     | Per-client integration walkthroughs (Claude Code, Cursor, Cline, Continue, Aider, Codex CLI, Gemini CLI, OpenAI/Anthropic SDK) |
+| [Client Guides](guides/claude-code.md)     | Per-client integration walkthroughs (Claude Code, Codex CLI, Gemini CLI, OpenAI/Anthropic SDK); Cursor, Cline, Continue and Aider are compatibility targets, not yet independently verified |
 
 ---
 
