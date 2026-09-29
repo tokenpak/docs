@@ -4,7 +4,7 @@ created: 2026-03-24T19:05:55Z
 ---
 # TokenPak Usage Examples
 
-> Copy-paste ready examples for common TokenPak patterns. The default proxy preserves conversation turns, so a forwarded request can report zero tokens saved; the compression and vault examples show optional modes and settings.
+> Copy-paste ready examples for common TokenPak patterns. The default proxy preserves conversation turns, so a forwarded request can report zero tokens saved.
 
 ---
 
@@ -20,11 +20,11 @@ created: 2026-03-24T19:05:55Z
 # Install TokenPak
 pip install tokenpak
 
-# Start the proxy (default port 8766, hybrid compression mode)
+# Start the proxy (default port 8766)
 tokenpak serve
 
-# Or with custom settings
-TOKENPAK_PORT=8766 TOKENPAK_MODE=hybrid tokenpak serve
+# Or with a custom port
+TOKENPAK_PORT=8766 tokenpak serve
 ```
 
 ### Drop-in Replacement
@@ -52,75 +52,21 @@ print(message.content[0].text)
 
 ### Expected Output
 
-```
-# Proxy startup:
-TokenPak proxy
-Listening: http://0.0.0.0:8766
-Mode: hybrid (Protected/Code strict, Narrative compressed)
-
-# Per-request log (illustrative; your tokens, savings, and cost depend on your traffic):
-[req] claude-opus-4-8 | <in> in → <sent> sent (<saved>% saved) | <out> out | $<cost>
-```
+The proxy listens on `127.0.0.1` by default. Run `tokenpak status` to see requests as they are recorded and `tokenpak savings` to inspect recorded usage. A forwarded request can report zero tokens saved.
 
 ---
 
-## Example 2: Custom Compression Mode
+## Example 2: Compression settings
 
-**Problem:** You have a codebase heavy with system prompts and code blocks. Default `hybrid` mode doesn't compress code. You want maximum savings.
-
-**Solution:** Switch to `aggressive` mode to compress everything (except PROTECTED content).
-
-```bash
-# Aggressive: compress narrative + code (keep system prompts intact)
-TOKENPAK_MODE=aggressive tokenpak serve
-```
-
-```python
-# Or per-request override via header
-import requests
-
-response = requests.post(
-    "http://localhost:8766/v1/messages",
-    headers={
-        "x-api-key": "sk-ant-...",
-        "x-tokenpak-mode": "aggressive",   # Override mode for this request
-        "Content-Type": "application/json",
-    },
-    json={
-        "model": "claude-sonnet-4-6",
-        "max_tokens": 512,
-        "messages": [
-            {
-                "role": "user",
-                "content": (
-                    "Here's a 500-line Python file:\n"
-                    + open("myproject/main.py").read()
-                    + "\n\nWhat's the main entry point?"
-                )
-            }
-        ],
-    }
-)
-print(response.json()["content"][0]["text"])
-```
-
-### Mode Comparison
-
-| Mode | Narrative | Code | Config | Protected |
-|------|-----------|------|--------|-----------|
-| `strict` | ❌ No | ❌ No | ❌ No | ❌ No |
-| `hybrid` | ✅ Yes | ❌ No | ❌ No | ❌ No |
-| `aggressive` | ✅ Yes | ✅ Yes | ✅ Yes | ❌ No |
-
-**Protected content is NEVER compressed** — system prompts, SOUL.md, tool schemas are always sent verbatim.
+The `TOKENPAK_COMPACT` flag and the `compression.enabled` setting remain accepted compatibility settings, but the built-in default HTTP proxy does not call the legacy body-compaction helper, so they do not change default HTTP request bytes. Explicit compression operations can reduce eligible content; inspect recorded usage with `tokenpak savings`.
 
 ---
 
-## Example 3: Vault Context Injection
+## Example 3: Vault indexing and context injection
 
-**Problem:** You have project documentation you want automatically injected into relevant requests without manually including it every time.
+**Problem:** You want project documentation indexed so it can be searched and, if you choose, added to requests as context.
 
-**Solution:** Index your vault and let TokenPak inject relevant context automatically.
+**Solution:** Index your documentation. Automatic context injection is off by default; enabling it is an explicit decision (`TOKENPAK_VAULT_INJECTION`). Injection totals are reported by `tokenpak status` and `GET /stats`.
 
 ```bash
 # Index your project docs
@@ -131,40 +77,6 @@ VAULT_INDEX_PATH=~/my-project/.tokenpak tokenpak index ~/my-project/docs
 
 # Rebuild on change
 tokenpak index ~/my-project/docs --watch
-```
-
-```python
-# TokenPak will automatically inject relevant vault chunks
-# based on semantic similarity to your request
-
-client = anthropic.Anthropic(
-    api_key="sk-ant-...",
-    base_url="http://localhost:8766",
-)
-
-# This request will automatically get relevant docs injected
-# from your vault without you doing anything
-message = client.messages.create(
-    model="claude-sonnet-4-6",
-    max_tokens=1024,
-    messages=[{
-        "role": "user",
-        "content": "How do I configure the cache timeout in our system?"
-    }]
-)
-# Response will have context from your docs injected automatically
-```
-
-```bash
-# Check what was injected in the last request
-curl http://localhost:8766/stats/last | python3 -m json.tool | grep -A5 "vault_injection"
-# {
-#   "vault_injection": {
-#     "chunks_injected": 3,
-#     "tokens_injected": 412,
-#     "top_chunks": ["docs/config.md#cache-timeout", ...]
-#   }
-# }
 ```
 
 ---
@@ -374,16 +286,12 @@ echo '{"model":"claude-haiku-4-5","messages":[{"role":"user","content":"hi"}],"m
 | View stats | `curl http://localhost:8766/stats` |
 | See last request | `curl http://localhost:8766/stats/last` |
 | Rebuild vault index | `tokenpak vault reindex` |
-| Hybrid mode | `TOKENPAK_MODE=hybrid tokenpak serve` |
-| Aggressive mode | `TOKENPAK_MODE=aggressive tokenpak serve` |
 | WebSocket port | `TOKENPAK_WS_PORT=8767 tokenpak serve` (default: PROXY_PORT+1) |
-| Disable compression | `TOKENPAK_MODE=strict tokenpak serve` |
 
 ## Environment Variables
 
 ```bash
 TOKENPAK_PORT=8766              # HTTP proxy port (default: 8766)
-TOKENPAK_MODE=hybrid            # Compression mode: strict|hybrid|aggressive
 TOKENPAK_WS_PORT=8767           # WebSocket port (default: PROXY_PORT+1)
 TOKENPAK_REQUEST_TIMEOUT=30     # Per-request upstream timeout (seconds, 0=disabled)
 VAULT_INDEX_PATH=~/.tokenpak    # Path to vault index directory
