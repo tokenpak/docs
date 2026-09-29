@@ -57,11 +57,13 @@
 }
 
 /*
- * Links on the light page use ink with an underline, so the underline carries
- * the affordance. Hover and focus shift to the accent (Material default).
- * The active navigation item is bold, because its colour now matches the rest.
+ * Links in page content are underlined in both schemes, so the underline, not
+ * the colour, carries the affordance. They are ink on the light page and accent
+ * on the dark page. Hover and focus shift to the accent (Material default).
+ * On the light page the active navigation item is bold, because its colour now
+ * matches the rest.
  */
-[data-md-color-scheme="default"] .md-typeset a:not(.headerlink) {
+.md-typeset a:not(.headerlink) {
   text-decoration: underline;
   text-underline-offset: 0.15em;
 }
