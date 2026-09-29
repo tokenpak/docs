@@ -8,18 +8,20 @@ Welcome to the TokenPak OSS beta. This page is the fastest path from "I heard ab
 
 ## Who this beta is for
 
-- Developers running LLM agent workflows daily (Claude Code, Cursor, Aider, Cline, Continue, Codex).
-- Anyone building on the Anthropic, OpenAI, or LiteLLM SDKs whose API bills are starting to show.
-- Engineers who want a transparent, local layer for compression / routing / cost tracking — not a hosted SaaS.
+- Developers and tech leads running long coding-agent sessions in Claude Code or Codex, the first-class integrations.
+- Anyone building on the Anthropic SDK, OpenAI SDK, or LiteLLM (tested adapters) whose API bills are starting to show.
+- Engineers who want a transparent, local layer for request records, explicit context tools, and cost tracking — not a hosted SaaS.
 - OSS contributors who'd rather file an issue than wait for a vendor roadmap.
 
-You don't need to use agents to benefit — any uncached LLM workload sees Prompt Packing in action. Agent workloads simply have more room to compress.
+Cursor, Cline, Continue and Aider are compatibility targets, not yet independently verified. You are welcome to try them and report what you find; their guides describe an expected setup.
+
+You don't need to use an agent to try TokenPak: any LLM request you send through the proxy is recorded locally. The default proxy preserves conversation turns, so a forwarded request can truthfully report zero tokens saved.
 
 ## Install
 
 ```bash
 pip install tokenpak
-tokenpak --version    # expect: tokenpak 1.25.1
+tokenpak --version    # expect: tokenpak 1.30.0
 tokenpak setup        # interactive wizard
 ```
 
@@ -33,7 +35,7 @@ export ANTHROPIC_BASE_URL=http://127.0.0.1:8766
 export OPENAI_BASE_URL=http://127.0.0.1:8766
 ```
 
-Claude Code, Cursor, Aider, Cline, and Continue all honor the same env vars. Full per-client patterns: [Quickstart](QUICKSTART.md).
+Claude Code honors the same env vars, and Codex launches through `tokenpak codex`. Cursor, Cline, Continue and Aider are compatibility targets, not yet independently verified. Full per-client patterns: [Quickstart](QUICKSTART.md).
 
 ## Trust posture
 
@@ -47,9 +49,9 @@ tokenpak status
 curl http://127.0.0.1:8766/health        # expect: {"status": "ok", ...}
 
 # 2. Make a real request through your usual client (any LLM call counts)
-#    e.g. run one Claude Code prompt, one Cursor question, one curl to /v1/messages
+#    e.g. run one Claude Code prompt, one Codex prompt, one curl to /v1/messages
 
-# 3. See savings on the local ledger
+# 3. See usage and savings on the local ledger (zero tokens saved is a valid result)
 tokenpak savings
 tokenpak cost --week
 
@@ -63,18 +65,18 @@ If `tokenpak status` shows the proxy up and your request count climbing, you're 
 
 These are the workflows where beta feedback is most valuable. Pick whichever matches your daily work:
 
-1. **Direct-API agent loop** — any code that makes a sequence of LLM calls (LangChain, LlamaIndex, your own loop). Highest savings; easiest to compare before / after.
-2. **Coding assistant** — Claude Code, Cursor, Aider, Cline, Continue. Run a real task end to end (open a feature branch, ask for a refactor, iterate). Note: provider-cached flows show lower incremental gains than direct-API; this is expected, and `tokenpak savings` will distinguish proxy-caused saves from provider cache hits.
-3. **Long multi-turn session** — extended chat or pair-programming session where the context keeps growing. Prompt Packing's value compounds over a session.
-4. **CLI / SDK script** — short Python or shell scripts that hit the LLM API directly. Cleanest case to measure compression because there's no provider-cache muddle.
+1. **Direct-API agent loop** — any code that makes a sequence of LLM calls (Anthropic SDK, OpenAI SDK, LiteLLM, your own loop). Easiest to compare before / after.
+2. **Coding assistant** — Claude Code or Codex (first-class); Cursor, Cline, Continue and Aider are compatibility targets, not yet independently verified. Run a real task end to end (open a feature branch, ask for a refactor, iterate). Note: provider cache hits are reported separately from TokenPak context reduction, and `tokenpak savings` will distinguish proxy-caused saves from provider cache hits.
+3. **Long multi-turn session** — extended chat or pair-programming session where the context keeps growing. Watch measured usage, burn and runway in the session footer or `tokenpak status`.
+4. **CLI / SDK script** — short Python or shell scripts that hit the LLM API directly. Cleanest case to measure explicit context tools because there's no provider-cache muddle.
 5. **Spend Guard** — set a deliberate low cap and trigger the pre-send 402: `tokenpak budget --help` for knobs. Worth verifying behavior in your environment before relying on it.
 6. **Vault indexing** — point `tokenpak index <dir>` at a project and try `tokenpak search "<query>"`. We want to know if results match what you'd expect.
 
 ## What savings to expect
 
-TokenPak's headline benchmark is a deterministic reduction pinned to a CI agent-style fixture (a blocking check on every PR; reproduce with `make benchmark-headline`). On favorable uncached workloads it can reach **up to** 90%+; provider-cached flows like Claude Code show lower incremental gains. `tokenpak savings` separates proxy saves from provider cache hits.
+TokenPak reports what it measured on your own traffic and does not promise a savings figure. The default proxy preserves conversation turns, so a forwarded request can truthfully report zero tokens saved; explicit context tools can reduce eligible content. `make benchmark-headline` exercises a fixed fixture, and its result is not a default-proxy savings receipt. `tokenpak savings` separates proxy saves from provider cache hits.
 
-If you're evaluating TokenPak, start with a direct-API workload to see the pipeline's actual effectiveness, then layer in your cached flows to see the marginal contribution on top.
+If you're evaluating TokenPak, start with a real session in Claude Code or Codex, read the receipt and `tokenpak status`, and then try explicit context tools on your own workload.
 
 ## Known limitations
 
