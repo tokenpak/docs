@@ -1,14 +1,14 @@
 # LangChain Adapter — Quick-Start
 
-Route your LangChain applications through the TokenPak proxy for request records, cost tracking, and explicit context tools.
+> **Not verified by current release evidence.** The first-class integrations are Claude Code and Codex, and the tested adapters are the OpenAI SDK, Anthropic SDK and LiteLLM; this page describes an expected setup for LangChain.
+
+Route your LangChain applications through the TokenPak proxy to try request records and cost tracking.
 
 ## Why Route Through TokenPak?
 
-- **Cost tracking:** Every token counted and categorized by model/provider
-- **Explicit compression:** Compression directives you set can reduce eligible content; the default proxy preserves conversation turns
-- **Vault injection:** Automatically enrich prompts with your knowledge base
-- **Request caching:** Deduplicate identical calls across applications
-- **Usage analytics:** Dashboard metrics for model spend and performance
+- **Cost tracking:** Per model, per session and per agent, in a local SQLite store
+- **Explicit context tools:** The default proxy preserves conversation turns. Explicit context tools can reduce eligible content; routing a request through the proxy does not by itself compress it.
+- **Usage and cache attribution:** Inspect recorded usage with `tokenpak savings` and provider-cache attribution with `tokenpak status --tip-cache`
 
 ## Prerequisites
 
@@ -199,30 +199,9 @@ stats = requests.get("http://localhost:8766/cache-stats").json()
 print(f"\nProxy stats: {stats['total_requests']} requests processed")
 ```
 
-## Advanced: Request Injection & Compression
+## Context tools
 
-TokenPak supports vault injection (prepend your knowledge base) and compression directives that you set explicitly with request headers, as in this example:
-
-```python
-import os
-from langchain_anthropic import ChatAnthropic
-
-llm = ChatAnthropic(
-    model="claude-sonnet-4-6",
-    base_url="http://localhost:8766/v1",
-    api_key=os.getenv("ANTHROPIC_API_KEY"),
-    # Optional: custom headers for injection/compression directives
-    default_headers={
-        "X-TokenPak-Vault": "~/your-vault",  # Auto-inject blocks
-        "X-TokenPak-Compress": "true",  # Enable compression
-    }
-)
-
-# Requests from this client now carry the vault and compression directives set above
-response = llm.invoke("What should I know about Python async?")
-```
-
-Check the main [TokenPak docs](../index.md) for detailed vault injection and compression configuration.
+The default proxy preserves conversation turns. Explicit context tools can reduce eligible content; routing a request through the proxy does not by itself compress it.
 
 ## Troubleshooting
 

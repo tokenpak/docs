@@ -1,16 +1,14 @@
 # OpenAI SDK Compatibility Guide
 
-TokenPak exposes an OpenAI-compatible endpoint at `/v1/chat/completions`. If you're migrating from the OpenAI API or using tools that target the OpenAI format (LangChain `ChatOpenAI`, LiteLLM, Vercel AI SDK, etc.), point them at the TokenPak proxy with no code changes.
+> **Cross-format use is not verified by current release evidence.** The OpenAI SDK and Anthropic SDK are tested adapters; the examples below that send OpenAI-format requests to Anthropic models describe an expected setup.
+
+This page describes pointing an OpenAI SDK client at the TokenPak proxy.
 
 ---
 
 ## How It Works
 
-```
-Your app (openai SDK) → POST /v1/chat/completions → TokenPak proxy → Anthropic API
-```
-
-TokenPak translates the OpenAI Chat Completions format to Anthropic's Messages API, records the request, then translates the response back.
+OpenAI SDK and Anthropic SDK are tested adapters. The default proxy preserves conversation turns and records requests.
 
 ---
 
