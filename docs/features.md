@@ -84,11 +84,11 @@ tokenpak savings                         # tokens and cost saved
 
 Deduplication, doc compression, instruction table, budget tracking, fidelity tiers
 
-Automatically applied. Semantic equivalence guaranteed.
+Explicit compression tools are opt-in and designed to preserve meaning; verify on your workload. The default proxy forwards the request and preserves conversation turns.
 
 ### Error Handling
 
-Normalized errors, automatic retries with exponential backoff, and circuit breaking are applied transparently by the proxy. When an upstream provider fails repeatedly, the proxy opens a circuit breaker (visible at `GET /circuit-breakers`) and surfaces a consistent JSON error to the client. See the [Error Handling Guide](./error-handling.md).
+Normalized errors are returned as consistent JSON. Retries, circuit breaking and fallback chains are not verified against the current release and automatic fallback enforcement is not active by default; routing policy is configuration and observe-mode records. See the [Error Handling Guide](./error-handling.md).
 
 ### Vault Features
 

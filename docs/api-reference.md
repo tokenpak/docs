@@ -449,7 +449,7 @@ Serves the built-in HTML monitoring dashboard.
 
 Anthropic Messages API — the primary proxy path for Claude models.
 
-TokenPak intercepts this request, applies compression, and forwards to the upstream Anthropic API. The response is transparently passed back.
+TokenPak intercepts this request, records it, and forwards it to the upstream Anthropic API. The default proxy preserves conversation turns; explicit context and compression tools are separate. The response is transparently passed back.
 
 **Headers:**
 

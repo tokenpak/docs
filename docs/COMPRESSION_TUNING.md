@@ -230,7 +230,7 @@ table.add_instruction(
 
 **How it works:**
 - First request with context → stored in Claude's prompt cache (the API applies a default cache TTL)
-- Identical or very similar context → reuses cached tokens at a reduced per-token cost on the cached prefix
+- Matching prefix context → reuses cached tokens at a reduced per-token cost on the cached prefix
 
 **Real example:**
 
@@ -430,7 +430,7 @@ print(f"Stages run: {', '.join(result.stages_run)}")
 
 ### Q: "Compression makes responses slightly different. Is this safe?"
 
-**A:** TokenPak compression is **semantic-preserving**. The meaning of the request/response is identical; only formatting and redundancy are removed. Safe for production.
+**A:** TokenPak compression is **semantic-preserving**. It is designed to preserve meaning while removing formatting and redundancy; responses can still differ, so verify on your workload before relying on it in production.
 
 ### Q: "Can I compress the response too?"
 

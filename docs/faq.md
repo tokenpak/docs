@@ -4,7 +4,7 @@
 
 ### Is TokenPak production-ready?
 
-TokenPak is currently in **OSS beta**. The proxy core, Prompt Packing pipeline, Spend Guard, Savings Ledger, and client integrations are stable and used in real workflows today. Some surfaces (Pak scoring/assembly, fleet orchestration, advanced recipes) are explicitly read-only or experimental in the beta — see [Known Limitations](KNOWN_LIMITATIONS.md) for the current line.
+TokenPak is currently in **OSS beta**. The proxy core, Spend Guard, request records and the Claude Code and Codex client integrations are stable and used in real workflows today. The default proxy forwards the request and preserves conversation turns; explicit context and compression tools are separate. Some surfaces (Pak scoring/assembly, fleet orchestration, advanced recipes) are explicitly read-only or experimental in the beta — see [Known Limitations](KNOWN_LIMITATIONS.md) for the current line.
 
 We don't claim an SLA for the OSS package: TokenPak runs on your machine, so reliability is determined by your machine and the upstream provider, not by any infrastructure we operate.
 
@@ -131,7 +131,7 @@ A full example with a local Ollama instance is in the docs.
 
 ### Can I use TokenPak with my favorite SDK (LangChain, LiteLLM, etc.)?
 
-Yes. TokenPak is a drop-in replacement for the OpenAI and Anthropic APIs. Change your SDK's base URL to `http://localhost:8766` and your real API key stays where the SDK already reads it from. Works with LangChain, LlamaIndex, AutoGen, CrewAI, LiteLLM, and any OpenAI-compatible SDK.
+Tested adapters: OpenAI SDK, Anthropic SDK and LiteLLM. Other SDKs that accept a base-URL override are untested. First-class clients are Claude Code and Codex. Where an SDK accepts a base URL, point it at your local proxy; your API key stays where the SDK already reads it from.
 
 ### Can I modify requests/responses in-flight?
 

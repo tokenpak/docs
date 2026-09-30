@@ -20,9 +20,10 @@ Guided first-run configuration. Prompts interactively when stdin is a terminal. 
 
 ### `tokenpak start`
 
-Start the TokenPak proxy server, which routes LLM API requests through
-Prompt Packing. The proxy listens on localhost:PORT and forwards
-compressed requests to your configured LLM providers.
+Start the TokenPak proxy server. The proxy listens on localhost:PORT and
+forwards requests to your configured LLM providers. The default proxy
+preserves conversation turns; explicit context and compression tools are
+separate.
 
 Example:
   tokenpak start --port 8888 --workers 4

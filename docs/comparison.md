@@ -1,6 +1,6 @@
 # TokenPak vs. Alternatives: Feature Comparison
 
-This comparison covers the most popular LLM proxy and observability solutions. We've researched each alternative's current capabilities directly from their documentation and GitHub repositories. Our goal is to help you understand when TokenPak is the right choice—and when alternatives might better suit your needs.
+This comparison covers the most popular LLM proxy and observability solutions. Competitor cells marked "Not assessed here" have not been evidenced for this page; check each project's own documentation. Our goal is to help you understand when TokenPak is the right choice—and when alternatives might better suit your needs.
 
 ---
 
@@ -10,20 +10,20 @@ This comparison covers the most popular LLM proxy and observability solutions. W
 |---------|----------|---------|----------|-----------|
 | **Self-hosted** | ✅ Yes | ✅ Yes | ⚠️ Cloud or self-hosted (Docker) | ❌ Cloud only |
 | **Open source** | ✅ Yes (Apache 2.0) | ✅ Yes (MIT) | ✅ Yes (Apache 2.0) | ❌ Proprietary |
-| **Provider support** | 4 (Claude, Gemini, OpenAI, Ollama) | 100+ | 20+ | 150+ |
+| **Provider support** | 4 (Claude, Gemini, OpenAI, Ollama) | Not assessed here | Not assessed here | Not assessed here |
 | **Vault compression** | ⚠️ Explicit tools only (not applied to default requests) | Not assessed here | Not assessed here | Not assessed here |
 | **Token counting accuracy** | ⚠️ Measured usage; estimated cost; some counts are estimates | Not assessed here | Not assessed here | Not assessed here |
-| **Cost tracking per-request** | ✅ Yes | ✅ Yes (with dashboard) | ✅ Yes (with dashboard) | ✅ Yes (cloud only) |
-| **Streaming support** | ✅ Full SSE | ✅ Full SSE | ✅ Full SSE | ✅ Full SSE |
-| **Python SDK** | ✅ Yes | ✅ Yes | ✅ Yes | ✅ Yes |
-| **JavaScript/TypeScript SDK** | ⚠️ HTTP client only | ✅ Yes | ✅ Yes | ✅ Yes |
-| **Docker support** | ✅ Yes | ✅ Yes | ✅ Yes (production-grade Helm) | ❌ Cloud only |
-| **Proxy overhead** | Designed for minimal local overhead | Local proxy (self-hosted) | Depends on self-host | Network-bound (cloud-routed) |
-| **Caching** | ✅ LRU (TTL-based) | ⚠️ Via enterprise integrations | ✅ Via observability | ❌ No |
+| **Cost tracking per-request** | ✅ Yes | Not assessed here | Not assessed here | Not assessed here |
+| **Streaming support** | ✅ Full SSE | Not assessed here | Not assessed here | Not assessed here |
+| **Python SDK** | ✅ Yes | Not assessed here | Not assessed here | Not assessed here |
+| **JavaScript/TypeScript SDK** | ⚠️ HTTP client only | Not assessed here | Not assessed here | Not assessed here |
+| **Docker support** | ✅ Yes | Not assessed here | Not assessed here | Not assessed here |
+| **Proxy overhead** | Designed for minimal local overhead | Not assessed here | Not assessed here | Not assessed here |
+| **Caching** | ✅ LRU (TTL-based) | Not assessed here | Not assessed here | Not assessed here |
 | **Automatic failover** | ⚠️ Not active by default (observe-mode routing records) | Not assessed here | Not assessed here | Not assessed here |
 | **Added TokenPak cloud service** | None; requests go to your chosen provider | Not assessed here | Not assessed here | Not assessed here |
-| **Rate limiting** | ✅ Yes | ✅ Yes | ✅ Yes | ✅ Yes (cloud-side) |
-| **Free tier** | ✅ Yes (unlimited, self-hosted) | ✅ Yes (limited requests) | ✅ Yes (10k/month) | ✅ Yes ($5 initial credit) |
+| **Rate limiting** | ✅ Yes | Not assessed here | Not assessed here | Not assessed here |
+| **Free tier** | ✅ Yes (unlimited, self-hosted) | Not assessed here | Not assessed here | Not assessed here |
 
 ---
 
@@ -66,7 +66,7 @@ This comparison covers the most popular LLM proxy and observability solutions. W
 
 **Strengths:**
 - **Provider breadth** — Supports 100+ LLMs (every major provider + emerging models)
-- **Production-grade routing** — Advanced retry, fallback, and load-balancing logic
+- **Routing** — retry, fallback and load-balancing (not assessed here)
 - **Admin dashboard** — Web UI for monitoring, cost tracking, virtual keys
 - **Extensive enterprise features** — Authentication, user management, rate limiting per project
 - **Framework integrations** — Works with LangChain, LlamaIndex, Semantic Kernel, etc.
@@ -98,7 +98,7 @@ This comparison covers the most popular LLM proxy and observability solutions. W
 
 **Strengths:**
 - **Observability-first design** — Session tracing, debugging, prompt management built-in
-- **AI Gateway** — Access 100+ models through Helicone with automatic fallbacks
+- **AI Gateway** — Model gateway (capabilities not assessed here)
 - **Free tier** — 10k requests/month free (generous for testing)
 - **Production-grade self-hosting** — Docker Compose + Helm for on-prem deployments
 - **Fine-tuning partnerships** — Native integration with OpenPipe and Autonomi
@@ -143,7 +143,7 @@ This comparison covers the most popular LLM proxy and observability solutions. W
 - **No caching** — Redundant requests always hit the model
 - **Cost opacity** — Pricing varies by model; harder to predict costs
 - **Token counting approximate** — Uses estimates, not native counting
-- **No failover** — If OpenRouter is down, you're blocked
+- **Failover** — not assessed here
 
 **Best for:**
 - **Rapid prototyping** — Try many models quickly without setup
@@ -155,7 +155,7 @@ This comparison covers the most popular LLM proxy and observability solutions. W
 - If you do not want a **hosted service in the request path** (TokenPak adds no cloud service; requests go to the provider you already use)
 - If you want **cost tracking without a hosted service** (TokenPak's cost tracking is stored in local SQLite)
 - If you want a **local proxy** rather than a hosted marketplace (TokenPak)
-- If you need **redundancy and failover** (LiteLLM)
+- If you need **redundancy and failover**, check the alternatives' own documentation (not assessed here)
 
 ---
 

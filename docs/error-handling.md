@@ -223,9 +223,13 @@ tokenpak config validate
 
 ## Fallback Chains & Circuit Breaker
 
-TokenPak automatically switches providers when the primary fails.
+> **Not verified / not active by default.** Automatic provider fallback and
+> circuit-breaker enforcement are not active by default. Routing policy is
+> configuration and observe-mode records; automatic model changes and fallback
+> enforcement have not been verified against the current release. The material
+> below describes the intended configuration shape, not default behavior.
 
-### How It Works
+### How It Works (configuration shape, not active by default)
 
 ```yaml
 provider: anthropic
@@ -234,7 +238,7 @@ fallback:
   - openai      # Try if Google fails
 ```
 
-**Request flow:**
+**Intended request flow when fallback is enabled:**
 ```
 1. Try Anthropic
    ├─ Success? ✅ Return response
@@ -253,7 +257,7 @@ fallback:
 
 ### Circuit Breaker
 
-When a provider fails repeatedly, TokenPak opens the **circuit breaker** to prevent cascading failures:
+The circuit breaker is designed to open when a provider fails repeatedly, to limit cascading failures. It is not verified against the current release and is not active by default:
 
 ```
 State: CLOSED (normal operation)

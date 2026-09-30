@@ -315,8 +315,9 @@ plainly is a feature, not a weakness:
 
 - **Pure byte-pass or already-minimal-context workloads.** If there's
   little redundant or compressible context in your requests, there's
-  little for Prompt Packing to reduce — you'll see minimal-to-no savings to
-  show for it.
+  little for explicit context tools to reduce, and the default proxy
+  preserves conversation turns, so a forwarded request can report zero
+  tokens saved.
 - **Teams that need a hosted, multi-tenant, or centrally-managed proxy
   today.** TokenPak is a local, single-machine process. There is no
   SaaS, hosted control plane, or shared cloud component in the OSS beta
