@@ -93,8 +93,9 @@
 /*
  * Code blocks: charcoal background, paper text and light syntax colours, the
  * same in both schemes. The variables are set on the block, so inline code
- * keeps the chip colours above. The six coloured tokens are Material's own
- * dark-scheme syntax colours, which stay above 5:1 against charcoal.
+ * keeps the chip colours above. The six coloured tokens are the theme's
+ * non-brand syntax colours (not brand tokens): Material's own dark-scheme
+ * syntax colours, which stay above 5:1 against charcoal.
  */
 .md-typeset .highlight,
 .md-typeset pre {
@@ -128,6 +129,25 @@
   color: var(--md-accent-fg-color);
 }
 
+/*
+ * Light scheme focus rings: Material draws them with the accent, which is
+ * 2.42:1 on the paper background. Use ink (17.9:1) instead. The dark scheme
+ * keeps the accent (6.4:1 on charcoal).
+ */
+[data-md-color-scheme="default"] .md-typeset a.focus-visible,
+[data-md-color-scheme="default"] .md-nav__link.focus-visible,
+[data-md-color-scheme="default"] .md-typeset summary.focus-visible,
+[data-md-color-scheme="default"] .md-pagination__link.focus-visible,
+[data-md-color-scheme="default"] .md-content :focus-visible,
+[data-md-color-scheme="default"] .md-sidebar :focus-visible {
+  outline-color: var(--tp-ink);
+}
+[data-md-color-scheme="default"] .focus-visible > .md-tooltip,
+[data-md-color-scheme="default"] .md-tooltip:target {
+  outline-color: var(--tp-ink);
+}
+/* Focus rings on the ink header, footer and code blocks keep the accent (dark background). */
+
 /* Beta banner / admonition tone. */
 .md-typeset .admonition.beta,
 .md-typeset details.beta {
@@ -143,4 +163,16 @@
   background-color: var(--md-accent-fg-color);
   -webkit-mask-image: var(--md-admonition-icon--note);
           mask-image: var(--md-admonition-icon--note);
+}
+
+/* Light scheme: the accent border is 2.42:1 on paper, so use ink for the border and icon. */
+[data-md-color-scheme="default"] .md-typeset .admonition.beta,
+[data-md-color-scheme="default"] .md-typeset details.beta,
+[data-md-color-scheme="default"] .md-typeset .beta > .admonition-title,
+[data-md-color-scheme="default"] .md-typeset .beta > summary {
+  border-color: var(--tp-ink);
+}
+[data-md-color-scheme="default"] .md-typeset .beta > .admonition-title::before,
+[data-md-color-scheme="default"] .md-typeset .beta > summary::before {
+  background-color: var(--tp-ink);
 }

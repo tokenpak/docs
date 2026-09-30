@@ -74,7 +74,7 @@ component's manifest.
 
 | Profile | Role |
 |---|---|
-| `tip-proxy` | Sits on the data plane, applies compression / routing / caching, and emits telemetry. |
+| `tip-proxy` | Sits on the data plane, forwards requests, records them and emits telemetry. Compression and routing are explicit, configurable operations. |
 | `tip-companion` | Client-side, pre-send optimizer (CLI/TUI helpers, memory capsules, session journal). |
 | `tip-adapter` | Wires a specific client tool or framework to a TIP-proxy. |
 | `tip-plugin` | Registers hooks at documented pipeline stages. |

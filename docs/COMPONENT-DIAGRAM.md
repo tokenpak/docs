@@ -91,7 +91,7 @@ graph TD
 - **Integrates with:** Provider Router, Monitor
 
 **7. Provider Router**
-- **What it does:** Selects which LLM provider to use based on routing rules, provider health, and failover policy
+- **What it does:** Selects which LLM provider to use based on routing rules, provider health, and failover policy (not active by default)
 - **Key methods:** `select_provider()`, `apply_routing_rules()`, `get_healthy_providers()`
 - **Integrates with:** Circuit Breaker, Rate Limiter
 

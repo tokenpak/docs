@@ -65,9 +65,9 @@ Enforces per-IP rate limiting, per-model rate limits, and cost-per-minute budget
 **Responsibility:** Rate limit enforcement, cost-based throttling, backpressure handling.
 
 ### 6. **Provider Router**
-Decides which LLM provider to use based on request metadata, fallback rules, and provider health. Supports weighted routing, circuit breakers (detects down providers), and failover logic.
+Decides which LLM provider to use based on request metadata, fallback rules, and provider health. Supports weighted routing, circuit breakers (detects down providers), and failover logic (fallback enforcement is not active by default).
 
-**Responsibility:** Provider selection, failover logic, circuit breaker management, health checking.
+**Responsibility:** Provider selection, failover logic (not active by default), circuit breaker management, health checking.
 
 ### 7. **Monitoring & Observability**
 Real-time stats collection: token usage, cost, cache hit rates, latency, provider health. Exports metrics to dashboards and analytics tools.
@@ -173,7 +173,7 @@ Node 1       Node 2       Node 3
 graph TD
     A["StageTrace & PipelineTrace"]
     B["VaultIndex<br/>Vault Retrieval & Semantic Search"]
-    C["Provider Router<br/>Route Selection & Failover"]
+    C["Provider Router<br/>Route Selection<br/>(failover not active by default)"]
     D["Validation Gate<br/>Content Security"]
     E["Cache Manager<br/>Response & Prompt Cache"]
     F["Rate Limiter<br/>Quota Enforcement"]
