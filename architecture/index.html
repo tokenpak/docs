@@ -3662,8 +3662,8 @@
 <p>An optional safety layer that inspects message content against configured policies before passing to the proxy. Can detect and block suspicious patterns, enforce compliance rules, or rate-limit based on content risk.</p>
 <p><strong>Responsibility:</strong> Content security scanning, policy enforcement, risk classification of requests and responses.</p>
 <h3 id="3-token-counter">3. <strong>Token Counter</strong><a class="headerlink" href="#3-token-counter" title="Permanent link">&para;</a></h3>
-<p>Counts input and output tokens accurately using provider-specific tokenizers. Works transparently for streaming and non-streaming responses, supports prompt caching token accounting, and feeds real usage data to the cost tracker.</p>
-<p><strong>Responsibility:</strong> Accurate token counting per provider, cache-aware token calculation, real-time stats collection.</p>
+<p>Records input and output token usage and feeds the cost tracker. Some counts are estimates; <code>tokenpak savings --verify</code> compares the byte estimator with an independent <code>cl100k_base</code> count.</p>
+<p><strong>Responsibility:</strong> Token usage records, cache-aware token calculation, stats collection.</p>
 <h3 id="4-cache-manager">4. <strong>Cache Manager</strong><a class="headerlink" href="#4-cache-manager" title="Permanent link">&para;</a></h3>
 <p>Implements a multi-layer caching strategy: provider-native prompt caching (e.g. Anthropic prompt cache pass-through), and an opt-in TokenPak-managed semantic cache for narrow read-shaped route classes. Semantic response substitution is OFF by default, bypassed entirely for code/debug/streaming/Claude-Code traffic, and gated by per-route similarity thresholds. Configurable TTL-based eviction governs cache lifetime. See the <strong>Caching Strategy</strong> section below for the full safety contract.</p>
 <p><strong>Responsibility:</strong> Cache storage and retrieval, cache hit rate optimization, prompt cache header management, token savings calculation.</p>
@@ -3796,14 +3796,14 @@ Node 1       Node 2       Node 3
 </ol>
 <hr />
 <h2 id="token-counting-cost-tracking">Token Counting &amp; Cost Tracking<a class="headerlink" href="#token-counting-cost-tracking" title="Permanent link">&para;</a></h2>
-<p>TokenPak counts tokens accurately for every request/response, accounting for:</p>
+<p>TokenPak records token usage for each request and response; some counts are estimates. The categories are:</p>
 <ul>
 <li><strong>Input tokens</strong> — User message + system prompt</li>
 <li><strong>Output tokens</strong> — Model response</li>
-<li><strong>Cache read tokens</strong> — Tokens served from provider caching (1/4 cost)</li>
-<li><strong>Cache creation tokens</strong> — Tokens used to create a new cache entry (full cost)</li>
+<li><strong>Cache read tokens</strong> — Tokens served from provider caching</li>
+<li><strong>Cache creation tokens</strong> — Tokens used to create a new cache entry</li>
 </ul>
-<p>Cost is calculated per-provider using live pricing data, giving you real per-request cost visibility.</p>
+<p>Cost is estimated from the pricing catalog.</p>
 <hr />
 <h2 id="monitoring-observability">Monitoring &amp; Observability<a class="headerlink" href="#monitoring-observability" title="Permanent link">&para;</a></h2>
 <p>TokenPak exports metrics for:</p>
