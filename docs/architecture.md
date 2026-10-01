@@ -50,9 +50,9 @@ An optional safety layer that inspects message content against configured polici
 **Responsibility:** Content security scanning, policy enforcement, risk classification of requests and responses.
 
 ### 3. **Token Counter**
-Counts input and output tokens accurately using provider-specific tokenizers. Works transparently for streaming and non-streaming responses, supports prompt caching token accounting, and feeds real usage data to the cost tracker.
+Records input and output token usage and feeds the cost tracker. Some counts are estimates; `tokenpak savings --verify` compares the byte estimator with an independent `cl100k_base` count.
 
-**Responsibility:** Accurate token counting per provider, cache-aware token calculation, real-time stats collection.
+**Responsibility:** Token usage records, cache-aware token calculation, stats collection.
 
 ### 4. **Cache Manager**
 Implements a multi-layer caching strategy: provider-native prompt caching (e.g. Anthropic prompt cache pass-through), and an opt-in TokenPak-managed semantic cache for narrow read-shaped route classes. Semantic response substitution is OFF by default, bypassed entirely for code/debug/streaming/Claude-Code traffic, and gated by per-route similarity thresholds. Configurable TTL-based eviction governs cache lifetime. See the **Caching Strategy** section below for the full safety contract.
@@ -216,14 +216,14 @@ TokenPak's caching layers are described below. Provider cache reuse is distinct 
 
 ## Token Counting & Cost Tracking
 
-TokenPak counts tokens accurately for every request/response, accounting for:
+TokenPak records token usage for each request and response; some counts are estimates. The categories are:
 
 - **Input tokens** — User message + system prompt
 - **Output tokens** — Model response
-- **Cache read tokens** — Tokens served from provider caching (1/4 cost)
-- **Cache creation tokens** — Tokens used to create a new cache entry (full cost)
+- **Cache read tokens** — Tokens served from provider caching
+- **Cache creation tokens** — Tokens used to create a new cache entry
 
-Cost is calculated per-provider using live pricing data, giving you real per-request cost visibility.
+Cost is estimated from the pricing catalog.
 
 ---
 
