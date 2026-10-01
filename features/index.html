@@ -45,12 +45,6 @@
     
     
       
-        
-        
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,300i,400,400i,700,700i%7CJetBrains+Mono:400,400i,700,700i&display=fallback">
-        <style>:root{--md-text-font:"Inter";--md-code-font:"JetBrains Mono"}</style>
-      
     
     
       <link rel="stylesheet" href="../assets/tokenpak.css">
@@ -2141,7 +2135,7 @@
     
   
   
-    <span class="md-status md-status--current"></span>
+    <span class="md-status md-status--compatibility-target"></span>
   
 
   
@@ -2176,7 +2170,7 @@
     
   
   
-    <span class="md-status md-status--current"></span>
+    <span class="md-status md-status--compatibility-target"></span>
   
 
   
@@ -2211,7 +2205,7 @@
     
   
   
-    <span class="md-status md-status--current"></span>
+    <span class="md-status md-status--compatibility-target"></span>
   
 
   
@@ -2246,7 +2240,7 @@
     
   
   
-    <span class="md-status md-status--current"></span>
+    <span class="md-status md-status--compatibility-target"></span>
   
 
   
@@ -3451,14 +3445,14 @@
 <tr>
 <td></td>
 <td>Fallback chains</td>
-<td>✅</td>
-<td>Auto-failover to backup providers</td>
+<td>⚠️</td>
+<td>Not active by default; routing policy is configuration and observe-mode records</td>
 </tr>
 <tr>
 <td></td>
 <td>Circuit breaker</td>
-<td>✅</td>
-<td>Recovers from rate limits</td>
+<td>⚠️</td>
+<td>Spend Guard is a pre-send circuit breaker that blocks runaway requests before the provider call</td>
 </tr>
 <tr>
 <td><strong>Token Management</strong></td>
@@ -3546,9 +3540,9 @@
 </tr>
 <tr>
 <td></td>
-<td>Auto-injection</td>
-<td>✅</td>
-<td>Automatically add relevant docs to context</td>
+<td>Context injection</td>
+<td>⚠️</td>
+<td>Off by default; enabling it is an explicit decision (<code>TOKENPAK_VAULT_INJECTION</code>)</td>
 </tr>
 <tr>
 <td></td>
@@ -3635,11 +3629,11 @@ tokenpak<span class="w"> </span>savings<span class="w">                         
 </code></pre></div>
 <h3 id="compression">Compression<a class="headerlink" href="#compression" title="Permanent link">&para;</a></h3>
 <p>Deduplication, doc compression, instruction table, budget tracking, fidelity tiers</p>
-<p>Automatically applied. Semantic equivalence guaranteed.</p>
+<p>Explicit compression tools are opt-in and designed to preserve meaning; verify on your workload. The default proxy forwards the request and preserves conversation turns.</p>
 <h3 id="error-handling">Error Handling<a class="headerlink" href="#error-handling" title="Permanent link">&para;</a></h3>
-<p>Normalized errors, automatic retries with exponential backoff, and circuit breaking are applied transparently by the proxy. When an upstream provider fails repeatedly, the proxy opens a circuit breaker (visible at <code>GET /circuit-breakers</code>) and surfaces a consistent JSON error to the client. See the <a href="../error-handling/">Error Handling Guide</a>.</p>
+<p>Normalized errors are returned as consistent JSON. Retries, circuit breaking and fallback chains are not verified against the current release and automatic fallback enforcement is not active by default; routing policy is configuration and observe-mode records. See the <a href="../error-handling/">Error Handling Guide</a>.</p>
 <h3 id="vault-features">Vault Features<a class="headerlink" href="#vault-features" title="Permanent link">&para;</a></h3>
-<p>Indexing, search, auto-injection, symbol extraction, AST parsing, chunking, watcher, SQLite backend</p>
+<p>Indexing, search, symbol extraction, AST parsing, chunking, watcher, SQLite backend. Context injection is off by default.</p>
 <div class="highlight"><pre><span></span><code><span class="nt">vault</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
 <span class="w">  </span><span class="nt">root</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;~/my-vault&quot;</span>

@@ -45,12 +45,6 @@
     
     
       
-        
-        
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,300i,400,400i,700,700i%7CJetBrains+Mono:400,400i,700,700i&display=fallback">
-        <style>:root{--md-text-font:"Inter";--md-code-font:"JetBrains Mono"}</style>
-      
     
     
       <link rel="stylesheet" href="../assets/tokenpak.css">
@@ -1945,7 +1939,7 @@
     
   
   
-    <span class="md-status md-status--current"></span>
+    <span class="md-status md-status--compatibility-target"></span>
   
 
   
@@ -1980,7 +1974,7 @@
     
   
   
-    <span class="md-status md-status--current"></span>
+    <span class="md-status md-status--compatibility-target"></span>
   
 
   
@@ -2015,7 +2009,7 @@
     
   
   
-    <span class="md-status md-status--current"></span>
+    <span class="md-status md-status--compatibility-target"></span>
   
 
   
@@ -2050,7 +2044,7 @@
     
   
   
-    <span class="md-status md-status--current"></span>
+    <span class="md-status md-status--compatibility-target"></span>
   
 
   
@@ -3788,9 +3782,12 @@
 
 
 <h1 id="tokenpak-compression-tuning-guide">TokenPak Compression Tuning Guide<a class="headerlink" href="#tokenpak-compression-tuning-guide" title="Permanent link">&para;</a></h1>
+<blockquote>
+<p><strong>Scope:</strong> This guide covers TokenPak's explicit compression operations. The default proxy preserves conversation turns, so a forwarded request can truthfully report zero tokens saved.</p>
+</blockquote>
 <p>This guide explains <strong>how to tune TokenPak's compression engine</strong> to maximize token savings while minimizing latency impact for your specific workload.</p>
 <h2 id="overview-why-compression-matters">Overview: Why Compression Matters<a class="headerlink" href="#overview-why-compression-matters" title="Permanent link">&para;</a></h2>
-<p>LLM API costs scale with token count. TokenPak's compression pipeline intercepts requests and re-expresses semantically equivalent content with fewer tokens, with the magnitude of the reduction depending on your data.</p>
+<p>LLM API costs scale with token count. When you run explicit compression operations, TokenPak's compression pipeline re-expresses eligible content with fewer tokens, with the magnitude of the reduction depending on your data.</p>
 <blockquote>
 <p><strong>Note on numbers:</strong> This guide intentionally describes savings and latency in qualitative terms. TokenPak does not publish specific latency, savings, or cache-hit figures until they are backed by a validated, frozen-fixture benchmark run. Receipt-backed figures will be added once TokenPak's benchmark suite produces a validated run. In the meantime, <strong>measure savings and latency on your own workload</strong> — see <a href="#monitoring">Monitoring</a> and run <code>tokenpak savings</code> / <code>tokenpak stats</code>.</p>
 </blockquote>
@@ -4016,7 +4013,7 @@ Lookup table maps [CODE-REVIEW-V2] → full instruction text
 <p><strong>What it does:</strong> Reuses cached prompt prefixes when subsequent requests have similar context.</p>
 <p><strong>How it works:</strong>
 - First request with context → stored in Claude's prompt cache (the API applies a default cache TTL)
-- Identical or very similar context → reuses cached tokens at a reduced per-token cost on the cached prefix</p>
+- Matching prefix context → reuses cached tokens at a reduced per-token cost on the cached prefix</p>
 <p><strong>Real example:</strong></p>
 <div class="highlight"><pre><span></span><code>Request 1: &quot;Here&#39;s the codebase:\n&lt;large context&gt;&quot; → cache creation tokens written
 Request 2: &quot;Same codebase, different question&quot; → cache read tokens (reduced cost on the cached prefix)
@@ -4198,7 +4195,7 @@ Effect: the repeated prefix is billed at the lower cache-read rate instead of fu
 <hr />
 <h2 id="common-tuning-questions">Common Tuning Questions<a class="headerlink" href="#common-tuning-questions" title="Permanent link">&para;</a></h2>
 <h3 id="q-compression-makes-responses-slightly-different-is-this-safe">Q: "Compression makes responses slightly different. Is this safe?"<a class="headerlink" href="#q-compression-makes-responses-slightly-different-is-this-safe" title="Permanent link">&para;</a></h3>
-<p><strong>A:</strong> TokenPak compression is <strong>semantic-preserving</strong>. The meaning of the request/response is identical; only formatting and redundancy are removed. Safe for production.</p>
+<p><strong>A:</strong> TokenPak compression is <strong>semantic-preserving</strong>. It is designed to preserve meaning while removing formatting and redundancy; responses can still differ, so verify on your workload before relying on it in production.</p>
 <h3 id="q-can-i-compress-the-response-too">Q: "Can I compress the response too?"<a class="headerlink" href="#q-can-i-compress-the-response-too" title="Permanent link">&para;</a></h3>
 <p><strong>A:</strong> TokenPak currently compresses <strong>requests only</strong> (to LLM). Response compression would require client-side modifications. Future feature.</p>
 <h3 id="q-how-much-should-i-save">Q: "How much should I save?"<a class="headerlink" href="#q-how-much-should-i-save" title="Permanent link">&para;</a></h3>

@@ -45,12 +45,6 @@
     
     
       
-        
-        
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,300i,400,400i,700,700i%7CJetBrains+Mono:400,400i,700,700i&display=fallback">
-        <style>:root{--md-text-font:"Inter";--md-code-font:"JetBrains Mono"}</style>
-      
     
     
       <link rel="stylesheet" href="../assets/tokenpak.css">
@@ -1075,10 +1069,10 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#how-it-works" class="md-nav__link">
+  <a href="#how-it-works-configuration-shape-not-active-by-default" class="md-nav__link">
     <span class="md-ellipsis">
       
-        How It Works
+        How It Works (configuration shape, not active by default)
       
     </span>
   </a>
@@ -2357,7 +2351,7 @@
     
   
   
-    <span class="md-status md-status--current"></span>
+    <span class="md-status md-status--compatibility-target"></span>
   
 
   
@@ -2392,7 +2386,7 @@
     
   
   
-    <span class="md-status md-status--current"></span>
+    <span class="md-status md-status--compatibility-target"></span>
   
 
   
@@ -2427,7 +2421,7 @@
     
   
   
-    <span class="md-status md-status--current"></span>
+    <span class="md-status md-status--compatibility-target"></span>
   
 
   
@@ -2462,7 +2456,7 @@
     
   
   
-    <span class="md-status md-status--current"></span>
+    <span class="md-status md-status--compatibility-target"></span>
   
 
   
@@ -3587,10 +3581,10 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#how-it-works" class="md-nav__link">
+  <a href="#how-it-works-configuration-shape-not-active-by-default" class="md-nav__link">
     <span class="md-ellipsis">
       
-        How It Works
+        How It Works (configuration shape, not active by default)
       
     </span>
   </a>
@@ -3997,13 +3991,13 @@ Attempt 4: Wait 8 seconds, retry
 <div class="highlight"><pre><span></span><code><span class="c1"># Option 1: Reduce message size — keep only relevant context</span>
 <span class="n">short_context</span> <span class="o">=</span> <span class="s2">&quot;Summary of relevant context only...&quot;</span>
 
-<span class="c1"># Option 2: Let the proxy compress context automatically</span>
-<span class="c1">#   (compression is enabled by default; tune via config.yaml / env vars)</span>
+<span class="c1"># Option 2: Use an explicit compression operation on eligible context</span>
+<span class="c1">#   (the default proxy preserves conversation turns; see the compression tuning guide)</span>
 
 <span class="c1"># Option 3: Split into multiple smaller requests</span>
 </code></pre></div></p>
 <p><strong>Prevention:</strong>
-- Enable compression (on by default — see config.yaml)
+- Use explicit compression on eligible content (the default proxy preserves conversation turns)
 - Use vault context injection selectively
 - Preview compression savings on a file with <code>tokenpak preview &lt;file&gt;</code></p>
 <hr />
@@ -4034,14 +4028,20 @@ tokenpak<span class="w"> </span>config<span class="w"> </span>validate
 - Refer to <a href="../installation/">Installation guide</a> for examples</p>
 <hr />
 <h2 id="fallback-chains-circuit-breaker">Fallback Chains &amp; Circuit Breaker<a class="headerlink" href="#fallback-chains-circuit-breaker" title="Permanent link">&para;</a></h2>
-<p>TokenPak automatically switches providers when the primary fails.</p>
-<h3 id="how-it-works">How It Works<a class="headerlink" href="#how-it-works" title="Permanent link">&para;</a></h3>
+<blockquote>
+<p><strong>Not verified / not active by default.</strong> Automatic provider fallback and
+circuit-breaker enforcement are not active by default. Routing policy is
+configuration and observe-mode records; automatic model changes and fallback
+enforcement have not been verified against the current release. The material
+below describes the intended configuration shape, not default behavior.</p>
+</blockquote>
+<h3 id="how-it-works-configuration-shape-not-active-by-default">How It Works (configuration shape, not active by default)<a class="headerlink" href="#how-it-works-configuration-shape-not-active-by-default" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="nt">provider</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">anthropic</span>
 <span class="nt">fallback</span><span class="p">:</span>
 <span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">google</span><span class="w">      </span><span class="c1"># Try if Anthropic fails</span>
 <span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">openai</span><span class="w">      </span><span class="c1"># Try if Google fails</span>
 </code></pre></div>
-<p><strong>Request flow:</strong>
+<p><strong>Intended request flow when fallback is enabled:</strong>
 <div class="highlight"><pre><span></span><code>1. Try Anthropic
    ├─ Success? ✅ Return response
    ├─ Timeout? → Try Google
@@ -4057,7 +4057,7 @@ tokenpak<span class="w"> </span>config<span class="w"> </span>validate
    └─ Fail? → Return error to client
 </code></pre></div></p>
 <h3 id="circuit-breaker">Circuit Breaker<a class="headerlink" href="#circuit-breaker" title="Permanent link">&para;</a></h3>
-<p>When a provider fails repeatedly, TokenPak opens the <strong>circuit breaker</strong> to prevent cascading failures:</p>
+<p>The circuit breaker is designed to open when a provider fails repeatedly, to limit cascading failures. It is not verified against the current release and is not active by default:</p>
 <div class="highlight"><pre><span></span><code>State: CLOSED (normal operation)
   └─ 3 failures in 60 seconds → OPEN
 

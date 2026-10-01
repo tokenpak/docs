@@ -45,12 +45,6 @@
     
     
       
-        
-        
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,300i,400,400i,700,700i%7CJetBrains+Mono:400,400i,700,700i&display=fallback">
-        <style>:root{--md-text-font:"Inter";--md-code-font:"JetBrains Mono"}</style>
-      
     
     
       <link rel="stylesheet" href="../../assets/tokenpak.css">
@@ -1950,7 +1944,7 @@
     
   
   
-    <span class="md-status md-status--current"></span>
+    <span class="md-status md-status--compatibility-target"></span>
   
 
   
@@ -1994,7 +1988,7 @@
     
   
   
-    <span class="md-status md-status--current"></span>
+    <span class="md-status md-status--compatibility-target"></span>
   
 
   
@@ -2019,7 +2013,7 @@
     
   
   
-    <span class="md-status md-status--current"></span>
+    <span class="md-status md-status--compatibility-target"></span>
   
 
   
@@ -2086,10 +2080,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#4-check-your-savings" class="md-nav__link">
+  <a href="#4-check-your-usage-and-savings" class="md-nav__link">
     <span class="md-ellipsis">
       
-        4. Check your savings
+        4. Check your usage and savings
       
     </span>
   </a>
@@ -2223,7 +2217,7 @@
     
   
   
-    <span class="md-status md-status--current"></span>
+    <span class="md-status md-status--compatibility-target"></span>
   
 
   
@@ -2258,7 +2252,7 @@
     
   
   
-    <span class="md-status md-status--current"></span>
+    <span class="md-status md-status--compatibility-target"></span>
   
 
   
@@ -3321,10 +3315,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#4-check-your-savings" class="md-nav__link">
+  <a href="#4-check-your-usage-and-savings" class="md-nav__link">
     <span class="md-ellipsis">
       
-        4. Check your savings
+        4. Check your usage and savings
       
     </span>
   </a>
@@ -3446,7 +3440,10 @@
 
 
 <h1 id="use-tokenpak-with-cline">Use TokenPak with Cline<a class="headerlink" href="#use-tokenpak-with-cline" title="Permanent link">&para;</a></h1>
-<p>This guide is for developers using Cline in VS Code who want to route model requests through TokenPak for cost tracking, cache analytics, and prompt compression.</p>
+<blockquote>
+<p><strong>Compatibility target, not yet independently verified.</strong> The first-class integrations are Claude Code and Codex; this guide describes an expected setup for Cline.</p>
+</blockquote>
+<p>This guide is for developers using Cline in VS Code who want to route model requests through TokenPak for request records, cost tracking, and cache analytics.</p>
 <p>Cline provider settings change across releases. Use the provider-agnostic rule: choose a provider mode that lets you set a custom OpenAI-compatible base URL, then point it at TokenPak's local <code>/v1</code> endpoint. If your Cline build exposes an Anthropic-compatible custom base URL instead, use the Anthropic URL noted below.</p>
 <p><strong>What you need before starting:</strong></p>
 <ul>
@@ -3516,12 +3513,12 @@ tokenpak<span class="w"> </span>setup
 </code></pre></div>
 <p>You should see at least one request in the recent activity table. If <code>requests_total</code> is still 0 after Cline sends a prompt, Cline is not using the TokenPak base URL — see <a href="#troubleshooting">Troubleshooting</a>.</p>
 <hr />
-<h2 id="4-check-your-savings">4. Check your savings<a class="headerlink" href="#4-check-your-savings" title="Permanent link">&para;</a></h2>
+<h2 id="4-check-your-usage-and-savings">4. Check your usage and savings<a class="headerlink" href="#4-check-your-usage-and-savings" title="Permanent link">&para;</a></h2>
 <p>After a few Cline turns:</p>
 <div class="highlight"><pre><span></span><code>tokenpak<span class="w"> </span>cost<span class="w"> </span>--week<span class="w">      </span><span class="c1"># spend by model</span>
-tokenpak<span class="w"> </span>savings<span class="w">          </span><span class="c1"># tokens compressed vs. uncompressed</span>
+tokenpak<span class="w"> </span>savings<span class="w">          </span><span class="c1"># recorded token savings; zero is a valid result</span>
 </code></pre></div>
-<p>Cline agent tasks can include repeated repository context, tool results, and instructions. Those larger repeated payloads are where TokenPak has the most room to reduce tokens. Very short prompts may show little or no compression.</p>
+<p>The default proxy preserves conversation turns, so a forwarded request can truthfully report zero tokens saved. Explicit context tools can reduce eligible content; measure their effect with <code>tokenpak savings</code>.</p>
 <hr />
 <h2 id="troubleshooting">Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permanent link">&para;</a></h2>
 <h3 id="requests_total-stays-0-after-cline-sends-a-prompt">requests_total stays 0 after Cline sends a prompt<a class="headerlink" href="#requests_total-stays-0-after-cline-sends-a-prompt" title="Permanent link">&para;</a></h3>
@@ -3569,7 +3566,7 @@ Anthropic-compatible base URL: http://localhost:8767
 </ol>
 <p>In remote VS Code sessions, <code>localhost</code> means the machine where the Cline extension host runs. If VS Code is connected to a remote host, run TokenPak on that remote host or use a reachable proxy URL.</p>
 <h3 id="savings-shows-0-after-several-turns">savings shows 0 after several turns<a class="headerlink" href="#savings-shows-0-after-several-turns" title="Permanent link">&para;</a></h3>
-<p>Compression runs on prompts above a configurable default threshold. Short Cline tasks are passed through unchanged. For larger tasks, use <code>tokenpak status</code> and check <code>compression_ratio_avg</code> in the <code>/health</code> response.</p>
+<p>Zero is a correct result for a forwarded request: the default proxy preserves conversation turns. Use <code>tokenpak status</code> to confirm requests reach the proxy. Inspect recorded usage with <code>tokenpak savings</code> and provider-cache attribution with <code>tokenpak status --tip-cache</code>.</p>
 <hr />
 <h2 id="removing-tokenpak">Removing TokenPak<a class="headerlink" href="#removing-tokenpak" title="Permanent link">&para;</a></h2>
 <p>To stop routing Cline through TokenPak, switch Cline's provider settings back to the provider's default base URL or clear the custom base URL field. Restart the Cline task so the new setting takes effect.</p>

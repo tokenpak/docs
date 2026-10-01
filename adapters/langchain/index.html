@@ -45,12 +45,6 @@
     
     
       
-        
-        
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,300i,400,400i,700,700i%7CJetBrains+Mono:400,400i,700,700i&display=fallback">
-        <style>:root{--md-text-font:"Inter";--md-code-font:"JetBrains Mono"}</style>
-      
     
     
       <link rel="stylesheet" href="../../assets/tokenpak.css">
@@ -1998,10 +1992,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#advanced-request-injection-compression" class="md-nav__link">
+  <a href="#context-tools" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Advanced: Request Injection &amp; Compression
+        Context tools
       
     </span>
   </a>
@@ -2185,7 +2179,7 @@
     
   
   
-    <span class="md-status md-status--current"></span>
+    <span class="md-status md-status--compatibility-target"></span>
   
 
   
@@ -2220,7 +2214,7 @@
     
   
   
-    <span class="md-status md-status--current"></span>
+    <span class="md-status md-status--compatibility-target"></span>
   
 
   
@@ -2255,7 +2249,7 @@
     
   
   
-    <span class="md-status md-status--current"></span>
+    <span class="md-status md-status--compatibility-target"></span>
   
 
   
@@ -2290,7 +2284,7 @@
     
   
   
-    <span class="md-status md-status--current"></span>
+    <span class="md-status md-status--compatibility-target"></span>
   
 
   
@@ -3464,10 +3458,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#advanced-request-injection-compression" class="md-nav__link">
+  <a href="#context-tools" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Advanced: Request Injection &amp; Compression
+        Context tools
       
     </span>
   </a>
@@ -3517,14 +3511,15 @@
 
 
 <h1 id="langchain-adapter-quick-start">LangChain Adapter — Quick-Start<a class="headerlink" href="#langchain-adapter-quick-start" title="Permanent link">&para;</a></h1>
-<p>Route your LangChain applications through the TokenPak proxy for cost tracking, compression, and vault context injection.</p>
+<blockquote>
+<p><strong>Not verified by current release evidence.</strong> The first-class integrations are Claude Code and Codex, and the tested adapters are the OpenAI SDK, Anthropic SDK and LiteLLM; this page describes an expected setup for LangChain.</p>
+</blockquote>
+<p>Route your LangChain applications through the TokenPak proxy to try request records and cost tracking.</p>
 <h2 id="why-route-through-tokenpak">Why Route Through TokenPak?<a class="headerlink" href="#why-route-through-tokenpak" title="Permanent link">&para;</a></h2>
 <ul>
-<li><strong>Cost tracking:</strong> Every token counted and categorized by model/provider</li>
-<li><strong>Request compression:</strong> Reduces token usage via built-in context optimization</li>
-<li><strong>Vault injection:</strong> Automatically enrich prompts with your knowledge base</li>
-<li><strong>Request caching:</strong> Deduplicate identical calls across applications</li>
-<li><strong>Usage analytics:</strong> Dashboard metrics for model spend and performance</li>
+<li><strong>Cost tracking:</strong> Per model, per session and per agent, in a local SQLite store</li>
+<li><strong>Explicit context tools:</strong> The default proxy preserves conversation turns. Explicit context tools can reduce eligible content; routing a request through the proxy does not by itself compress it.</li>
+<li><strong>Usage and cache attribution:</strong> Inspect recorded usage with <code>tokenpak savings</code> and provider-cache attribution with <code>tokenpak status --tip-cache</code></li>
 </ul>
 <h2 id="prerequisites">Prerequisites<a class="headerlink" href="#prerequisites" title="Permanent link">&para;</a></h2>
 <ol>
@@ -3702,26 +3697,8 @@ llm.invoke<span class="o">(</span><span class="s2">&quot;test&quot;</span><span 
 <span class="n">stats</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;http://localhost:8766/cache-stats&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Proxy stats: </span><span class="si">{</span><span class="n">stats</span><span class="p">[</span><span class="s1">&#39;total_requests&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2"> requests processed&quot;</span><span class="p">)</span>
 </code></pre></div>
-<h2 id="advanced-request-injection-compression">Advanced: Request Injection &amp; Compression<a class="headerlink" href="#advanced-request-injection-compression" title="Permanent link">&para;</a></h2>
-<p>TokenPak supports vault injection (prepend your knowledge base) and automatic compression. These work transparently with LangChain:</p>
-<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">langchain_anthropic</span><span class="w"> </span><span class="kn">import</span> <span class="n">ChatAnthropic</span>
-
-<span class="n">llm</span> <span class="o">=</span> <span class="n">ChatAnthropic</span><span class="p">(</span>
-    <span class="n">model</span><span class="o">=</span><span class="s2">&quot;claude-sonnet-4-6&quot;</span><span class="p">,</span>
-    <span class="n">base_url</span><span class="o">=</span><span class="s2">&quot;http://localhost:8766/v1&quot;</span><span class="p">,</span>
-    <span class="n">api_key</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;ANTHROPIC_API_KEY&quot;</span><span class="p">),</span>
-    <span class="c1"># Optional: custom headers for injection/compression directives</span>
-    <span class="n">default_headers</span><span class="o">=</span><span class="p">{</span>
-        <span class="s2">&quot;X-TokenPak-Vault&quot;</span><span class="p">:</span> <span class="s2">&quot;~/your-vault&quot;</span><span class="p">,</span>  <span class="c1"># Auto-inject blocks</span>
-        <span class="s2">&quot;X-TokenPak-Compress&quot;</span><span class="p">:</span> <span class="s2">&quot;true&quot;</span><span class="p">,</span>  <span class="c1"># Enable compression</span>
-    <span class="p">}</span>
-<span class="p">)</span>
-
-<span class="c1"># All requests now use vault injection + compression</span>
-<span class="n">response</span> <span class="o">=</span> <span class="n">llm</span><span class="o">.</span><span class="n">invoke</span><span class="p">(</span><span class="s2">&quot;What should I know about Python async?&quot;</span><span class="p">)</span>
-</code></pre></div>
-<p>Check the main <a href="../../">TokenPak docs</a> for detailed vault injection and compression configuration.</p>
+<h2 id="context-tools">Context tools<a class="headerlink" href="#context-tools" title="Permanent link">&para;</a></h2>
+<p>The default proxy preserves conversation turns. Explicit context tools can reduce eligible content; routing a request through the proxy does not by itself compress it.</p>
 <h2 id="troubleshooting">Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permanent link">&para;</a></h2>
 <ul>
 <li><strong>Proxy won't start:</strong> Check port 8766 isn't in use (<code>lsof -i :8766</code>)</li>

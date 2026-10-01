@@ -43,12 +43,6 @@
     
     
       
-        
-        
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,300i,400,400i,700,700i%7CJetBrains+Mono:400,400i,700,700i&display=fallback">
-        <style>:root{--md-text-font:"Inter";--md-code-font:"JetBrains Mono"}</style>
-      
     
     
       <link rel="stylesheet" href="assets/tokenpak.css">
@@ -2043,7 +2037,7 @@
     
   
   
-    <span class="md-status md-status--current"></span>
+    <span class="md-status md-status--compatibility-target"></span>
   
 
   
@@ -2078,7 +2072,7 @@
     
   
   
-    <span class="md-status md-status--current"></span>
+    <span class="md-status md-status--compatibility-target"></span>
   
 
   
@@ -2113,7 +2107,7 @@
     
   
   
-    <span class="md-status md-status--current"></span>
+    <span class="md-status md-status--compatibility-target"></span>
   
 
   
@@ -2148,7 +2142,7 @@
     
   
   
-    <span class="md-status md-status--current"></span>
+    <span class="md-status md-status--compatibility-target"></span>
   
 
   
@@ -3235,7 +3229,22 @@
 
 
 <h1 id="tokenpak">TokenPak<a class="headerlink" href="#tokenpak" title="Permanent link">&para;</a></h1>
-<p><strong>A local LLM proxy with request records and explicit context tools.</strong></p>
+<p><strong>TokenPak is the open logistics layer for AI context.</strong></p>
+<p>TokenPak is a local proxy for coding agents that records each request and shows how far the session can go: measured usage, estimated cost, burn and runway.</p>
+<p><strong>Know how far your agent can go.</strong></p>
+<ul>
+<li><strong>Today (release 1.30.0):</strong> request records and receipts; the session trip
+  computer (measured usage, estimated cost, burn and runway, with forecasts
+  shown only where calibrated), on by default in the Claude Code footer and the
+  Codex pane from 1.27.0 and in <code>tokenpak status</code>; Spend Guard limits; and
+  explicit context tools. Pro adds prepared stay-versus-fresh session comparisons, with measurements and explicit confirm or decline.</li>
+<li><strong>Planned:</strong> calibrated forecasts for more model and effort combinations; Pro
+  reroute recommendations once calibration evidence exists; and any automation
+  later, gated separately.</li>
+</ul>
+<p><strong>Who it's for.</strong> Developers and tech leads running long coding-agent sessions
+in Claude Code or Codex who want to see what a session has used, what finishing
+will likely cost, and how far it can go.</p>
 <p>This page is for developers evaluating or getting started with TokenPak.
 TokenPak sits between your AI tools and the upstream LLM provider, with its
 proxy listening on <code>127.0.0.1</code>. The default proxy preserves conversation turns,
@@ -3347,7 +3356,7 @@ tokenpak<span class="w"> </span>setup<span class="w"> </span>--start
 </tr>
 <tr>
 <td><a href="guides/claude-code/">Client Guides</a></td>
-<td>Per-client integration walkthroughs (Claude Code, Cursor, Cline, Continue, Aider, Codex CLI, Gemini CLI, OpenAI/Anthropic SDK)</td>
+<td>Per-client integration walkthroughs (Claude Code, Codex CLI, Gemini CLI, OpenAI/Anthropic SDK); Cursor, Cline, Continue and Aider are compatibility targets, not yet independently verified</td>
 </tr>
 </tbody>
 </table>

@@ -45,12 +45,6 @@
     
     
       
-        
-        
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,300i,400,400i,700,700i%7CJetBrains+Mono:400,400i,700,700i&display=fallback">
-        <style>:root{--md-text-font:"Inter";--md-code-font:"JetBrains Mono"}</style>
-      
     
     
       <link rel="stylesheet" href="../../assets/tokenpak.css">
@@ -1950,7 +1944,7 @@
     
   
   
-    <span class="md-status md-status--current"></span>
+    <span class="md-status md-status--compatibility-target"></span>
   
 
   
@@ -1985,7 +1979,7 @@
     
   
   
-    <span class="md-status md-status--current"></span>
+    <span class="md-status md-status--compatibility-target"></span>
   
 
   
@@ -2029,7 +2023,7 @@
     
   
   
-    <span class="md-status md-status--current"></span>
+    <span class="md-status md-status--compatibility-target"></span>
   
 
   
@@ -2054,7 +2048,7 @@
     
   
   
-    <span class="md-status md-status--current"></span>
+    <span class="md-status md-status--compatibility-target"></span>
   
 
   
@@ -2132,10 +2126,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#5-check-savings-after-real-coding-sessions" class="md-nav__link">
+  <a href="#5-check-usage-and-savings-after-real-coding-sessions" class="md-nav__link">
     <span class="md-ellipsis">
       
-        5. Check savings after real coding sessions
+        5. Check usage and savings after real coding sessions
       
     </span>
   </a>
@@ -2247,7 +2241,7 @@
     
   
   
-    <span class="md-status md-status--current"></span>
+    <span class="md-status md-status--compatibility-target"></span>
   
 
   
@@ -3321,10 +3315,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#5-check-savings-after-real-coding-sessions" class="md-nav__link">
+  <a href="#5-check-usage-and-savings-after-real-coding-sessions" class="md-nav__link">
     <span class="md-ellipsis">
       
-        5. Check savings after real coding sessions
+        5. Check usage and savings after real coding sessions
       
     </span>
   </a>
@@ -3424,7 +3418,10 @@
 
 
 <h1 id="use-tokenpak-with-continuedev">Use TokenPak with Continue.dev<a class="headerlink" href="#use-tokenpak-with-continuedev" title="Permanent link">&para;</a></h1>
-<p>This guide is for developers using Continue.dev who want to route chat and autocomplete requests through TokenPak for cost tracking, TokenPak cache analytics, and prompt compression.</p>
+<blockquote>
+<p><strong>Compatibility target, not yet independently verified.</strong> The first-class integrations are Claude Code and Codex; this guide describes an expected setup for Continue.dev.</p>
+</blockquote>
+<p>This guide is for developers using Continue.dev who want to route chat and autocomplete requests through TokenPak for request records, cost tracking, and TokenPak cache analytics.</p>
 <p>Continue reads model providers from <code>~/.continue/config.json</code>. Add a TokenPak-backed OpenAI-compatible model entry that points <code>apiBase</code> at <code>http://localhost:8766/v1</code>.</p>
 <p><strong>What you need before starting:</strong></p>
 <ul>
@@ -3517,12 +3514,12 @@ curl<span class="w"> </span>-s<span class="w"> </span>http://localhost:8766/heal
 </code></pre></div>
 <p><code>requests_total</code> should increase after a Continue request. If it stays at <code>0</code>, Continue is not using the TokenPak <code>apiBase</code> value.</p>
 <hr />
-<h2 id="5-check-savings-after-real-coding-sessions">5. Check savings after real coding sessions<a class="headerlink" href="#5-check-savings-after-real-coding-sessions" title="Permanent link">&para;</a></h2>
+<h2 id="5-check-usage-and-savings-after-real-coding-sessions">5. Check usage and savings after real coding sessions<a class="headerlink" href="#5-check-usage-and-savings-after-real-coding-sessions" title="Permanent link">&para;</a></h2>
 <p>After several Continue turns with file or workspace context:</p>
 <div class="highlight"><pre><span></span><code>tokenpak<span class="w"> </span>savings
 tokenpak<span class="w"> </span>cost<span class="w"> </span>--week
 </code></pre></div>
-<p>Continue requests with larger context usually show more savings than short one-line chats. Short prompts may pass through unchanged when they are below TokenPak's compression threshold.</p>
+<p>The default proxy preserves conversation turns, so a forwarded request can truthfully report zero tokens saved. Explicit context tools can reduce eligible content; measure their effect with <code>tokenpak savings</code>.</p>
 <hr />
 <h2 id="troubleshooting">Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permanent link">&para;</a></h2>
 <h3 id="requests_total-stays-0">requests_total stays 0<a class="headerlink" href="#requests_total-stays-0" title="Permanent link">&para;</a></h3>

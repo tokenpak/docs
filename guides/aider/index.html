@@ -45,12 +45,6 @@
     
     
       
-        
-        
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,300i,400,400i,700,700i%7CJetBrains+Mono:400,400i,700,700i&display=fallback">
-        <style>:root{--md-text-font:"Inter";--md-code-font:"JetBrains Mono"}</style>
-      
     
     
       <link rel="stylesheet" href="../../assets/tokenpak.css">
@@ -1950,7 +1944,7 @@
     
   
   
-    <span class="md-status md-status--current"></span>
+    <span class="md-status md-status--compatibility-target"></span>
   
 
   
@@ -1985,7 +1979,7 @@
     
   
   
-    <span class="md-status md-status--current"></span>
+    <span class="md-status md-status--compatibility-target"></span>
   
 
   
@@ -2020,7 +2014,7 @@
     
   
   
-    <span class="md-status md-status--current"></span>
+    <span class="md-status md-status--compatibility-target"></span>
   
 
   
@@ -2064,7 +2058,7 @@
     
   
   
-    <span class="md-status md-status--current"></span>
+    <span class="md-status md-status--compatibility-target"></span>
   
 
   
@@ -2089,7 +2083,7 @@
     
   
   
-    <span class="md-status md-status--current"></span>
+    <span class="md-status md-status--compatibility-target"></span>
   
 
   
@@ -2156,10 +2150,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#4-check-savings-after-real-coding-sessions" class="md-nav__link">
+  <a href="#4-check-usage-and-savings-after-real-coding-sessions" class="md-nav__link">
     <span class="md-ellipsis">
       
-        4. Check savings after real coding sessions
+        4. Check usage and savings after real coding sessions
       
     </span>
   </a>
@@ -3299,10 +3293,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#4-check-savings-after-real-coding-sessions" class="md-nav__link">
+  <a href="#4-check-usage-and-savings-after-real-coding-sessions" class="md-nav__link">
     <span class="md-ellipsis">
       
-        4. Check savings after real coding sessions
+        4. Check usage and savings after real coding sessions
       
     </span>
   </a>
@@ -3402,7 +3396,10 @@
 
 
 <h1 id="use-tokenpak-with-aider">Use TokenPak with Aider<a class="headerlink" href="#use-tokenpak-with-aider" title="Permanent link">&para;</a></h1>
-<p>This guide is for developers using Aider who want to route chat/edit traffic through TokenPak for cost tracking, cache analytics, and prompt compression.</p>
+<blockquote>
+<p><strong>Compatibility target, not yet independently verified.</strong> The first-class integrations are Claude Code and Codex; this guide describes an expected setup for Aider.</p>
+</blockquote>
+<p>This guide is for developers using Aider who want to route chat/edit traffic through TokenPak for request records, cost tracking, and cache analytics.</p>
 <p>Aider can send requests to an OpenAI-compatible endpoint. Point that endpoint at TokenPak with <code>--openai-api-base</code>, then use Aider's <code>openai/&lt;model-name&gt;</code> model format.</p>
 <p><strong>What you need before starting:</strong></p>
 <ul>
@@ -3463,12 +3460,12 @@ aider<span class="w"> </span>--model<span class="w"> </span>openai/gpt-4o<span c
 </code></pre></div>
 <p><code>requests_total</code> should increase after an Aider request. If it stays at <code>0</code>, Aider is not using the TokenPak base URL.</p>
 <hr />
-<h2 id="4-check-savings-after-real-coding-sessions">4. Check savings after real coding sessions<a class="headerlink" href="#4-check-savings-after-real-coding-sessions" title="Permanent link">&para;</a></h2>
+<h2 id="4-check-usage-and-savings-after-real-coding-sessions">4. Check usage and savings after real coding sessions<a class="headerlink" href="#4-check-usage-and-savings-after-real-coding-sessions" title="Permanent link">&para;</a></h2>
 <p>After a few Aider turns with repository context:</p>
 <div class="highlight"><pre><span></span><code>tokenpak<span class="w"> </span>savings
 tokenpak<span class="w"> </span>cost<span class="w"> </span>--week
 </code></pre></div>
-<p>Aider sessions with large file context usually show more savings than short one-message chats. Short prompts may pass through unchanged when they are below TokenPak's compression threshold.</p>
+<p>The default proxy preserves conversation turns, so a forwarded request can truthfully report zero tokens saved. Explicit context tools can reduce eligible content; measure their effect with <code>tokenpak savings</code>.</p>
 <hr />
 <h2 id="troubleshooting">Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permanent link">&para;</a></h2>
 <h3 id="requests_total-stays-0">requests_total stays 0<a class="headerlink" href="#requests_total-stays-0" title="Permanent link">&para;</a></h3>
@@ -3501,7 +3498,7 @@ aider<span class="w"> </span>--model<span class="w"> </span>openai/gpt-4o<span c
 aider<span class="w"> </span>--model<span class="w"> </span>openai/gpt-4o<span class="w"> </span>--openai-api-base<span class="w"> </span>http://localhost:8767/v1
 </code></pre></div>
 <h3 id="savings-show-as-zero">Savings show as zero<a class="headerlink" href="#savings-show-as-zero" title="Permanent link">&para;</a></h3>
-<p>TokenPak may pass short prompts through unchanged. Aider requests with larger repository context should show compression over time. Check request counts first with <code>tokenpak status</code>, then run:</p>
+<p>Zero is a correct result for a forwarded request: the default proxy preserves conversation turns. Check request counts first with <code>tokenpak status</code>, then run:</p>
 <div class="highlight"><pre><span></span><code>tokenpak<span class="w"> </span>savings
 </code></pre></div>
 

@@ -45,12 +45,6 @@
     
     
       
-        
-        
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,300i,400,400i,700,700i%7CJetBrains+Mono:400,400i,700,700i&display=fallback">
-        <style>:root{--md-text-font:"Inter";--md-code-font:"JetBrains Mono"}</style>
-      
     
     
       <link rel="stylesheet" href="../assets/tokenpak.css">
@@ -2152,7 +2146,7 @@
     
   
   
-    <span class="md-status md-status--current"></span>
+    <span class="md-status md-status--compatibility-target"></span>
   
 
   
@@ -2187,7 +2181,7 @@
     
   
   
-    <span class="md-status md-status--current"></span>
+    <span class="md-status md-status--compatibility-target"></span>
   
 
   
@@ -2222,7 +2216,7 @@
     
   
   
-    <span class="md-status md-status--current"></span>
+    <span class="md-status md-status--compatibility-target"></span>
   
 
   
@@ -2257,7 +2251,7 @@
     
   
   
-    <span class="md-status md-status--current"></span>
+    <span class="md-status md-status--compatibility-target"></span>
   
 
   
@@ -3515,7 +3509,7 @@ tokenpak<span class="w"> </span>serve
 <span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">content</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
 </code></pre></div>
-<p>The proxy transparently applies compression and context handling, then forwards to the upstream provider.</p>
+<p>The proxy evaluates configured Spend Guard limits, records the request, and forwards it to the upstream provider. The default proxy preserves conversation turns; explicit compression operations can reduce eligible content.</p>
 <hr />
 <h2 id="sdk-adapters">SDK Adapters<a class="headerlink" href="#sdk-adapters" title="Permanent link">&para;</a></h2>
 <p>The <code>tokenpak.sdk</code> adapter layer provides a thin, uniform wrapper around the proxy for callers that prefer a plain-dict request/response interface. All adapters share the <code>TokenPakAdapter</code> base contract:</p>

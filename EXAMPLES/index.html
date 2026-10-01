@@ -45,12 +45,6 @@
     
     
       
-        
-        
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,300i,400,400i,700,700i%7CJetBrains+Mono:400,400i,700,700i&display=fallback">
-        <style>:root{--md-text-font:"Inter";--md-code-font:"JetBrains Mono"}</style>
-      
     
     
       <link rel="stylesheet" href="../assets/tokenpak.css">
@@ -1945,7 +1939,7 @@
     
   
   
-    <span class="md-status md-status--current"></span>
+    <span class="md-status md-status--compatibility-target"></span>
   
 
   
@@ -1980,7 +1974,7 @@
     
   
   
-    <span class="md-status md-status--current"></span>
+    <span class="md-status md-status--compatibility-target"></span>
   
 
   
@@ -2015,7 +2009,7 @@
     
   
   
-    <span class="md-status md-status--current"></span>
+    <span class="md-status md-status--compatibility-target"></span>
   
 
   
@@ -2050,7 +2044,7 @@
     
   
   
-    <span class="md-status md-status--current"></span>
+    <span class="md-status md-status--compatibility-target"></span>
   
 
   
@@ -3101,38 +3095,21 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#example-2-custom-compression-mode" class="md-nav__link">
+  <a href="#example-2-compression-settings" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Example 2: Custom Compression Mode
+        Example 2: Compression settings
       
     </span>
   </a>
-  
-    <nav class="md-nav" aria-label="Example 2: Custom Compression Mode">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#mode-comparison" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Mode Comparison
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#example-3-vault-context-injection" class="md-nav__link">
+  <a href="#example-3-vault-indexing-and-context-injection" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Example 3: Vault Context Injection
+        Example 3: Vault indexing and context injection
       
     </span>
   </a>
@@ -3332,38 +3309,21 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#example-2-custom-compression-mode" class="md-nav__link">
+  <a href="#example-2-compression-settings" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Example 2: Custom Compression Mode
+        Example 2: Compression settings
       
     </span>
   </a>
-  
-    <nav class="md-nav" aria-label="Example 2: Custom Compression Mode">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#mode-comparison" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Mode Comparison
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#example-3-vault-context-injection" class="md-nav__link">
+  <a href="#example-3-vault-indexing-and-context-injection" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Example 3: Vault Context Injection
+        Example 3: Vault indexing and context injection
       
     </span>
   </a>
@@ -3464,21 +3424,21 @@
 
 <h1 id="tokenpak-usage-examples">TokenPak Usage Examples<a class="headerlink" href="#tokenpak-usage-examples" title="Permanent link">&para;</a></h1>
 <blockquote>
-<p>Copy-paste ready examples for common TokenPak patterns.</p>
+<p>Copy-paste ready examples for common TokenPak patterns. The default proxy preserves conversation turns, so a forwarded request can report zero tokens saved.</p>
 </blockquote>
 <hr />
 <h2 id="example-1-hello-world-basic-proxy-setup">Example 1: Hello World — Basic Proxy Setup<a class="headerlink" href="#example-1-hello-world-basic-proxy-setup" title="Permanent link">&para;</a></h2>
-<p><strong>Problem:</strong> You want to route your Anthropic API calls through TokenPak to get automatic compression and cost tracking.</p>
+<p><strong>Problem:</strong> You want to route your Anthropic API calls through TokenPak to get request records and cost tracking.</p>
 <p><strong>Solution:</strong> Start the proxy, point your client at <code>localhost:8766</code> instead of <code>api.anthropic.com</code>.</p>
 <h3 id="setup">Setup<a class="headerlink" href="#setup" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="c1"># Install TokenPak</span>
 pip<span class="w"> </span>install<span class="w"> </span>tokenpak
 
-<span class="c1"># Start the proxy (default port 8766, hybrid compression mode)</span>
+<span class="c1"># Start the proxy (default port 8766)</span>
 tokenpak<span class="w"> </span>serve
 
-<span class="c1"># Or with custom settings</span>
-<span class="nv">TOKENPAK_PORT</span><span class="o">=</span><span class="m">8766</span><span class="w"> </span><span class="nv">TOKENPAK_MODE</span><span class="o">=</span>hybrid<span class="w"> </span>tokenpak<span class="w"> </span>serve
+<span class="c1"># Or with a custom port</span>
+<span class="nv">TOKENPAK_PORT</span><span class="o">=</span><span class="m">8766</span><span class="w"> </span>tokenpak<span class="w"> </span>serve
 </code></pre></div>
 <h3 id="drop-in-replacement">Drop-in Replacement<a class="headerlink" href="#drop-in-replacement" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">anthropic</span>
@@ -3501,88 +3461,14 @@ tokenpak<span class="w"> </span>serve
 <span class="nb">print</span><span class="p">(</span><span class="n">message</span><span class="o">.</span><span class="n">content</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
 </code></pre></div>
 <h3 id="expected-output">Expected Output<a class="headerlink" href="#expected-output" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code># Proxy startup:
-TokenPak proxy
-Listening: http://0.0.0.0:8766
-Mode: hybrid (Protected/Code strict, Narrative compressed)
-
-# Per-request log (illustrative; your tokens, savings, and cost depend on your traffic):
-[req] claude-opus-4-8 | &lt;in&gt; in → &lt;sent&gt; sent (&lt;saved&gt;% saved) | &lt;out&gt; out | $&lt;cost&gt;
-</code></pre></div>
+<p>The proxy listens on <code>127.0.0.1</code> by default. Run <code>tokenpak status</code> to see requests as they are recorded and <code>tokenpak savings</code> to inspect recorded usage. A forwarded request can report zero tokens saved.</p>
 <hr />
-<h2 id="example-2-custom-compression-mode">Example 2: Custom Compression Mode<a class="headerlink" href="#example-2-custom-compression-mode" title="Permanent link">&para;</a></h2>
-<p><strong>Problem:</strong> You have a codebase heavy with system prompts and code blocks. Default <code>hybrid</code> mode doesn't compress code. You want maximum savings.</p>
-<p><strong>Solution:</strong> Switch to <code>aggressive</code> mode to compress everything (except PROTECTED content).</p>
-<div class="highlight"><pre><span></span><code><span class="c1"># Aggressive: compress narrative + code (keep system prompts intact)</span>
-<span class="nv">TOKENPAK_MODE</span><span class="o">=</span>aggressive<span class="w"> </span>tokenpak<span class="w"> </span>serve
-</code></pre></div>
-<div class="highlight"><pre><span></span><code><span class="c1"># Or per-request override via header</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">requests</span>
-
-<span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span>
-    <span class="s2">&quot;http://localhost:8766/v1/messages&quot;</span><span class="p">,</span>
-    <span class="n">headers</span><span class="o">=</span><span class="p">{</span>
-        <span class="s2">&quot;x-api-key&quot;</span><span class="p">:</span> <span class="s2">&quot;sk-ant-...&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;x-tokenpak-mode&quot;</span><span class="p">:</span> <span class="s2">&quot;aggressive&quot;</span><span class="p">,</span>   <span class="c1"># Override mode for this request</span>
-        <span class="s2">&quot;Content-Type&quot;</span><span class="p">:</span> <span class="s2">&quot;application/json&quot;</span><span class="p">,</span>
-    <span class="p">},</span>
-    <span class="n">json</span><span class="o">=</span><span class="p">{</span>
-        <span class="s2">&quot;model&quot;</span><span class="p">:</span> <span class="s2">&quot;claude-sonnet-4-6&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;max_tokens&quot;</span><span class="p">:</span> <span class="mi">512</span><span class="p">,</span>
-        <span class="s2">&quot;messages&quot;</span><span class="p">:</span> <span class="p">[</span>
-            <span class="p">{</span>
-                <span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;user&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="p">(</span>
-                    <span class="s2">&quot;Here&#39;s a 500-line Python file:</span><span class="se">\n</span><span class="s2">&quot;</span>
-                    <span class="o">+</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;myproject/main.py&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
-                    <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n\n</span><span class="s2">What&#39;s the main entry point?&quot;</span>
-                <span class="p">)</span>
-            <span class="p">}</span>
-        <span class="p">],</span>
-    <span class="p">}</span>
-<span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s2">&quot;content&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s2">&quot;text&quot;</span><span class="p">])</span>
-</code></pre></div>
-<h3 id="mode-comparison">Mode Comparison<a class="headerlink" href="#mode-comparison" title="Permanent link">&para;</a></h3>
-<table>
-<thead>
-<tr>
-<th>Mode</th>
-<th>Narrative</th>
-<th>Code</th>
-<th>Config</th>
-<th>Protected</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>strict</code></td>
-<td>❌ No</td>
-<td>❌ No</td>
-<td>❌ No</td>
-<td>❌ No</td>
-</tr>
-<tr>
-<td><code>hybrid</code></td>
-<td>✅ Yes</td>
-<td>❌ No</td>
-<td>❌ No</td>
-<td>❌ No</td>
-</tr>
-<tr>
-<td><code>aggressive</code></td>
-<td>✅ Yes</td>
-<td>✅ Yes</td>
-<td>✅ Yes</td>
-<td>❌ No</td>
-</tr>
-</tbody>
-</table>
-<p><strong>Protected content is NEVER compressed</strong> — system prompts, SOUL.md, tool schemas are always sent verbatim.</p>
+<h2 id="example-2-compression-settings">Example 2: Compression settings<a class="headerlink" href="#example-2-compression-settings" title="Permanent link">&para;</a></h2>
+<p>The <code>TOKENPAK_COMPACT</code> flag and the <code>compression.enabled</code> setting remain accepted compatibility settings, but the built-in default HTTP proxy does not call the legacy body-compaction helper, so they do not change default HTTP request bytes. Explicit compression operations can reduce eligible content; inspect recorded usage with <code>tokenpak savings</code>.</p>
 <hr />
-<h2 id="example-3-vault-context-injection">Example 3: Vault Context Injection<a class="headerlink" href="#example-3-vault-context-injection" title="Permanent link">&para;</a></h2>
-<p><strong>Problem:</strong> You have project documentation you want automatically injected into relevant requests without manually including it every time.</p>
-<p><strong>Solution:</strong> Index your vault and let TokenPak inject relevant context automatically.</p>
+<h2 id="example-3-vault-indexing-and-context-injection">Example 3: Vault indexing and context injection<a class="headerlink" href="#example-3-vault-indexing-and-context-injection" title="Permanent link">&para;</a></h2>
+<p><strong>Problem:</strong> You want project documentation indexed so it can be searched and, if you choose, added to requests as context.</p>
+<p><strong>Solution:</strong> Index your documentation. Automatic context injection is off by default; enabling it is an explicit decision (<code>TOKENPAK_VAULT_INJECTION</code>). Injection totals are reported by <code>tokenpak status</code> and <code>GET /stats</code>.</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># Index your project docs</span>
 tokenpak<span class="w"> </span>index<span class="w"> </span>~/my-project/docs
 
@@ -3591,36 +3477,6 @@ tokenpak<span class="w"> </span>index<span class="w"> </span>~/my-project/docs
 
 <span class="c1"># Rebuild on change</span>
 tokenpak<span class="w"> </span>index<span class="w"> </span>~/my-project/docs<span class="w"> </span>--watch
-</code></pre></div>
-<div class="highlight"><pre><span></span><code><span class="c1"># TokenPak will automatically inject relevant vault chunks</span>
-<span class="c1"># based on semantic similarity to your request</span>
-
-<span class="n">client</span> <span class="o">=</span> <span class="n">anthropic</span><span class="o">.</span><span class="n">Anthropic</span><span class="p">(</span>
-    <span class="n">api_key</span><span class="o">=</span><span class="s2">&quot;sk-ant-...&quot;</span><span class="p">,</span>
-    <span class="n">base_url</span><span class="o">=</span><span class="s2">&quot;http://localhost:8766&quot;</span><span class="p">,</span>
-<span class="p">)</span>
-
-<span class="c1"># This request will automatically get relevant docs injected</span>
-<span class="c1"># from your vault without you doing anything</span>
-<span class="n">message</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">messages</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
-    <span class="n">model</span><span class="o">=</span><span class="s2">&quot;claude-sonnet-4-6&quot;</span><span class="p">,</span>
-    <span class="n">max_tokens</span><span class="o">=</span><span class="mi">1024</span><span class="p">,</span>
-    <span class="n">messages</span><span class="o">=</span><span class="p">[{</span>
-        <span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;user&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="s2">&quot;How do I configure the cache timeout in our system?&quot;</span>
-    <span class="p">}]</span>
-<span class="p">)</span>
-<span class="c1"># Response will have context from your docs injected automatically</span>
-</code></pre></div>
-<div class="highlight"><pre><span></span><code><span class="c1"># Check what was injected in the last request</span>
-curl<span class="w"> </span>http://localhost:8766/stats/last<span class="w"> </span><span class="p">|</span><span class="w"> </span>python3<span class="w"> </span>-m<span class="w"> </span>json.tool<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-A5<span class="w"> </span><span class="s2">&quot;vault_injection&quot;</span>
-<span class="c1"># {</span>
-<span class="c1">#   &quot;vault_injection&quot;: {</span>
-<span class="c1">#     &quot;chunks_injected&quot;: 3,</span>
-<span class="c1">#     &quot;tokens_injected&quot;: 412,</span>
-<span class="c1">#     &quot;top_chunks&quot;: [&quot;docs/config.md#cache-timeout&quot;, ...]</span>
-<span class="c1">#   }</span>
-<span class="c1"># }</span>
 </code></pre></div>
 <hr />
 <h2 id="example-4-error-handling-retry-logic">Example 4: Error Handling + Retry Logic<a class="headerlink" href="#example-4-error-handling-retry-logic" title="Permanent link">&para;</a></h2>
@@ -3834,26 +3690,13 @@ curl<span class="w"> </span>http://localhost:8766/health<span class="w"> </span>
 <td><code>tokenpak vault reindex</code></td>
 </tr>
 <tr>
-<td>Hybrid mode</td>
-<td><code>TOKENPAK_MODE=hybrid tokenpak serve</code></td>
-</tr>
-<tr>
-<td>Aggressive mode</td>
-<td><code>TOKENPAK_MODE=aggressive tokenpak serve</code></td>
-</tr>
-<tr>
 <td>WebSocket port</td>
 <td><code>TOKENPAK_WS_PORT=8767 tokenpak serve</code> (default: PROXY_PORT+1)</td>
-</tr>
-<tr>
-<td>Disable compression</td>
-<td><code>TOKENPAK_MODE=strict tokenpak serve</code></td>
 </tr>
 </tbody>
 </table>
 <h2 id="environment-variables">Environment Variables<a class="headerlink" href="#environment-variables" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><span class="nv">TOKENPAK_PORT</span><span class="o">=</span><span class="m">8766</span><span class="w">              </span><span class="c1"># HTTP proxy port (default: 8766)</span>
-<span class="nv">TOKENPAK_MODE</span><span class="o">=</span>hybrid<span class="w">            </span><span class="c1"># Compression mode: strict|hybrid|aggressive</span>
 <span class="nv">TOKENPAK_WS_PORT</span><span class="o">=</span><span class="m">8767</span><span class="w">           </span><span class="c1"># WebSocket port (default: PROXY_PORT+1)</span>
 <span class="nv">TOKENPAK_REQUEST_TIMEOUT</span><span class="o">=</span><span class="m">30</span><span class="w">     </span><span class="c1"># Per-request upstream timeout (seconds, 0=disabled)</span>
 <span class="nv">VAULT_INDEX_PATH</span><span class="o">=</span>~/.tokenpak<span class="w">    </span><span class="c1"># Path to vault index directory</span>

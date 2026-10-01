@@ -45,12 +45,6 @@
     
     
       
-        
-        
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,300i,400,400i,700,700i%7CJetBrains+Mono:400,400i,700,700i&display=fallback">
-        <style>:root{--md-text-font:"Inter";--md-code-font:"JetBrains Mono"}</style>
-      
     
     
       <link rel="stylesheet" href="../../assets/tokenpak.css">
@@ -1823,23 +1817,6 @@
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Why Use LiteLLM + TokenPak?">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#use-cases" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Use Cases
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
 </li>
       
         <li class="md-nav__item">
@@ -1916,10 +1893,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#pattern-3-multi-provider-fallback-with-tokenpak-caching" class="md-nav__link">
+  <a href="#pattern-3-litellm-fallback-with-tokenpak" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Pattern 3: Multi-Provider Fallback with TokenPak Caching
+        Pattern 3: LiteLLM Fallback with TokenPak
       
     </span>
   </a>
@@ -2236,7 +2213,7 @@
     
   
   
-    <span class="md-status md-status--current"></span>
+    <span class="md-status md-status--compatibility-target"></span>
   
 
   
@@ -2271,7 +2248,7 @@
     
   
   
-    <span class="md-status md-status--current"></span>
+    <span class="md-status md-status--compatibility-target"></span>
   
 
   
@@ -2306,7 +2283,7 @@
     
   
   
-    <span class="md-status md-status--current"></span>
+    <span class="md-status md-status--compatibility-target"></span>
   
 
   
@@ -2341,7 +2318,7 @@
     
   
   
-    <span class="md-status md-status--current"></span>
+    <span class="md-status md-status--compatibility-target"></span>
   
 
   
@@ -3368,23 +3345,6 @@
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Why Use LiteLLM + TokenPak?">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#use-cases" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Use Cases
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
 </li>
       
         <li class="md-nav__item">
@@ -3461,10 +3421,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#pattern-3-multi-provider-fallback-with-tokenpak-caching" class="md-nav__link">
+  <a href="#pattern-3-litellm-fallback-with-tokenpak" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Pattern 3: Multi-Provider Fallback with TokenPak Caching
+        Pattern 3: LiteLLM Fallback with TokenPak
       
     </span>
   </a>
@@ -3619,55 +3579,11 @@
 
 
 <h1 id="tokenpak-litellm-adapter">TokenPak + LiteLLM Adapter<a class="headerlink" href="#tokenpak-litellm-adapter" title="Permanent link">&para;</a></h1>
-<p><a href="https://github.com/BerriAI/litellm">LiteLLM</a> is a multi-provider LLM router that abstracts away provider differences under a unified OpenAI-compatible API. By routing LiteLLM through TokenPak, you gain automatic compression, caching, and token accounting — all while maintaining LiteLLM's multi-provider fallback and cost-optimization features.</p>
+<p><a href="https://github.com/BerriAI/litellm">LiteLLM</a> is a tested SDK adapter; TokenPak records usage and estimated cost.</p>
 <h2 id="why-use-litellm-tokenpak">Why Use LiteLLM + TokenPak?<a class="headerlink" href="#why-use-litellm-tokenpak" title="Permanent link">&para;</a></h2>
-<table>
-<thead>
-<tr>
-<th>Feature</th>
-<th>LiteLLM</th>
-<th>TokenPak</th>
-<th>Together</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>Multi-provider routing</strong></td>
-<td>✅ Fallback, cost optimization</td>
-<td>—</td>
-<td>✅ Add compression + caching</td>
-</tr>
-<tr>
-<td><strong>OpenAI compatibility</strong></td>
-<td>✅ Unified API</td>
-<td>✅ <code>/v1/chat/completions</code></td>
-<td>✅ Seamless integration</td>
-</tr>
-<tr>
-<td><strong>Token compression</strong></td>
-<td>—</td>
-<td>✅ Reduce input/output tokens</td>
-<td>✅ Lower costs further</td>
-</tr>
-<tr>
-<td><strong>Request caching</strong></td>
-<td>—</td>
-<td>✅ Cache identical prompts</td>
-<td>✅ Deduplicate across clients</td>
-</tr>
-<tr>
-<td><strong>Token accounting</strong></td>
-<td>Limited</td>
-<td>✅ Detailed stats/usage</td>
-<td>✅ Unified usage tracking</td>
-</tr>
-</tbody>
-</table>
-<h3 id="use-cases">Use Cases<a class="headerlink" href="#use-cases" title="Permanent link">&para;</a></h3>
 <ul>
-<li><strong>Multi-provider fallback</strong> with TokenPak compression: Use LiteLLM's fallback to Claude → Gemini → GPT, with TokenPak deduplicating requests across all routes</li>
-<li><strong>Cost optimization</strong> across providers: LiteLLM optimizes provider selection, TokenPak optimizes tokens — compound savings</li>
-<li><strong>Controlled multi-client access</strong>: Route multiple services through TokenPak proxy + LiteLLM for unified auth and cost tracking</li>
+<li><strong>Usage records:</strong> TokenPak records usage and estimated cost for requests routed through it.</li>
+<li><strong>Default behavior:</strong> The default proxy preserves conversation turns, so a forwarded request can report zero tokens saved. Explicit context tools can reduce eligible content.</li>
 </ul>
 <hr />
 <h2 id="setup">Setup<a class="headerlink" href="#setup" title="Permanent link">&para;</a></h2>
@@ -3709,7 +3625,7 @@ tokenpak<span class="w"> </span>serve<span class="w"> </span>--port<span class="
 <p><strong>Key points:</strong>
 - Use <code>openai/&lt;model-name&gt;</code> format: LiteLLM routes to the OpenAI-compatible endpoint
 - <code>api_base</code> points to TokenPak proxy (default: <code>localhost:8766/v1</code>)
-- TokenPak handles compression, caching, and token accounting</p>
+- TokenPak records requests and handles token accounting</p>
 <hr />
 <h3 id="pattern-2-litellm-proxy-mode-with-tokenpak-backend">Pattern 2: LiteLLM Proxy Mode with TokenPak Backend<a class="headerlink" href="#pattern-2-litellm-proxy-mode-with-tokenpak-backend" title="Permanent link">&para;</a></h3>
 <p>Run LiteLLM's own proxy to manage multiple clients, all routing through TokenPak:</p>
@@ -3746,8 +3662,8 @@ tokenpak<span class="w"> </span>serve<span class="w"> </span>--port<span class="
 <div class="highlight"><pre><span></span><code>Your App → LiteLLM Proxy (8000) → TokenPak Proxy (8766) → Anthropic API
 </code></pre></div></p>
 <hr />
-<h3 id="pattern-3-multi-provider-fallback-with-tokenpak-caching">Pattern 3: Multi-Provider Fallback with TokenPak Caching<a class="headerlink" href="#pattern-3-multi-provider-fallback-with-tokenpak-caching" title="Permanent link">&para;</a></h3>
-<p>Combine LiteLLM's fallback logic with TokenPak's caching for resilient + efficient routing:</p>
+<h3 id="pattern-3-litellm-fallback-with-tokenpak">Pattern 3: LiteLLM Fallback with TokenPak<a class="headerlink" href="#pattern-3-litellm-fallback-with-tokenpak" title="Permanent link">&para;</a></h3>
+<p>Use LiteLLM's own fallback settings with TokenPak recording the requests it receives:</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># litellm_config.yaml</span>
 <span class="nt">model_list</span><span class="p">:</span>
 <span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">model_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;smart-router&quot;</span>
@@ -3767,10 +3683,8 @@ tokenpak<span class="w"> </span>serve<span class="w"> </span>--port<span class="
 <span class="w">  </span><span class="nt">allowed_fails</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span><span class="w">  </span><span class="c1"># Allow 1 request to fail before fallback kicks in</span>
 </code></pre></div>
 <p><strong>How it works:</strong>
-1. LiteLLM routes 80% of requests to Claude (primary)
-2. On failures, automatically routes to GPT-4
-3. <strong>TokenPak caches both paths</strong> — identical prompts are deduplicated across providers
-4. Unified token usage tracking across all routes</p>
+1. LiteLLM handles routing and fallback according to its own configuration
+2. TokenPak records the requests it receives on each path</p>
 <hr />
 <h2 id="model-name-convention">Model Name Convention<a class="headerlink" href="#model-name-convention" title="Permanent link">&para;</a></h2>
 <p>TokenPak uses the <code>openai/&lt;model-name&gt;</code> pattern for all providers. This tells LiteLLM to treat the endpoint as OpenAI-compatible.</p>

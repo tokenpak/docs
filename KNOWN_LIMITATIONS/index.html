@@ -45,12 +45,6 @@
     
     
       
-        
-        
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,300i,400,400i,700,700i%7CJetBrains+Mono:400,400i,700,700i&display=fallback">
-        <style>:root{--md-text-font:"Inter";--md-code-font:"JetBrains Mono"}</style>
-      
     
     
       <link rel="stylesheet" href="../assets/tokenpak.css">
@@ -2158,7 +2152,7 @@
     
   
   
-    <span class="md-status md-status--current"></span>
+    <span class="md-status md-status--compatibility-target"></span>
   
 
   
@@ -2193,7 +2187,7 @@
     
   
   
-    <span class="md-status md-status--current"></span>
+    <span class="md-status md-status--compatibility-target"></span>
   
 
   
@@ -2228,7 +2222,7 @@
     
   
   
-    <span class="md-status md-status--current"></span>
+    <span class="md-status md-status--compatibility-target"></span>
   
 
   
@@ -2263,7 +2257,7 @@
     
   
   
-    <span class="md-status md-status--current"></span>
+    <span class="md-status md-status--compatibility-target"></span>
   
 
   
@@ -3676,8 +3670,9 @@ plainly is a feature, not a weakness:</p>
 <ul>
 <li><strong>Pure byte-pass or already-minimal-context workloads.</strong> If there's
   little redundant or compressible context in your requests, there's
-  little for Prompt Packing to reduce — you'll see minimal-to-no savings to
-  show for it.</li>
+  little for explicit context tools to reduce, and the default proxy
+  preserves conversation turns, so a forwarded request can report zero
+  tokens saved.</li>
 <li><strong>Teams that need a hosted, multi-tenant, or centrally-managed proxy
   today.</strong> TokenPak is a local, single-machine process. There is no
   SaaS, hosted control plane, or shared cloud component in the OSS beta

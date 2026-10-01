@@ -45,12 +45,6 @@
     
     
       
-        
-        
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,300i,400,400i,700,700i%7CJetBrains+Mono:400,400i,700,700i&display=fallback">
-        <style>:root{--md-text-font:"Inter";--md-code-font:"JetBrains Mono"}</style>
-      
     
     
       <link rel="stylesheet" href="../assets/tokenpak.css">
@@ -2085,7 +2079,7 @@
     
   
   
-    <span class="md-status md-status--current"></span>
+    <span class="md-status md-status--compatibility-target"></span>
   
 
   
@@ -2120,7 +2114,7 @@
     
   
   
-    <span class="md-status md-status--current"></span>
+    <span class="md-status md-status--compatibility-target"></span>
   
 
   
@@ -2155,7 +2149,7 @@
     
   
   
-    <span class="md-status md-status--current"></span>
+    <span class="md-status md-status--compatibility-target"></span>
   
 
   
@@ -2190,7 +2184,7 @@
     
   
   
-    <span class="md-status md-status--current"></span>
+    <span class="md-status md-status--compatibility-target"></span>
   
 
   
@@ -3320,24 +3314,25 @@
 <p>Welcome to the TokenPak OSS beta. This page is the fastest path from "I heard about it" to "I'm running it and sending useful feedback."</p>
 <h2 id="who-this-beta-is-for">Who this beta is for<a class="headerlink" href="#who-this-beta-is-for" title="Permanent link">&para;</a></h2>
 <ul>
-<li>Developers running LLM agent workflows daily (Claude Code, Cursor, Aider, Cline, Continue, Codex).</li>
-<li>Anyone building on the Anthropic, OpenAI, or LiteLLM SDKs whose API bills are starting to show.</li>
-<li>Engineers who want a transparent, local layer for compression / routing / cost tracking — not a hosted SaaS.</li>
+<li>Developers and tech leads running long coding-agent sessions in Claude Code or Codex, the first-class integrations.</li>
+<li>Anyone building on the Anthropic SDK, OpenAI SDK, or LiteLLM (tested adapters) whose API bills are starting to show.</li>
+<li>Engineers who want a transparent, local layer for request records, explicit context tools, and cost tracking — not a hosted SaaS.</li>
 <li>OSS contributors who'd rather file an issue than wait for a vendor roadmap.</li>
 </ul>
-<p>You don't need to use agents to benefit — any uncached LLM workload sees Prompt Packing in action. Agent workloads simply have more room to compress.</p>
+<p>Cursor, Cline, Continue and Aider are compatibility targets, not yet independently verified. You are welcome to try them and report what you find; their guides describe an expected setup.</p>
+<p>You don't need to use an agent to try TokenPak: any LLM request you send through the proxy is recorded. The default proxy preserves conversation turns, so a forwarded request can truthfully report zero tokens saved.</p>
 <h2 id="install">Install<a class="headerlink" href="#install" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code>pip<span class="w"> </span>install<span class="w"> </span>tokenpak
-tokenpak<span class="w"> </span>--version<span class="w">    </span><span class="c1"># expect: tokenpak 1.25.1</span>
+tokenpak<span class="w"> </span>--version<span class="w">    </span><span class="c1"># expect: tokenpak 1.30.0</span>
 tokenpak<span class="w"> </span>setup<span class="w">        </span><span class="c1"># interactive wizard</span>
 </code></pre></div>
 <p><code>tokenpak setup</code> scans your environment for <code>ANTHROPIC_API_KEY</code>, <code>OPENAI_API_KEY</code>, and <code>GOOGLE_API_KEY</code>, asks which provider to proxy, picks a compression profile, writes <code>~/.tpk/config.yaml</code> (or <code>~/.tokenpak/config.yaml</code> on systems that already have the legacy directory), and starts the proxy on <code>127.0.0.1:8766</code>.</p>
 <p>Point your existing client at the proxy:</p>
 <div class="highlight"><pre><span></span><code><span class="nb">export</span><span class="w"> </span><span class="nv">ANTHROPIC_BASE_URL</span><span class="o">=</span>http://127.0.0.1:8766
 <span class="c1"># or, for OpenAI-compatible clients:</span>
-<span class="nb">export</span><span class="w"> </span><span class="nv">OPENAI_BASE_URL</span><span class="o">=</span>http://127.0.0.1:8766
+<span class="nb">export</span><span class="w"> </span><span class="nv">OPENAI_BASE_URL</span><span class="o">=</span>http://127.0.0.1:8766/v1
 </code></pre></div>
-<p>Claude Code, Cursor, Aider, Cline, and Continue all honor the same env vars. Full per-client patterns: <a href="../QUICKSTART/">Quickstart</a>.</p>
+<p>Codex launches through <code>tokenpak codex</code>. Cursor, Cline, Continue and Aider are compatibility targets, not yet independently verified. Full per-client patterns: <a href="../QUICKSTART/">Quickstart</a>.</p>
 <h2 id="trust-posture">Trust posture<a class="headerlink" href="#trust-posture" title="Permanent link">&para;</a></h2>
 <p>TokenPak runs locally. Your prompts and credentials stay in your environment and the provider flow you already use — they are not sent to TokenPak-operated infrastructure. Configuration and the local SQLite ledger live under <code>~/.tpk/</code> (canonical) or <code>~/.tokenpak/</code> (legacy fallback). See the <a href="https://tokenpak.ai/compliance/privacy/">tokenpak.ai privacy page</a> for the full disclosure of optional escape-hatch flags.</p>
 <h2 id="first-run-smoke-test-5-minutes">First-run smoke test (≈5 minutes)<a class="headerlink" href="#first-run-smoke-test-5-minutes" title="Permanent link">&para;</a></h2>
@@ -3346,9 +3341,9 @@ tokenpak<span class="w"> </span>status
 curl<span class="w"> </span>http://127.0.0.1:8766/health<span class="w">        </span><span class="c1"># expect: {&quot;status&quot;: &quot;ok&quot;, ...}</span>
 
 <span class="c1"># 2. Make a real request through your usual client (any LLM call counts)</span>
-<span class="c1">#    e.g. run one Claude Code prompt, one Cursor question, one curl to /v1/messages</span>
+<span class="c1">#    e.g. run one Claude Code prompt, one Codex prompt, one curl to /v1/messages</span>
 
-<span class="c1"># 3. See savings on the local ledger</span>
+<span class="c1"># 3. See usage and savings on the local ledger (zero tokens saved is a valid result)</span>
 tokenpak<span class="w"> </span>savings
 tokenpak<span class="w"> </span>cost<span class="w"> </span>--week
 
@@ -3359,16 +3354,16 @@ tokenpak<span class="w"> </span>dashboard<span class="w">                       
 <h2 id="recommended-workflows-to-test">Recommended workflows to test<a class="headerlink" href="#recommended-workflows-to-test" title="Permanent link">&para;</a></h2>
 <p>These are the workflows where beta feedback is most valuable. Pick whichever matches your daily work:</p>
 <ol>
-<li><strong>Direct-API agent loop</strong> — any code that makes a sequence of LLM calls (LangChain, LlamaIndex, your own loop). Highest savings; easiest to compare before / after.</li>
-<li><strong>Coding assistant</strong> — Claude Code, Cursor, Aider, Cline, Continue. Run a real task end to end (open a feature branch, ask for a refactor, iterate). Note: provider-cached flows show lower incremental gains than direct-API; this is expected, and <code>tokenpak savings</code> will distinguish proxy-caused saves from provider cache hits.</li>
-<li><strong>Long multi-turn session</strong> — extended chat or pair-programming session where the context keeps growing. Prompt Packing's value compounds over a session.</li>
-<li><strong>CLI / SDK script</strong> — short Python or shell scripts that hit the LLM API directly. Cleanest case to measure compression because there's no provider-cache muddle.</li>
+<li><strong>Direct-API agent loop</strong> — any code that makes a sequence of LLM calls (Anthropic SDK, OpenAI SDK, LiteLLM, your own loop). Easiest to compare before / after.</li>
+<li><strong>Coding assistant</strong> — Claude Code or Codex (first-class); Cursor, Cline, Continue and Aider are compatibility targets, not yet independently verified. Run a real task end to end (open a feature branch, ask for a refactor, iterate). Inspect recorded usage with <code>tokenpak savings</code>; inspect provider-cache versus TokenPak attribution with <code>tokenpak status --tip-cache</code>.</li>
+<li><strong>Long multi-turn session</strong> — extended chat or pair-programming session where the context keeps growing. Watch measured usage, burn and runway in the session footer or <code>tokenpak status</code>.</li>
+<li><strong>CLI / SDK script</strong> — short Python or shell scripts that hit the LLM API directly. Inspect recorded usage with <code>tokenpak savings</code>.</li>
 <li><strong>Spend Guard</strong> — set a deliberate low cap and trigger the pre-send 402: <code>tokenpak budget --help</code> for knobs. Worth verifying behavior in your environment before relying on it.</li>
 <li><strong>Vault indexing</strong> — point <code>tokenpak index &lt;dir&gt;</code> at a project and try <code>tokenpak search "&lt;query&gt;"</code>. We want to know if results match what you'd expect.</li>
 </ol>
 <h2 id="what-savings-to-expect">What savings to expect<a class="headerlink" href="#what-savings-to-expect" title="Permanent link">&para;</a></h2>
-<p>TokenPak's headline benchmark is a deterministic reduction pinned to a CI agent-style fixture (a blocking check on every PR; reproduce with <code>make benchmark-headline</code>). On favorable uncached workloads it can reach <strong>up to</strong> 90%+; provider-cached flows like Claude Code show lower incremental gains. <code>tokenpak savings</code> separates proxy saves from provider cache hits.</p>
-<p>If you're evaluating TokenPak, start with a direct-API workload to see the pipeline's actual effectiveness, then layer in your cached flows to see the marginal contribution on top.</p>
+<p>TokenPak reports what it measured on your own traffic and does not promise a savings figure. The default proxy preserves conversation turns, so a forwarded request can truthfully report zero tokens saved; explicit context tools can reduce eligible content. <code>make benchmark-headline</code> exercises a fixed fixture, and its result is not a default-proxy savings receipt. Inspect recorded usage with <code>tokenpak savings</code>; inspect provider-cache versus TokenPak attribution with <code>tokenpak status --tip-cache</code>.</p>
+<p>If you're evaluating TokenPak, start with a real session in Claude Code or Codex, read the receipt and <code>tokenpak status</code>, and then try explicit context tools on your own workload.</p>
 <h2 id="known-limitations">Known limitations<a class="headerlink" href="#known-limitations" title="Permanent link">&para;</a></h2>
 <p>Read the full list before reporting: <a href="../KNOWN_LIMITATIONS/">Known Limitations</a>.</p>
 <p>Highlights:</p>

@@ -45,12 +45,6 @@
     
     
       
-        
-        
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,300i,400,400i,700,700i%7CJetBrains+Mono:400,400i,700,700i&display=fallback">
-        <style>:root{--md-text-font:"Inter";--md-code-font:"JetBrains Mono"}</style>
-      
     
     
       <link rel="stylesheet" href="../assets/tokenpak.css">
@@ -2091,7 +2085,7 @@
     
   
   
-    <span class="md-status md-status--current"></span>
+    <span class="md-status md-status--compatibility-target"></span>
   
 
   
@@ -2126,7 +2120,7 @@
     
   
   
-    <span class="md-status md-status--current"></span>
+    <span class="md-status md-status--compatibility-target"></span>
   
 
   
@@ -2161,7 +2155,7 @@
     
   
   
-    <span class="md-status md-status--current"></span>
+    <span class="md-status md-status--compatibility-target"></span>
   
 
   
@@ -2196,7 +2190,7 @@
     
   
   
-    <span class="md-status md-status--current"></span>
+    <span class="md-status md-status--compatibility-target"></span>
   
 
   
@@ -3408,7 +3402,7 @@
 - <strong>Key methods:</strong> <code>check_limit()</code>, <code>consume_quota()</code>, <code>is_within_budget()</code>
 - <strong>Integrates with:</strong> Provider Router, Monitor</p>
 <p><strong>7. Provider Router</strong>
-- <strong>What it does:</strong> Selects which LLM provider to use based on routing rules, provider health, and failover policy
+- <strong>What it does:</strong> Selects which LLM provider to use based on routing rules, provider health, and failover policy (not active by default)
 - <strong>Key methods:</strong> <code>select_provider()</code>, <code>apply_routing_rules()</code>, <code>get_healthy_providers()</code>
 - <strong>Integrates with:</strong> Circuit Breaker, Rate Limiter</p>
 <h3 id="support-modules">Support Modules<a class="headerlink" href="#support-modules" title="Permanent link">&para;</a></h3>

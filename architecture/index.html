@@ -45,12 +45,6 @@
     
     
       
-        
-        
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,300i,400,400i,700,700i%7CJetBrains+Mono:400,400i,700,700i&display=fallback">
-        <style>:root{--md-text-font:"Inter";--md-code-font:"JetBrains Mono"}</style>
-      
     
     
       <link rel="stylesheet" href="../assets/tokenpak.css">
@@ -2240,7 +2234,7 @@
     
   
   
-    <span class="md-status md-status--current"></span>
+    <span class="md-status md-status--compatibility-target"></span>
   
 
   
@@ -2275,7 +2269,7 @@
     
   
   
-    <span class="md-status md-status--current"></span>
+    <span class="md-status md-status--compatibility-target"></span>
   
 
   
@@ -2310,7 +2304,7 @@
     
   
   
-    <span class="md-status md-status--current"></span>
+    <span class="md-status md-status--compatibility-target"></span>
   
 
   
@@ -2345,7 +2339,7 @@
     
   
   
-    <span class="md-status md-status--current"></span>
+    <span class="md-status md-status--compatibility-target"></span>
   
 
   
@@ -3677,8 +3671,8 @@
 <p>Enforces per-IP rate limiting, per-model rate limits, and cost-per-minute budgets. Prevents runaway spending and protects against abuse.</p>
 <p><strong>Responsibility:</strong> Rate limit enforcement, cost-based throttling, backpressure handling.</p>
 <h3 id="6-provider-router">6. <strong>Provider Router</strong><a class="headerlink" href="#6-provider-router" title="Permanent link">&para;</a></h3>
-<p>Decides which LLM provider to use based on request metadata, fallback rules, and provider health. Supports weighted routing, circuit breakers (detects down providers), and failover logic.</p>
-<p><strong>Responsibility:</strong> Provider selection, failover logic, circuit breaker management, health checking.</p>
+<p>Decides which LLM provider to use based on request metadata, fallback rules, and provider health. Supports weighted routing, circuit breakers (detects down providers), and failover logic (fallback enforcement is not active by default).</p>
+<p><strong>Responsibility:</strong> Provider selection, failover logic (not active by default), circuit breaker management, health checking.</p>
 <h3 id="7-monitoring-observability">7. <strong>Monitoring &amp; Observability</strong><a class="headerlink" href="#7-monitoring-observability" title="Permanent link">&para;</a></h3>
 <p>Real-time stats collection: token usage, cost, cache hit rates, latency, provider health. Exports metrics to dashboards and analytics tools.</p>
 <p><strong>Responsibility:</strong> Metrics collection, stats aggregation, performance monitoring, usage reporting.</p>
@@ -3763,7 +3757,7 @@ Node 1       Node 2       Node 3
 <div class="highlight"><pre><span></span><code>graph TD
     A[&quot;StageTrace &amp; PipelineTrace&quot;]
     B[&quot;VaultIndex&lt;br/&gt;Vault Retrieval &amp; Semantic Search&quot;]
-    C[&quot;Provider Router&lt;br/&gt;Route Selection &amp; Failover&quot;]
+    C[&quot;Provider Router&lt;br/&gt;Route Selection&lt;br/&gt;(failover not active by default)&quot;]
     D[&quot;Validation Gate&lt;br/&gt;Content Security&quot;]
     E[&quot;Cache Manager&lt;br/&gt;Response &amp; Prompt Cache&quot;]
     F[&quot;Rate Limiter&lt;br/&gt;Quota Enforcement&quot;]
@@ -3790,15 +3784,15 @@ Node 1       Node 2       Node 3
 <li><strong>Rate Limiter:</strong> Per-IP, per-model, and cost-based limits</li>
 <li><strong>Monitor:</strong> Real-time stats and usage reporting</li>
 <li><strong>FormatAdapter:</strong> Converts between OpenAI and native formats transparently</li>
-<li><strong>Circuit Breaker:</strong> Detects and routes around failing providers</li>
+<li><strong>Circuit Breaker:</strong> Not verified against current release evidence; automatic fallback enforcement is not active by default</li>
 </ul>
 <hr />
 <h2 id="caching-strategy">Caching Strategy<a class="headerlink" href="#caching-strategy" title="Permanent link">&para;</a></h2>
-<p>TokenPak uses a three-tier caching approach to maximize token savings:</p>
+<p>TokenPak's caching layers are described below. Provider cache reuse is distinct from TokenPak context reduction, and a forwarded request can report zero tokens saved.</p>
 <ol>
 <li><strong>Exact Match Cache</strong> — If we've seen this exact request before, return the cached response instantly (0 tokens).</li>
 <li><strong>Semantic Cache (opt-in)</strong> — When explicitly enabled via <code>TOKENPAK_SEMANTIC_CACHE_STAGE</code>, TokenPak may serve cached responses for a narrow set of read-shaped route classes (status checks, summarization, configuration inspection) at conservative per-route similarity thresholds. All code-generation, code-edit, code-review, debugging, test-failure, log-analysis, git-diff-review, and shell-command-analysis prompts are bypassed entirely. Streaming requests are never served from semantic cache. Claude Code traffic is excluded to preserve message-id fidelity. Unknown route classes default to no response substitution. The TokenPak semantic cache stores normalized + hashed query forms only — entries hold a 12-character query hash, response bytes, content type, and wire format. Raw prompt text is not persisted in the semantic-cache store. (This statement scopes only the semantic-cache store; other TokenPak surfaces — request telemetry, trace records, companion journal, capsule storage — have their own retention rules documented in their respective standards and operator configuration.)</li>
-<li><strong>Prompt Cache Headers</strong> — When available, TokenPak automatically injects prompt caching headers so the LLM provider caches expensive prompt prefixes.</li>
+<li><strong>Prompt Cache Headers</strong> — Not verified against current release evidence. Claude Code request bytes remain byte-preserved.</li>
 </ol>
 <hr />
 <h2 id="token-counting-cost-tracking">Token Counting &amp; Cost Tracking<a class="headerlink" href="#token-counting-cost-tracking" title="Permanent link">&para;</a></h2>

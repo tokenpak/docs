@@ -45,12 +45,6 @@
     
     
       
-        
-        
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,300i,400,400i,700,700i%7CJetBrains+Mono:400,400i,700,700i&display=fallback">
-        <style>:root{--md-text-font:"Inter";--md-code-font:"JetBrains Mono"}</style>
-      
     
     
       <link rel="stylesheet" href="../assets/tokenpak.css">
@@ -3056,7 +3050,7 @@
     
   
   
-    <span class="md-status md-status--current"></span>
+    <span class="md-status md-status--compatibility-target"></span>
   
 
   
@@ -3091,7 +3085,7 @@
     
   
   
-    <span class="md-status md-status--current"></span>
+    <span class="md-status md-status--compatibility-target"></span>
   
 
   
@@ -3126,7 +3120,7 @@
     
   
   
-    <span class="md-status md-status--current"></span>
+    <span class="md-status md-status--compatibility-target"></span>
   
 
   
@@ -3161,7 +3155,7 @@
     
   
   
-    <span class="md-status md-status--current"></span>
+    <span class="md-status md-status--compatibility-target"></span>
   
 
   
@@ -5282,7 +5276,7 @@ SDK adapters, or CLI. It covers the v1.30.0 surface described below.</p>
 </ol>
 <hr />
 <h2 id="proxy-http-api">Proxy HTTP API<a class="headerlink" href="#proxy-http-api" title="Permanent link">&para;</a></h2>
-<p>The TokenPak proxy runs on <code>localhost:8766</code> by default. It accepts standard HTTP requests and transparently forwards them to upstream providers after applying compression and context injection.</p>
+<p>The TokenPak proxy runs on <code>localhost:8766</code> by default. It accepts standard HTTP requests, evaluates configured Spend Guard limits, records the request, and forwards it to the upstream provider. The default proxy preserves conversation turns; explicit compression operations can reduce eligible content.</p>
 <h3 id="authentication">Authentication<a class="headerlink" href="#authentication" title="Permanent link">&para;</a></h3>
 <p>TokenPak allows unauthenticated requests from localhost. A non-localhost bind
 is explicit: set <code>TOKENPAK_BIND_ADDRESS</code> and configure
@@ -5643,7 +5637,7 @@ tokenpak_uptime_seconds 16200
 <h3 id="post-endpoints">POST endpoints<a class="headerlink" href="#post-endpoints" title="Permanent link">&para;</a></h3>
 <h4 id="post-v1messages"><code>POST /v1/messages</code><a class="headerlink" href="#post-v1messages" title="Permanent link">&para;</a></h4>
 <p>Anthropic Messages API — the primary proxy path for Claude models.</p>
-<p>TokenPak intercepts this request, applies compression, and forwards to the upstream Anthropic API. The response is transparently passed back.</p>
+<p>TokenPak intercepts this request, records it, and forwards it to the upstream Anthropic API. The default proxy preserves conversation turns; explicit context and compression tools are separate. The response is transparently passed back.</p>
 <p><strong>Headers:</strong></p>
 <table>
 <thead>
@@ -6736,7 +6730,7 @@ precedence.</p>
 <tbody>
 <tr>
 <td><code>TOKENPAK_VAULT_INDEX</code></td>
-<td><code>~/vault/.tokenpak</code></td>
+<td><code>~/your-vault/.tokenpak</code></td>
 <td>Path to vault index directory</td>
 </tr>
 <tr>
@@ -6851,7 +6845,7 @@ generate the complete file for the installed version.</p>
 <span class="w">  </span><span class="nt">cache_size</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2000</span>
 
 <span class="nt">vault</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">index_path</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">~/vault/.tokenpak</span>
+<span class="w">  </span><span class="nt">index_path</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">~/your-vault/.tokenpak</span>
 <span class="w">  </span><span class="nt">inject_budget</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">4000</span>
 <span class="w">  </span><span class="nt">inject_top_k</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5</span>
 <span class="w">  </span><span class="nt">inject_min_score</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2.0</span>

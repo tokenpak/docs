@@ -45,12 +45,6 @@
     
     
       
-        
-        
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,300i,400,400i,700,700i%7CJetBrains+Mono:400,400i,700,700i&display=fallback">
-        <style>:root{--md-text-font:"Inter";--md-code-font:"JetBrains Mono"}</style>
-      
     
     
       <link rel="stylesheet" href="../../assets/tokenpak.css">
@@ -2108,7 +2102,7 @@
     
   
   
-    <span class="md-status md-status--current"></span>
+    <span class="md-status md-status--compatibility-target"></span>
   
 
   
@@ -2143,7 +2137,7 @@
     
   
   
-    <span class="md-status md-status--current"></span>
+    <span class="md-status md-status--compatibility-target"></span>
   
 
   
@@ -2178,7 +2172,7 @@
     
   
   
-    <span class="md-status md-status--current"></span>
+    <span class="md-status md-status--compatibility-target"></span>
   
 
   
@@ -2213,7 +2207,7 @@
     
   
   
-    <span class="md-status md-status--current"></span>
+    <span class="md-status md-status--compatibility-target"></span>
   
 
   
@@ -3363,12 +3357,13 @@
 
 
 <h1 id="openai-sdk-compatibility-guide">OpenAI SDK Compatibility Guide<a class="headerlink" href="#openai-sdk-compatibility-guide" title="Permanent link">&para;</a></h1>
-<p>TokenPak exposes an OpenAI-compatible endpoint at <code>/v1/chat/completions</code>. If you're migrating from the OpenAI API or using tools that target the OpenAI format (LangChain <code>ChatOpenAI</code>, LiteLLM, Vercel AI SDK, etc.), point them at the TokenPak proxy with no code changes.</p>
+<blockquote>
+<p><strong>Cross-format use is not verified by current release evidence.</strong> The OpenAI SDK and Anthropic SDK are tested adapters; the examples below that send OpenAI-format requests to Anthropic models describe an expected setup.</p>
+</blockquote>
+<p>This page describes pointing an OpenAI SDK client at the TokenPak proxy.</p>
 <hr />
 <h2 id="how-it-works">How It Works<a class="headerlink" href="#how-it-works" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code>Your app (openai SDK) → POST /v1/chat/completions → TokenPak proxy → Anthropic API
-</code></pre></div>
-<p>TokenPak translates the OpenAI Chat Completions format to Anthropic's Messages API, applies compression + caching, then translates the response back.</p>
+<p>OpenAI SDK and Anthropic SDK are tested adapters. The default proxy preserves conversation turns and records requests.</p>
 <hr />
 <h2 id="python-openai-sdk">Python — openai SDK<a class="headerlink" href="#python-openai-sdk" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">openai</span><span class="w"> </span><span class="kn">import</span> <span class="n">OpenAI</span>
