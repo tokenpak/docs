@@ -629,6 +629,13 @@
   </span>
   
   
+    
+  
+  
+    <span class="md-status md-status--current"></span>
+  
+
+  
 
       </a>
     </li>
@@ -684,6 +691,13 @@
     
   </span>
   
+  
+    
+  
+  
+    <span class="md-status md-status--current"></span>
+  
+
   
 
       </a>
@@ -3423,7 +3437,7 @@
 
 
 <h1 id="feature-matrix">Feature Matrix<a class="headerlink" href="#feature-matrix" title="Permanent link">&para;</a></h1>
-<p>All features are <strong>FREE and open source</strong> under the Apache 2.0 license.</p>
+<p>The features on this page are part of the open-source core, licensed under Apache 2.0. Pro is a separate, proprietary package.</p>
 <hr />
 <h2 id="core-features">Core Features<a class="headerlink" href="#core-features" title="Permanent link">&para;</a></h2>
 <table>
@@ -3440,7 +3454,7 @@
 <td><strong>Core Routing</strong></td>
 <td>Multiple provider adapters</td>
 <td>✅</td>
-<td>Built-in adapters: Anthropic, OpenAI, Google, xAI/Grok, Ollama</td>
+<td>Built-in adapters: Anthropic, OpenAI (chat, responses and Codex), Google Gemini, xAI Grok, plus a passthrough adapter</td>
 </tr>
 <tr>
 <td></td>
@@ -3493,8 +3507,8 @@
 <tr>
 <td></td>
 <td>Automatic retries</td>
-<td>✅</td>
-<td>Exponential backoff, configurable</td>
+<td>⚠️</td>
+<td>Not verified against the current release</td>
 </tr>
 <tr>
 <td></td>
@@ -3504,9 +3518,9 @@
 </tr>
 <tr>
 <td><strong>Observability</strong></td>
-<td>Request/response logging</td>
+<td>Request logging</td>
 <td>✅</td>
-<td>JSON logs, searchable</td>
+<td>Metadata only (model, token counts, latency, cost); prompt and response bodies are not stored by default</td>
 </tr>
 <tr>
 <td></td>
@@ -3603,7 +3617,7 @@
 <hr />
 <h2 id="feature-details">Feature Details<a class="headerlink" href="#feature-details" title="Permanent link">&para;</a></h2>
 <h3 id="core-proxy">Core Proxy<a class="headerlink" href="#core-proxy" title="Permanent link">&para;</a></h3>
-<p>Provider routing, adapters, tool schema handling, fallback chains, circuit breaker, streaming, passthrough.</p>
+<p>Provider adapters, tool-schema handling, streaming and passthrough. Routing policy is configuration and observe-mode records; automatic fallback is not active by default.</p>
 <p>TokenPak's primary usage model is to run the local proxy and point your existing provider SDK or tool at it via a base URL — no application code changes required:</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># Start the proxy (default: http://127.0.0.1:8766)</span>
 tokenpak<span class="w"> </span>serve
@@ -3652,9 +3666,6 @@ tokenpak<span class="w"> </span>serve
 <span class="w">  </span><span class="nt">host</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">127.0.0.1</span>
 
 <span class="nt">provider</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">anthropic</span>
-<span class="nt">fallback</span><span class="p">:</span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">google</span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">openai</span>
 
 <span class="nt">compression</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
@@ -3680,7 +3691,7 @@ tokenpak<span class="w"> </span>serve
 </blockquote>
 <hr />
 <h2 id="support-licensing">Support &amp; Licensing<a class="headerlink" href="#support-licensing" title="Permanent link">&para;</a></h2>
-<p><strong>License:</strong> Apache 2.0. Use however you like.</p>
+<p><strong>License:</strong> Apache 2.0 for the open-source core. The TokenPak name and logo are not licensed under it. Pro is a separate, proprietary package.</p>
 <p>See <a href="../">README</a> for more information.</p>
 
 

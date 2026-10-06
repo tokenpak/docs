@@ -629,6 +629,13 @@
   </span>
   
   
+    
+  
+  
+    <span class="md-status md-status--current"></span>
+  
+
+  
 
       </a>
     </li>
@@ -684,6 +691,13 @@
     
   </span>
   
+  
+    
+  
+  
+    <span class="md-status md-status--current"></span>
+  
+
   
 
       </a>
@@ -3324,9 +3338,9 @@
 <h2 id="install">Install<a class="headerlink" href="#install" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code>pip<span class="w"> </span>install<span class="w"> </span>tokenpak
 tokenpak<span class="w"> </span>--version<span class="w">    </span><span class="c1"># expect: tokenpak 1.30.0</span>
-tokenpak<span class="w"> </span>setup<span class="w">        </span><span class="c1"># interactive wizard</span>
+tokenpak<span class="w"> </span>setup<span class="w"> </span>--start<span class="w">    </span><span class="c1"># interactive wizard; --start also launches the proxy</span>
 </code></pre></div>
-<p><code>tokenpak setup</code> scans your environment for <code>ANTHROPIC_API_KEY</code>, <code>OPENAI_API_KEY</code>, and <code>GOOGLE_API_KEY</code>, asks which provider to proxy, picks a compression profile, writes <code>~/.tpk/config.yaml</code> (or <code>~/.tokenpak/config.yaml</code> on systems that already have the legacy directory), and starts the proxy on <code>127.0.0.1:8766</code>.</p>
+<p><code>tokenpak setup</code> scans your environment for <code>ANTHROPIC_API_KEY</code>, <code>OPENAI_API_KEY</code>, and <code>GOOGLE_API_KEY</code>, asks which provider to proxy, picks a compression profile, and writes <code>~/.tpk/config.yaml</code> (or <code>~/.tokenpak/config.yaml</code> on systems that already have the legacy directory). With <code>--start</code>, it also starts the proxy on <code>127.0.0.1:8766</code>.</p>
 <p>Point your existing client at the proxy:</p>
 <div class="highlight"><pre><span></span><code><span class="nb">export</span><span class="w"> </span><span class="nv">ANTHROPIC_BASE_URL</span><span class="o">=</span>http://127.0.0.1:8766
 <span class="c1"># or, for OpenAI-compatible clients:</span>
@@ -3334,7 +3348,7 @@ tokenpak<span class="w"> </span>setup<span class="w">        </span><span class=
 </code></pre></div>
 <p>Codex launches through <code>tokenpak codex</code>. Cursor, Cline, Continue and Aider are compatibility targets, not yet independently verified. Full per-client patterns: <a href="../QUICKSTART/">Quickstart</a>.</p>
 <h2 id="trust-posture">Trust posture<a class="headerlink" href="#trust-posture" title="Permanent link">&para;</a></h2>
-<p>TokenPak runs locally. Your prompts and credentials stay in your environment and the provider flow you already use — they are not sent to TokenPak-operated infrastructure. Configuration and the local SQLite ledger live under <code>~/.tpk/</code> (canonical) or <code>~/.tokenpak/</code> (legacy fallback). See the <a href="https://tokenpak.ai/compliance/privacy/">tokenpak.ai privacy page</a> for the full disclosure of optional escape-hatch flags.</p>
+<p>TokenPak runs locally. Your prompts and credentials stay in your environment and the provider flow you already use — they are not sent to TokenPak-operated infrastructure. By default the proxy talks only to the upstream provider you configure; optional features can make other network requests, such as an update check against pypi.org (TokenPak asks first) and an anonymous metrics heartbeat (off by default). Configuration and the local SQLite ledger live under <code>~/.tpk/</code> (canonical) or <code>~/.tokenpak/</code> (legacy fallback). See the <a href="https://tokenpak.ai/compliance/privacy/">tokenpak.ai privacy page</a> for the privacy details.</p>
 <h2 id="first-run-smoke-test-5-minutes">First-run smoke test (≈5 minutes)<a class="headerlink" href="#first-run-smoke-test-5-minutes" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><span class="c1"># 1. Proxy is up</span>
 tokenpak<span class="w"> </span>status
@@ -3371,7 +3385,7 @@ tokenpak<span class="w"> </span>dashboard<span class="w">                       
 <li>The OSS beta ships the <strong>Pak recall data plane</strong> only. Scoring, ranking, and assembly enforcement are planned, not shipped — <code>severity = block</code> flags are stored but not enforced by OSS.</li>
 <li>Storage path is migrating from <code>~/.tokenpak/</code> (legacy) to <code>~/.tpk/</code> (canonical). Both work; fresh installs land on <code>~/.tpk/</code>.</li>
 <li>Several CLI command families (<code>fleet</code>, <code>macro</code>, <code>template</code>, <code>recipe</code>, <code>audit</code>, <code>agent</code>, <code>trigger</code>, <code>retrieval</code>, <code>goals</code>) are functional but their surfaces may change during beta. Stable verbs are listed in Known Issues.</li>
-<li>TokenPak is a local proxy. There is no SaaS, hosted dashboard, license server, team workspace, or shared cloud component in the beta. This is the trust-posture commitment, not a feature gap.</li>
+<li>TokenPak is a local proxy. The OSS package has no SaaS, hosted dashboard, team workspace, or shared cloud component. This is the trust-posture commitment, not a feature gap.</li>
 </ul>
 <h2 id="reporting-issues">Reporting issues<a class="headerlink" href="#reporting-issues" title="Permanent link">&para;</a></h2>
 <ul>

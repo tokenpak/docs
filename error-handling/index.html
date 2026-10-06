@@ -629,6 +629,13 @@
   </span>
   
   
+    
+  
+  
+    <span class="md-status md-status--current"></span>
+  
+
+  
 
       </a>
     </li>
@@ -684,6 +691,13 @@
     
   </span>
   
+  
+    
+  
+  
+    <span class="md-status md-status--current"></span>
+  
+
   
 
       </a>
@@ -1241,10 +1255,10 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#1-always-use-fallback-chains" class="md-nav__link">
+  <a href="#1-handle-upstream-errors-in-your-client" class="md-nav__link">
     <span class="md-ellipsis">
       
-        1. Always Use Fallback Chains
+        1. Handle upstream errors in your client
       
     </span>
   </a>
@@ -3753,10 +3767,10 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#1-always-use-fallback-chains" class="md-nav__link">
+  <a href="#1-handle-upstream-errors-in-your-client" class="md-nav__link">
     <span class="md-ellipsis">
       
-        1. Always Use Fallback Chains
+        1. Handle upstream errors in your client
       
     </span>
   </a>
@@ -3855,7 +3869,7 @@
 
 
 <h1 id="error-handling-troubleshooting">Error Handling &amp; Troubleshooting<a class="headerlink" href="#error-handling-troubleshooting" title="Permanent link">&para;</a></h1>
-<p>TokenPak provides normalized error handling across all providers, automatic retries, and fallback chains.</p>
+<p>TokenPak returns normalized error responses. Automatic retries and provider fallback are not verified against the current release, and fallback is not active by default.</p>
 <hr />
 <h2 id="common-errors-solutions">Common Errors &amp; Solutions<a class="headerlink" href="#common-errors-solutions" title="Permanent link">&para;</a></h2>
 <h3 id="1-connection-refused-proxy-not-running">1. Connection Refused (Proxy Not Running)<a class="headerlink" href="#1-connection-refused-proxy-not-running" title="Permanent link">&para;</a></h3>
@@ -3900,16 +3914,8 @@ tokenpak<span class="w"> </span>serve
 Retry-After: 60
 </code></pre></div></p>
 <p><strong>Cause:</strong> Too many requests to the provider in a short time.</p>
-<p><strong>Solution (Automatic):</strong>
-TokenPak automatically retries with exponential backoff:
-<div class="highlight"><pre><span></span><code>Attempt 1: Wait 1 second, retry
-Attempt 2: Wait 2 seconds, retry
-Attempt 3: Wait 4 seconds, retry
-Attempt 4: Wait 8 seconds, retry
-(Circuit breaker opens, switch to fallback provider)
-</code></pre></div></p>
-<p><strong>Solution (Manual):</strong></p>
-<p>When a request is rate-limited, the proxy returns a <code>429</code> with a <code>rate_limit_exceeded</code> error body. With the TokenPak SDK adapter, this surfaces as a <code>TokenPakAdapterError</code> carrying <code>status_code == 429</code>:</p>
+<p><strong>Solution:</strong></p>
+<p>Handle rate limits in your client. When a request is rate-limited, the proxy returns a <code>429</code> with a <code>rate_limit_exceeded</code> error body. With the TokenPak SDK adapter, this surfaces as a <code>TokenPakAdapterError</code> carrying <code>status_code == 429</code>:</p>
 <div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">tokenpak.sdk</span><span class="w"> </span><span class="kn">import</span> <span class="n">AnthropicAdapter</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">tokenpak.sdk.base</span><span class="w"> </span><span class="kn">import</span> <span class="n">TokenPakAdapterError</span>
@@ -3930,7 +3936,6 @@ Attempt 4: Wait 8 seconds, retry
 </code></pre></div>
 <p><strong>Prevention:</strong>
 - Implement request batching (fewer, larger requests)
-- Use fallback chains for load balancing
 - Monitor your request frequency</p>
 <hr />
 <h3 id="4-model-not-found">4. Model Not Found<a class="headerlink" href="#4-model-not-found" title="Permanent link">&para;</a></h3>
@@ -3978,11 +3983,10 @@ Attempt 4: Wait 8 seconds, retry
 <span class="k">try</span><span class="p">:</span>
     <span class="n">response</span> <span class="o">=</span> <span class="n">adapter</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
 <span class="k">except</span> <span class="n">TokenPakTimeoutError</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Proxy/upstream timed out — retry or use a fallback&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Proxy/upstream timed out — retry or report the failure&quot;</span><span class="p">)</span>
 </code></pre></div></p>
 <p><strong>Prevention:</strong>
 - Set reasonable timeouts (<code>timeout_s</code>)
-- Configure fallback chains in <code>config.yaml</code>
 - Monitor provider status</p>
 <hr />
 <h3 id="6-request-too-large">6. Request Too Large<a class="headerlink" href="#6-request-too-large" title="Permanent link">&para;</a></h3>
@@ -4057,7 +4061,7 @@ below describes the intended configuration shape, not default behavior.</p>
    └─ Fail? → Return error to client
 </code></pre></div></p>
 <h3 id="circuit-breaker">Circuit Breaker<a class="headerlink" href="#circuit-breaker" title="Permanent link">&para;</a></h3>
-<p>The circuit breaker is designed to open when a provider fails repeatedly, to limit cascading failures. It is not verified against the current release and is not active by default:</p>
+<p>The circuit breaker is designed to open when a provider fails repeatedly, to limit cascading failures. It is not verified against the current release, and the thresholds and timings below are illustrative, not documented defaults:</p>
 <div class="highlight"><pre><span></span><code>State: CLOSED (normal operation)
   └─ 3 failures in 60 seconds → OPEN
 
@@ -4286,12 +4290,8 @@ curl<span class="w"> </span>http://127.0.0.1:8766/v1/export/csv
 </table>
 <hr />
 <h2 id="best-practices">Best Practices<a class="headerlink" href="#best-practices" title="Permanent link">&para;</a></h2>
-<h3 id="1-always-use-fallback-chains">1. Always Use Fallback Chains<a class="headerlink" href="#1-always-use-fallback-chains" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><span class="nt">provider</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">anthropic</span>
-<span class="nt">fallback</span><span class="p">:</span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">google</span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">openai</span>
-</code></pre></div>
+<h3 id="1-handle-upstream-errors-in-your-client">1. Handle upstream errors in your client<a class="headerlink" href="#1-handle-upstream-errors-in-your-client" title="Permanent link">&para;</a></h3>
+<p>Set timeouts and handle upstream errors in your client; provider fallback is not active by default.</p>
 <h3 id="2-wrap-requests-in-try-catch">2. Wrap Requests in Try-Catch<a class="headerlink" href="#2-wrap-requests-in-try-catch" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">tokenpak.sdk.base</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
     <span class="n">TokenPakAdapterError</span><span class="p">,</span>
@@ -4312,7 +4312,7 @@ curl<span class="w"> </span>http://127.0.0.1:8766/v1/export/csv
     <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Adapter error: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </code></pre></div>
 <h3 id="3-implement-exponential-backoff">3. Implement Exponential Backoff<a class="headerlink" href="#3-implement-exponential-backoff" title="Permanent link">&para;</a></h3>
-<p>The proxy retries upstream failures automatically, but for custom client-side retries:</p>
+<p>Automatic proxy retries are not verified against the current release. For client-side retries:</p>
 <div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">tokenpak.sdk.base</span><span class="w"> </span><span class="kn">import</span> <span class="n">TokenPakAdapterError</span>
 

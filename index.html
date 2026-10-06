@@ -727,6 +727,13 @@
   </span>
   
   
+    
+  
+  
+    <span class="md-status md-status--current"></span>
+  
+
+  
 
       </a>
     </li>
@@ -782,6 +789,13 @@
     
   </span>
   
+  
+    
+  
+  
+    <span class="md-status md-status--current"></span>
+  
+
   
 
       </a>
@@ -3234,10 +3248,13 @@
 <p><strong>Know how far your agent can go.</strong></p>
 <ul>
 <li><strong>Today (release 1.30.1):</strong> request records and receipts; the session trip
-  computer (measured usage, estimated cost, burn and runway, with forecasts
-  shown only where calibrated), on by default in the Claude Code footer and the
-  Codex pane from 1.27.0 and in <code>tokenpak status</code>; Spend Guard limits; and
-  explicit context tools. Pro adds prepared stay-versus-fresh session comparisons, with measurements and explicit confirm or decline.</li>
+  computer (measured usage, estimated cost, burn and runway; forecasts are
+  ranges, not guarantees, and appear only once a model has enough local
+  history), on by default in the Claude Code footer and the Codex pane from
+  1.27.0 and in <code>tokenpak status</code>; Spend Guard limits; and explicit context
+  tools. Pro, a separate licensed package, adds stay-versus-fresh session
+  comparisons with measurements and an explicit confirm or decline. There is no
+  self-service purchase; write to hello@tokenpak.ai about access.</li>
 <li><strong>Planned:</strong> calibrated forecasts for more model and effort combinations; Pro
   reroute recommendations once calibration evidence exists; and any automation
   later, gated separately.</li>
@@ -3284,9 +3301,9 @@ version pins describe the release line named on that page.</p>
 <li><strong>Vault indexing + semantic search</strong> — index your codebase, search without an LLM call.</li>
 <li><strong>TIP-1.0 protocol contracts</strong> — canonical headers, metadata fields, capability labels, manifest schemas. Conformance gate runnable via <code>tokenpak doctor --conformance</code>.</li>
 <li><strong>Pak recall (read-only)</strong> — storage, FTS, <code>tokenpak pak inspect</code>. Scoring and assembly are not part of the OSS beta.</li>
-<li><strong>Three built-in setup profiles and 50+ compression recipes</strong> — minimal, balanced, and aggressive profiles plus customizable packaged YAML recipes.</li>
+<li><strong>Three built-in setup profiles and packaged compression recipes</strong> — minimal, balanced, and aggressive profiles plus customizable packaged YAML recipes.</li>
 <li><strong>Companion forecast footer</strong> — visible by default in interactive Claude Code and Codex launches. See <a href="companion-session-forecast/">terminal forecasts</a> for prerequisites, estimates and opt-out settings.</li>
-<li><strong>Session economics trip computer</strong> — a deterministic spent/burn/binding-runway/guard-state summary built only from completed local ledger rows, on <code>tokenpak status</code>, the dashboard, and an MCP tool. Coverage-tracked calibrated forecasts fill in as a model×effort cell earns enough history; cold cells report an explicit <code>learning</code> state rather than a guess.</li>
+<li><strong>Session economics trip computer</strong> — a deterministic spent/burn/binding-runway/guard-state summary built only from completed local ledger rows, on <code>tokenpak status</code>, the dashboard, and an MCP tool. Forecasts are estimates shown as ranges, not guarantees; a model and effort combination reports an explicit <code>learning</code> state until it has enough local history.</li>
 </ul>
 <hr />
 <h2 id="quick-start">Quick start<a class="headerlink" href="#quick-start" title="Permanent link">&para;</a></h2>

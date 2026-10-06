@@ -629,6 +629,13 @@
   </span>
   
   
+    
+  
+  
+    <span class="md-status md-status--current"></span>
+  
+
+  
 
       </a>
     </li>
@@ -684,6 +691,13 @@
     
   </span>
   
+  
+    
+  
+  
+    <span class="md-status md-status--current"></span>
+  
+
   
 
       </a>
@@ -1258,34 +1272,6 @@
       
     </span>
   </a>
-  
-    <nav class="md-nav" aria-label="Configuration Examples">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#multi-provider-fallback" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Multi-Provider Fallback
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#cost-optimized-routing" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Cost-Optimized Routing
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -3816,34 +3802,6 @@
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Configuration Examples">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#multi-provider-fallback" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Multi-Provider Fallback
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#cost-optimized-routing" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Cost-Optimized Routing
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
 </li>
       
         <li class="md-nav__item">
@@ -3889,7 +3847,7 @@
 
 
 <h1 id="adapter-reference">Adapter Reference<a class="headerlink" href="#adapter-reference" title="Permanent link">&para;</a></h1>
-<p>Adapters are converters between your code's request/response format and each provider's native format. TokenPak includes <strong>5 built-in adapters</strong>, all FREE.</p>
+<p>Adapters are converters between your code's request/response format and each provider's native format. TokenPak includes built-in adapters for Anthropic, OpenAI (chat, responses and Codex), Google Gemini and xAI Grok, plus a passthrough adapter, all part of the open-source core. The table below lists the adapters this page covers.</p>
 <hr />
 <h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">&para;</a></h2>
 <table>
@@ -4215,28 +4173,7 @@
 </ul>
 <hr />
 <h2 id="configuration-examples">Configuration Examples<a class="headerlink" href="#configuration-examples" title="Permanent link">&para;</a></h2>
-<h3 id="multi-provider-fallback">Multi-Provider Fallback<a class="headerlink" href="#multi-provider-fallback" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><span class="c1"># Try Claude first, fall back to Gemini, then GPT-4</span>
-<span class="nt">provider</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">anthropic</span>
-<span class="nt">fallback</span><span class="p">:</span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">google</span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">openai</span>
-
-<span class="nt">providers</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">anthropic</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">model</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">claude-opus-4-8</span>
-<span class="w">  </span><span class="nt">google</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">model</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">gemini-pro</span>
-<span class="w">  </span><span class="nt">openai</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">model</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">gpt-4o</span>
-</code></pre></div>
-<h3 id="cost-optimized-routing">Cost-Optimized Routing<a class="headerlink" href="#cost-optimized-routing" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><span class="c1"># Use cheaper Haiku for simple tasks, Opus for complex</span>
-<span class="nt">provider</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">anthropic</span>
-<span class="nt">routing</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">simple_tasks</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">claude-haiku-4-5</span><span class="w">  </span><span class="c1"># Cheaper</span>
-<span class="w">  </span><span class="nt">complex_tasks</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">claude-opus-4-8</span><span class="w">  </span><span class="c1"># More capable</span>
-</code></pre></div>
+<p>Provider fallback and model routing are not active by default; routing policy is configuration and observe-mode records. The <a href="../recipes/01-multi-provider-fallback/">multi-provider fallback</a> and <a href="../recipes/04-model-routing-by-use-case/">model routing</a> recipes describe both as conceptual patterns, not validated configuration.</p>
 <hr />
 <h2 id="error-handling">Error Handling<a class="headerlink" href="#error-handling" title="Permanent link">&para;</a></h2>
 <p>The TokenPak SDK adapters raise a canonical exception hierarchy. See <a href="../error-handling/">Error Handling Guide</a>.</p>

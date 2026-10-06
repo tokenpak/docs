@@ -627,6 +627,13 @@
   </span>
   
   
+    
+  
+  
+    <span class="md-status md-status--current"></span>
+  
+
+  
 
       </a>
     </li>
@@ -682,6 +689,13 @@
     
   </span>
   
+  
+    
+  
+  
+    <span class="md-status md-status--current"></span>
+  
+
   
 
       </a>
@@ -3357,14 +3371,10 @@ diff<span class="w"> </span>~/.tokenpak/config.json<span class="w"> </span>~/.to
   <div class="highlight"><pre><span></span><code>git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;Release v X.Y.Z: [summary of changes]&quot;</span>
 </code></pre></div></li>
 <li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <strong>Git tag:</strong> <code>git tag vX.Y.Z &amp;&amp; git push origin vX.Y.Z</code></li>
-<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <strong>PyPI/Cloudsmith:</strong> Package published
-  <div class="highlight"><pre><span></span><code><span class="c1"># For PyPI:</span>
-pip<span class="w"> </span>install<span class="w"> </span>build<span class="w"> </span>twine
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <strong>PyPI:</strong> Package published
+  <div class="highlight"><pre><span></span><code>pip<span class="w"> </span>install<span class="w"> </span>build<span class="w"> </span>twine
 python<span class="w"> </span>-m<span class="w"> </span>build
 twine<span class="w"> </span>upload<span class="w"> </span>dist/*
-
-<span class="c1"># For Cloudsmith (Pro):</span>
-bash<span class="w"> </span>scripts/publish-pro.sh<span class="w"> </span>X.Y.Z
 </code></pre></div></li>
 </ul>
 <hr />

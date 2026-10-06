@@ -629,6 +629,13 @@
   </span>
   
   
+    
+  
+  
+    <span class="md-status md-status--current"></span>
+  
+
+  
 
       </a>
     </li>
@@ -684,6 +691,13 @@
     
   </span>
   
+  
+    
+  
+  
+    <span class="md-status md-status--current"></span>
+  
+
   
 
       </a>
@@ -3276,10 +3290,15 @@ does not backfill earlier traffic or invent missing usage measurements.</p>
 <ul>
 <li><code>est</code> and <code>~</code> identify estimates. Remaining ranges carry their 50% interval
   label; the 90% ceiling appears when there is room.</li>
+<li>Ranges are estimates, not guarantees. Where a display shows measured
+  coverage, it is the observed coverage of the 50% range. The 90% ceiling is
+  shown at its nominal 90% level: its measured coverage is not shown, and a
+  session can run past it.</li>
 <li><code>guard limit</code> is the estimated number of turns before a configured constraint,
   not the number of turns needed to finish your task.</li>
-<li><code>learning</code>, <code>no data</code>, and <code>unavailable</code> are real states. Subscription traffic
-  can show <code>subscription</code> rather than a fabricated dollar bill.</li>
+<li><code>learning</code>, <code>no data</code>, and <code>unavailable</code> are real states. A model and effort
+  combination shows <code>learning</code> until it has enough local history. Subscription
+  traffic can show <code>subscription</code> rather than a fabricated dollar bill.</li>
 <li><code>stale</code> means the cached observation expired. Expired numbers are hidden.</li>
 <li>Narrow terminals show fewer complete fields, preserving guard information.
   The display makes no numeric savings claim and triggers no session switch.</li>

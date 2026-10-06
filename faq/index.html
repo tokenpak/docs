@@ -629,6 +629,13 @@
   </span>
   
   
+    
+  
+  
+    <span class="md-status md-status--current"></span>
+  
+
+  
 
       </a>
     </li>
@@ -684,6 +691,13 @@
     
   </span>
   
+  
+    
+  
+  
+    <span class="md-status md-status--current"></span>
+  
+
   
 
       </a>
@@ -3903,22 +3917,16 @@
 <h1 id="tokenpak-frequently-asked-questions">TokenPak — Frequently Asked Questions<a class="headerlink" href="#tokenpak-frequently-asked-questions" title="Permanent link">&para;</a></h1>
 <h2 id="general">General<a class="headerlink" href="#general" title="Permanent link">&para;</a></h2>
 <h3 id="is-tokenpak-production-ready">Is TokenPak production-ready?<a class="headerlink" href="#is-tokenpak-production-ready" title="Permanent link">&para;</a></h3>
-<p>TokenPak is currently in <strong>OSS beta</strong>. The proxy core, Spend Guard, request records and the Claude Code and Codex client integrations are stable and used in real workflows today. The default proxy forwards the request and preserves conversation turns; explicit context and compression tools are separate. Some surfaces (Pak scoring/assembly, fleet orchestration, advanced recipes) are explicitly read-only or experimental in the beta — see <a href="../KNOWN_LIMITATIONS/">Known Limitations</a> for the current line.</p>
+<p>TokenPak is alpha-stage open-source software. The proxy core, Spend Guard, request records and the Claude Code and Codex integrations ship in the current release; interfaces can still change. The default proxy forwards the request and preserves conversation turns; explicit context and compression tools are separate. Some surfaces (Pak scoring and assembly, fleet orchestration, advanced recipes) are read-only or experimental — see <a href="../KNOWN_LIMITATIONS/">Known Limitations</a> for the current line.</p>
 <p>We don't claim an SLA for the OSS package: TokenPak runs on your machine, so reliability is determined by your machine and the upstream provider, not by any infrastructure we operate.</p>
 <h3 id="is-tokenpak-free">Is TokenPak free?<a class="headerlink" href="#is-tokenpak-free" title="Permanent link">&para;</a></h3>
-<p>Yes. TokenPak is Apache 2.0 licensed and the package on PyPI (<code>pip install tokenpak</code>) is the full OSS product. No license activation, no feature gates inside the OSS package, no telemetry sent home by default.</p>
+<p>Yes. The TokenPak core is Apache 2.0 licensed, and <code>pip install tokenpak</code> installs it. It needs no license key and sends no telemetry by default. Pro is a separate, proprietary package.</p>
 <h3 id="why-is-it-free">Why is it free?<a class="headerlink" href="#why-is-it-free" title="Permanent link">&para;</a></h3>
 <p>TokenPak is built in the open because it works better that way. The protocol it implements (TIP-1.0) is a public spec; the proxy is its reference implementation. Sustainable open-source projects work when the source is honest, the docs match the code, and the development cadence is real — that's the bar we hold ourselves to.</p>
 <h3 id="what-providers-does-tokenpak-support">What providers does TokenPak support?<a class="headerlink" href="#what-providers-does-tokenpak-support" title="Permanent link">&para;</a></h3>
-<p><strong>Fully supported in the OSS beta:</strong></p>
-<ul>
-<li>Anthropic Claude (all models)</li>
-<li>OpenAI GPT-4, GPT-3.5</li>
-<li>Google Gemini</li>
-<li>Meta Llama (via Replicate or Hugging Face)</li>
-<li>Local Ollama</li>
-</ul>
-<p><strong>Easy to add:</strong> any REST-compatible LLM API. TokenPak's adapter pattern makes adding custom providers straightforward — see the <a href="../adapters/">adapters guide</a>.</p>
+<p><strong>Adapters in the current release:</strong> Anthropic, OpenAI (chat, responses and Codex), Google Gemini and xAI Grok, plus a passthrough adapter.</p>
+<p><strong>Tested:</strong> OpenAI SDK, Anthropic SDK and LiteLLM. <strong>First-class integrations:</strong> Claude Code and Codex.</p>
+<p><strong>Other providers:</strong> see the <a href="../adapters/">adapters guide</a> for the passthrough adapter and for adding your own.</p>
 <hr />
 <h2 id="how-it-works">How It Works<a class="headerlink" href="#how-it-works" title="Permanent link">&para;</a></h2>
 <h3 id="how-does-tokenpak-route-requests-to-providers">How does TokenPak route requests to providers?<a class="headerlink" href="#how-does-tokenpak-route-requests-to-providers" title="Permanent link">&para;</a></h3>
@@ -3926,7 +3934,7 @@
 <h3 id="does-tokenpak-support-streaming">Does TokenPak support streaming?<a class="headerlink" href="#does-tokenpak-support-streaming" title="Permanent link">&para;</a></h3>
 <p>The proxy handles streamed responses, and empty streamed responses preserve ordinary accounting observations. If the proxy restarts mid-stream, a retried request gets an explicit <code>terminally_failed</code> / <code>recovery_status</code> signal instead of a bare connection reset; transparent replay is not implemented.</p>
 <h3 id="how-does-caching-work-will-i-get-stale-responses">How does caching work? Will I get stale responses?<a class="headerlink" href="#how-does-caching-work-will-i-get-stale-responses" title="Permanent link">&para;</a></h3>
-<p>TokenPak caches responses based on request hashing (model + prompt). Cache hits have a configurable TTL (default 1 hour), and you can disable caching per-request via headers. It's useful for repeated queries or batch processing, but not suited for live/dynamic content. For chat conversations, disable caching or use short TTLs.</p>
+<p>Provider-side prompt-cache hits are recorded separately from TokenPak's own cache. TokenPak's semantic cache is off by default; if you turn it on (<code>TOKENPAK_SEMANTIC_CACHE</code>), use it for repeated or batch queries and not for live or dynamic content.</p>
 <h3 id="what-about-token-counting-is-it-accurate">What about token counting? Is it accurate?<a class="headerlink" href="#what-about-token-counting-is-it-accurate" title="Permanent link">&para;</a></h3>
 <p>Some counts are estimates. <code>tokenpak savings --verify</code> compares TokenPak's existing UTF-8 byte estimator with an independent <code>cl100k_base</code> count on a packaged fixture corpus and reports both counts and their divergence; it does not recount stored requests, whose source text is not retained. Session displays label estimates.</p>
 <hr />
@@ -3935,9 +3943,9 @@
 <p>The TokenPak proxy and its local ledger run on your machine. Provider-bound
 prompts, responses, and credentials still travel between your client and the
 upstream provider you configure; they do not pass through a TokenPak cloud
-service. TokenPak sends no telemetry home by default. Cached responses live in
+service. TokenPak sends no telemetry home by default. Request records live in
 a local SQLite ledger (<code>~/.tokenpak/monitor.db</code> or <code>~/.tpk/monitor.db</code> on fresh
-installs) with a configurable TTL. Full details are on the
+installs). Full details are on the
 <a href="https://tokenpak.ai/compliance/privacy">tokenpak.ai privacy page</a>.</p>
 <h3 id="how-does-rate-limiting-work">How does rate limiting work?<a class="headerlink" href="#how-does-rate-limiting-work" title="Permanent link">&para;</a></h3>
 <p>TokenPak supports multiple rate-limiting strategies:</p>
@@ -3948,7 +3956,7 @@ installs) with a configurable TTL. Full details are on the
 </ul>
 <p>Limits are configurable in <code>config.yaml</code>. You get clear error messages when limits are exceeded.</p>
 <h3 id="can-i-audit-requests-for-compliance">Can I audit requests for compliance?<a class="headerlink" href="#can-i-audit-requests-for-compliance" title="Permanent link">&para;</a></h3>
-<p>Yes. Every request is logged to the local SQLite ledger with metadata (model, token counts, latency, cost, cache-origin). You can also wire up your own logging backend via webhooks.</p>
+<p>TokenPak records available request metadata (model, token counts, latency, cost, cache origin) in a local SQLite ledger. Failed writes and missing usage are coverage limits, so treat it as a usage record rather than a compliance audit trail.</p>
 <hr />
 <h2 id="performance-operations">Performance &amp; Operations<a class="headerlink" href="#performance-operations" title="Permanent link">&para;</a></h2>
 <h3 id="whats-the-performance-overhead">What's the performance overhead?<a class="headerlink" href="#whats-the-performance-overhead" title="Permanent link">&para;</a></h3>
@@ -3960,8 +3968,7 @@ installs) with a configurable TTL. Full details are on the
 <p>That's the only way to run TokenPak. You install the OSS package locally:</p>
 <ul>
 <li><strong>pip:</strong> <code>pip install tokenpak &amp;&amp; tokenpak start</code></li>
-<li><strong>Docker:</strong> <code>docker run -p 8766:8766 tokenpak/tokenpak</code></li>
-<li><strong>Kubernetes:</strong> Helm charts and manifests are in the repo</li>
+<li><strong>Docker:</strong> build the image from the repository with <code>docker build -t tokenpak .</code> (see the <a href="../DOCKER/">Docker guide</a>)</li>
 </ul>
 <p>See the <a href="../installation/">installation guide</a> for deployment options.</p>
 <h3 id="how-do-i-monitor-tokenpak">How do I monitor TokenPak?<a class="headerlink" href="#how-do-i-monitor-tokenpak" title="Permanent link">&para;</a></h3>
@@ -4003,7 +4010,7 @@ installs) with a configurable TTL. Full details are on the
 <h3 id="how-does-tokenpak-calculate-costs">How does TokenPak calculate costs?<a class="headerlink" href="#how-does-tokenpak-calculate-costs" title="Permanent link">&para;</a></h3>
 <p>TokenPak tracks input and output tokens and multiplies by provider pricing. Pricing is updated from provider public pricing pages. You can also configure custom rates in <code>config.yaml</code> (useful for negotiated enterprise pricing). Costs are logged per request and rolled up by session, agent, model, and provider.</p>
 <h3 id="can-i-set-a-budgetcost-limit">Can I set a budget/cost limit?<a class="headerlink" href="#can-i-set-a-budgetcost-limit" title="Permanent link">&para;</a></h3>
-<p>Yes — that's what <strong>Spend Guard</strong> does. It's shipped in the OSS beta as a pre-send circuit breaker:</p>
+<p>Yes — that's what <strong>Spend Guard</strong> does. It ships in the current release as a pre-send circuit breaker:</p>
 <div class="highlight"><pre><span></span><code>tokenpak<span class="w"> </span>budget<span class="w"> </span>--help
 </code></pre></div>
 <p>Defaults are context-window-percentage based (90% warn / 100% hard stop). Dollar-based rolling caps are opt-in. When a request would exceed the cap, TokenPak returns HTTP 402 with <code>error.type=tokenpak_spend_guard_blocked</code> and a clear release directive — instead of letting a runaway agent burn through a budget. Full details in the Spend Guard section of the <a href="../configuration/">configuration docs</a>.</p>
@@ -4012,11 +4019,11 @@ installs) with a configurable TTL. Full details are on the
 <h3 id="where-do-i-report-bugs">Where do I report bugs?<a class="headerlink" href="#where-do-i-report-bugs" title="Permanent link">&para;</a></h3>
 <p><a href="https://github.com/tokenpak/tokenpak/issues">GitHub Issues</a>. Include your OS, Python version, TokenPak version, and reproduction steps. We prioritize crashes and regressions.</p>
 <h3 id="how-do-i-request-features">How do I request features?<a class="headerlink" href="#how-do-i-request-features" title="Permanent link">&para;</a></h3>
-<p><a href="https://github.com/tokenpak/tokenpak/discussions">GitHub Discussions</a> for ideas, or <a href="https://github.com/tokenpak/tokenpak/issues">Issues</a> if you have a detailed spec. We review requests weekly and prioritize based on community interest and alignment with the roadmap.</p>
+<p><a href="https://github.com/tokenpak/tokenpak/discussions">GitHub Discussions</a> for ideas, or <a href="https://github.com/tokenpak/tokenpak/issues">Issues</a> if you have a detailed spec.</p>
 <h3 id="how-do-i-contribute">How do I contribute?<a class="headerlink" href="#how-do-i-contribute" title="Permanent link">&para;</a></h3>
 <p>We welcome bug fixes, docs, adapters, and tests. Fork, make your change, and open a PR. Good first issues are labeled <a href="https://github.com/tokenpak/tokenpak/labels/good-first-issue"><code>good-first-issue</code></a>.</p>
 <h3 id="is-there-a-slackdiscord-community">Is there a Slack/Discord community?<a class="headerlink" href="#is-there-a-slackdiscord-community" title="Permanent link">&para;</a></h3>
-<p>We're using GitHub Discussions for now, which is lower-friction than chat. If the community asks for Slack, we'll set it up. Reach out in <a href="https://github.com/tokenpak/tokenpak/discussions">Discussions</a> if you'd like to chat.</p>
+<p>There is no Slack or Discord community. Ask questions or start a conversation in <a href="https://github.com/tokenpak/tokenpak/discussions">GitHub Discussions</a>.</p>
 
 
 

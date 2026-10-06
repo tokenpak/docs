@@ -629,6 +629,13 @@
   </span>
   
   
+    
+  
+  
+    <span class="md-status md-status--current"></span>
+  
+
+  
 
       </a>
     </li>
@@ -684,6 +691,13 @@
     
   </span>
   
+  
+    
+  
+  
+    <span class="md-status md-status--current"></span>
+  
+
   
 
       </a>
@@ -3556,11 +3570,12 @@ lands (tracked in issue #161).</p>
 <h2 id="no-managed-cloud-hosted-offering">No managed cloud / hosted offering<a class="headerlink" href="#no-managed-cloud-hosted-offering" title="Permanent link">&para;</a></h2>
 <p><strong>Status:</strong> by design — a durable trust-posture commitment, not a feature
 gap.</p>
-<p><strong>What:</strong> TokenPak is a <strong>local proxy</strong>. There is no SaaS, hosted
-dashboard, license server, team workspace, SSO, or shared cloud component
-in the OSS beta.</p>
-<p><strong>Current behavior:</strong> the package runs on <code>127.0.0.1</code> and only talks to the
-upstream LLM provider you configure.</p>
+<p><strong>What:</strong> TokenPak is a <strong>local proxy</strong>. The OSS package has no SaaS,
+hosted dashboard, team workspace, SSO, or shared cloud component.</p>
+<p><strong>Current behavior:</strong> by default the package runs on <code>127.0.0.1</code> and talks
+only to the upstream LLM provider you configure. Optional features can make
+other network requests, such as an update check against pypi.org (TokenPak
+asks first) and an anonymous metrics heartbeat (off by default).</p>
 <p><strong>Workaround:</strong> not applicable — this is the product's trust posture, not a
 gap to work around.</p>
 <p><strong>Retirement condition:</strong> none. Changing this would require a strategic
@@ -3595,9 +3610,12 @@ Cost and burn are derived estimates and are labeled accordingly.
 Mixed model or effort histories are not treated as homogeneous calibration
 evidence, unsupported effort values remain unavailable, and inactivity is not
 proof of task completion. Stale or unknown provider rates leave USD unavailable while token-based
-ranges stay intact. Measured walk-forward coverage is reported as observed,
-never asserted as nominal, and drifting coverage triggers a refit rather
-than a relabel.</p>
+ranges stay intact. Forecast ranges are estimates, not guarantees.</p>
+<p>The measured walk-forward coverage shown for a forecast is the observed
+coverage of the 50% range, never asserted as nominal, and drifting 50%
+coverage triggers a refit rather than a relabel. That holds for the 50%
+range only. The 90% ceiling is shown at its nominal 90% level; its measured
+coverage is not shown, and a session can run past it.</p>
 <p><strong>Workaround:</strong> none needed — this is working as designed. Use a
 session/model/effort combination with enough history if a calibrated band
 is needed immediately.</p>
