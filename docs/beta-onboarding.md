@@ -22,10 +22,10 @@ You don't need to use an agent to try TokenPak: any LLM request you send through
 ```bash
 pip install tokenpak
 tokenpak --version    # expect: tokenpak 1.30.0
-tokenpak setup        # interactive wizard
+tokenpak setup --start    # interactive wizard; --start also launches the proxy
 ```
 
-`tokenpak setup` scans your environment for `ANTHROPIC_API_KEY`, `OPENAI_API_KEY`, and `GOOGLE_API_KEY`, asks which provider to proxy, picks a compression profile, writes `~/.tpk/config.yaml` (or `~/.tokenpak/config.yaml` on systems that already have the legacy directory), and starts the proxy on `127.0.0.1:8766`.
+`tokenpak setup` scans your environment for `ANTHROPIC_API_KEY`, `OPENAI_API_KEY`, and `GOOGLE_API_KEY`, asks which provider to proxy, picks a compression profile, and writes `~/.tpk/config.yaml` (or `~/.tokenpak/config.yaml` on systems that already have the legacy directory). With `--start`, it also starts the proxy on `127.0.0.1:8766`.
 
 Point your existing client at the proxy:
 
@@ -39,7 +39,7 @@ Codex launches through `tokenpak codex`. Cursor, Cline, Continue and Aider are c
 
 ## Trust posture
 
-TokenPak runs locally. Your prompts and credentials stay in your environment and the provider flow you already use — they are not sent to TokenPak-operated infrastructure. Configuration and the local SQLite ledger live under `~/.tpk/` (canonical) or `~/.tokenpak/` (legacy fallback). See the [tokenpak.ai privacy page](https://tokenpak.ai/compliance/privacy/) for the full disclosure of optional escape-hatch flags.
+TokenPak runs locally. Your prompts and credentials stay in your environment and the provider flow you already use — they are not sent to TokenPak-operated infrastructure. By default the proxy talks only to the upstream provider you configure; optional features can make other network requests, such as an update check against pypi.org (TokenPak asks first) and an anonymous metrics heartbeat (off by default). Configuration and the local SQLite ledger live under `~/.tpk/` (canonical) or `~/.tokenpak/` (legacy fallback). See the [tokenpak.ai privacy page](https://tokenpak.ai/compliance/privacy/) for the privacy details.
 
 ## First-run smoke test (≈5 minutes)
 
@@ -87,7 +87,7 @@ Highlights:
 - The OSS beta ships the **Pak recall data plane** only. Scoring, ranking, and assembly enforcement are planned, not shipped — `severity = block` flags are stored but not enforced by OSS.
 - Storage path is migrating from `~/.tokenpak/` (legacy) to `~/.tpk/` (canonical). Both work; fresh installs land on `~/.tpk/`.
 - Several CLI command families (`fleet`, `macro`, `template`, `recipe`, `audit`, `agent`, `trigger`, `retrieval`, `goals`) are functional but their surfaces may change during beta. Stable verbs are listed in Known Issues.
-- TokenPak is a local proxy. There is no SaaS, hosted dashboard, license server, team workspace, or shared cloud component in the beta. This is the trust-posture commitment, not a feature gap.
+- TokenPak is a local proxy. The OSS package has no SaaS, hosted dashboard, team workspace, or shared cloud component. This is the trust-posture commitment, not a feature gap.
 
 ## Reporting issues
 

@@ -45,7 +45,7 @@ The entry point that receives all API requests from your application. It normali
 **Responsibility:** Parse and validate incoming requests, extract user intent and model name, prepare request body for downstream processing.
 
 ### 2. **Validation Gate**
-An optional safety layer that inspects message content against configured policies before passing to the proxy. Can detect and block suspicious patterns, enforce compliance rules, or rate-limit based on content risk.
+An optional layer that inspects message content against configured policies and can block matching requests.
 
 **Responsibility:** Content security scanning, policy enforcement, risk classification of requests and responses.
 
@@ -248,11 +248,10 @@ curl http://localhost:8766/stats
 
 ## Security Features
 
-- **Validation Gate:** Blocks suspicious content before it reaches providers
+- **Validation Gate:** Optional layer that can block requests matching configured policies
 - **Rate Limiting:** Prevents abuse and runaway costs
 - **Per-IP Quotas:** Control who can use the proxy and how much
 - **API Key Isolation:** Proxied requests don't leak your API keys to the client
-- **Encrypted Config:** Sensitive settings encrypted at rest
 
 ---
 

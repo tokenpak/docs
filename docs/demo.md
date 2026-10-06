@@ -1,61 +1,41 @@
-# TokenPak Demo Data
+---
+title: TokenPak demo data
+rung: 2
+audience: Developers who want sample events in the local dashboard before real traffic exists.
+updated: 2026-10-06
+status: current
+---
 
-Quickly showcase TokenPak with realistic demo data — no need to generate real traffic.
+# TokenPak demo data
 
-## Usage
+This page is for developers who want sample events in the local dashboard before real traffic exists. `tokenpak demo --seed` writes randomly generated sample events, each marked `is_demo`. The values are illustrative; they are not a measurement of your savings.
 
-### Seed demo data
+## Seed demo data
+
 ```bash
-python3 demo.py --seed
+tokenpak demo --seed
 ```
 
-Populates the database with:
-- **500 requests** over 24 hours
-- **A realistic cache hit rate** (modeling repeated queries)
-- **Multiple models** (Haiku, Sonnet, GPT-4)
-- **Cost breakdown**, latency, cache efficiency
-- **Labeled as "Demo Data"** for clarity
+Writes 500 sample events spread over 24 hours, using a mix of Claude and GPT model names with random token counts, cache values and latencies.
 
-### Custom seed size
+To change the size or the time window:
+
 ```bash
-python3 demo.py --seed 1000 12  # 1000 requests over 12 hours
+tokenpak demo --seed --seed-count 1000 --seed-hours 12   # 1000 events over 12 hours
 ```
 
-### Check demo data
+## Clear demo data
+
 ```bash
-python3 demo.py --check
+tokenpak demo --clear
 ```
 
-Shows:
-- Total requests
-- Cache hit rate and percentage
-- Time range
-- Cost breakdown (misses vs. hits)
-- Estimated savings
+Removes the events marked `is_demo` and keeps every other event.
 
-### Clear demo data
-```bash
-python3 demo.py --clear
-```
+## Where the sample events go
 
-Removes all demo data — safe to run before a live demo.
+Sample events are appended to the same local compression event log that the proxy writes and the dashboard reads, so they sit next to real events until you clear them. Seeding again adds another batch. Run `tokenpak demo --clear` before you look at real traffic.
 
-## Dashboard Integration
+## Offline fixture demo
 
-Once seeded, the TokenPak dashboard automatically displays:
-- **Request timeline** (scatter plot over 24h)
-- **Cache hit rate** (a high hit rate on repeated queries)
-- **Cost breakdown** by model
-- **Latency comparison** (cache hits respond much faster)
-- **Savings estimate** (realistic for production scenarios)
-
-## Data Isolation
-
-- Demo data is **labeled** internally (`agent_id: "demo-data"`)
-- Real traffic **never mixes** with demo data
-- Cleanup is **safe** — only removes records marked as demo
-- **Idempotent** — seed multiple times without duplicates
-
-## Data Isolation Guarantees
-
-Demo data is fully isolated from real traffic and safe to seed or clear at any time — see the **Data Isolation** notes above.
+`tokenpak demo` with no flags prints an offline comparison on a built-in sample fixture. Its output is labelled "not a savings receipt".

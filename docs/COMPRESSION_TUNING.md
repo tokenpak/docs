@@ -478,4 +478,4 @@ print(f"Stages run: {', '.join(result.stages_run)}")
 
 ---
 
-**Questions? Issues?** Open a GitHub issue or reach out to the TokenPak team on Slack.
+**Questions? Issues?** Open a GitHub issue or start a conversation in [GitHub Discussions](https://github.com/tokenpak/tokenpak/discussions).

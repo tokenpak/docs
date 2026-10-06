@@ -4,7 +4,7 @@ created: 2026-03-24T19:05:55Z
 ---
 # Feature Matrix
 
-All features are **FREE and open source** under the Apache 2.0 license.
+The features on this page are part of the open-source core, licensed under Apache 2.0. Pro is a separate, proprietary package.
 
 ---
 
@@ -12,7 +12,7 @@ All features are **FREE and open source** under the Apache 2.0 license.
 
 | Category | Feature | Status | Notes |
 |----------|---------|--------|-------|
-| **Core Routing** | Multiple provider adapters | ✅ | Built-in adapters: Anthropic, OpenAI, Google, xAI/Grok, Ollama |
+| **Core Routing** | Multiple provider adapters | ✅ | Built-in adapters: Anthropic, OpenAI (chat, responses and Codex), Google Gemini, xAI Grok, plus a passthrough adapter |
 | | Fallback chains | ⚠️ | Not active by default; routing policy is configuration and observe-mode records |
 | | Circuit breaker | ⚠️ | Spend Guard is a pre-send circuit breaker that blocks runaway requests before the provider call |
 | **Token Management** | Token counting (all providers) | ✅ | Unified across Anthropic, OpenAI, Google |
@@ -21,9 +21,9 @@ All features are **FREE and open source** under the Apache 2.0 license.
 | | Document compression | ✅ | Summarize long docs |
 | | Instruction table | ✅ | Compress repetitive instructions |
 | **Error Handling** | Normalized error messages | ✅ | Consistent across providers |
-| | Automatic retries | ✅ | Exponential backoff, configurable |
+| | Automatic retries | ⚠️ | Not verified against the current release |
 | | Error telemetry | ✅ | Log error types and frequency |
-| **Observability** | Request/response logging | ✅ | JSON logs, searchable |
+| **Observability** | Request logging | ✅ | Metadata only (model, token counts, latency, cost); prompt and response bodies are not stored by default |
 | | Token usage reports | ✅ | CSV export, JSON export |
 | **Agentic** | Error normalization | ✅ | Convert errors to agent-readable format |
 | | Streaming support | ✅ | Handle streaming + non-streaming |
@@ -46,7 +46,7 @@ All features are **FREE and open source** under the Apache 2.0 license.
 
 ### Core Proxy
 
-Provider routing, adapters, tool schema handling, fallback chains, circuit breaker, streaming, passthrough.
+Provider adapters, tool-schema handling, streaming and passthrough. Routing policy is configuration and observe-mode records; automatic fallback is not active by default.
 
 TokenPak's primary usage model is to run the local proxy and point your existing provider SDK or tool at it via a base URL — no application code changes required:
 
@@ -122,9 +122,6 @@ proxy:
   host: 127.0.0.1
 
 provider: anthropic
-fallback:
-  - google
-  - openai
 
 compression:
   enabled: true
@@ -154,6 +151,6 @@ These items are on the roadmap and are **not part of the current OSS beta surfac
 
 ## Support & Licensing
 
-**License:** Apache 2.0. Use however you like.
+**License:** Apache 2.0 for the open-source core. The TokenPak name and logo are not licensed under it. Pro is a separate, proprietary package.
 
 See [README](index.md) for more information.

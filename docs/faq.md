@@ -4,13 +4,13 @@
 
 ### Is TokenPak production-ready?
 
-TokenPak is currently in **OSS beta**. The proxy core, Spend Guard, request records and the Claude Code and Codex client integrations are stable and used in real workflows today. The default proxy forwards the request and preserves conversation turns; explicit context and compression tools are separate. Some surfaces (Pak scoring/assembly, fleet orchestration, advanced recipes) are explicitly read-only or experimental in the beta — see [Known Limitations](KNOWN_LIMITATIONS.md) for the current line.
+TokenPak is alpha-stage open-source software. The proxy core, Spend Guard, request records and the Claude Code and Codex integrations ship in the current release; interfaces can still change. The default proxy forwards the request and preserves conversation turns; explicit context and compression tools are separate. Some surfaces (Pak scoring and assembly, fleet orchestration, advanced recipes) are read-only or experimental — see [Known Limitations](KNOWN_LIMITATIONS.md) for the current line.
 
 We don't claim an SLA for the OSS package: TokenPak runs on your machine, so reliability is determined by your machine and the upstream provider, not by any infrastructure we operate.
 
 ### Is TokenPak free?
 
-Yes. TokenPak is Apache 2.0 licensed and the package on PyPI (`pip install tokenpak`) is the full OSS product. No license activation, no feature gates inside the OSS package, no telemetry sent home by default.
+Yes. The TokenPak core is Apache 2.0 licensed, and `pip install tokenpak` installs it. It needs no license key and sends no telemetry by default. Pro is a separate, proprietary package.
 
 ### Why is it free?
 
@@ -18,15 +18,11 @@ TokenPak is built in the open because it works better that way. The protocol it 
 
 ### What providers does TokenPak support?
 
-**Fully supported in the OSS beta:**
+**Adapters in the current release:** Anthropic, OpenAI (chat, responses and Codex), Google Gemini and xAI Grok, plus a passthrough adapter.
 
-- Anthropic Claude (all models)
-- OpenAI GPT-4, GPT-3.5
-- Google Gemini
-- Meta Llama (via Replicate or Hugging Face)
-- Local Ollama
+**Tested:** OpenAI SDK, Anthropic SDK and LiteLLM. **First-class integrations:** Claude Code and Codex.
 
-**Easy to add:** any REST-compatible LLM API. TokenPak's adapter pattern makes adding custom providers straightforward — see the [adapters guide](adapters.md).
+**Other providers:** see the [adapters guide](adapters.md) for the passthrough adapter and for adding your own.
 
 ---
 
@@ -42,7 +38,7 @@ The proxy handles streamed responses, and empty streamed responses preserve ordi
 
 ### How does caching work? Will I get stale responses?
 
-TokenPak caches responses based on request hashing (model + prompt). Cache hits have a configurable TTL (default 1 hour), and you can disable caching per-request via headers. It's useful for repeated queries or batch processing, but not suited for live/dynamic content. For chat conversations, disable caching or use short TTLs.
+Provider-side prompt-cache hits are recorded separately from TokenPak's own cache. TokenPak's semantic cache is off by default; if you turn it on (`TOKENPAK_SEMANTIC_CACHE`), use it for repeated or batch queries and not for live or dynamic content.
 
 ### What about token counting? Is it accurate?
 
@@ -57,9 +53,9 @@ Some counts are estimates. `tokenpak savings --verify` compares TokenPak's exist
 The TokenPak proxy and its local ledger run on your machine. Provider-bound
 prompts, responses, and credentials still travel between your client and the
 upstream provider you configure; they do not pass through a TokenPak cloud
-service. TokenPak sends no telemetry home by default. Cached responses live in
+service. TokenPak sends no telemetry home by default. Request records live in
 a local SQLite ledger (`~/.tokenpak/monitor.db` or `~/.tpk/monitor.db` on fresh
-installs) with a configurable TTL. Full details are on the
+installs). Full details are on the
 [tokenpak.ai privacy page](https://tokenpak.ai/compliance/privacy).
 
 ### How does rate limiting work?
@@ -74,7 +70,7 @@ Limits are configurable in `config.yaml`. You get clear error messages when limi
 
 ### Can I audit requests for compliance?
 
-Yes. Every request is logged to the local SQLite ledger with metadata (model, token counts, latency, cost, cache-origin). You can also wire up your own logging backend via webhooks.
+TokenPak records available request metadata (model, token counts, latency, cost, cache origin) in a local SQLite ledger. Failed writes and missing usage are coverage limits, so treat it as a usage record rather than a compliance audit trail.
 
 ---
 
@@ -95,8 +91,7 @@ For applications where sub-millisecond response time is critical, either run the
 That's the only way to run TokenPak. You install the OSS package locally:
 
 - **pip:** `pip install tokenpak && tokenpak start`
-- **Docker:** `docker run -p 8766:8766 tokenpak/tokenpak`
-- **Kubernetes:** Helm charts and manifests are in the repo
+- **Docker:** build the image from the repository with `docker build -t tokenpak .` (see the [Docker guide](DOCKER.md))
 
 See the [installation guide](installation.md) for deployment options.
 
@@ -159,7 +154,7 @@ TokenPak tracks input and output tokens and multiplies by provider pricing. Pric
 
 ### Can I set a budget/cost limit?
 
-Yes — that's what **Spend Guard** does. It's shipped in the OSS beta as a pre-send circuit breaker:
+Yes — that's what **Spend Guard** does. It ships in the current release as a pre-send circuit breaker:
 
 ```bash
 tokenpak budget --help
@@ -177,7 +172,7 @@ Defaults are context-window-percentage based (90% warn / 100% hard stop). Dollar
 
 ### How do I request features?
 
-[GitHub Discussions](https://github.com/tokenpak/tokenpak/discussions) for ideas, or [Issues](https://github.com/tokenpak/tokenpak/issues) if you have a detailed spec. We review requests weekly and prioritize based on community interest and alignment with the roadmap.
+[GitHub Discussions](https://github.com/tokenpak/tokenpak/discussions) for ideas, or [Issues](https://github.com/tokenpak/tokenpak/issues) if you have a detailed spec.
 
 ### How do I contribute?
 
@@ -185,4 +180,4 @@ We welcome bug fixes, docs, adapters, and tests. Fork, make your change, and ope
 
 ### Is there a Slack/Discord community?
 
-We're using GitHub Discussions for now, which is lower-friction than chat. If the community asks for Slack, we'll set it up. Reach out in [Discussions](https://github.com/tokenpak/tokenpak/discussions) if you'd like to chat.
+There is no Slack or Discord community. Ask questions or start a conversation in [GitHub Discussions](https://github.com/tokenpak/tokenpak/discussions).

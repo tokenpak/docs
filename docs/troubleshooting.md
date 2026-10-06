@@ -102,7 +102,6 @@ tokenpak config-check proxy.json
 # Example (correct):
 routing:
   primary: "anthropic"
-  fallback: "openai"
 ```
 
 ### Error: "Missing API key for provider: anthropic"
@@ -313,28 +312,6 @@ rate_limiting:
 # - OpenAI: varies by tier (check https://platform.openai.com/account/rate-limits)
 
 # If you hit a hard limit, you'll need to upgrade your tier
-```
-
-### Error: "Fallback provider also failed"
-**Symptom:** Request fails even though both primary and fallback providers are configured.
-
-**Likely cause:** Both providers are either down, rate-limited, or having auth issues.
-
-**Fix:**
-```bash
-# Check provider/circuit-breaker health
-curl http://localhost:8766/circuit-breakers
-
-# Check API keys for all providers
-tokenpak doctor
-
-# If a provider is temporarily down, TokenPak will mark it as unhealthy
-# and only use it again after a recovery check (default 30s)
-
-# Add more fallbacks in proxy.yaml:
-routing:
-  primary: anthropic
-  fallback: [openai, gemini]
 ```
 
 ---

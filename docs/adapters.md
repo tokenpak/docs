@@ -4,7 +4,7 @@ created: 2026-03-24T19:05:55Z
 ---
 # Adapter Reference
 
-Adapters are converters between your code's request/response format and each provider's native format. TokenPak includes **5 built-in adapters**, all FREE.
+Adapters are converters between your code's request/response format and each provider's native format. TokenPak includes built-in adapters for Anthropic, OpenAI (chat, responses and Codex), Google Gemini and xAI Grok, plus a passthrough adapter, all part of the open-source core. The table below lists the adapters this page covers.
 
 ---
 
@@ -366,33 +366,7 @@ print(response.json())
 
 ## Configuration Examples
 
-### Multi-Provider Fallback
-
-```yaml
-# Try Claude first, fall back to Gemini, then GPT-4
-provider: anthropic
-fallback:
-  - google
-  - openai
-
-providers:
-  anthropic:
-    model: claude-opus-4-8
-  google:
-    model: gemini-pro
-  openai:
-    model: gpt-4o
-```
-
-### Cost-Optimized Routing
-
-```yaml
-# Use cheaper Haiku for simple tasks, Opus for complex
-provider: anthropic
-routing:
-  simple_tasks: claude-haiku-4-5  # Cheaper
-  complex_tasks: claude-opus-4-8  # More capable
-```
+Provider fallback and model routing are not active by default; routing policy is configuration and observe-mode records. The [multi-provider fallback](recipes/01-multi-provider-fallback.md) and [model routing](recipes/04-model-routing-by-use-case.md) recipes describe both as conceptual patterns, not validated configuration.
 
 ---
 

@@ -4,7 +4,7 @@ created: 2026-03-24T19:05:55Z
 ---
 # Error Handling & Troubleshooting
 
-TokenPak provides normalized error handling across all providers, automatic retries, and fallback chains.
+TokenPak returns normalized error responses. Automatic retries and provider fallback are not verified against the current release, and fallback is not active by default.
 
 ---
 
@@ -72,19 +72,9 @@ Retry-After: 60
 
 **Cause:** Too many requests to the provider in a short time.
 
-**Solution (Automatic):**
-TokenPak automatically retries with exponential backoff:
-```
-Attempt 1: Wait 1 second, retry
-Attempt 2: Wait 2 seconds, retry
-Attempt 3: Wait 4 seconds, retry
-Attempt 4: Wait 8 seconds, retry
-(Circuit breaker opens, switch to fallback provider)
-```
+**Solution:**
 
-**Solution (Manual):**
-
-When a request is rate-limited, the proxy returns a `429` with a `rate_limit_exceeded` error body. With the TokenPak SDK adapter, this surfaces as a `TokenPakAdapterError` carrying `status_code == 429`:
+Handle rate limits in your client. When a request is rate-limited, the proxy returns a `429` with a `rate_limit_exceeded` error body. With the TokenPak SDK adapter, this surfaces as a `TokenPakAdapterError` carrying `status_code == 429`:
 
 ```python
 import time
@@ -108,7 +98,6 @@ except TokenPakAdapterError as e:
 
 **Prevention:**
 - Implement request batching (fewer, larger requests)
-- Use fallback chains for load balancing
 - Monitor your request frequency
 
 ---
@@ -153,12 +142,11 @@ adapter = AnthropicAdapter(
 try:
     response = adapter.call(request)
 except TokenPakTimeoutError:
-    print("Proxy/upstream timed out — retry or use a fallback")
+    print("Proxy/upstream timed out — retry or report the failure")
 ```
 
 **Prevention:**
 - Set reasonable timeouts (`timeout_s`)
-- Configure fallback chains in `config.yaml`
 - Monitor provider status
 
 ---
@@ -257,7 +245,7 @@ fallback:
 
 ### Circuit Breaker
 
-The circuit breaker is designed to open when a provider fails repeatedly, to limit cascading failures. It is not verified against the current release and is not active by default:
+The circuit breaker is designed to open when a provider fails repeatedly, to limit cascading failures. It is not verified against the current release, and the thresholds and timings below are illustrative, not documented defaults:
 
 ```
 State: CLOSED (normal operation)
@@ -404,14 +392,9 @@ Raised by the `tokenpak.sdk` adapters. Base class: `TokenPakAdapterError` (impor
 
 ## Best Practices
 
-### 1. Always Use Fallback Chains
+### 1. Handle upstream errors in your client
 
-```yaml
-provider: anthropic
-fallback:
-  - google
-  - openai
-```
+Set timeouts and handle upstream errors in your client; provider fallback is not active by default.
 
 ### 2. Wrap Requests in Try-Catch
 
@@ -437,7 +420,7 @@ except TokenPakAdapterError as e:
 
 ### 3. Implement Exponential Backoff
 
-The proxy retries upstream failures automatically, but for custom client-side retries:
+Automatic proxy retries are not verified against the current release. For client-side retries:
 
 ```python
 import time

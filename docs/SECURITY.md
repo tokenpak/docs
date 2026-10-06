@@ -33,7 +33,7 @@ Outgoing requests to upstream also strip: `host`, `proxy-authorization`, `proxy-
 
 ### Internal Path Exposure
 
-The `/health` and `/stats` endpoints expose operational data (token counts, cost, circuit breaker state). These endpoints are **localhost-only** by design — the proxy binds to `127.0.0.1:8766` and is not externally accessible.
+The `/health` and `/stats` endpoints expose operational data (token counts, cost, circuit breaker state). By default the proxy binds to `127.0.0.1:8766`, so these endpoints are reachable only from your machine. If you expose the proxy beyond localhost, set `TOKENPAK_PROXY_AUTH_TOKEN`: requests from other machines are accepted only with that bearer token, and are refused when the variable is unset.
 
 ## Auth Key Handling
 
@@ -44,8 +44,8 @@ API keys are passed to upstream providers in outbound requests. They are:
 
 ## Known Limitations
 
-- No HTTPS on the proxy listener (localhost-only, low risk)
-- `/stats` exposes cost and token data (localhost-only, acceptable)
+- No HTTPS on the proxy listener (loopback by default, low risk)
+- `/stats` exposes cost and token data (loopback by default, acceptable)
 
 ## Reporting a Vulnerability
 

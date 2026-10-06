@@ -2,7 +2,7 @@
 title: TokenPak
 rung: 1
 audience: Developers evaluating or getting started with TokenPak.
-updated: 2026-09-29
+updated: 2026-10-06
 status: current
 hide:
   - navigation
@@ -18,10 +18,13 @@ TokenPak is a local proxy for coding agents that records each request and shows 
 **Know how far your agent can go.**
 
 - **Today (release 1.30.1):** request records and receipts; the session trip
-  computer (measured usage, estimated cost, burn and runway, with forecasts
-  shown only where calibrated), on by default in the Claude Code footer and the
-  Codex pane from 1.27.0 and in `tokenpak status`; Spend Guard limits; and
-  explicit context tools. Pro adds prepared stay-versus-fresh session comparisons, with measurements and explicit confirm or decline.
+  computer (measured usage, estimated cost, burn and runway; forecasts are
+  ranges, not guarantees, and appear only once a model has enough local
+  history), on by default in the Claude Code footer and the Codex pane from
+  1.27.0 and in `tokenpak status`; Spend Guard limits; and explicit context
+  tools. Pro, a separate licensed package, adds stay-versus-fresh session
+  comparisons with measurements and an explicit confirm or decline. There is no
+  self-service purchase; write to hello@tokenpak.ai about access.
 - **Planned:** calibrated forecasts for more model and effort combinations; Pro
   reroute recommendations once calibration evidence exists; and any automation
   later, gated separately.
@@ -70,9 +73,9 @@ relay and requires no application code changes.
 - **Vault indexing + semantic search** — index your codebase, search without an LLM call.
 - **TIP-1.0 protocol contracts** — canonical headers, metadata fields, capability labels, manifest schemas. Conformance gate runnable via `tokenpak doctor --conformance`.
 - **Pak recall (read-only)** — storage, FTS, `tokenpak pak inspect`. Scoring and assembly are not part of the OSS beta.
-- **Three built-in setup profiles and 50+ compression recipes** — minimal, balanced, and aggressive profiles plus customizable packaged YAML recipes.
+- **Three built-in setup profiles and packaged compression recipes** — minimal, balanced, and aggressive profiles plus customizable packaged YAML recipes.
 - **Companion forecast footer** — visible by default in interactive Claude Code and Codex launches. See [terminal forecasts](companion-session-forecast.md) for prerequisites, estimates and opt-out settings.
-- **Session economics trip computer** — a deterministic spent/burn/binding-runway/guard-state summary built only from completed local ledger rows, on `tokenpak status`, the dashboard, and an MCP tool. Coverage-tracked calibrated forecasts fill in as a model×effort cell earns enough history; cold cells report an explicit `learning` state rather than a guess.
+- **Session economics trip computer** — a deterministic spent/burn/binding-runway/guard-state summary built only from completed local ledger rows, on `tokenpak status`, the dashboard, and an MCP tool. Forecasts are estimates shown as ranges, not guarantees; a model and effort combination reports an explicit `learning` state until it has enough local history.
 
 ---
 

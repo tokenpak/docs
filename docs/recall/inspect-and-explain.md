@@ -79,7 +79,7 @@ Phase 1 `inspect` is intentionally narrow:
 | Vault block not indexed | `pak_not_found` | `vault block not indexed: <pak-id>` |
 | Pak file missing | `file_not_found` | `file not found: <path>` |
 | Pak file unparseable | `invalid_pak_file` | `cannot parse Pak file: <reason>` |
-| Non-Vault subtype on Phase 1 OSS | `not_implemented` (`reason: pro_daemon_required`) | "requires the Pro daemon — non-Vault subtypes are encrypted at rest" |
+| Non-Vault subtype on Phase 1 OSS | `not_implemented` (`reason: pro_daemon_required`) | `Pak '<pak-id>' requires the Pro daemon — …` |
 
 Exit code 2 is reserved for argparse usage errors (handled by argparse itself).
 

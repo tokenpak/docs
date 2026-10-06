@@ -240,12 +240,6 @@ proxy:
 # Default provider
 provider: anthropic  # or: openai, google, passthrough
 
-# Fallback chain (try these if primary fails)
-fallback:
-  - anthropic
-  - google
-  - openai
-
 # Compression settings
 compression:
   enabled: true

@@ -2,7 +2,7 @@
 title: "Known Limitations — OSS beta"
 rung: 2
 audience: Developers evaluating or running the TokenPak OSS beta who want an honest account of what isn't production-quality yet.
-updated: 2026-09-28
+updated: 2026-10-06
 status: current
 ---
 
@@ -154,12 +154,13 @@ lands (tracked in issue #161).
 **Status:** by design — a durable trust-posture commitment, not a feature
 gap.
 
-**What:** TokenPak is a **local proxy**. There is no SaaS, hosted
-dashboard, license server, team workspace, SSO, or shared cloud component
-in the OSS beta.
+**What:** TokenPak is a **local proxy**. The OSS package has no SaaS,
+hosted dashboard, team workspace, SSO, or shared cloud component.
 
-**Current behavior:** the package runs on `127.0.0.1` and only talks to the
-upstream LLM provider you configure.
+**Current behavior:** by default the package runs on `127.0.0.1` and talks
+only to the upstream LLM provider you configure. Optional features can make
+other network requests, such as an update check against pypi.org (TokenPak
+asks first) and an anonymous metrics heartbeat (off by default).
 
 **Workaround:** not applicable — this is the product's trust posture, not a
 gap to work around.
@@ -208,9 +209,13 @@ Cost and burn are derived estimates and are labeled accordingly.
 Mixed model or effort histories are not treated as homogeneous calibration
 evidence, unsupported effort values remain unavailable, and inactivity is not
 proof of task completion. Stale or unknown provider rates leave USD unavailable while token-based
-ranges stay intact. Measured walk-forward coverage is reported as observed,
-never asserted as nominal, and drifting coverage triggers a refit rather
-than a relabel.
+ranges stay intact. Forecast ranges are estimates, not guarantees.
+
+The measured walk-forward coverage shown for a forecast is the observed
+coverage of the 50% range, never asserted as nominal, and drifting 50%
+coverage triggers a refit rather than a relabel. That holds for the 50%
+range only. The 90% ceiling is shown at its nominal 90% level; its measured
+coverage is not shown, and a session can run past it.
 
 **Workaround:** none needed — this is working as designed. Use a
 session/model/effort combination with enough history if a calibrated band

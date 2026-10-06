@@ -58,15 +58,11 @@ diff ~/.tokenpak/config.json ~/.tokenpak/config.json.backup  # Should be identic
   git commit -m "Release v X.Y.Z: [summary of changes]"
   ```
 - [ ] **Git tag:** `git tag vX.Y.Z && git push origin vX.Y.Z`
-- [ ] **PyPI/Cloudsmith:** Package published
+- [ ] **PyPI:** Package published
   ```bash
-  # For PyPI:
   pip install build twine
   python -m build
   twine upload dist/*
-
-  # For Cloudsmith (Pro):
-  bash scripts/publish-pro.sh X.Y.Z
   ```
 
 ---

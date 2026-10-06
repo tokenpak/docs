@@ -72,10 +72,15 @@ does not backfill earlier traffic or invent missing usage measurements.
 
 - `est` and `~` identify estimates. Remaining ranges carry their 50% interval
   label; the 90% ceiling appears when there is room.
+- Ranges are estimates, not guarantees. Where a display shows measured
+  coverage, it is the observed coverage of the 50% range. The 90% ceiling is
+  shown at its nominal 90% level: its measured coverage is not shown, and a
+  session can run past it.
 - `guard limit` is the estimated number of turns before a configured constraint,
   not the number of turns needed to finish your task.
-- `learning`, `no data`, and `unavailable` are real states. Subscription traffic
-  can show `subscription` rather than a fabricated dollar bill.
+- `learning`, `no data`, and `unavailable` are real states. A model and effort
+  combination shows `learning` until it has enough local history. Subscription
+  traffic can show `subscription` rather than a fabricated dollar bill.
 - `stale` means the cached observation expired. Expired numbers are hidden.
 - Narrow terminals show fewer complete fields, preserving guard information.
   The display makes no numeric savings claim and triggers no session switch.
