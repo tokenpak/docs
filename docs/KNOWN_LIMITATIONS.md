@@ -9,7 +9,7 @@ status: current
 # Known Limitations — OSS beta
 
 This page documents current, honest limitations of the **OSS beta**
-(`pip install tokenpak`, **v1.30.2**). If a capability described elsewhere in
+(`pip install tokenpak`, **v1.30.3**). If a capability described elsewhere in
 these docs isn't shipping the way the rest of the docs imply, it shows up
 here — that is the point of this page. Each entry states what's limited,
 whether it's an intentional scope choice or a known defect, the honest
@@ -43,7 +43,10 @@ take over an install whose state lives in `~/.tokenpak/`. A *new* install
 always starts canonical — TokenPak will not begin one in the legacy
 directory. An *existing* legacy install stays put until moved explicitly.
 The resolver never creates directories on its own. Some docs and examples
-still reference `~/.tokenpak/`; both paths work today.
+still reference `~/.tokenpak/`; both paths work today. The license file is the
+one exception: since 1.30.3 it is looked up on its own, so a license in
+`~/.tokenpak/` is found even when `~/.tpk/` holds other state. See the
+[1.30.3 upgrade guide](upgrading.md#license-lookup-in-the-older-home-folder).
 
 **Workaround:** run `tokenpak config migrate` to move an existing legacy
 install to the canonical path explicitly.
@@ -274,10 +277,10 @@ execution environments and their acceptance criteria are verified and published.
 
 ## Optional dependency security advisories
 
-**Status:** disclosed limitations of optional integrations in v1.30.2.
+**Status:** disclosed limitations of optional integrations in v1.30.3.
 
 **What:** the release records unresolved advisories for optional dependencies.
-See the [versioned security policy](https://github.com/tokenpak/tokenpak/blob/v1.30.2/SECURITY.md)
+See the [versioned security policy](https://github.com/tokenpak/tokenpak/blob/v1.30.3/SECURITY.md)
 for affected versions, exposure and mitigations.
 
 **Current behavior:** passing the supported release checks does not remove
@@ -291,7 +294,7 @@ replaced or fixed and the corresponding integration is verified again.
 
 ## Execution ledger recovery is fail-with-signal, not replay
 
-**Status:** intentional scope boundary in v1.30.2.
+**Status:** intentional scope boundary in v1.30.3.
 
 **What:** a durable, SQLite-backed execution ledger records in-flight
 upstream proxy calls before dispatch, so a retried request after a
