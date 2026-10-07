@@ -103,7 +103,8 @@ Pro is a separate licensed package. There is no self-service purchase; write to
 hello@tokenpak.ai about access.
 
 Pro 0.6.0 requires exactly OSS 1.30.3. It declares 1.30.3 as both its minimum
-and its maximum supported OSS version, with TIP-1.0 unchanged. Pro 0.5.x
+and its maximum supported OSS version, with TIP-1.0 unchanged, and Pro refuses
+to run on an OSS version outside the range its release supports. Pro 0.5.x
 supports OSS only through 1.30.1, so it does not pair with OSS 1.30.3. If you
 use Pro 0.5.x, stay on the OSS version it supports, 1.30.1 for Pro 0.5.2 and
 1.30.0 for Pro 0.5.1, until you upgrade both packages together in one pip
@@ -251,11 +252,12 @@ learning or unavailable. See [terminal forecasts](companion-session-forecast.md)
 2. If you do not use Pro, install `tokenpak==1.30.3` with the extras already
    used by your installation. The standard service profile is
    `tokenpak[serve,tokens,telemetry]==1.30.3`.
-3. If you use Pro, upgrade OSS and Pro together, in one `pip install` command
-   that names OSS 1.30.3 and Pro 0.6.0, through your existing licensed delivery
-   channel. Pro 0.6.0 requires exactly OSS 1.30.3. Do not upgrade OSS alone: Pro
-   0.5.2 supports OSS 1.26.0 through 1.30.1 with TIP-1.0, and Pro 0.5.1 supports
-   OSS only through 1.30.0. pip does not stop an OSS-only upgrade:
+3. If you use Pro, install OSS and Pro together in a fresh environment, in one
+   `pip install` command that names OSS 1.30.3 and Pro 0.6.0, through your
+   existing licensed delivery channel. Pro 0.6.0 requires exactly OSS 1.30.3. Do
+   not upgrade OSS alone: Pro 0.5.2 supports OSS 1.26.0 through 1.30.1 with
+   TIP-1.0, and Pro 0.5.1 supports OSS only through 1.30.0. pip does not stop an
+   OSS-only upgrade:
    `pip install --upgrade tokenpak` installs 1.30.3 next to Pro 0.5.2, prints a
    dependency-conflict message, and `pip check` then fails. If that happens,
    reinstall `tokenpak==1.30.1`. If you are not ready to upgrade both packages,
