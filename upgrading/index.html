@@ -74,7 +74,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#upgrade-to-tokenpak-1301" class="md-skip">
+        <a href="#upgrade-to-tokenpak-1302" class="md-skip">
           Skip to content
         </a>
       
@@ -1199,6 +1199,61 @@
       Table of contents
     </label>
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#license-activation-keeps-an-installed-license" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        License activation keeps an installed license
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#expired-licenses-read-as-expired" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Expired licenses read as expired
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#license-writes-and-the-pro-daemon-connection-file" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        License writes and the Pro daemon connection file
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#package-summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Package summary
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dependencies-in-existing-environments" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Dependencies in existing environments
+      
+    </span>
+  </a>
+  
+</li>
       
         <li class="md-nav__item">
   <a href="#session-footer-under-collating-locales" class="md-nav__link">
@@ -3224,6 +3279,61 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#license-activation-keeps-an-installed-license" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        License activation keeps an installed license
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#expired-licenses-read-as-expired" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Expired licenses read as expired
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#license-writes-and-the-pro-daemon-connection-file" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        License writes and the Pro daemon connection file
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#package-summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Package summary
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dependencies-in-existing-environments" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Dependencies in existing environments
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#session-footer-under-collating-locales" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -3331,17 +3441,59 @@
   
 
 
-<h1 id="upgrade-to-tokenpak-1301">Upgrade to TokenPak 1.30.1<a class="headerlink" href="#upgrade-to-tokenpak-1301" title="Permanent link">&para;</a></h1>
-<p>This guide is for developers upgrading from TokenPak 1.30.0. The compatible
-published pair is OSS 1.30.1 and the separately distributed Pro 0.5.2. If you
-are upgrading from an earlier release, also read the 1.30.0, 1.29.0 and 1.28.0
+<h1 id="upgrade-to-tokenpak-1302">Upgrade to TokenPak 1.30.2<a class="headerlink" href="#upgrade-to-tokenpak-1302" title="Permanent link">&para;</a></h1>
+<p>This guide is for developers upgrading from TokenPak 1.30.1. OSS 1.30.2 has no
+published Pro pair yet: Pro 0.5.2 supports OSS 1.26.0 through 1.30.1 and
+refuses 1.30.2. If you use Pro, stay on OSS 1.30.1 and Pro 0.5.2 until a Pro
+release that supports 1.30.2 is published. If you do not use Pro, upgrade as
+described in <a href="#install-and-verify">Install and verify</a>. If you are upgrading
+from an earlier release, also read the 1.30.1, 1.30.0, 1.29.0 and 1.28.0
 changes below.</p>
+<h2 id="license-activation-keeps-an-installed-license">License activation keeps an installed license<a class="headerlink" href="#license-activation-keeps-an-installed-license" title="Permanent link">&para;</a></h2>
+<p><code>tokenpak activate</code> no longer replaces a license that is installed and still
+current. Activating a different key leaves <code>license.json</code> unchanged and names
+<code>tokenpak deactivate</code> as the way to replace the license. Activating the key
+that is already installed reports that it is already active. An expired or
+pending license can still be replaced by activating a new key.</p>
+<h2 id="expired-licenses-read-as-expired">Expired licenses read as expired<a class="headerlink" href="#expired-licenses-read-as-expired" title="Permanent link">&para;</a></h2>
+<p><code>tokenpak license</code> and <code>tokenpak features</code> honor the license's <code>expires_at</code>
+date and the issuer's <code>grace_days</code>. A lapsed license reads as expired and no
+longer grants Pro through its tier. A license whose <code>expires_at</code> cannot be read
+counts as expired.</p>
+<h2 id="license-writes-and-the-pro-daemon-connection-file">License writes and the Pro daemon connection file<a class="headerlink" href="#license-writes-and-the-pro-daemon-connection-file" title="Permanent link">&para;</a></h2>
+<p>License writes are serialized under one lock, and an unverified write never
+replaces a signed license, even with a matching key. A license write now also
+creates an empty <code>license.json.lock</code> file beside <code>license.json</code>; leave it in
+place. On Windows, a license write takes a cross-process lock and waits up to
+30 seconds for it. If it cannot get the lock, the write fails and the license
+is left unchanged.</p>
+<p>The Pro daemon's connection file (<code>pro/daemon.sock-info</code>) is now looked up under
+the selected TokenPak home (<code>TOKENPAK_HOME</code>, otherwise the home that holds your
+state) instead of always under <code>~/.tokenpak</code>.</p>
+<h2 id="package-summary">Package summary<a class="headerlink" href="#package-summary" title="Permanent link">&para;</a></h2>
+<p>The package summary that PyPI and <code>pip show tokenpak</code> display, and
+<code>tokenpak.__description__</code>, no longer claim automatic cost cuts or default
+compression and routing. They now read: "Local proxy for coding agents that
+records each request and shows how far the session can go: measured usage,
+estimated cost, burn and runway."</p>
+<h2 id="dependencies-in-existing-environments">Dependencies in existing environments<a class="headerlink" href="#dependencies-in-existing-environments" title="Permanent link">&para;</a></h2>
+<p>Upgrading TokenPak does not upgrade packages that are already installed. In an
+existing environment, run:</p>
+<div class="highlight"><pre><span></span><code>python<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>-U<span class="w"> </span>urllib3
+</code></pre></div>
+<p>urllib3 2.7.0 has open advisories (two high, one medium) that are fixed in
+2.8.0. A new install resolves a fixed version, because TokenPak requires
+<code>urllib3&gt;=2.0.0</code> and sets no upper limit. The Security section of the
+<a href="https://github.com/tokenpak/tokenpak/blob/v1.30.2/CHANGELOG.md">1.30.2 changelog entry</a>
+lists the other advisory findings at this release.</p>
 <h2 id="session-footer-under-collating-locales">Session footer under collating locales<a class="headerlink" href="#session-footer-under-collating-locales" title="Permanent link">&para;</a></h2>
+<p><em>Introduced in 1.30.1.</em></p>
 <p>The Claude Code footer and the Codex pane showed only <code>TokenPak</code> instead of
 the session line when the shell's locale collates regex ranges, for example
 <code>en_US.UTF-8</code> on Linux. TokenPak 1.30.1 fixes this. Start a new managed client
 launch after upgrading so the client runs the updated footer script.</p>
 <h2 id="handoff-recipient-name">Handoff recipient name<a class="headerlink" href="#handoff-recipient-name" title="Permanent link">&para;</a></h2>
+<p><em>Introduced in 1.30.1.</em></p>
 <p>The orchestration handoff's human recipient is now registered as <code>operator</code>.
 A handoff addressed to a name that is not registered fails as an unknown agent;
 address the human recipient as <code>operator</code>.</p>
@@ -3397,13 +3549,17 @@ learning or unavailable. See <a href="../companion-session-forecast/">terminal f
 <h2 id="install-and-verify">Install and verify<a class="headerlink" href="#install-and-verify" title="Permanent link">&para;</a></h2>
 <ol>
 <li>Retain the previous package pair and environment for rollback.</li>
-<li>Install <code>tokenpak==1.30.1</code> with the extras already used by your
-   installation. The standard service profile is
-   <code>tokenpak[serve,tokens,telemetry]==1.30.1</code>.</li>
-<li>If you use Pro, install Pro 0.5.2 together with OSS 1.30.1 through your
-   existing licensed delivery channel; upgrade the pair together. Pro 0.5.2
-   supports OSS 1.26.0 through 1.30.1 with TIP-1.0. Pro 0.5.1 supports OSS
-   only through 1.30.0 — if you stay on Pro 0.5.1, stay on OSS 1.30.0 as well.</li>
+<li>If you do not use Pro, install <code>tokenpak==1.30.2</code> with the extras already
+   used by your installation. The standard service profile is
+   <code>tokenpak[serve,tokens,telemetry]==1.30.2</code>.</li>
+<li>If you use Pro, do not install OSS 1.30.2. Pro 0.5.2 supports OSS 1.26.0
+   through 1.30.1 with TIP-1.0 and refuses 1.30.2. Pro 0.5.1 supports OSS only
+   through 1.30.0 — if you stay on Pro 0.5.1, stay on OSS 1.30.0 as well. Keep
+   the pair you have until a Pro release that supports 1.30.2 is published, then
+   upgrade OSS and Pro together through your existing licensed delivery channel.
+   pip does not stop an OSS-only upgrade: <code>pip install --upgrade tokenpak</code>
+   installs 1.30.2 next to Pro 0.5.2, prints a dependency-conflict message, and
+   <code>pip check</code> then fails. If that happens, reinstall <code>tokenpak==1.30.1</code>.</li>
 <li>After active requests finish, restart the services that use the replaced
    environment. Reinstall or repoint configured companion hooks when changing
    environment paths. Preserve explicit journal-root settings and verify the
@@ -3413,16 +3569,22 @@ learning or unavailable. See <a href="../companion-session-forecast/">terminal f
    Start a new managed client launch to use updated hooks and display code.</li>
 </ol>
 <p>This is a package-only upgrade: no database migration and no configuration
-change are required. If you upgrade from 1.29.0 or earlier, TokenPak creates a
-new <code>execution_ledger.db</code> in its state directory the first time it starts;
-existing state and configured journal locations are otherwise unaffected.</p>
+change are required. A license write now also creates an empty
+<code>license.json.lock</code> file beside <code>license.json</code>. If you upgrade from 1.29.0 or
+earlier, TokenPak creates a new <code>execution_ledger.db</code> in its state directory
+the first time it starts; existing state and configured journal locations are
+otherwise unaffected.</p>
 <h2 id="roll-back">Roll back<a class="headerlink" href="#roll-back" title="Permanent link">&para;</a></h2>
-<p>Reinstall OSS 1.30.0. TokenPak 1.30.1 adds no state, so nothing needs to be
-removed. If you run Pro, roll back to OSS 1.30.0 with either Pro 0.5.1 or
-Pro 0.5.2. Rolling back further, to 1.29.0, leaves the <code>execution_ledger.db</code>
-file in place; 1.29.0 serves normally with it present. Restore the previous
-environment pointer and hook configuration after active requests finish.
-Published artifacts and tags are never overwritten.</p>
+<p>Reinstall OSS 1.30.1. TokenPak 1.30.2 adds no database state, so nothing needs
+to be removed, and 1.30.1 ignores the empty <code>license.json.lock</code> file that a
+license write leaves beside <code>license.json</code>. Rolling back removes the license
+fixes described above; it does not undo licenses issued or revoked in the
+meantime. If you run Pro, keep Pro 0.5.2, which supports OSS 1.30.1. Rolling
+back further, to 1.30.0, pairs with either Pro 0.5.1 or Pro 0.5.2, and rolling
+back to 1.29.0 leaves the <code>execution_ledger.db</code> file in place; 1.29.0 serves
+normally with it present. Restore the previous environment pointer and hook
+configuration after active requests finish. Published artifacts and tags are
+never overwritten.</p>
 <h2 id="limits-and-dependency-findings">Limits and dependency findings<a class="headerlink" href="#limits-and-dependency-findings" title="Permanent link">&para;</a></h2>
 <p>A <code>terminally_failed</code> or <code>recovery_status</code> signal on a retried request means
 the execution ledger detected a proxy restart mid-stream. It is not
@@ -3431,10 +3593,11 @@ call is not silently completed or resumed for you. See
 <a href="../KNOWN_LIMITATIONS/#execution-ledger-recovery-is-fail-with-signal-not-replay">known limitations</a>
 before treating a recovery signal as a completed retry.</p>
 <p>Optional dependency findings are documented in
-<a href="https://github.com/tokenpak/tokenpak/blob/v1.30.1/SECURITY.md">SECURITY.md</a>.
-Release validation covers changed behavior, installed artifacts, paired
-compatibility, upgrade and rollback. Publication, deployment and the
-observation period remain separate milestones.</p>
+<a href="https://github.com/tokenpak/tokenpak/blob/v1.30.2/SECURITY.md">SECURITY.md</a>.
+Release validation covers changed behavior, installed artifacts, upgrade and
+rollback of OSS 1.30.2. It does not cover a Pro pairing, because no Pro release
+supports 1.30.2 yet. Publication, deployment and the observation period remain
+separate milestones.</p>
 
 
 
