@@ -2,14 +2,14 @@
 title: "Known Limitations — OSS beta"
 rung: 2
 audience: Developers evaluating or running the TokenPak OSS beta who want an honest account of what isn't production-quality yet.
-updated: 2026-10-06
+updated: 2026-10-07
 status: current
 ---
 
 # Known Limitations — OSS beta
 
 This page documents current, honest limitations of the **OSS beta**
-(`pip install tokenpak`, **v1.30.1**). If a capability described elsewhere in
+(`pip install tokenpak`, **v1.30.2**). If a capability described elsewhere in
 these docs isn't shipping the way the rest of the docs imply, it shows up
 here — that is the point of this page. Each entry states what's limited,
 whether it's an intentional scope choice or a known defect, the honest
@@ -274,10 +274,10 @@ execution environments and their acceptance criteria are verified and published.
 
 ## Optional dependency security advisories
 
-**Status:** disclosed limitations of optional integrations in v1.30.1.
+**Status:** disclosed limitations of optional integrations in v1.30.2.
 
 **What:** the release records unresolved advisories for optional dependencies.
-See the [versioned security policy](https://github.com/tokenpak/tokenpak/blob/v1.30.1/SECURITY.md)
+See the [versioned security policy](https://github.com/tokenpak/tokenpak/blob/v1.30.2/SECURITY.md)
 for affected versions, exposure and mitigations.
 
 **Current behavior:** passing the supported release checks does not remove
@@ -291,7 +291,7 @@ replaced or fixed and the corresponding integration is verified again.
 
 ## Execution ledger recovery is fail-with-signal, not replay
 
-**Status:** intentional scope boundary in v1.30.1.
+**Status:** intentional scope boundary in v1.30.2.
 
 **What:** a durable, SQLite-backed execution ledger records in-flight
 upstream proxy calls before dispatch, so a retried request after a

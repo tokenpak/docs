@@ -2,18 +2,74 @@
 title: Upgrade TokenPak
 rung: 2
 audience: Developers upgrading an existing TokenPak installation.
-updated: 2026-10-01
+updated: 2026-10-07
 status: current
 ---
 
-# Upgrade to TokenPak 1.30.1
+# Upgrade to TokenPak 1.30.2
 
-This guide is for developers upgrading from TokenPak 1.30.0. The compatible
-published pair is OSS 1.30.1 and the separately distributed Pro 0.5.2. If you
-are upgrading from an earlier release, also read the 1.30.0, 1.29.0 and 1.28.0
+This guide is for developers upgrading from TokenPak 1.30.1. OSS 1.30.2 has no
+published Pro pair yet: Pro 0.5.2 supports OSS 1.26.0 through 1.30.1 and
+refuses 1.30.2. If you use Pro, stay on OSS 1.30.1 and Pro 0.5.2 until a Pro
+release that supports 1.30.2 is published. If you do not use Pro, upgrade as
+described in [Install and verify](#install-and-verify). If you are upgrading
+from an earlier release, also read the 1.30.1, 1.30.0, 1.29.0 and 1.28.0
 changes below.
 
+## License activation keeps an installed license
+
+`tokenpak activate` no longer replaces a license that is installed and still
+current. Activating a different key leaves `license.json` unchanged and names
+`tokenpak deactivate` as the way to replace the license. Activating the key
+that is already installed reports that it is already active. An expired or
+pending license can still be replaced by activating a new key.
+
+## Expired licenses read as expired
+
+`tokenpak license` and `tokenpak features` honor the license's `expires_at`
+date and the issuer's `grace_days`. A lapsed license reads as expired and no
+longer grants Pro through its tier. A license whose `expires_at` cannot be read
+counts as expired.
+
+## License writes and the Pro daemon connection file
+
+License writes are serialized under one lock, and an unverified write never
+replaces a signed license, even with a matching key. A license write now also
+creates an empty `license.json.lock` file beside `license.json`; leave it in
+place. On Windows, a license write takes a cross-process lock and waits up to
+30 seconds for it. If it cannot get the lock, the write fails and the license
+is left unchanged.
+
+The Pro daemon's connection file (`pro/daemon.sock-info`) is now looked up under
+the selected TokenPak home (`TOKENPAK_HOME`, otherwise the home that holds your
+state) instead of always under `~/.tokenpak`.
+
+## Package summary
+
+The package summary that PyPI and `pip show tokenpak` display, and
+`tokenpak.__description__`, no longer claim automatic cost cuts or default
+compression and routing. They now read: "Local proxy for coding agents that
+records each request and shows how far the session can go: measured usage,
+estimated cost, burn and runway."
+
+## Dependencies in existing environments
+
+Upgrading TokenPak does not upgrade packages that are already installed. In an
+existing environment, run:
+
+```bash
+python -m pip install -U urllib3
+```
+
+urllib3 2.7.0 has open advisories (two high, one medium) that are fixed in
+2.8.0. A new install resolves a fixed version, because TokenPak requires
+`urllib3>=2.0.0` and sets no upper limit. The Security section of the
+[1.30.2 changelog entry](https://github.com/tokenpak/tokenpak/blob/v1.30.2/CHANGELOG.md)
+lists the other advisory findings at this release.
+
 ## Session footer under collating locales
+
+*Introduced in 1.30.1.*
 
 The Claude Code footer and the Codex pane showed only `TokenPak` instead of
 the session line when the shell's locale collates regex ranges, for example
@@ -21,6 +77,8 @@ the session line when the shell's locale collates regex ranges, for example
 launch after upgrading so the client runs the updated footer script.
 
 ## Handoff recipient name
+
+*Introduced in 1.30.1.*
 
 The orchestration handoff's human recipient is now registered as `operator`.
 A handoff addressed to a name that is not registered fails as an unknown agent;
@@ -92,13 +150,17 @@ learning or unavailable. See [terminal forecasts](companion-session-forecast.md)
 ## Install and verify
 
 1. Retain the previous package pair and environment for rollback.
-2. Install `tokenpak==1.30.1` with the extras already used by your
-   installation. The standard service profile is
-   `tokenpak[serve,tokens,telemetry]==1.30.1`.
-3. If you use Pro, install Pro 0.5.2 together with OSS 1.30.1 through your
-   existing licensed delivery channel; upgrade the pair together. Pro 0.5.2
-   supports OSS 1.26.0 through 1.30.1 with TIP-1.0. Pro 0.5.1 supports OSS
-   only through 1.30.0 — if you stay on Pro 0.5.1, stay on OSS 1.30.0 as well.
+2. If you do not use Pro, install `tokenpak==1.30.2` with the extras already
+   used by your installation. The standard service profile is
+   `tokenpak[serve,tokens,telemetry]==1.30.2`.
+3. If you use Pro, do not install OSS 1.30.2. Pro 0.5.2 supports OSS 1.26.0
+   through 1.30.1 with TIP-1.0 and refuses 1.30.2. Pro 0.5.1 supports OSS only
+   through 1.30.0 — if you stay on Pro 0.5.1, stay on OSS 1.30.0 as well. Keep
+   the pair you have until a Pro release that supports 1.30.2 is published, then
+   upgrade OSS and Pro together through your existing licensed delivery channel.
+   pip does not stop an OSS-only upgrade: `pip install --upgrade tokenpak`
+   installs 1.30.2 next to Pro 0.5.2, prints a dependency-conflict message, and
+   `pip check` then fails. If that happens, reinstall `tokenpak==1.30.1`.
 4. After active requests finish, restart the services that use the replaced
    environment. Reinstall or repoint configured companion hooks when changing
    environment paths. Preserve explicit journal-root settings and verify the
@@ -108,18 +170,24 @@ learning or unavailable. See [terminal forecasts](companion-session-forecast.md)
    Start a new managed client launch to use updated hooks and display code.
 
 This is a package-only upgrade: no database migration and no configuration
-change are required. If you upgrade from 1.29.0 or earlier, TokenPak creates a
-new `execution_ledger.db` in its state directory the first time it starts;
-existing state and configured journal locations are otherwise unaffected.
+change are required. A license write now also creates an empty
+`license.json.lock` file beside `license.json`. If you upgrade from 1.29.0 or
+earlier, TokenPak creates a new `execution_ledger.db` in its state directory
+the first time it starts; existing state and configured journal locations are
+otherwise unaffected.
 
 ## Roll back
 
-Reinstall OSS 1.30.0. TokenPak 1.30.1 adds no state, so nothing needs to be
-removed. If you run Pro, roll back to OSS 1.30.0 with either Pro 0.5.1 or
-Pro 0.5.2. Rolling back further, to 1.29.0, leaves the `execution_ledger.db`
-file in place; 1.29.0 serves normally with it present. Restore the previous
-environment pointer and hook configuration after active requests finish.
-Published artifacts and tags are never overwritten.
+Reinstall OSS 1.30.1. TokenPak 1.30.2 adds no database state, so nothing needs
+to be removed, and 1.30.1 ignores the empty `license.json.lock` file that a
+license write leaves beside `license.json`. Rolling back removes the license
+fixes described above; it does not undo licenses issued or revoked in the
+meantime. If you run Pro, keep Pro 0.5.2, which supports OSS 1.30.1. Rolling
+back further, to 1.30.0, pairs with either Pro 0.5.1 or Pro 0.5.2, and rolling
+back to 1.29.0 leaves the `execution_ledger.db` file in place; 1.29.0 serves
+normally with it present. Restore the previous environment pointer and hook
+configuration after active requests finish. Published artifacts and tags are
+never overwritten.
 
 ## Limits and dependency findings
 
@@ -131,7 +199,8 @@ call is not silently completed or resumed for you. See
 before treating a recovery signal as a completed retry.
 
 Optional dependency findings are documented in
-[SECURITY.md](https://github.com/tokenpak/tokenpak/blob/v1.30.1/SECURITY.md).
-Release validation covers changed behavior, installed artifacts, paired
-compatibility, upgrade and rollback. Publication, deployment and the
-observation period remain separate milestones.
+[SECURITY.md](https://github.com/tokenpak/tokenpak/blob/v1.30.2/SECURITY.md).
+Release validation covers changed behavior, installed artifacts, upgrade and
+rollback of OSS 1.30.2. It does not cover a Pro pairing, because no Pro release
+supports 1.30.2 yet. Publication, deployment and the observation period remain
+separate milestones.

@@ -2,7 +2,7 @@
 title: "TokenPak quickstart: your first measured receipt"
 rung: 1
 audience: Developers installing TokenPak for the first time.
-updated: 2026-09-29
+updated: 2026-10-07
 status: current
 ---
 
@@ -118,7 +118,7 @@ Check health:
 curl http://127.0.0.1:8766/health
 ```
 
-The expected response includes `{"status": "ok", "version": "1.30.1"}`.
+The expected response includes `{"status": "ok", "version": "1.30.2"}`.
 
 ## See your usage and savings
 
