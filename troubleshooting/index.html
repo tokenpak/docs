@@ -1121,6 +1121,39 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#warning-split-home-both-homes-hold-state" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Warning: "split home: both homes hold state"
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#error-tokenpak-home-migrate-apply-refuses-to-run" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Error: tokenpak home migrate --apply refuses to run
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#message-update-pending-or-update-version-pending" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Message: "update pending" or update &lt;version&gt; pending
+      
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -3578,6 +3611,39 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#warning-split-home-both-homes-hold-state" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Warning: "split home: both homes hold state"
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#error-tokenpak-home-migrate-apply-refuses-to-run" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Error: tokenpak home migrate --apply refuses to run
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#message-update-pending-or-update-version-pending" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Message: "update pending" or update &lt;version&gt; pending
+      
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -3943,6 +4009,37 @@ providers:
 <span class="w">    </span>model_aliases:
 <span class="w">      </span><span class="s2">&quot;gpt-4-latest&quot;</span>:<span class="w"> </span><span class="s2">&quot;gpt-4-turbo-preview&quot;</span>
 </code></pre></div></p>
+<h3 id="warning-split-home-both-homes-hold-state">Warning: "split home: both homes hold state"<a class="headerlink" href="#warning-split-home-both-homes-hold-state" title="Permanent link">&para;</a></h3>
+<p><strong>Symptom:</strong> <code>tokenpak doctor</code> warns that both <code>~/.tokenpak</code> and <code>~/.tpk</code> hold
+state, or spend-cap, cost and telemetry history looks reset after upgrading to
+1.31.0.</p>
+<p><strong>Likely cause:</strong> your install has state in both home folders. Since 1.31.0,
+new writes go to <code>~/.tpk</code>, so history that lives in <code>~/.tokenpak</code> is not read.
+Installs with a single home, and installs that set <code>TOKENPAK_HOME</code>, are not
+affected.</p>
+<p><strong>Fix:</strong>
+<div class="highlight"><pre><span></span><code>tokenpak<span class="w"> </span>home<span class="w"> </span>migrate<span class="w">            </span><span class="c1"># print the plan; changes nothing</span>
+tokenpak<span class="w"> </span>home<span class="w"> </span>migrate<span class="w"> </span>--apply<span class="w">    </span><span class="c1"># merge ~/.tokenpak into ~/.tpk</span>
+</code></pre></div></p>
+<p>The merge backs up every changed target first and never changes or deletes
+<code>~/.tokenpak</code>. <code>tokenpak doctor</code> then reports <code>migrated on &lt;date&gt;</code>. See the
+<a href="../configuration/#the-tokenpak-home-folder">home folder guide</a>.</p>
+<h3 id="error-tokenpak-home-migrate-apply-refuses-to-run">Error: <code>tokenpak home migrate --apply</code> refuses to run<a class="headerlink" href="#error-tokenpak-home-migrate-apply-refuses-to-run" title="Permanent link">&para;</a></h3>
+<p><strong>Symptom:</strong> the command changes nothing and says TokenPak is in use.</p>
+<p><strong>Likely cause:</strong> a request is in flight, a client is connected to the proxy, or
+a companion session is open.</p>
+<p><strong>Fix:</strong> close the session or let the proxy go idle, then run it again.</p>
+<h3 id="message-update-pending-or-update-version-pending">Message: "update pending" or <code>update &lt;version&gt; pending</code><a class="headerlink" href="#message-update-pending-or-update-version-pending" title="Permanent link">&para;</a></h3>
+<p><strong>Symptom:</strong> <code>tokenpak status</code>, <code>tokenpak doctor</code> or the companion status line
+says a newer version is pending, for example <code>1.30.3 → 1.31.0, applies at next
+launch</code>.</p>
+<p><strong>Likely cause:</strong> the new version is staged or installed, but the running proxy
+still reports the older one.</p>
+<p><strong>Fix:</strong> <code>tokenpak update apply --check</code> reports whether it would apply now.
+<code>tokenpak update apply</code> restarts the services when nothing is in use; it exits
+with code 9 and changes nothing while a request is in flight or a client is
+connected.</p>
+<hr />
 <hr />
 <h2 id="startup-runtime">Startup &amp; Runtime<a class="headerlink" href="#startup-runtime" title="Permanent link">&para;</a></h2>
 <h3 id="error-port-8766-is-already-in-use">Error: "Port 8766 is already in use"<a class="headerlink" href="#error-port-8766-is-already-in-use" title="Permanent link">&para;</a></h3>

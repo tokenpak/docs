@@ -4539,6 +4539,12 @@ The proxy reads config from tokenpak.yaml or ~/.tokenpak/config.yaml</p>
 <li><code>--core-only</code> — Update core only, skip config merge</li>
 <li><code>--dry-run</code> — Show what would change without applying</li>
 </ul>
+<p><strong>Subcommands:</strong></p>
+<ul>
+<li><code>apply</code> — Load a pending update (only when nothing is in use). Restarts TokenPak so a staged or installed update takes effect. Refuses, and changes nothing, while a request is in flight or a client is connected, and exits with code 9.</li>
+<li><code>--check</code> — Report whether it would apply now, without restarting anything</li>
+</ul>
+<p>When an update is pending, <code>tokenpak update</code> reports it instead of downloading it again, and <code>tokenpak status</code>, <code>tokenpak doctor</code> and the stats footer show it (for example <code>1.30.3 → 1.31.0, applies at next launch</code>). The companion status line ends with <code>update &lt;version&gt; pending</code> when there is room.</p>
 <h3 id="tokenpak-uninstall"><code>tokenpak uninstall</code><a class="headerlink" href="#tokenpak-uninstall" title="Permanent link">&para;</a></h3>
 <p>Un-route (--soft) or purge state + remove package (--hard)</p>
 <p><strong>Flags:</strong></p>
@@ -4725,9 +4731,10 @@ Use this command explicitly to compress arbitrary content.</p>
 <li><code>--json</code></li>
 <li><code>explain</code></li>
 <li><code>--json</code></li>
-<li><code>migrate</code> — Copy the legacy ~/.tokenpak/ tree to the canonical ~/.tpk/ location. The legacy tree is left in place as a safety backup; you can prune it manually once satisfied.</li>
-<li><code>--dry-run</code> — Show what would be copied without writing anything</li>
-<li><code>--force</code> — Allow merging into an existing ~/.tpk/ (default: refuse and report what to do manually)</li>
+<li><code>migrate</code> — Merge the legacy ~/.tokenpak/ home into the canonical ~/.tpk/ home. Prints the plan by default and writes only with <code>--apply</code>. Backs up every changed target first, never changes or deletes ~/.tokenpak/, refuses while TokenPak is in use, and writes a <code>home-migrated.json</code> receipt on success.</li>
+<li><code>--apply</code> — Write the changes (default: print the plan only)</li>
+<li><code>--dry-run</code> — Print the plan without writing (this is the default)</li>
+<li><code>--json</code> — Machine-readable output</li>
 </ul>
 <h3 id="tokenpak-init"><code>tokenpak init</code><a class="headerlink" href="#tokenpak-init" title="Permanent link">&para;</a></h3>
 <p>Guided first-run setup wizard: API key, port, vault path.</p>

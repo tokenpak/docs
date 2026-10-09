@@ -898,6 +898,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#the-tokenpak-home-folder" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The TokenPak home folder
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#common-recipes" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -3206,6 +3217,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#the-tokenpak-home-folder" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The TokenPak home folder
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#common-recipes" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -3312,6 +3334,30 @@ tokenpak<span class="w"> </span>serve
 <span class="w">  </span><span class="nt">host</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;127.0.0.1&quot;</span>
 </code></pre></div>
 Any environment variable overrides the matching config-file value.</p>
+<hr />
+<h2 id="the-tokenpak-home-folder">The TokenPak home folder<a class="headerlink" href="#the-tokenpak-home-folder" title="Permanent link">&para;</a></h2>
+<p>TokenPak keeps its state, such as the request ledger, spend-cap and telemetry
+history, journals and <code>home-migrated.json</code>, in one home folder. New installs use
+<code>~/.tpk</code>. An install that predates it keeps using <code>~/.tokenpak</code>. If you set
+<code>TOKENPAK_HOME</code>, that folder is the home. Run <code>tokenpak home path</code> to see which
+one is in use.</p>
+<p>If both <code>~/.tokenpak</code> and <code>~/.tpk</code> hold state, <code>tokenpak doctor</code> warns "split
+home: both homes hold state". Since 1.31.0, every write goes to <code>~/.tpk</code> in that
+layout, so history left in <code>~/.tokenpak</code> can look reset. Merge it with
+<code>tokenpak home migrate</code>:</p>
+<div class="highlight"><pre><span></span><code>tokenpak<span class="w"> </span>home<span class="w"> </span>migrate<span class="w">            </span><span class="c1"># print the plan; changes nothing</span>
+tokenpak<span class="w"> </span>home<span class="w"> </span>migrate<span class="w"> </span>--apply<span class="w">    </span><span class="c1"># write the merge</span>
+tokenpak<span class="w"> </span>home<span class="w"> </span>migrate<span class="w"> </span>--json<span class="w">     </span><span class="c1"># machine-readable plan</span>
+</code></pre></div>
+<p>The merge is backup-first: every changed target is saved under
+<code>~/.tpk/backups/home-migrate-&lt;time&gt;/</code>. A file that differs keeps the <code>~/.tpk</code>
+copy, and the older one is saved beside it as <code>&lt;name&gt;.legacy</code>. Databases are
+merged row by row. <code>~/.tokenpak</code> is never changed or deleted. The command
+refuses while the proxy or a companion session is in use, and a successful
+<code>--apply</code> writes a receipt, <code>home-migrated.json</code>, in <code>~/.tpk</code>. <code>tokenpak doctor</code>
+then reports <code>migrated on &lt;time&gt;</code>. See the
+<a href="../upgrading/#merge-the-older-home-folder-with-tokenpak-home-migrate">1.31.0 upgrade guide</a>
+for the full behavior.</p>
 <hr />
 <h2 id="common-recipes">Common recipes<a class="headerlink" href="#common-recipes" title="Permanent link">&para;</a></h2>
 <p><strong>Disable compaction (pure passthrough proxy):</strong>

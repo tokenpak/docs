@@ -3465,7 +3465,7 @@
 
 <h1 id="known-limitations-oss-beta">Known Limitations — OSS beta<a class="headerlink" href="#known-limitations-oss-beta" title="Permanent link">&para;</a></h1>
 <p>This page documents current, honest limitations of the <strong>OSS beta</strong>
-(<code>pip install tokenpak</code>, <strong>v1.30.3</strong>). If a capability described elsewhere in
+(<code>pip install tokenpak</code>, <strong>v1.31.0</strong>). If a capability described elsewhere in
 these docs isn't shipping the way the rest of the docs imply, it shows up
 here — that is the point of this page. Each entry states what's limited,
 whether it's an intentional scope choice or a known defect, the honest
@@ -3499,6 +3499,11 @@ one exception: since 1.30.3 it is looked up on its own, so a license in
 <a href="../upgrading/#license-lookup-in-the-older-home-folder">1.30.3 upgrade guide</a>.</p>
 <p><strong>Workaround:</strong> run <code>tokenpak config migrate</code> to move an existing legacy
 install to the canonical path explicitly.</p>
+<p>Since 1.31.0, writes follow the resolved home everywhere. On an install with
+state in both homes, new writes go to <code>~/.tpk/</code>, and history left in
+<code>~/.tokenpak/</code> can look reset. <code>tokenpak doctor</code> flags this layout; run
+<code>tokenpak home migrate</code> to read the merge plan and <code>tokenpak home migrate --apply</code>
+to merge. See the <a href="../configuration/#the-tokenpak-home-folder">home folder guide</a>.</p>
 <p><strong>Retirement condition:</strong> retires when automatic zero-touch migration ships
 for all installs, or the legacy <code>~/.tokenpak/</code> fallback is formally
 deprecated and removed in a future major version. Neither is committed to a
@@ -3658,9 +3663,9 @@ verify the actual task through your existing workflow.</p>
 execution environments and their acceptance criteria are verified and published.</p>
 <hr />
 <h2 id="optional-dependency-security-advisories">Optional dependency security advisories<a class="headerlink" href="#optional-dependency-security-advisories" title="Permanent link">&para;</a></h2>
-<p><strong>Status:</strong> disclosed limitations of optional integrations in v1.30.3.</p>
+<p><strong>Status:</strong> disclosed limitations of optional integrations in v1.31.0.</p>
 <p><strong>What:</strong> the release records unresolved advisories for optional dependencies.
-See the <a href="https://github.com/tokenpak/tokenpak/blob/v1.30.3/SECURITY.md">versioned security policy</a>
+See the <a href="https://github.com/tokenpak/tokenpak/blob/v1.31.0/SECURITY.md">versioned security policy</a>
 for affected versions, exposure and mitigations.</p>
 <p><strong>Current behavior:</strong> passing the supported release checks does not remove
 these advisories. Install only the extras your workflow needs and apply the
@@ -3669,7 +3674,7 @@ documented mitigations before enabling an affected integration.</p>
 replaced or fixed and the corresponding integration is verified again.</p>
 <hr />
 <h2 id="execution-ledger-recovery-is-fail-with-signal-not-replay">Execution ledger recovery is fail-with-signal, not replay<a class="headerlink" href="#execution-ledger-recovery-is-fail-with-signal-not-replay" title="Permanent link">&para;</a></h2>
-<p><strong>Status:</strong> intentional scope boundary in v1.30.3.</p>
+<p><strong>Status:</strong> intentional scope boundary in v1.31.0.</p>
 <p><strong>What:</strong> a durable, SQLite-backed execution ledger records in-flight
 upstream proxy calls before dispatch, so a retried request after a
 mid-stream proxy restart can carry an explicit recovery signal instead of a

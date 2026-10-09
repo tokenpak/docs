@@ -3337,7 +3337,7 @@
 <p>You don't need to use an agent to try TokenPak: any LLM request you send through the proxy is recorded. The default proxy preserves conversation turns, so a forwarded request can truthfully report zero tokens saved.</p>
 <h2 id="install">Install<a class="headerlink" href="#install" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code>pip<span class="w"> </span>install<span class="w"> </span>tokenpak
-tokenpak<span class="w"> </span>--version<span class="w">    </span><span class="c1"># expect: tokenpak 1.30.3</span>
+tokenpak<span class="w"> </span>--version<span class="w">    </span><span class="c1"># expect: tokenpak 1.31.0</span>
 tokenpak<span class="w"> </span>setup<span class="w"> </span>--start<span class="w">    </span><span class="c1"># interactive wizard; --start also launches the proxy</span>
 </code></pre></div>
 <p><code>tokenpak setup</code> scans your environment for <code>ANTHROPIC_API_KEY</code>, <code>OPENAI_API_KEY</code>, and <code>GOOGLE_API_KEY</code>, asks which provider to proxy, picks a compression profile, and writes <code>~/.tpk/config.yaml</code> (or <code>~/.tokenpak/config.yaml</code> on systems that already have the legacy directory). With <code>--start</code>, it also starts the proxy on <code>127.0.0.1:8766</code>.</p>
