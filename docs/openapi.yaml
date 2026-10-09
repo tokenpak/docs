@@ -10,7 +10,7 @@ x-tokenpak-session-economics-visible-text:
 
 info:
   title: TokenPak Proxy API
-  version: "1.30.3"
+  version: "1.31.0"
   description: |
     TokenPak is a drop-in HTTP proxy that sits between your app and LLM APIs.
     It forwards requests and records available usage without SDK changes.
@@ -284,7 +284,7 @@ paths:
               example:
                 status: ok
                 uptime_seconds: 3600
-                version: 1.30.3
+                version: 1.31.0
                 pid: 4242
                 requests_total: 42
                 requests_errors: 0

@@ -2,21 +2,108 @@
 title: Upgrade TokenPak
 rung: 2
 audience: Developers upgrading an existing TokenPak installation.
-updated: 2026-10-07
+updated: 2026-10-09
 status: current
 ---
 
-# Upgrade to TokenPak 1.30.3
+# Upgrade to TokenPak 1.31.0
 
-This guide is for developers upgrading from TokenPak 1.30.2. The compatible
-published pair is OSS 1.30.3 and the separately distributed Pro 0.6.0, which
-requires exactly OSS 1.30.3. Pro 0.5.x supports OSS only through 1.30.1, so if
-you use Pro, read [Pairing with Pro 0.6.0](#pairing-with-pro-060) first and
-upgrade both packages together. If you do not use Pro, upgrade as described in
-[Install and verify](#install-and-verify). If you are upgrading from an earlier
-release, also read the 1.30.2, 1.30.1, 1.30.0, 1.29.0 and 1.28.0 changes below.
+This guide is for developers upgrading from TokenPak 1.30.3. It starts with one
+change that can make history look reset on some installs: if you have TokenPak
+state in both `~/.tokenpak` and `~/.tpk`, read
+[Installs with state in both home folders](#installs-with-state-in-both-home-folders)
+first. If you use Pro, read [Pairing with Pro](#pairing-with-pro) before you
+upgrade: Pro 0.6.0 supports exactly OSS 1.30.3 and refuses 1.31.0, so Pro users
+stay on 1.30.3 until Pro 0.6.1 is announced. If you do not use Pro, upgrade as
+described in [Install and verify](#install-and-verify). If you are upgrading from
+an earlier release, also read the 1.30.3, 1.30.2, 1.30.1, 1.30.0, 1.29.0 and
+1.28.0 changes below.
+
+## Installs with state in both home folders
+
+TokenPak keeps its files in `~/.tpk`, or in `~/.tokenpak` on an installation
+that predates it. Before 1.31.0, about a hundred places in the product built
+those paths themselves, and some kept writing to `~/.tokenpak` after an install
+had moved to `~/.tpk`. TokenPak 1.31.0 finds the home through one resolver
+everywhere, so every write goes to the home the resolver names.
+
+If you have TokenPak state in both `~/.tokenpak` and `~/.tpk`, new writes go to
+`~/.tpk` after you upgrade. Spend-cap, cost and telemetry history that lives in
+`~/.tokenpak` can look reset until you run `tokenpak home migrate --apply`.
+
+- Run `tokenpak home migrate` first. It prints the plan and changes nothing.
+- `tokenpak doctor` flags this layout: it warns "split home: both homes hold
+  state".
+- Installs with a single home are unaffected, and so are installs that set
+  `TOKENPAK_HOME`.
+
+Nothing is migrated automatically. You choose when to run the merge. See
+[Merge the older home folder](#merge-the-older-home-folder-with-tokenpak-home-migrate)
+below, and the [home folder guide](configuration.md#the-tokenpak-home-folder).
+
+## Merge the older home folder with `tokenpak home migrate`
+
+`tokenpak home migrate` merges `~/.tokenpak` into `~/.tpk`. Before 1.31.0 it
+copied blindly; it now prints a plan and writes only when you ask.
+
+| Option | Effect |
+|---|---|
+| (none) | Print the plan and change nothing. This is the default. |
+| `--dry-run` | Print the plan without writing. Same as the default. |
+| `--apply` | Write the changes. |
+| `--json` | Machine-readable output. |
+
+Each plan line is marked COPY, MERGE, SKIP-identical, CONFLICT or
+KEEP-legacy-only; files that are not TokenPak state stay where they are. With
+`--apply`:
+
+- SQLite databases are snapshotted and merged row by row. Journal entries are
+  matched on content, not on row id. A database with virtual tables is skipped
+  when its content already matches; otherwise the `~/.tpk` copy is kept and the
+  older one is saved beside it as `<name>.legacy`.
+- A file that differs keeps the `~/.tpk` copy, and the older one is saved beside
+  it as `<name>.legacy`.
+- Every changed target is backed up first, in a `backups/home-migrate-<time>`
+  folder in `~/.tpk`.
+- Symbolic links are recreated, never followed. A relative link that stays
+  inside the home is recreated as written.
+- `~/.tokenpak` is never modified or removed.
+- The command refuses, and changes nothing, while the proxy or a companion
+  session is in use.
+- A successful `--apply` writes a receipt, `home-migrated.json`, in `~/.tpk`.
+
+After a migration, `tokenpak doctor` reports `migrated on <time>` instead of a
+split home. It warns again only if something wrote to `~/.tokenpak` later.
+
+## A pending update shows where you already look
+
+When a newer version is staged or installed but not yet running, `tokenpak
+status`, `tokenpak doctor` and the stats footer say so, for example
+`1.30.3 → 1.31.0, applies at next launch`. The companion status line ends with
+`update <version> pending` when there is room for it, and is never clipped to
+make room. The check is local: a staged-release marker, or an installed version
+newer than the version the proxy reports on its loopback `/health`.
+`tokenpak update` reports a pending update instead of downloading it again.
+
+## Load a pending update with `tokenpak update apply`
+
+`tokenpak update apply` restarts the TokenPak services so the pending version
+takes effect.
+
+| Option | Effect |
+|---|---|
+| (none) | Restart the services, only if nothing is in use. |
+| `--check` | Report whether it would apply now, without restarting anything. |
+
+It takes two idle observations a short interval apart (requests in flight,
+connections to the proxy and the Pro daemon, request counter and process
+unchanged) and checks again immediately before it stops anything. If a request
+is in flight or a client is connected, it changes nothing and exits with code 9.
+When it finds no service manager, it prints the exact manual step instead.
 
 ## License lookup in the older home folder
+
+*Introduced in 1.30.3.*
 
 TokenPak keeps its files in `~/.tpk`, or in `~/.tokenpak` on an installation
 that predates it. Before 1.30.3 it chose one of the two folders for everything,
@@ -43,6 +130,8 @@ TokenPak moves and copies nothing, and `license.json` keeps its format.
 
 ## Activation, refresh and removal follow the file in use
 
+*Introduced in 1.30.3.*
+
 Activating, refreshing and removing a license act on the file that was found, so
 a read and the write that follows name the same file. The `license.json.lock`
 file is created beside it. `tokenpak activate` still refuses to replace an
@@ -57,6 +146,8 @@ and `~/.tpk` held other files, 1.30.2 stored a pending key in
 license in `~/.tokenpak` then takes effect.
 
 ## A refused request releases its hold first
+
+*Introduced in 1.30.3.*
 
 When the token guard refuses a request locally, that request has already
 reserved its spend hold and, with the circuit half open, taken the single
@@ -73,6 +164,8 @@ usage is recorded, and a refused request consumes nothing.
 
 ## Recipe count in help text
 
+*Introduced in 1.30.3.*
+
 The package has shipped 57 built-in compression recipes since 1.18.0. The
 `tokenpak demo --list` help still said 50, the count before 1.18.0, and now says
 57. The `--category` help for `tokenpak demo` and `tokenpak recipe list` now
@@ -80,6 +173,8 @@ names all eight categories, including `go` and `rust`. The recipes themselves
 are unchanged.
 
 ## Dependencies in existing environments
+
+*Introduced in 1.30.3.*
 
 Upgrading TokenPak does not upgrade packages that are already installed. In an
 existing environment, run:
@@ -97,18 +192,21 @@ those advisories affected only the locks. If you installed the
 [1.30.3 changelog entry](https://github.com/tokenpak/tokenpak/blob/v1.30.3/CHANGELOG.md)
 lists the other advisory findings at this release.
 
-## Pairing with Pro 0.6.0
+## Pairing with Pro
 
 Pro is a separate licensed package. There is no self-service purchase; write to
 hello@tokenpak.ai about access.
 
-Pro 0.6.0 requires exactly OSS 1.30.3. It declares 1.30.3 as both its minimum
-and its maximum supported OSS version, with TIP-1.0 unchanged, and Pro refuses
-to run on an OSS version outside the range its release supports. Pro 0.5.x
-supports OSS only through 1.30.1, so it does not pair with OSS 1.30.3. If you
-use Pro 0.5.x, stay on the OSS version it supports, 1.30.1 for Pro 0.5.2 and
-1.30.0 for Pro 0.5.1, until you upgrade both packages together in one pip
-command.
+Pro 0.6.0 supports exactly OSS 1.30.3 and refuses 1.31.0. If you use Pro, stay
+on OSS 1.30.3 until Pro 0.6.1 is announced. Do not upgrade `tokenpak` alone on a
+host with Pro installed: pip does not stop it, `pip check` then fails, and Pro
+refuses to run against the newer package. Upgrade the pair together, in one pip
+command, once Pro 0.6.1 is available.
+
+Pro 0.5.x supports OSS only through 1.30.1, so it does not pair with OSS 1.30.3
+or 1.31.0 either. If you use Pro 0.5.x, stay on the OSS version it supports,
+1.30.1 for Pro 0.5.2 and 1.30.0 for Pro 0.5.1, until you upgrade both packages
+together.
 
 Pro 0.6.0 also changes how Pro reads your license:
 
@@ -119,8 +217,8 @@ Pro 0.6.0 also changes how Pro reads your license:
   checks.
 
 The [1.30.3 release log](https://github.com/tokenpak/tokenpak/blob/v1.30.3/docs/release-log/v1.30.3.md)
-describes the paired upgrade step by step, including a gate script in the source
-tree that checks the installed pair before you switch to it.
+describes the Pro 0.6.0 and OSS 1.30.3 upgrade step by step, including a gate
+script in the source tree that checks the installed pair before you switch to it.
 
 ## License activation keeps an installed license
 
@@ -249,20 +347,17 @@ learning or unavailable. See [terminal forecasts](companion-session-forecast.md)
 ## Install and verify
 
 1. Retain the previous package pair and environment for rollback.
-2. If you do not use Pro, install `tokenpak==1.30.3` with the extras already
-   used by your installation. The standard service profile is
-   `tokenpak[serve,tokens,telemetry]==1.30.3`.
-3. If you use Pro, install OSS and Pro together in a fresh environment, in one
-   `pip install` command that names OSS 1.30.3 and Pro 0.6.0, through your
-   existing licensed delivery channel. Pro 0.6.0 requires exactly OSS 1.30.3. Do
-   not upgrade OSS alone: Pro 0.5.2 supports OSS 1.26.0 through 1.30.1 with
-   TIP-1.0, and Pro 0.5.1 supports OSS only through 1.30.0. pip does not stop an
-   OSS-only upgrade:
-   `pip install --upgrade tokenpak` installs 1.30.3 next to Pro 0.5.2, prints a
+2. If you do not use Pro, run `pip install --upgrade tokenpak`, or install
+   `tokenpak==1.31.0` with the extras already used by your installation. The
+   standard service profile is `tokenpak[serve,tokens,telemetry]==1.31.0`.
+3. If you use Pro, do not install OSS 1.31.0. Pro 0.6.0 supports exactly OSS
+   1.30.3 and refuses 1.31.0. Keep the pair you have, OSS 1.30.3 with Pro 0.6.0,
+   until Pro 0.6.1 is announced, then upgrade both packages together in one
+   `pip install` command through your existing licensed delivery channel.
+   `pip install --upgrade tokenpak` installs 1.31.0 next to Pro 0.6.0, prints a
    dependency-conflict message, and `pip check` then fails. If that happens,
-   reinstall `tokenpak==1.30.1`. If you are not ready to upgrade both packages,
-   keep the pair you have. After the paired upgrade, run `python -m pip check`;
-   it must report no broken requirements.
+   reinstall `tokenpak==1.30.3`. After any paired upgrade, run
+   `python -m pip check`; it must report no broken requirements.
 4. After active requests finish, restart the services that use the replaced
    environment. Reinstall or repoint configured companion hooks when changing
    environment paths. Preserve explicit journal-root settings and verify the
@@ -271,8 +366,11 @@ learning or unavailable. See [terminal forecasts](companion-session-forecast.md)
    `tokenpak status --json --session ID` for a session you intend to inspect.
    Start a new managed client launch to use updated hooks and display code.
 
-This is a package-only upgrade: no database migration, configuration change or
-data backup is required, and no file is moved. Since 1.30.2, a license write
+This is a package-only upgrade: no migration runs automatically, no
+configuration change or data backup is required, and no file is moved. A
+single-home install keeps resolving to its home; a split home is flagged by
+`tokenpak doctor`, and you choose when to run `tokenpak home migrate --apply`.
+Since 1.30.2, a license write
 also creates an empty `license.json.lock` file beside the license file in use.
 If you upgrade from 1.29.0 or earlier, TokenPak creates a new
 `execution_ledger.db` in its state directory the first time it starts; existing
@@ -280,19 +378,17 @@ state and configured journal locations are otherwise unaffected.
 
 ## Roll back
 
-Reinstall OSS 1.30.2, or 1.30.1. TokenPak 1.30.3 adds no database state and
-moves no file, so nothing needs to be removed, and 1.30.1 ignores the empty
-`license.json.lock` file that a license write leaves beside the license file.
-Rolling back restores the old license lookup, so an installation whose license
-sits in `~/.tokenpak` while `~/.tpk` holds other files reads as the free plan
-again, and the false `tokenpak_spend_guard_reservation_blocked` refusal on an
-immediate retry can return. Rolling back does not undo licenses issued or
-revoked in the meantime.
+Reinstall OSS 1.30.3: `pip install tokenpak==1.30.3`. State written to `~/.tpk`
+after a migration stays there, and the migration leaves `~/.tokenpak` as it was,
+so 1.30.3 reads both homes as before. 1.31.0 adds no database state, so nothing
+needs to be removed. Rolling back does not undo licenses issued or revoked in the
+meantime.
 
 If you run Pro, switch back to the previous environment, or reinstall the
-previous pair, OSS 1.30.1 with Pro 0.5.2, in one `pip install` command. Never
-downgrade only one of the two packages. Rolling back further, to 1.30.0, pairs
-with either Pro 0.5.1 or Pro 0.5.2, and rolling back to 1.29.0 leaves the
+previous pair in one `pip install` command. Never downgrade only one of the two
+packages. Rolling back further, to 1.30.2 or 1.30.1, restores the older license
+lookup described above; 1.30.1 pairs with Pro 0.5.2, and rolling back to 1.30.0
+pairs with either Pro 0.5.1 or Pro 0.5.2. Rolling back to 1.29.0 leaves the
 `execution_ledger.db` file in place; 1.29.0 serves normally with it present.
 Restore the previous environment pointer and hook configuration after active
 requests finish. Published artifacts and tags are never overwritten.
@@ -307,7 +403,11 @@ call is not silently completed or resumed for you. See
 before treating a recovery signal as a completed retry.
 
 Optional dependency findings are documented in
-[SECURITY.md](https://github.com/tokenpak/tokenpak/blob/v1.30.3/SECURITY.md).
-Release validation of OSS 1.30.3 covers changed behavior, installed artifacts,
-upgrade and rollback of the OSS package. It did not install Pro, so it does not
-cover the OSS and Pro pair.
+[SECURITY.md](https://github.com/tokenpak/tokenpak/blob/v1.31.0/SECURITY.md).
+The NLTK and Accelerate findings in the optional `compression` and `full` extras
+are unchanged from 1.30.3: the advisories list no patched version, and the base
+install selects neither extra.
+Release validation of OSS 1.31.0 covers changed behavior, installed artifacts,
+and upgrade and rollback of the OSS package on Linux with Python 3.12, with a
+single-home and a split-home fixture. It did not cover macOS or Windows, a live
+service manager for `tokenpak update apply`, or the OSS and Pro pair.

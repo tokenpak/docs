@@ -54,6 +54,37 @@ Any environment variable overrides the matching config-file value.
 
 ---
 
+## The TokenPak home folder
+
+TokenPak keeps its state, such as the request ledger, spend-cap and telemetry
+history, journals and `home-migrated.json`, in one home folder. New installs use
+`~/.tpk`. An install that predates it keeps using `~/.tokenpak`. If you set
+`TOKENPAK_HOME`, that folder is the home. Run `tokenpak home path` to see which
+one is in use.
+
+If both `~/.tokenpak` and `~/.tpk` hold state, `tokenpak doctor` warns "split
+home: both homes hold state". Since 1.31.0, every write goes to `~/.tpk` in that
+layout, so history left in `~/.tokenpak` can look reset. Merge it with
+`tokenpak home migrate`:
+
+```bash
+tokenpak home migrate            # print the plan; changes nothing
+tokenpak home migrate --apply    # write the merge
+tokenpak home migrate --json     # machine-readable plan
+```
+
+The merge is backup-first: every changed target is saved under
+`~/.tpk/backups/home-migrate-<time>/`. A file that differs keeps the `~/.tpk`
+copy, and the older one is saved beside it as `<name>.legacy`. Databases are
+merged row by row. `~/.tokenpak` is never changed or deleted. The command
+refuses while the proxy or a companion session is in use, and a successful
+`--apply` writes a receipt, `home-migrated.json`, in `~/.tpk`. `tokenpak doctor`
+then reports `migrated on <time>`. See the
+[1.31.0 upgrade guide](upgrading.md#merge-the-older-home-folder-with-tokenpak-home-migrate)
+for the full behavior.
+
+---
+
 ## Common recipes
 
 **Disable compaction (pure passthrough proxy):**

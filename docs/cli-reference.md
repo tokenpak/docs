@@ -279,6 +279,13 @@ Update tokenpak
 - `--core-only` — Update core only, skip config merge
 - `--dry-run` — Show what would change without applying
 
+**Subcommands:**
+
+- `apply` — Load a pending update (only when nothing is in use). Restarts TokenPak so a staged or installed update takes effect. Refuses, and changes nothing, while a request is in flight or a client is connected, and exits with code 9.
+  - `--check` — Report whether it would apply now, without restarting anything
+
+When an update is pending, `tokenpak update` reports it instead of downloading it again, and `tokenpak status`, `tokenpak doctor` and the stats footer show it (for example `1.30.3 → 1.31.0, applies at next launch`). The companion status line ends with `update <version> pending` when there is room.
+
 ### `tokenpak uninstall`
 
 Un-route (--soft) or purge state + remove package (--hard)
@@ -509,9 +516,10 @@ Inspect, validate, and migrate the TokenPak home directory. All paths resolve th
   - `--json`
 - `explain`
   - `--json`
-- `migrate` — Copy the legacy ~/.tokenpak/ tree to the canonical ~/.tpk/ location. The legacy tree is left in place as a safety backup; you can prune it manually once satisfied.
-  - `--dry-run` — Show what would be copied without writing anything
-  - `--force` — Allow merging into an existing ~/.tpk/ (default: refuse and report what to do manually)
+- `migrate` — Merge the legacy ~/.tokenpak/ home into the canonical ~/.tpk/ home. Prints the plan by default and writes only with `--apply`. Backs up every changed target first, never changes or deletes ~/.tokenpak/, refuses while TokenPak is in use, and writes a `home-migrated.json` receipt on success.
+  - `--apply` — Write the changes (default: print the plan only)
+  - `--dry-run` — Print the plan without writing (this is the default)
+  - `--json` — Machine-readable output
 
 ### `tokenpak init`
 

@@ -21,7 +21,7 @@ You don't need to use an agent to try TokenPak: any LLM request you send through
 
 ```bash
 pip install tokenpak
-tokenpak --version    # expect: tokenpak 1.30.3
+tokenpak --version    # expect: tokenpak 1.31.0
 tokenpak setup --start    # interactive wizard; --start also launches the proxy
 ```
 

@@ -17,7 +17,7 @@ TokenPak is a local proxy for coding agents that records each request and shows 
 
 **Know how far your agent can go.**
 
-- **Today (release 1.30.3):** request records and receipts; the session trip
+- **Today (release 1.31.0):** request records and receipts; the session trip
   computer (measured usage, estimated cost, burn and runway; forecasts are
   ranges, not guarantees, and appear only once a model has enough local
   history), on by default in the Claude Code footer and the Codex pane from
@@ -42,18 +42,19 @@ content; the default path does not promise automatic token savings. Provider-bou
 still travel to the selected upstream provider; TokenPak operates no cloud
 relay and requires no application code changes.
 
-!!! note "v1.30.3"
+!!! note "v1.31.0"
     The commands below, [Quick Start](QUICKSTART.md),
     [extended API reference](api-reference.md), and
-    [Docker guide](DOCKER.md) describe TokenPak **v1.30.3**, the currently
+    [Docker guide](DOCKER.md) describe TokenPak **v1.31.0**, the currently
     published release on PyPI (`pip install tokenpak`). The separate
     [Installation page](installation.md) retains older-release guidance; use
     the Quick Start for the current setup path. See the
-    [1.30.3 upgrade guide](upgrading.md) for the license lookup and spend-hold
-    fixes and the dependency advice. If you use Pro, read it before upgrading:
-    Pro 0.6.0 requires exactly OSS 1.30.3, and Pro 0.5.x supports OSS only
-    through 1.30.1. Other pages with explicit version pins describe the
-    release line named on that page.
+    [1.31.0 upgrade guide](upgrading.md) for the pending-update display,
+    `tokenpak update apply`, the `tokenpak home migrate` merge and the note for
+    installs with state in both home folders. If you use Pro, read it before
+    upgrading: Pro 0.6.0 supports exactly OSS 1.30.3 and refuses 1.31.0, so stay
+    on 1.30.3 until Pro 0.6.1 is announced. Other pages with explicit version
+    pins describe the release line named on that page.
 
 ---
 
@@ -98,7 +99,7 @@ tokenpak setup --start
 
 | Section | What it covers |
 |---------|-----------------|
-| [Installation](installation.md)            | Older-release installation guidance; use the Quick Start for v1.30.3 |
+| [Installation](installation.md)            | Older-release installation guidance; use the Quick Start for v1.31.0 |
 | [Quick Start](QUICKSTART.md)               | Setup wizard, client integration, first request receipt, including zero savings |
 | [Configuration](configuration.md)          | How configuration works (env vars + YAML, precedence) |
 | [Environment Variables](env-vars.md)       | Complete `TOKENPAK_*` reference |

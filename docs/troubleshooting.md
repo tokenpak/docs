@@ -165,6 +165,52 @@ providers:
       "gpt-4-latest": "gpt-4-turbo-preview"
 ```
 
+### Warning: "split home: both homes hold state"
+
+**Symptom:** `tokenpak doctor` warns that both `~/.tokenpak` and `~/.tpk` hold
+state, or spend-cap, cost and telemetry history looks reset after upgrading to
+1.31.0.
+
+**Likely cause:** your install has state in both home folders. Since 1.31.0,
+new writes go to `~/.tpk`, so history that lives in `~/.tokenpak` is not read.
+Installs with a single home, and installs that set `TOKENPAK_HOME`, are not
+affected.
+
+**Fix:**
+```bash
+tokenpak home migrate            # print the plan; changes nothing
+tokenpak home migrate --apply    # merge ~/.tokenpak into ~/.tpk
+```
+
+The merge backs up every changed target first and never changes or deletes
+`~/.tokenpak`. `tokenpak doctor` then reports `migrated on <date>`. See the
+[home folder guide](configuration.md#the-tokenpak-home-folder).
+
+### Error: `tokenpak home migrate --apply` refuses to run
+
+**Symptom:** the command changes nothing and says TokenPak is in use.
+
+**Likely cause:** a request is in flight, a client is connected to the proxy, or
+a companion session is open.
+
+**Fix:** close the session or let the proxy go idle, then run it again.
+
+### Message: "update pending" or `update <version> pending`
+
+**Symptom:** `tokenpak status`, `tokenpak doctor` or the companion status line
+says a newer version is pending, for example `1.30.3 → 1.31.0, applies at next
+launch`.
+
+**Likely cause:** the new version is staged or installed, but the running proxy
+still reports the older one.
+
+**Fix:** `tokenpak update apply --check` reports whether it would apply now.
+`tokenpak update apply` restarts the services when nothing is in use; it exits
+with code 9 and changes nothing while a request is in flight or a client is
+connected.
+
+---
+
 ---
 
 ## Startup & Runtime
