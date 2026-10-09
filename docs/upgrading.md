@@ -13,8 +13,8 @@ change that can make history look reset on some installs: if you have TokenPak
 state in both `~/.tokenpak` and `~/.tpk`, read
 [Installs with state in both home folders](#installs-with-state-in-both-home-folders)
 first. If you use Pro, read [Pairing with Pro](#pairing-with-pro) before you
-upgrade: Pro 0.6.0 supports exactly OSS 1.30.3 and refuses 1.31.0, so Pro users
-stay on 1.30.3 until Pro 0.6.1 is announced. If you do not use Pro, upgrade as
+upgrade: Pro 0.6.1 supports exactly OSS 1.31.0, and Pro 0.6.0 supports exactly
+OSS 1.30.3 and refuses 1.31.0, so Pro users upgrade both packages together. If you do not use Pro, upgrade as
 described in [Install and verify](#install-and-verify). If you are upgrading from
 an earlier release, also read the 1.30.3, 1.30.2, 1.30.1, 1.30.0, 1.29.0 and
 1.28.0 changes below.
@@ -197,14 +197,20 @@ lists the other advisory findings at this release.
 Pro is a separate licensed package. There is no self-service purchase; write to
 hello@tokenpak.ai about access.
 
-Pro 0.6.0 supports exactly OSS 1.30.3 and refuses 1.31.0. If you use Pro, stay
-on OSS 1.30.3 until Pro 0.6.1 is announced. Do not upgrade `tokenpak` alone on a
-host with Pro installed: pip does not stop it, `pip check` then fails, and Pro
-refuses to run against the newer package. Upgrade the pair together, in one pip
-command, once Pro 0.6.1 is available.
+Pro 0.6.1 supports exactly OSS 1.31.0: it declares 1.31.0 as both its minimum
+and its maximum supported OSS version. The 1.31.0 and 0.6.1 pair was qualified
+on macOS arm64 and installed from the private index, and `pip check` reported no
+broken requirements. Pro 0.6.0 supports exactly OSS 1.30.3 and refuses 1.31.0.
+Do not upgrade `tokenpak` alone on a host with Pro installed: pip does not stop
+it, `pip check` then fails, and Pro refuses to run against the newer package.
+Upgrade the pair together, in one pip command (see
+[Install and verify](#install-and-verify)).
+
+Pro keeps its state in the TokenPak home folder, so running
+`tokenpak home migrate` on a split home keeps Pro working.
 
 Pro 0.5.x supports OSS only through 1.30.1, so it does not pair with OSS 1.30.3
-or 1.31.0 either. If you use Pro 0.5.x, stay on the OSS version it supports,
+or 1.31.0. If you use Pro 0.5.x, stay on the OSS version it supports,
 1.30.1 for Pro 0.5.2 and 1.30.0 for Pro 0.5.1, until you upgrade both packages
 together.
 
@@ -350,13 +356,21 @@ learning or unavailable. See [terminal forecasts](companion-session-forecast.md)
 2. If you do not use Pro, run `pip install --upgrade tokenpak`, or install
    `tokenpak==1.31.0` with the extras already used by your installation. The
    standard service profile is `tokenpak[serve,tokens,telemetry]==1.31.0`.
-3. If you use Pro, do not install OSS 1.31.0. Pro 0.6.0 supports exactly OSS
-   1.30.3 and refuses 1.31.0. Keep the pair you have, OSS 1.30.3 with Pro 0.6.0,
-   until Pro 0.6.1 is announced, then upgrade both packages together in one
-   `pip install` command through your existing licensed delivery channel.
-   `pip install --upgrade tokenpak` installs 1.31.0 next to Pro 0.6.0, prints a
-   dependency-conflict message, and `pip check` then fails. If that happens,
-   reinstall `tokenpak==1.30.3`. After any paired upgrade, run
+3. If you use Pro, install OSS and Pro together in one `pip install` command
+   from the private index, ideally in a fresh environment:
+
+   ```bash
+   pip install --index-url https://pypi.tokenpak.ai/simple \
+     "tokenpak==1.31.0" "tokenpak-paid==0.6.1"
+   ```
+
+   Pro 0.6.1 supports exactly OSS 1.31.0. The index asks for HTTP Basic
+   credentials: the username is `__token__` and the password is the URL-safe
+   base64 encoding of your license file. See
+   [Private index credential](#private-index-credential). Do not upgrade OSS
+   alone: `pip install --upgrade tokenpak` installs 1.31.0 next to Pro 0.6.0,
+   prints a dependency-conflict message, and `pip check` then fails. If that
+   happens, reinstall `tokenpak==1.30.3`. After any paired upgrade, run
    `python -m pip check`; it must report no broken requirements.
 4. After active requests finish, restart the services that use the replaced
    environment. Reinstall or repoint configured companion hooks when changing
@@ -376,6 +390,29 @@ If you upgrade from 1.29.0 or earlier, TokenPak creates a new
 `execution_ledger.db` in its state directory the first time it starts; existing
 state and configured journal locations are otherwise unaffected.
 
+## Private index credential
+
+Pro is served from a license-gated index. Pip sends the credential as HTTP Basic
+auth: the username is `__token__`, and the password is the URL-safe base64
+encoding of your license file. Keep the credential out of your shell history and
+command line by putting it in a `~/.netrc` file readable only by you:
+
+```bash
+python3 - <<'PY'
+import base64, os, pathlib
+license_file = pathlib.Path(os.environ["TOKENPAK_LICENSE_FILE"])  # path to your license file
+password = base64.urlsafe_b64encode(license_file.read_bytes()).decode()
+netrc = pathlib.Path.home() / ".netrc"
+fd = os.open(netrc, os.O_WRONLY | os.O_CREAT | os.O_APPEND, 0o600)
+with os.fdopen(fd, "a") as f:
+    f.write(f"machine pypi.tokenpak.ai\n  login __token__\n  password {password}\n")
+PY
+```
+
+Set `TOKENPAK_LICENSE_FILE` to your license file first. Afterwards run
+`tokenpak activate YOUR-LICENSE-KEY` as before; the index credential gets you the
+package, and the key unlocks the features.
+
 ## Roll back
 
 Reinstall OSS 1.30.3: `pip install tokenpak==1.30.3`. State written to `~/.tpk`
@@ -385,9 +422,9 @@ needs to be removed. Rolling back does not undo licenses issued or revoked in th
 meantime.
 
 If you run Pro, switch back to the previous environment, or reinstall the
-previous pair in one `pip install` command. Never downgrade only one of the two
-packages. Rolling back further, to 1.30.2 or 1.30.1, restores the older license
-lookup described above; 1.30.1 pairs with Pro 0.5.2, and rolling back to 1.30.0
+previous pair, OSS 1.30.3 with Pro 0.6.0, in one `pip install` command. Never
+downgrade only one of the two packages. Rolling back further, to 1.30.2 or 1.30.1, restores the older license
+lookup described above; 1.30.1 pairs with Pro 0.5.2, and 1.30.0
 pairs with either Pro 0.5.1 or Pro 0.5.2. Rolling back to 1.29.0 leaves the
 `execution_ledger.db` file in place; 1.29.0 serves normally with it present.
 Restore the previous environment pointer and hook configuration after active
@@ -409,5 +446,6 @@ are unchanged from 1.30.3: the advisories list no patched version, and the base
 install selects neither extra.
 Release validation of OSS 1.31.0 covers changed behavior, installed artifacts,
 and upgrade and rollback of the OSS package on Linux with Python 3.12, with a
-single-home and a split-home fixture. It did not cover macOS or Windows, a live
-service manager for `tokenpak update apply`, or the OSS and Pro pair.
+single-home and a split-home fixture. The 1.31.0 and Pro 0.6.1 pair was
+qualified on macOS arm64 and installed from the private index. Validation did
+not cover Windows or a live service manager for `tokenpak update apply`.

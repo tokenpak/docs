@@ -52,8 +52,8 @@ relay and requires no application code changes.
     [1.31.0 upgrade guide](upgrading.md) for the pending-update display,
     `tokenpak update apply`, the `tokenpak home migrate` merge and the note for
     installs with state in both home folders. If you use Pro, read it before
-    upgrading: Pro 0.6.0 supports exactly OSS 1.30.3 and refuses 1.31.0, so stay
-    on 1.30.3 until Pro 0.6.1 is announced. Other pages with explicit version
+    upgrading: Pro 0.6.1 supports exactly OSS 1.31.0, and Pro 0.6.0 supports
+    exactly OSS 1.30.3 and refuses 1.31.0, so upgrade both packages together. Other pages with explicit version
     pins describe the release line named on that page.
 
 ---
