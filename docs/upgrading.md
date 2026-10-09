@@ -203,8 +203,8 @@ on macOS arm64 and installed from the private index, and `pip check` reported no
 broken requirements. Pro 0.6.0 supports exactly OSS 1.30.3 and refuses 1.31.0.
 Do not upgrade `tokenpak` alone on a host with Pro installed: pip does not stop
 it, `pip check` then fails, and Pro refuses to run against the newer package.
-Upgrade the pair together, in one pip command (see
-[Install and verify](#install-and-verify)).
+Upgrade the pair together, in the two install steps under
+[Install and verify](#install-and-verify).
 
 Pro keeps its state in the TokenPak home folder, so running
 `tokenpak home migrate` on a split home keeps Pro working.
@@ -356,15 +356,21 @@ learning or unavailable. See [terminal forecasts](companion-session-forecast.md)
 2. If you do not use Pro, run `pip install --upgrade tokenpak`, or install
    `tokenpak==1.31.0` with the extras already used by your installation. The
    standard service profile is `tokenpak[serve,tokens,telemetry]==1.31.0`.
-3. If you use Pro, install OSS and Pro together in one `pip install` command
-   from the private index, ideally in a fresh environment:
+3. If you use Pro, install the pair in two steps, ideally in a fresh
+   environment. First OSS from public PyPI, then Pro from the private index only:
 
    ```bash
-   pip install --index-url https://pypi.tokenpak.ai/simple \
-     "tokenpak==1.31.0" "tokenpak-paid==0.6.1"
+   pip install "tokenpak==1.31.0"
+   pip install --index-url https://pypi.tokenpak.ai/simple "tokenpak-paid==0.6.1"
    ```
 
-   Pro 0.6.1 supports exactly OSS 1.31.0. The index asks for HTTP Basic
+   Never add `--extra-index-url`, or an extra index in `pip.conf`, when you
+   install Pro: `tokenpak-paid` is not on public PyPI, so a second index would
+   let anyone who publishes that name there win the resolution. Pro's one
+   dependency is already satisfied by step one, so pip never consults another
+   index.
+
+   Pro 0.6.1 supports exactly OSS 1.31.0. The private index asks for HTTP Basic
    credentials: the username is `__token__` and the password is the URL-safe
    base64 encoding of your license file. See
    [Private index credential](#private-index-credential). Do not upgrade OSS
@@ -394,7 +400,7 @@ state and configured journal locations are otherwise unaffected.
 
 Pro is served from a license-gated index. Pip sends the credential as HTTP Basic
 auth: the username is `__token__`, and the password is the URL-safe base64
-encoding of your license file. Keep the credential out of your shell history and
+encoding of your license file, with or without `=` padding. Keep the credential out of your shell history and
 command line by putting it in a `~/.netrc` file readable only by you:
 
 ```bash
@@ -422,8 +428,14 @@ needs to be removed. Rolling back does not undo licenses issued or revoked in th
 meantime.
 
 If you run Pro, switch back to the previous environment, or reinstall the
-previous pair, OSS 1.30.3 with Pro 0.6.0, in one `pip install` command. Never
-downgrade only one of the two packages. Rolling back further, to 1.30.2 or 1.30.1, restores the older license
+previous pair, OSS 1.30.3 with Pro 0.6.0, in the same two steps:
+
+```bash
+pip install "tokenpak==1.30.3"
+pip install --index-url https://pypi.tokenpak.ai/simple "tokenpak-paid==0.6.0"
+```
+
+Never downgrade only one of the two packages. Rolling back further, to 1.30.2 or 1.30.1, restores the older license
 lookup described above; 1.30.1 pairs with Pro 0.5.2, and 1.30.0
 pairs with either Pro 0.5.1 or Pro 0.5.2. Rolling back to 1.29.0 leaves the
 `execution_ledger.db` file in place; 1.29.0 serves normally with it present.
